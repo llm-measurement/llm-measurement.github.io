@@ -8,6 +8,7 @@
 - [Which user is driving my LLM token spike?](https://llm-measurement.github.io/token-spike.html): Compare two windows of LLM usage with fleetdiff. Find token-heavy users and sessions, with a released-binary example.
 - [How do I detect anomalies in LLM token consumption?](https://llm-measurement.github.io/anomalies.html): Scan retained LLM summary windows for unusual token usage, session concentration, tool errors and missing usage.
 - [How do I count distinct LLM users without storing user IDs?](https://llm-measurement.github.io/distinct-users.html): Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers.
+- [Why summaries instead of raw logs](https://llm-measurement.github.io/summaries.html): Measured sharing, retention and attribution properties of keyed summaries, with pinned coding-agent data and labeled synthetic workloads.
 
 ## Released tools used in these examples
 
@@ -15,4 +16,4 @@
 - llm-sketchkit v0.2.2
 - Collector configuration guidance: v0.3.1
 
-All numerical examples use synthetic inputs. See each page for its limits and sources.
+Command guides use synthetic inputs. The summaries evidence page separates released coding-agent records from synthetic scale workloads and pins its experimental source. See each page for its methods and limits.

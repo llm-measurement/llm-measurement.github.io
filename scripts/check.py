@@ -2,6 +2,7 @@
 # Code authors: Vijay and Codex
 """Check generated pages, local links, question titles and the text indexes."""
 from html.parser import HTMLParser
+import html
 import json
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -35,7 +36,13 @@ def main():
         page = Page()
         page.feed(path.read_text())
         assert page.h1 == 1 and page.has_description, path.name
-        if entry["slug"] != "index":
+        title = entry.get("document_title", entry["title"] + " | LLM Measurement")
+        assert f"<title>{html.escape(title)}</title>" in path.read_text(), path.name
+        assert f'<h1>{html.escape(entry["title"])}</h1>' in path.read_text(), path.name
+        if entry.get("kind") == "evidence":
+            assert page.commands == 0, path.name
+            assert 'id="reproduce"' in path.read_text(), path.name
+        elif entry["slug"] != "index":
             assert entry["title"].endswith("?") and page.commands == 1, path.name
         for link in page.links:
             target = urlsplit(link)
@@ -46,7 +53,8 @@ def main():
     text_index = (ROOT / "docs/llms.txt").read_text()
     assert all(p["slug"] + ".html" in text_index for p in pages[1:])
     assert (ROOT / "docs/.nojekyll").exists()
-    print("PASS: five pages, four runnable guides, local links, sitemap and llms.txt")
+    guides = sum(p["slug"] != "index" and p.get("kind") != "evidence" for p in pages)
+    print(f"PASS: {len(pages)} pages, {guides} runnable guides, local links, sitemap and llms.txt")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,261 @@
+{
+  "contributors": {
+    "top_sessions": {
+      "bound_violations": 0,
+      "comparisons": 304,
+      "false_negative": 0,
+      "false_positive": 0,
+      "flagged_next_days": 136,
+      "growth_share_checks": 9295,
+      "keys_checked": 17729,
+      "next_day_reversals": 67,
+      "precision": 1.0,
+      "recall": 1.0,
+      "share_checks": 35405,
+      "true_positive": 136
+    },
+    "top_users": {
+      "bound_violations": 0,
+      "comparisons": 304,
+      "false_negative": 0,
+      "false_positive": 0,
+      "flagged_next_days": 147,
+      "growth_share_checks": 1110,
+      "keys_checked": 2133,
+      "next_day_reversals": 70,
+      "precision": 1.0,
+      "recall": 1.0,
+      "share_checks": 4231,
+      "true_positive": 147
+    }
+  },
+  "identifier_exclusion": {
+    "all_serialized_sketch_bytes_total_view": 262732,
+    "files_scanned": 1278,
+    "note": "Wire bytes include metadata/registers/weights as well as hashes. Decoded and sentinel checks are recorded separately.",
+    "raw_identity_hits": [],
+    "raw_identity_values": 2076518
+  },
+  "ranges": {
+    "queries": [
+      {
+        "absolute_error": {
+          "max": 0.001289452911578337,
+          "mean": 0.0003173819742030904,
+          "median": 9.346176122804195e-05,
+          "n": 299,
+          "p95": 0.001009046447375539
+        },
+        "batch_seconds": [
+          0.000673541973810643,
+          0.0006721250247210264,
+          0.0007034579757601023,
+          0.0007102499948814511,
+          0.0007202919805422425
+        ],
+        "days": 7,
+        "median_ms_per_query": 0.0023527022600672316,
+        "queries": 299,
+        "slowest_batch_seconds": 0.0007202919805422425
+      },
+      {
+        "absolute_error": {
+          "max": 0.002077276972805464,
+          "mean": 0.0006155930823150786,
+          "median": 0.0002307956547120682,
+          "n": 278,
+          "p95": 0.001953283960268948
+        },
+        "batch_seconds": [
+          0.0023616659455001354,
+          0.002359666978009045,
+          0.0023556670057587326,
+          0.002363458974286914,
+          0.002382167032919824
+        ],
+        "days": 28,
+        "median_ms_per_query": 0.008495201242806243,
+        "queries": 278,
+        "slowest_batch_seconds": 0.002382167032919824
+      },
+      {
+        "absolute_error": {
+          "max": 0.003364922407428139,
+          "mean": 0.0012895243926615706,
+          "median": 0.0006180092415846161,
+          "n": 216,
+          "p95": 0.0032065874050104526
+        },
+        "batch_seconds": [
+          0.005555125011596829,
+          0.005578916985541582,
+          0.005570042005274445,
+          0.005593665991909802,
+          0.005627500009723008
+        ],
+        "days": 90,
+        "median_ms_per_query": 0.025828319377507323,
+        "queries": 216,
+        "slowest_batch_seconds": 0.005627500009723008
+      }
+    ],
+    "storage": {
+      "burstgpt": {
+        "days": 121,
+        "raw_bytes": 197102320,
+        "raw_compressed_bytes": null,
+        "raw_years_per_decimal_GB": 1.6807511207528367,
+        "summary_bytes": 728113,
+        "summary_bytes_per_day": 6017.462809917355,
+        "summary_files": 242,
+        "summary_gzip_bytes": 22133,
+        "summary_years_per_decimal_GB": 454.9842472843971
+      },
+      "tracelab": {
+        "days": 305,
+        "raw_bytes": 1245532297,
+        "raw_compressed_bytes": 100939722,
+        "raw_years_per_decimal_GB": 0.6704318242783318,
+        "summary_bytes": 2093440,
+        "summary_bytes_per_day": 6863.737704918033,
+        "summary_files": 610,
+        "summary_gzip_bytes": 222397,
+        "summary_years_per_decimal_GB": 398.8862781237059
+      }
+    }
+  },
+  "unions": {
+    "1": {
+      "hll_exchange_bytes": {
+        "max": 236,
+        "mean": 116.7672131147541,
+        "median": 100,
+        "n": 305,
+        "p95": 196
+      },
+      "hll_plus_minhash_exchange_bytes": {
+        "max": 2360,
+        "mean": 2239.895081967213,
+        "median": 2224,
+        "n": 305,
+        "p95": 2320
+      },
+      "minhash_overlap_abs_error": {
+        "max": 0.8124415853686586,
+        "mean": 0.061346962851449666,
+        "median": 0.0,
+        "n": 305,
+        "p95": 0.3203452389318808
+      },
+      "naive_overcount": {
+        "max": 5,
+        "mean": 0.6295081967213115,
+        "median": 0,
+        "n": 305,
+        "p95": 2
+      },
+      "raw_list_bytes": {
+        "max": 341,
+        "mean": 103.00983606557377,
+        "median": 69,
+        "n": 305,
+        "p95": 261
+      },
+      "union_abs_error": {
+        "max": 0.0006885861360999002,
+        "mean": 0.00010082361532970447,
+        "median": 1.716628321091207e-05,
+        "n": 305,
+        "p95": 0.00037385364058373227
+      }
+    },
+    "28": {
+      "hll_exchange_bytes": {
+        "max": 412,
+        "mean": 214.25539568345323,
+        "median": 184.0,
+        "n": 278,
+        "p95": 381
+      },
+      "hll_plus_minhash_exchange_bytes": {
+        "max": 2537,
+        "mean": 2338.2841726618703,
+        "median": 2308.0,
+        "n": 278,
+        "p95": 2506
+      },
+      "minhash_overlap_abs_error": {
+        "max": 2.6568801303854332,
+        "mean": 0.29341573369853574,
+        "median": 0.15645302665269378,
+        "n": 278,
+        "p95": 1.0238528132085811
+      },
+      "naive_overcount": {
+        "max": 11,
+        "mean": 3.4784172661870505,
+        "median": 3.0,
+        "n": 278,
+        "p95": 9
+      },
+      "raw_list_bytes": {
+        "max": 693,
+        "mean": 297.1546762589928,
+        "median": 237.0,
+        "n": 278,
+        "p95": 629
+      },
+      "union_abs_error": {
+        "max": 0.002077276972805464,
+        "mean": 0.0006155930823150786,
+        "median": 0.0002307956547120682,
+        "n": 278,
+        "p95": 0.001953283960268948
+      }
+    },
+    "7": {
+      "hll_exchange_bytes": {
+        "max": 340,
+        "mean": 164.65551839464882,
+        "median": 132,
+        "n": 299,
+        "p95": 285
+      },
+      "hll_plus_minhash_exchange_bytes": {
+        "max": 2464,
+        "mean": 2288.1471571906354,
+        "median": 2256,
+        "n": 299,
+        "p95": 2409
+      },
+      "minhash_overlap_abs_error": {
+        "max": 1.7426997599943501,
+        "mean": 0.21532375508979418,
+        "median": 0.10155393172598304,
+        "n": 299,
+        "p95": 0.80449921472841
+      },
+      "naive_overcount": {
+        "max": 9,
+        "mean": 1.7892976588628762,
+        "median": 1,
+        "n": 299,
+        "p95": 5
+      },
+      "raw_list_bytes": {
+        "max": 549,
+        "mean": 198.2173913043478,
+        "median": 133,
+        "n": 299,
+        "p95": 437
+      },
+      "union_abs_error": {
+        "max": 0.001289452911578337,
+        "mean": 0.0003173819742030904,
+        "median": 9.346176122804195e-05,
+        "n": 299,
+        "p95": 0.001009046447375539
+      }
+    }
+  }
+}

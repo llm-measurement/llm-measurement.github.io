@@ -1,0 +1,12 @@
+{
+  "both_provider_days": 191,
+  "claude_labels": 46,
+  "codex_labels": 26,
+  "days_with_shared_labels": 137,
+  "interpretation": "Observed pseudonymous label overlap, not inferred humans.",
+  "intersection_labels": 20,
+  "naive_overcount_fraction_of_union": 0.38461538461538464,
+  "naive_overcount_labels": 20,
+  "naive_sum_labels": 72,
+  "union_labels": 52
+}

@@ -54,7 +54,7 @@ def main():
     pages = json.loads((ROOT / "pages.json").read_text())
     for page in pages:
         slug = page["slug"]
-        if slug == "index" or (args.page and slug != args.page):
+        if slug == "index" or page.get("kind") == "evidence" or (args.page and slug != args.page):
             continue
         blocks = Blocks()
         source = (ROOT / "pages" / (slug + ".html")).read_text()

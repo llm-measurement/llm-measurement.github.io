@@ -1,0 +1,54 @@
+{
+  "analyst_artifact_scan": {
+    "checks": {
+      "all_marker_patterns_indexed": true,
+      "decode_or_validation_errors": 0,
+      "files_scanned": 855,
+      "injected_leak_tests": [
+        {
+          "cases": 100,
+          "name": "prefix_scan_vs_naive_short_overlap_collision_unicode",
+          "passed": true
+        },
+        {
+          "cases": 24,
+          "name": "full_index_injected_plaintext",
+          "passed": true
+        },
+        {
+          "cases": 8,
+          "name": "full_index_base64_protobuf_only_leaks",
+          "passed": true
+        },
+        {
+          "cases": 2,
+          "name": "decoded_json_and_csv_escaped_leaks",
+          "passed": true
+        },
+        {
+          "cases": 1,
+          "name": "negative_control",
+          "passed": true
+        }
+      ],
+      "leak_findings": 0,
+      "protobuf_payloads": 5118,
+      "stable_inventory": true,
+      "stable_marker_sources": true
+    },
+    "passed": true,
+    "planted_sentinel_count": 5,
+    "raw_identity_count": 2076518
+  },
+  "isolation": {
+    "network_denied": true,
+    "raw_read_denied": true
+  },
+  "known_identifier_scan": {
+    "all_serialized_sketch_bytes_total_view": 262732,
+    "files_scanned": 1278,
+    "note": "Wire bytes include metadata/registers/weights as well as hashes. Decoded and sentinel checks are recorded separately.",
+    "raw_identity_hits": [],
+    "raw_identity_values": 2076518
+  }
+}

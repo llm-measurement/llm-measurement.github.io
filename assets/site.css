@@ -3,7 +3,8 @@
 body { margin: 0; }
 a { color: #116447; text-underline-offset: 3px; overflow-wrap: anywhere; }
 header { border-bottom: 1px solid #dde4e0; padding: 22px 5%; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-.brand { color: #202624; font-size: 22px; font-weight: 650; text-decoration: none; }
+.brand { color: #202624; font-size: 22px; font-weight: 650; text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
+.brand svg { flex-shrink: 0; }
 .layout { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 215px minmax(0, 1fr); gap: 48px; padding: 40px 32px 64px; }
 nav { font-size: 14px; padding-top: 4px; }
 nav a { display: block; padding: 9px 12px; text-decoration: none; border-left: 2px solid transparent; color: #46544c; }
