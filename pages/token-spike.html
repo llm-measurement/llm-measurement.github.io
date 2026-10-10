@@ -19,6 +19,6 @@ Reported tokens: 400 -&gt; 3300; model attempts: 4 -&gt; 13.
 <h2>Use your own application</h2>
 <p>Enable token-weighted <code>user_key</code> and <code>session_key</code> rankings in the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/TOPK_KEYS.md">released collector</a>, retain two complete summary windows, and pass their directories as <code>--before</code> and <code>--after</code>. Set <code>--expected</code> to your actual producer inventory and keep the hashing key consistent across the comparison.</p>
 <p>For a gateway setup, start with the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">LiteLLM recipe</a>. To keep watching, <a href="anomalies.html">scan retained history</a>.</p>
-<h2>What the numbers mean</h2>
-<p>These inputs are synthetic and retain every ranked key, so their bounds are exact. The production report shows ranges when bounds differ. A flagged session warrants investigation; it is not proof of a loop. Aliases are local to a measurement and the hashes are pseudonymous. Reported tokens describe usage, not an invoice or a causal explanation of LLM cost.</p>
 <p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.5.0/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="measurement-context">A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.<br>
+<a href="summaries.html#measurement-notes">Measurement notes</a></p>

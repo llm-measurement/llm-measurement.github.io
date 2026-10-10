@@ -30,6 +30,6 @@ sh scripts/install.sh v0.5.0 ./release
   connectors.genaisketch.operation_filter.llm_operations (line 10): Keep only model operations (chat, generate_content, text_completion, embeddings), each once. Tool and agent operations count as model attempts if included.
   connectors.genaisketch.slices[0].keys (line 12): enduser.id is a metric label; remove it from slices and use a hashed field instead.</code></pre>
 <p>Exit code <code>3</code> means the configuration has a blocking finding. It is the expected result for this example.</p>
-<h2>What the numbers mean</h2>
-<p>This is a static configuration check, not a measurement of live series count. Keyed hashes are pseudonymous. Restrict access to the hashing secret, rankings and summary files. Trace fan-out preserves original spans, so apply any required content redaction before forwarding them.</p>
 <p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.5.0/examples/diagnose">released synthetic diagnosis fixtures</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="measurement-context">diagnose reads your collector configuration; your metrics backend reports live series counts.<br>
+<a href="summaries.html#measurement-notes">Measurement notes</a></p>
