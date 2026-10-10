@@ -17,6 +17,7 @@ Requires Python 3.11 or later. The static-site builder uses only the standard li
 
 ```sh
 python3 scripts/build.py
+python3 -m unittest discover -s scripts -p 'test_*.py'
 python3 scripts/check.py
 ```
 
@@ -45,6 +46,8 @@ canonical URLs use `https://llm-measurement.github.io/`; they become live on
 publication. This scaffold does not enable hosting or change repository settings.
 
 Change the source pages, rebuild, and check the generated diff in the same PR.
+The public Google verification file at the repository root is copied unchanged
+into `docs/`, outside the generated-assets cleanup, for Search Console verification.
 Keep results tied to released versions. Each guide keeps a short interpretation
 line linked to the shared Measurement notes section on the summaries page.
 Commits must be signed and signed off (`git commit -s -S`).
