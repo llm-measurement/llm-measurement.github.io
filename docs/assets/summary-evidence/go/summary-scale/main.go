@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	fi "github.com/llm-measurement/llm-sketchkit/go/sketchkit/frequentitems"
@@ -127,8 +128,15 @@ func run() error {
 				}
 			}
 			exactJSON, _ := json.Marshal(truth)
+			// Record the input binding after measuring state, outside the heap interval.
+			canonicalWeights, err := json.Marshal(weights)
+			if err != nil {
+				return err
+			}
+			weightsDigest := fmt.Sprintf("%x", sha256.Sum256(canonicalWeights))
 			record := map[string]any{"n": n, "seed": seed, "events": 5 * n, "distinct_estimate": h.Estimate(), "distinct_relative_error": math.Abs(h.Estimate()-float64(n)) / float64(n), "hll_bytes": len(hb), "fi_bytes": len(fb), "hll_register_storage_bytes": h.RegisterStorageBytes(), "fi_capacity": f.MapSize(), "heap_delta_bytes": allocated, "exact_json_bytes": len(exactJSON), "exact_table_entries": len(truth), "minimum_exact_key_weight_payload_bytes": 16 * len(truth), "top20_precision": float64(matches) / 20, "top20_recall": float64(matches) / 20, "bound_violations": violations, "untracked_checked": untracked, "weight_conserved": f.TotalWeight() == total, "seconds": elapsed, "per_user_metric_series": 12 * n, "aggregate_metric_series": 12}
 			results = append(results, record)
+			record["weights_sha256_json"] = weightsDigest
 			record["exact_heap_delta_bytes"] = exactAllocated
 			record["isolated_process"] = len(os.Args) == 5
 			raw, _ := json.MarshalIndent(results, "", "  ")

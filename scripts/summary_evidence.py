@@ -33,6 +33,9 @@ def claims(root):
         "scale": ("scale", "", scale,
             "Isolated processes, mandatory identity events then Zipf(1.2), exact keyed-table comparison.",
             "for seed in 20261010 20261011 20261012; do ./scale data/weights.json evidence/scale-isolated-1000000-$seed 1000000 $seed; done"),
+        "sampling": ("sampling", "deduplication", data["sampling"]["deduplication"],
+            "Verify both shifted CSV blocks with row multiplicity, remove later copies, audit daily gaps and sample successful rows with Algorithm R.",
+            "venv/bin/python scripts/data_audit.py"),
         "contributors": ("sketch-results", "contributors", contributions,
             "Adjacent-day key deltas; flag when the two largest positive lower bounds exceed half of positive total growth.", "venv/bin/python scripts/sketch_experiments.py"),
         "privacy": ("privacy", "", data["privacy"],
@@ -68,7 +71,7 @@ def page_values(root):
     run = data["run"]
     sizes = {row["hll_bytes"] + row["fi_bytes"] for row in scale}
     populations = {row["n"] for row in scale}
-    assert len(sizes) == len(populations) == 1
+    assert len(populations) == 1
     exact_mb = sorted({f'{row["exact_json_bytes"] / 1e6:.1f}' for row in scale})
     recall = sorted({f'{100 * row["top20_recall"]:g}' for row in scale})
     assert len(recall) == 1
@@ -81,14 +84,16 @@ def page_values(root):
         "claude_users": str(data["overlap"]["claude_labels"]), "codex_users": str(data["overlap"]["codex_labels"]),
         "union_users": str(data["overlap"]["union_labels"]), "sum_users": str(data["overlap"]["naive_sum_labels"]),
         "query_count": str(sum(row["queries"] for row in ranges)),
-        "range_days": ", ".join(str(row["days"]) for row in ranges),
+        "range_days": ", ".join(str(row["days"]) for row in ranges[:-1]) + " and " + str(ranges[-1]["days"]),
         "range_error": upper(max(row["absolute_error"]["max"] for row in ranges), 4),
         "query_ms": upper(max(row["median_ms_per_query"] for row in ranges), 3),
-        "scale_users": f'{next(iter(populations)):,}', "scale_bytes": f'{next(iter(sizes)):,}',
+        "scale_users": f'{next(iter(populations)):,}',
+        "scale_bytes": f'{min(sizes):,}' if len(sizes) == 1 else f'{min(sizes):,} to {max(sizes):,}',
         "exact_mb": " to ".join(exact_mb),
         "scale_min_error": f'{100 * min(row["distinct_relative_error"] for row in scale):.1f}',
         "scale_max_error": f'{100 * max(row["distinct_relative_error"] for row in scale):.1f}',
         "scale_seeds": str(len(scale)), "top_recall": recall[0],
+        "copied_rows": f'{data["sampling"]["deduplication"]["removed_rows"]:,}',
         "user_flags": str(contributor["top_users"]["true_positive"]),
         "session_flags": str(contributor["top_sessions"]["true_positive"]),
         "flag_misses": str(sum(row["false_negative"] for row in contributor.values())),
@@ -102,7 +107,7 @@ def page_values(root):
         "sketch_daily_bytes": str(round(daily["hll_exchange_bytes"]["mean"])),
         "list_daily_bytes": str(round(daily["raw_list_bytes"]["mean"])),
         "machine": html.escape(run["machine"]), "os": html.escape(run["os"]),
-        "go": html.escape(run["go"]), "python": html.escape(run["python"]),
+        "go": "Go " + html.escape(run["go"].split()[2].removeprefix("go")), "python": html.escape(run["python"]),
         "sketchkit": html.escape(run["sketchkit"]), "collector_source": run["collector_source"],
     }
 

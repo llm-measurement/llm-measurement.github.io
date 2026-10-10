@@ -200,12 +200,60 @@
         }
       ]
     },
+    "sampling": {
+      "command": "venv/bin/python scripts/data_audit.py",
+      "evidence": "recorded/sampling.json",
+      "field": "deduplication",
+      "method": "Verify both shifted CSV blocks with row multiplicity, remove later copies, audit daily gaps and sample successful rows with Algorithm R.",
+      "sha256": "71e10f733e3abb92bc7aa5d97a8db8c06c803f198bab4b8fbbb5e34d819585e8",
+      "values": {
+        "blocks": [
+          {
+            "all_rows_matched": true,
+            "first_copy_line": 745569,
+            "last_copy_line": 1456690,
+            "removed_rows": 710853,
+            "shift_seconds": 604800,
+            "shifted_source_sha256": "73879fac8899fbbfe7b34fd6dd292ae931ee7b322ea91b7f10210b563528e97d",
+            "source_lines_inclusive": [
+              2,
+              710854
+            ]
+          },
+          {
+            "all_rows_matched": true,
+            "first_copy_line": 2965704,
+            "last_copy_line": 3634299,
+            "removed_rows": 668596,
+            "shift_seconds": 518400,
+            "shifted_source_sha256": "43c24ed6d17c16b6a10802465a165b7be5bae97b5d8bf36298dabcbbe10abdd4",
+            "source_lines_inclusive": [
+              2296677,
+              2965272
+            ]
+          }
+        ],
+        "file": "BurstGPT_2.csv",
+        "fraction_of_both_files": 0.26085549773050165,
+        "method": "Match all six fields with exact Decimal timestamp shifts and row multiplicity; retain source occurrences, remove only later matching copies before reservoir sampling.",
+        "removed_rows": 1379449,
+        "replay_scope": "Original rows remain in the accounting replay and exact counter reconciliation; synthetic scale weights use only deduplicated successful rows.",
+        "retained_counts": {
+          "complete_tokens": 1766982581,
+          "input_tokens": 1503636841,
+          "missing_token_usage": 63619,
+          "output_tokens": 263357004,
+          "requests": 3908724
+        },
+        "successful_sampling_population": 3845105
+      }
+    },
     "scale": {
       "command": "for seed in 20261010 20261011 20261012; do ./scale data/weights.json evidence/scale-isolated-1000000-$seed 1000000 $seed; done",
       "evidence": "recorded/scale.json",
       "field": "",
       "method": "Isolated processes, mandatory identity events then Zipf(1.2), exact keyed-table comparison.",
-      "sha256": "7ee0ec5267ba0f674d58fba8541624045ce29267dca32ab23dcc0bb67a59b227",
+      "sha256": "604180d86ee55c52d0e04ff2fc8162a6d139dee50e4968bcb9f58475d6a2c64c",
       "values": [
         {
           "aggregate_metric_series": 12,
@@ -213,24 +261,25 @@
           "distinct_estimate": 996116.7935345507,
           "distinct_relative_error": 0.003883206465449301,
           "events": 5000000,
-          "exact_heap_delta_bytes": 37758464,
-          "exact_json_bytes": 26515692,
+          "exact_heap_delta_bytes": 37741568,
+          "exact_json_bytes": 26533386,
           "exact_table_entries": 1000000,
           "fi_bytes": 10797,
           "fi_capacity": 512,
-          "heap_delta_bytes": 93408,
+          "heap_delta_bytes": 91712,
           "hll_bytes": 16424,
           "hll_register_storage_bytes": 16384,
           "isolated_process": true,
           "minimum_exact_key_weight_payload_bytes": 16000000,
           "n": 1000000,
           "per_user_metric_series": 12000000,
-          "seconds": 1.864581458,
+          "seconds": 1.824016416,
           "seed": 20261010,
           "top20_precision": 1,
           "top20_recall": 1,
           "untracked_checked": 999488,
-          "weight_conserved": true
+          "weight_conserved": true,
+          "weights_sha256_json": "c41012d5806983fafc92ffdc3e4db499e61c99af793d1259d8fcb511291ec540"
         },
         {
           "aggregate_metric_series": 12,
@@ -238,24 +287,25 @@
           "distinct_estimate": 992837.6811310343,
           "distinct_relative_error": 0.007162318868965726,
           "events": 5000000,
-          "exact_heap_delta_bytes": 37721424,
-          "exact_json_bytes": 26516745,
+          "exact_heap_delta_bytes": 37667376,
+          "exact_json_bytes": 26533880,
           "exact_table_entries": 1000000,
-          "fi_bytes": 10797,
+          "fi_bytes": 10776,
           "fi_capacity": 512,
-          "heap_delta_bytes": 93856,
+          "heap_delta_bytes": 104832,
           "hll_bytes": 16424,
           "hll_register_storage_bytes": 16384,
           "isolated_process": true,
           "minimum_exact_key_weight_payload_bytes": 16000000,
           "n": 1000000,
           "per_user_metric_series": 12000000,
-          "seconds": 1.851350916,
+          "seconds": 1.8302220839999999,
           "seed": 20261011,
           "top20_precision": 1,
           "top20_recall": 1,
-          "untracked_checked": 999488,
-          "weight_conserved": true
+          "untracked_checked": 999489,
+          "weight_conserved": true,
+          "weights_sha256_json": "c41012d5806983fafc92ffdc3e4db499e61c99af793d1259d8fcb511291ec540"
         },
         {
           "aggregate_metric_series": 12,
@@ -263,24 +313,25 @@
           "distinct_estimate": 993297.1699813675,
           "distinct_relative_error": 0.0067028300186324635,
           "events": 5000000,
-          "exact_heap_delta_bytes": 37776928,
-          "exact_json_bytes": 26516830,
+          "exact_heap_delta_bytes": 37721424,
+          "exact_json_bytes": 26534055,
           "exact_table_entries": 1000000,
           "fi_bytes": 10797,
           "fi_capacity": 512,
-          "heap_delta_bytes": 93520,
+          "heap_delta_bytes": 87512,
           "hll_bytes": 16424,
           "hll_register_storage_bytes": 16384,
           "isolated_process": true,
           "minimum_exact_key_weight_payload_bytes": 16000000,
           "n": 1000000,
           "per_user_metric_series": 12000000,
-          "seconds": 1.8463689589999999,
+          "seconds": 1.830910042,
           "seed": 20261012,
           "top20_precision": 1,
           "top20_recall": 1,
           "untracked_checked": 999488,
-          "weight_conserved": true
+          "weight_conserved": true,
+          "weights_sha256_json": "c41012d5806983fafc92ffdc3e4db499e61c99af793d1259d8fcb511291ec540"
         }
       ]
     },

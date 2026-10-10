@@ -43,6 +43,69 @@ IDENTITY_KEYS = {"user", "user_name", "username", "session_id", "round_id", "tur
 TRACE_START = dt.date(2025, 9, 23)
 TRACE_END = dt.date(2026, 7, 25)
 BURST_EPOCH = dt.datetime(2024, 1, 1, tzinfo=dt.timezone.utc)
+BURST_COPIED_BLOCKS = ((2, 710854, 604800), (2296677, 2965272, 518400))
+
+
+class CopiedBlock:
+    """Match later copies of a pinned CSV block, preserving row multiplicity."""
+
+    def __init__(self, first, last, shift):
+        self.first, self.last, self.shift = first, last, shift
+        self.pending = collections.Counter()
+        self.source_rows = self.removed = 0
+        self.first_copy = self.last_copy = None
+        self.digest = hashlib.sha256()
+
+    def observe(self, line, row):
+        key = (burst_offset(row["Timestamp"]), row["Model"], int(row["Request tokens"]),
+               int(row["Response tokens"]), int(row["Total tokens"]), row["Log Type"])
+        if self.first <= line <= self.last:
+            shifted = (key[0] + self.shift, *key[1:])
+            self.pending[shifted] += 1
+            self.source_rows += 1
+            self.digest.update((json.dumps([str(shifted[0]), *shifted[1:]],
+                                          separators=(",", ":")) + "\n").encode())
+        elif line > self.last and self.pending.get(key, 0):
+            self.pending[key] -= 1
+            if not self.pending[key]:
+                del self.pending[key]
+            self.removed += 1
+            if self.first_copy is None:
+                self.first_copy = line
+            self.last_copy = line
+            return True
+        return False
+
+    def result(self):
+        require(self.source_rows == self.last - self.first + 1, "copied-block source incomplete")
+        require(not self.pending and self.removed == self.source_rows,
+                "copied-block match incomplete; refuse to sample weights")
+        return {"source_lines_inclusive": [self.first, self.last],
+                "shift_seconds": self.shift, "removed_rows": self.removed,
+                "first_copy_line": self.first_copy, "last_copy_line": self.last_copy,
+                "shifted_source_sha256": self.digest.hexdigest(), "all_rows_matched": True}
+
+
+def observe_day_gap(days, offset):
+    index = int(offset // 86400)
+    if index not in days:
+        days[index] = {"rows": 0, "first": offset, "last": offset, "gap": Decimal(0)}
+    day = days[index]
+    require(offset >= day["last"], "daily gap check requires timestamp order")
+    day["gap"] = max(day["gap"], offset - day["last"])
+    day["last"] = offset
+    day["rows"] += 1
+
+
+def daily_gap_report(days, first, last):
+    report = []
+    for index in range(int(first // 86400), int(last // 86400) + 1):
+        start, end = Decimal(index * 86400), Decimal((index + 1) * 86400)
+        day = days.get(index)
+        report.append({"offset_day": index, "rows": day["rows"] if day else 0,
+            "maximum_gap_with_day_edges_seconds": float(max(
+                day["gap"], day["first"] - start, end - day["last"])) if day else 86400.0})
+    return report
 
 
 def require(condition, message):
@@ -345,7 +408,10 @@ def audit_burstgpt():
     days = collections.defaultdict(lambda: {"counts": collections.defaultdict(empty_counts)})
     files, sample = [], []
     random_source = random.Random(SEED)
-    successful = 0
+    successful = sample_population = 0
+    blocks = [CopiedBlock(*spec) for spec in BURST_COPIED_BLOCKS]
+    raw_gaps, retained_gaps = {}, {}
+    retained_counts = empty_counts()
     first = last = None
     expected_headers = ["Timestamp", "Model", "Request tokens", "Response tokens", "Total tokens", "Log Type"]
     for name in ("BurstGPT_1.csv", "BurstGPT_2.csv"):
@@ -362,8 +428,11 @@ def audit_burstgpt():
         with (DATA / name).open(newline="", encoding="utf-8") as stream:
             reader = csv.DictReader(stream)
             require(reader.fieldnames == expected_headers, "unexpected BurstGPT CSV schema")
-            for row in reader:
+            for line, row in enumerate(reader, 2):
                 offset = burst_offset(row["Timestamp"])
+                observe_day_gap(raw_gaps, offset)
+                copied = sum(block.observe(line, row) for block in blocks) if name == "BurstGPT_2.csv" else 0
+                require(copied <= 1, "overlapping copied blocks")
                 if first_in_file is None:
                     first_in_file = offset
                 last_in_file = offset
@@ -375,6 +444,9 @@ def audit_burstgpt():
                 inp, out, total = (int(row[k]) for k in ("Request tokens", "Response tokens", "Total tokens"))
                 require(inp >= 0 and out >= 0 and total >= 0, "negative BurstGPT token value")
                 counts = row_counts(inp, None if out == 0 else out)
+                if not copied:
+                    observe_day_gap(retained_gaps, offset)
+                    add_counts(retained_counts, counts)
                 for group in ("total", "model:" + model):
                     add_counts(days[day]["counts"][group], counts)
                 add_counts(file_counts, counts)
@@ -391,10 +463,12 @@ def audit_burstgpt():
                 file_last = offset if file_last is None else max(file_last, offset)
                 if out > 0:
                     successful += 1
+                if out > 0 and not copied:
+                    sample_population += 1
                     if len(sample) < 100000:
                         sample.append(inp + out)
                     else:
-                        index = random_source.randrange(successful)
+                        index = random_source.randrange(sample_population)
                         if index < len(sample):
                             sample[index] = inp + out
         require(file_first is not None, "empty BurstGPT file")
@@ -417,6 +491,20 @@ def audit_burstgpt():
     checks = reconcile_days(days, ("model:",))
     totals = aggregate_days(days)
     require(successful == totals["total"]["requests"] - totals["total"]["missing_token_usage"], "success count mismatch")
+    block_results = [block.result() for block in blocks]
+    removed_rows = sum(block["removed_rows"] for block in block_results)
+    require(removed_rows == 1379449, "pinned duplicate count changed")
+    require(retained_counts["requests"] + removed_rows == totals["total"]["requests"], "dedup count mismatch")
+    require(sample_population == retained_counts["requests"] - retained_counts["missing_token_usage"], "dedup success count mismatch")
+    deduplication = {
+        "file": "BurstGPT_2.csv", "blocks": block_results, "removed_rows": removed_rows,
+        "fraction_of_both_files": removed_rows / totals["total"]["requests"],
+        "retained_counts": retained_counts, "successful_sampling_population": sample_population,
+        "method": "Match all six fields with exact Decimal timestamp shifts and row multiplicity; retain source occurrences, remove only later matching copies before reservoir sampling.",
+        "replay_scope": "Original rows remain in the accounting replay and exact counter reconciliation; synthetic scale weights use only deduplicated successful rows."}
+    daily_gaps = {"source": daily_gap_report(raw_gaps, first, last),
+                  "deduplicated": daily_gap_report(retained_gaps, first, last),
+                  "interpretation": "Largest gap between recorded events or a calendar-day edge. A day without retained events is an observation gap, not measured zero demand."}
     continuity = {
         "second_min_minus_first_max_seconds": float(Decimal(files[1]["minimum_offset_seconds"]) - Decimal(files[0]["maximum_offset_seconds"])),
         "overlapping_offset_ranges": Decimal(files[1]["minimum_offset_seconds"]) <= Decimal(files[0]["maximum_offset_seconds"]),
@@ -437,9 +525,11 @@ def audit_burstgpt():
         "calendar_is_synthetic": True, "calendar_zero": BURST_EPOCH.isoformat(),
         "minimum_offset_seconds": str(first), "maximum_offset_seconds": str(last),
         "continuity": continuity, "boundaries": boundary, "hierarchy_checks": checks,
+        "deduplication": deduplication, "daily_gaps": daily_gaps,
         "successful_requests": successful,
         "known_input_on_failed_attempts": totals["total"]["input_tokens"] + totals["total"]["output_tokens"] - totals["total"]["complete_tokens"],
-        "sample": {"method": "Algorithm R uniform reservoir over successful rows, file1 then file2 source order",
+        "sample": {"method": "Algorithm R uniform reservoir over deduplicated successful rows, file1 then file2 source order",
+                   "population": sample_population,
                    "seed": SEED, "size": len(sample), "minimum": min(sample), "maximum": max(sample),
                    "sha256_json": hashlib.sha256(json.dumps(sample, separators=(",", ":")).encode()).hexdigest()},
         "identity_columns_present": False,
@@ -503,6 +593,8 @@ def render_report(evidence):
         f"- Quality-only boundary exclusion: {', '.join(b['boundaries']['excluded_quality_dates'])}; retain {b['boundaries']['quality_days']} interior days. Edge gaps are {b['boundaries']['first_event_seconds_after_day_start']:g}s and {b['boundaries']['seconds_from_last_event_to_end_exclusive']:g}s. Exclusion is conservative because observation completeness is unverified; these event gaps do not prove partial collection.",
         f"- Source failures retain {b['known_input_on_failed_attempts']:,} known input tokens and absent output. Complete-token target excludes the whole failed attempt, not just its zero-coded output.",
         f"- Successful-request weight reservoir: {b['sample']['size']:,} values, Algorithm R, seed {SEED}; independent raw validation only.",
+        f"- Removed {b['deduplication']['removed_rows']:,} later copied rows before sampling; {b['sample']['population']:,} successful rows remain in the sampling population. All six fields and row multiplicity match the pinned shifted blocks. Original rows remain only in accounting replay and reconciliation.",
+        "- Daily-gap checks cover source and deduplicated rows separately, including calendar-day edges and empty retained days. Observation gaps are not measured zero demand; the numeric audit retains every day.",
         "- Pinned-source documentation anomalies: " + " ".join(b["source_documentation_anomalies"]), "",
         "## Exact Aggregate Reconciliation", "",
         "| Dataset / group | Requests | Input | Output | Missing usage | Complete tokens |",

@@ -1,0 +1,1269 @@
+{
+  "daily_gaps": {
+    "deduplicated": [
+      {
+        "maximum_gap_with_day_edges_seconds": 6651.0,
+        "offset_day": 0,
+        "rows": 3389
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4945.0,
+        "offset_day": 1,
+        "rows": 3172
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10868.0,
+        "offset_day": 2,
+        "rows": 2659
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 9770.0,
+        "offset_day": 3,
+        "rows": 1576
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7875.0,
+        "offset_day": 4,
+        "rows": 2099
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3053.0,
+        "offset_day": 5,
+        "rows": 3176
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4355.0,
+        "offset_day": 6,
+        "rows": 3360
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7369.0,
+        "offset_day": 7,
+        "rows": 3297
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2249.0,
+        "offset_day": 8,
+        "rows": 5145
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5321.0,
+        "offset_day": 9,
+        "rows": 149520
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1961.0,
+        "offset_day": 10,
+        "rows": 91322
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 9584.0,
+        "offset_day": 11,
+        "rows": 3089
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7610.0,
+        "offset_day": 12,
+        "rows": 7269
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3221.0,
+        "offset_day": 13,
+        "rows": 5926
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3361.0,
+        "offset_day": 14,
+        "rows": 76918
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3957.0,
+        "offset_day": 15,
+        "rows": 13307
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4761.0,
+        "offset_day": 16,
+        "rows": 22823
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3610.0,
+        "offset_day": 17,
+        "rows": 14549
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10976.0,
+        "offset_day": 18,
+        "rows": 22757
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 8244.0,
+        "offset_day": 19,
+        "rows": 36597
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 247.0,
+        "offset_day": 20,
+        "rows": 80239
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1060.0,
+        "offset_day": 21,
+        "rows": 65591
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 6110.0,
+        "offset_day": 22,
+        "rows": 23705
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 756.0,
+        "offset_day": 23,
+        "rows": 31336
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 8082.0,
+        "offset_day": 24,
+        "rows": 8715
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 8608.0,
+        "offset_day": 25,
+        "rows": 3972
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 14921.0,
+        "offset_day": 26,
+        "rows": 3906
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10768.0,
+        "offset_day": 27,
+        "rows": 14834
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2074.0,
+        "offset_day": 28,
+        "rows": 12782
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3963.0,
+        "offset_day": 29,
+        "rows": 22575
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4546.0,
+        "offset_day": 30,
+        "rows": 3492
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4121.0,
+        "offset_day": 31,
+        "rows": 2127
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 6326.0,
+        "offset_day": 32,
+        "rows": 10712
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3014.0,
+        "offset_day": 33,
+        "rows": 39368
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4094.0,
+        "offset_day": 34,
+        "rows": 33958
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1720.0,
+        "offset_day": 35,
+        "rows": 37010
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2285.0,
+        "offset_day": 36,
+        "rows": 14052
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4258.0,
+        "offset_day": 37,
+        "rows": 5570
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4270.0,
+        "offset_day": 38,
+        "rows": 2017
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5629.0,
+        "offset_day": 39,
+        "rows": 2009
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3714.0,
+        "offset_day": 40,
+        "rows": 23069
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5521.0,
+        "offset_day": 41,
+        "rows": 47403
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5867.0,
+        "offset_day": 42,
+        "rows": 42642
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 6980.0,
+        "offset_day": 43,
+        "rows": 24684
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2402.0,
+        "offset_day": 44,
+        "rows": 31419
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2875.0,
+        "offset_day": 45,
+        "rows": 28416
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1767.0,
+        "offset_day": 46,
+        "rows": 14634
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1809.0,
+        "offset_day": 47,
+        "rows": 7291
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4622.0,
+        "offset_day": 48,
+        "rows": 19823
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4438.0,
+        "offset_day": 49,
+        "rows": 7594
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1341.0,
+        "offset_day": 50,
+        "rows": 10682
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3858.0,
+        "offset_day": 51,
+        "rows": 28994
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 15240.0,
+        "offset_day": 52,
+        "rows": 16865
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3185.0,
+        "offset_day": 53,
+        "rows": 7030
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2653.0,
+        "offset_day": 54,
+        "rows": 12112
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4306.0,
+        "offset_day": 55,
+        "rows": 12748
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3320.0,
+        "offset_day": 56,
+        "rows": 41842
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1625.0,
+        "offset_day": 57,
+        "rows": 45035
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3443.0,
+        "offset_day": 58,
+        "rows": 40705
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3051.0,
+        "offset_day": 59,
+        "rows": 62372
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3765.0,
+        "offset_day": 60,
+        "rows": 14457
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2784.0,
+        "offset_day": 61,
+        "rows": 77661
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 511.0,
+        "offset_day": 62,
+        "rows": 244066
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5233.0,
+        "offset_day": 63,
+        "rows": 167581
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 117.0,
+        "offset_day": 64,
+        "rows": 221545
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3164.0,
+        "offset_day": 65,
+        "rows": 11925
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4228.0,
+        "offset_day": 66,
+        "rows": 13729
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7405.0,
+        "offset_day": 67,
+        "rows": 9060
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 45026.0,
+        "offset_day": 68,
+        "rows": 19
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 22094.0,
+        "offset_day": 69,
+        "rows": 63
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 20160.0,
+        "offset_day": 70,
+        "rows": 46
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 37887.0,
+        "offset_day": 71,
+        "rows": 141
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2471.0,
+        "offset_day": 72,
+        "rows": 113141
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 370.0,
+        "offset_day": 73,
+        "rows": 163527
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 967.0,
+        "offset_day": 74,
+        "rows": 121878
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1069.0,
+        "offset_day": 75,
+        "rows": 87748
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3051.0,
+        "offset_day": 76,
+        "rows": 102520
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 12658.0,
+        "offset_day": 77,
+        "rows": 1229
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2960.0,
+        "offset_day": 78,
+        "rows": 94552
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 753.0,
+        "offset_day": 79,
+        "rows": 154878
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1060.0,
+        "offset_day": 80,
+        "rows": 185862
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1653.0,
+        "offset_day": 81,
+        "rows": 179633
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1133.0,
+        "offset_day": 82,
+        "rows": 123347
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5872.0,
+        "offset_day": 83,
+        "rows": 67155
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4497.0,
+        "offset_day": 84,
+        "rows": 28954
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1168.0,
+        "offset_day": 85,
+        "rows": 84158
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 82801.0,
+        "offset_day": 86,
+        "rows": 431
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 86400.0,
+        "offset_day": 87,
+        "rows": 0
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 86400.0,
+        "offset_day": 88,
+        "rows": 0
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 86400.0,
+        "offset_day": 89,
+        "rows": 0
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 86400.0,
+        "offset_day": 90,
+        "rows": 0
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 86400.0,
+        "offset_day": 91,
+        "rows": 0
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 9105.0,
+        "offset_day": 92,
+        "rows": 1595
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 6179.0,
+        "offset_day": 93,
+        "rows": 1302
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10941.0,
+        "offset_day": 94,
+        "rows": 336
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10239.0,
+        "offset_day": 95,
+        "rows": 917
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 9734.0,
+        "offset_day": 96,
+        "rows": 794
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4808.0,
+        "offset_day": 97,
+        "rows": 730
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 13290.0,
+        "offset_day": 98,
+        "rows": 641
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 15987.0,
+        "offset_day": 99,
+        "rows": 402
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 20456.0,
+        "offset_day": 100,
+        "rows": 129
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 32339.0,
+        "offset_day": 101,
+        "rows": 68
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 24436.0,
+        "offset_day": 102,
+        "rows": 52
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 33073.0,
+        "offset_day": 103,
+        "rows": 84
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 14202.0,
+        "offset_day": 104,
+        "rows": 71
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 30414.0,
+        "offset_day": 105,
+        "rows": 83
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 22428.0,
+        "offset_day": 106,
+        "rows": 174
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 31622.0,
+        "offset_day": 107,
+        "rows": 180
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 18922.0,
+        "offset_day": 108,
+        "rows": 315
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 12237.0,
+        "offset_day": 109,
+        "rows": 793
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7101.0,
+        "offset_day": 110,
+        "rows": 1430
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 17555.0,
+        "offset_day": 111,
+        "rows": 1760
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 11483.0,
+        "offset_day": 112,
+        "rows": 2044
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 17778.0,
+        "offset_day": 113,
+        "rows": 10521
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 602.0,
+        "offset_day": 114,
+        "rows": 23454
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 602.0,
+        "offset_day": 115,
+        "rows": 10395
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 602.0,
+        "offset_day": 116,
+        "rows": 48857
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1694.0,
+        "offset_day": 117,
+        "rows": 25545
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 224.0,
+        "offset_day": 118,
+        "rows": 31766
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 136.0,
+        "offset_day": 119,
+        "rows": 27393
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 214.0,
+        "offset_day": 120,
+        "rows": 32307
+      }
+    ],
+    "interpretation": "Largest gap between recorded events or a calendar-day edge. A day without retained events is an observation gap, not measured zero demand.",
+    "source": [
+      {
+        "maximum_gap_with_day_edges_seconds": 6651.0,
+        "offset_day": 0,
+        "rows": 3389
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4945.0,
+        "offset_day": 1,
+        "rows": 3172
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10868.0,
+        "offset_day": 2,
+        "rows": 2659
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 9770.0,
+        "offset_day": 3,
+        "rows": 1576
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7875.0,
+        "offset_day": 4,
+        "rows": 2099
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3053.0,
+        "offset_day": 5,
+        "rows": 3176
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4355.0,
+        "offset_day": 6,
+        "rows": 3360
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7369.0,
+        "offset_day": 7,
+        "rows": 3297
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2249.0,
+        "offset_day": 8,
+        "rows": 5145
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5321.0,
+        "offset_day": 9,
+        "rows": 149520
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1961.0,
+        "offset_day": 10,
+        "rows": 91322
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 9584.0,
+        "offset_day": 11,
+        "rows": 3089
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7610.0,
+        "offset_day": 12,
+        "rows": 7269
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3221.0,
+        "offset_day": 13,
+        "rows": 5926
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3361.0,
+        "offset_day": 14,
+        "rows": 76918
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3957.0,
+        "offset_day": 15,
+        "rows": 13307
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4761.0,
+        "offset_day": 16,
+        "rows": 22823
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3610.0,
+        "offset_day": 17,
+        "rows": 14549
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10976.0,
+        "offset_day": 18,
+        "rows": 22757
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 8244.0,
+        "offset_day": 19,
+        "rows": 36597
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 247.0,
+        "offset_day": 20,
+        "rows": 80239
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1060.0,
+        "offset_day": 21,
+        "rows": 65591
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 6110.0,
+        "offset_day": 22,
+        "rows": 23705
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 756.0,
+        "offset_day": 23,
+        "rows": 31336
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 8082.0,
+        "offset_day": 24,
+        "rows": 8715
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 8608.0,
+        "offset_day": 25,
+        "rows": 3972
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 14921.0,
+        "offset_day": 26,
+        "rows": 3906
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10768.0,
+        "offset_day": 27,
+        "rows": 14834
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2074.0,
+        "offset_day": 28,
+        "rows": 12782
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3963.0,
+        "offset_day": 29,
+        "rows": 22575
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4546.0,
+        "offset_day": 30,
+        "rows": 3492
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4121.0,
+        "offset_day": 31,
+        "rows": 2127
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 6326.0,
+        "offset_day": 32,
+        "rows": 10712
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3014.0,
+        "offset_day": 33,
+        "rows": 39368
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4094.0,
+        "offset_day": 34,
+        "rows": 33958
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1720.0,
+        "offset_day": 35,
+        "rows": 37010
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2285.0,
+        "offset_day": 36,
+        "rows": 14052
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4258.0,
+        "offset_day": 37,
+        "rows": 5570
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4270.0,
+        "offset_day": 38,
+        "rows": 2017
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5629.0,
+        "offset_day": 39,
+        "rows": 2009
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3714.0,
+        "offset_day": 40,
+        "rows": 23069
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5521.0,
+        "offset_day": 41,
+        "rows": 47403
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5867.0,
+        "offset_day": 42,
+        "rows": 42642
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 6980.0,
+        "offset_day": 43,
+        "rows": 24684
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2402.0,
+        "offset_day": 44,
+        "rows": 31419
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2875.0,
+        "offset_day": 45,
+        "rows": 28416
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1767.0,
+        "offset_day": 46,
+        "rows": 14634
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1809.0,
+        "offset_day": 47,
+        "rows": 7291
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4622.0,
+        "offset_day": 48,
+        "rows": 19823
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4438.0,
+        "offset_day": 49,
+        "rows": 7594
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1341.0,
+        "offset_day": 50,
+        "rows": 10682
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3858.0,
+        "offset_day": 51,
+        "rows": 28994
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 15240.0,
+        "offset_day": 52,
+        "rows": 16865
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3185.0,
+        "offset_day": 53,
+        "rows": 7030
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2653.0,
+        "offset_day": 54,
+        "rows": 12112
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4306.0,
+        "offset_day": 55,
+        "rows": 12748
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3320.0,
+        "offset_day": 56,
+        "rows": 41842
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1625.0,
+        "offset_day": 57,
+        "rows": 45035
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3443.0,
+        "offset_day": 58,
+        "rows": 40705
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3051.0,
+        "offset_day": 59,
+        "rows": 62372
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3765.0,
+        "offset_day": 60,
+        "rows": 14457
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2784.0,
+        "offset_day": 61,
+        "rows": 77661
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 511.0,
+        "offset_day": 62,
+        "rows": 244066
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5233.0,
+        "offset_day": 63,
+        "rows": 167581
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 117.0,
+        "offset_day": 64,
+        "rows": 221545
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3164.0,
+        "offset_day": 65,
+        "rows": 11925
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4228.0,
+        "offset_day": 66,
+        "rows": 13729
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7405.0,
+        "offset_day": 67,
+        "rows": 9060
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2784.0,
+        "offset_day": 68,
+        "rows": 77680
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 511.0,
+        "offset_day": 69,
+        "rows": 244129
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5233.0,
+        "offset_day": 70,
+        "rows": 167627
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 117.0,
+        "offset_day": 71,
+        "rows": 221686
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2471.0,
+        "offset_day": 72,
+        "rows": 113141
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 370.0,
+        "offset_day": 73,
+        "rows": 163527
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 967.0,
+        "offset_day": 74,
+        "rows": 121878
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1069.0,
+        "offset_day": 75,
+        "rows": 87748
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 3051.0,
+        "offset_day": 76,
+        "rows": 102520
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 12658.0,
+        "offset_day": 77,
+        "rows": 1229
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 2960.0,
+        "offset_day": 78,
+        "rows": 94552
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 753.0,
+        "offset_day": 79,
+        "rows": 154878
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1060.0,
+        "offset_day": 80,
+        "rows": 185862
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1653.0,
+        "offset_day": 81,
+        "rows": 179633
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1133.0,
+        "offset_day": 82,
+        "rows": 123347
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5872.0,
+        "offset_day": 83,
+        "rows": 67155
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4497.0,
+        "offset_day": 84,
+        "rows": 28954
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1168.0,
+        "offset_day": 85,
+        "rows": 84158
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1060.0,
+        "offset_day": 86,
+        "rows": 185780
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1653.0,
+        "offset_day": 87,
+        "rows": 179633
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1133.0,
+        "offset_day": 88,
+        "rows": 123347
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 5872.0,
+        "offset_day": 89,
+        "rows": 67155
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4497.0,
+        "offset_day": 90,
+        "rows": 28954
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1168.0,
+        "offset_day": 91,
+        "rows": 84158
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 9105.0,
+        "offset_day": 92,
+        "rows": 1595
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 6179.0,
+        "offset_day": 93,
+        "rows": 1302
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10941.0,
+        "offset_day": 94,
+        "rows": 336
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 10239.0,
+        "offset_day": 95,
+        "rows": 917
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 9734.0,
+        "offset_day": 96,
+        "rows": 794
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 4808.0,
+        "offset_day": 97,
+        "rows": 730
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 13290.0,
+        "offset_day": 98,
+        "rows": 641
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 15987.0,
+        "offset_day": 99,
+        "rows": 402
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 20456.0,
+        "offset_day": 100,
+        "rows": 129
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 32339.0,
+        "offset_day": 101,
+        "rows": 68
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 24436.0,
+        "offset_day": 102,
+        "rows": 52
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 33073.0,
+        "offset_day": 103,
+        "rows": 84
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 14202.0,
+        "offset_day": 104,
+        "rows": 71
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 30414.0,
+        "offset_day": 105,
+        "rows": 83
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 22428.0,
+        "offset_day": 106,
+        "rows": 174
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 31622.0,
+        "offset_day": 107,
+        "rows": 180
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 18922.0,
+        "offset_day": 108,
+        "rows": 315
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 12237.0,
+        "offset_day": 109,
+        "rows": 793
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 7101.0,
+        "offset_day": 110,
+        "rows": 1430
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 17555.0,
+        "offset_day": 111,
+        "rows": 1760
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 11483.0,
+        "offset_day": 112,
+        "rows": 2044
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 17778.0,
+        "offset_day": 113,
+        "rows": 10521
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 602.0,
+        "offset_day": 114,
+        "rows": 23454
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 602.0,
+        "offset_day": 115,
+        "rows": 10395
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 602.0,
+        "offset_day": 116,
+        "rows": 48857
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 1694.0,
+        "offset_day": 117,
+        "rows": 25545
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 224.0,
+        "offset_day": 118,
+        "rows": 31766
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 136.0,
+        "offset_day": 119,
+        "rows": 27393
+      },
+      {
+        "maximum_gap_with_day_edges_seconds": 214.0,
+        "offset_day": 120,
+        "rows": 32307
+      }
+    ]
+  },
+  "deduplication": {
+    "blocks": [
+      {
+        "all_rows_matched": true,
+        "first_copy_line": 745569,
+        "last_copy_line": 1456690,
+        "removed_rows": 710853,
+        "shift_seconds": 604800,
+        "shifted_source_sha256": "73879fac8899fbbfe7b34fd6dd292ae931ee7b322ea91b7f10210b563528e97d",
+        "source_lines_inclusive": [
+          2,
+          710854
+        ]
+      },
+      {
+        "all_rows_matched": true,
+        "first_copy_line": 2965704,
+        "last_copy_line": 3634299,
+        "removed_rows": 668596,
+        "shift_seconds": 518400,
+        "shifted_source_sha256": "43c24ed6d17c16b6a10802465a165b7be5bae97b5d8bf36298dabcbbe10abdd4",
+        "source_lines_inclusive": [
+          2296677,
+          2965272
+        ]
+      }
+    ],
+    "file": "BurstGPT_2.csv",
+    "fraction_of_both_files": 0.26085549773050165,
+    "method": "Match all six fields with exact Decimal timestamp shifts and row multiplicity; retain source occurrences, remove only later matching copies before reservoir sampling.",
+    "removed_rows": 1379449,
+    "replay_scope": "Original rows remain in the accounting replay and exact counter reconciliation; synthetic scale weights use only deduplicated successful rows.",
+    "retained_counts": {
+      "complete_tokens": 1766982581,
+      "input_tokens": 1503636841,
+      "missing_token_usage": 63619,
+      "output_tokens": 263357004,
+      "requests": 3908724
+    },
+    "successful_sampling_population": 3845105
+  },
+  "sample": {
+    "maximum": 14319,
+    "method": "Algorithm R uniform reservoir over deduplicated successful rows, file1 then file2 source order",
+    "minimum": 17,
+    "population": 3845105,
+    "seed": 20261010,
+    "sha256_json": "c41012d5806983fafc92ffdc3e4db499e61c99af793d1259d8fcb511291ec540",
+    "size": 100000
+  }
+}

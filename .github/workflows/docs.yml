@@ -20,6 +20,7 @@ jobs:
       - run: python3 scripts/build.py
       - run: python3 scripts/check.py
       - run: python3 scripts/check_summaries.py
+      - run: python3 -m unittest discover -s assets/summary-evidence/scripts -p 'test_*.py'
       - run: git diff --exit-code -- docs
   examples:
     runs-on: ubuntu-latest

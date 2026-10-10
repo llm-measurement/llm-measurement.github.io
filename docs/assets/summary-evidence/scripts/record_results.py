@@ -32,11 +32,14 @@ def main():
     for seed in (20261010, 20261011, 20261012):
         values = read(f"evidence/scale-isolated-1000000-{seed}/results.json")
         assert len(values) == 1 and values[0]["seed"] == seed
+        assert values[0]["weights_sha256_json"] == audit["burstgpt"]["sample"]["sha256_json"]
         scales.extend(values)
     records = {
         "sketch-results": sketches,
         "overlap": audit["tracelab"]["overlap"],
         "scale": scales,
+        "sampling": {key: audit["burstgpt"][key] for key in
+                     ("deduplication", "daily_gaps", "sample")},
         "privacy": {
             "known_identifier_scan": sketches["identifier_exclusion"],
             "analyst_artifact_scan": {

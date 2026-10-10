@@ -49,6 +49,11 @@ def mutation_check():
         changed = summary_evidence.render(root)
         assert changed != original
         assert "3.4 MB" in changed and "0.0124 users" in changed and "123 matching user flags" in changed
+        path = root / "assets/summary-evidence/recorded/scale.json"
+        data = json.loads(path.read_text())
+        data[0]["fi_bytes"] = 20_000
+        path.write_text(json.dumps(data))
+        assert "to 36,424 bytes" in summary_evidence.render(root)
         assert summary_evidence.claims(root) != summary_evidence.claims(ROOT)
 
 
@@ -67,7 +72,14 @@ def main():
     source = summary_evidence.render(ROOT)
     assert source in (ROOT / "docs/summaries.html").read_text(), "regenerate page values"
     assert source.count("What the numbers mean") == 1
-    assert "A raw-data system can compute exact answers." in source
+    assert "A raw-data system computes exact answers," in source
+    sampling = recorded["sampling"]
+    assert sampling["deduplication"]["removed_rows"] == 1379449
+    assert all(block["all_rows_matched"] for block in sampling["deduplication"]["blocks"])
+    assert sampling["sample"]["population"] == sampling["deduplication"]["successful_sampling_population"]
+    assert all(row["weights_sha256_json"] == sampling["sample"]["sha256_json"] for row in recorded["scale"])
+    assert sum(d["rows"] for d in sampling["daily_gaps"]["source"]) - sum(
+        d["rows"] for d in sampling["daily_gaps"]["deduplicated"]) == 1379449
     article = Article()
     article.feed(source)
     assert article.claims == set(ledger["claims"])

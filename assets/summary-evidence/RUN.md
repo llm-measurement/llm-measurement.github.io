@@ -29,6 +29,7 @@ curl -fL https://github.com/HPMLL/BurstGPT/releases/download/v2.0/BurstGPT_2.csv
 curl -fL https://raw.githubusercontent.com/uw-syfi/TraceLab/61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c/LICENSE-DATASET.md -o data/TraceLab-LICENSE-DATASET.md
 curl -fL https://raw.githubusercontent.com/HPMLL/BurstGPT/7eb2c4f8350f8a6985272386f5c14af1f678b299/LICENSE -o data/BurstGPT-LICENSE.txt
 venv/bin/python scripts/data_audit.py --fetch-sources
+venv/bin/python -m unittest discover -s scripts -p 'test_*.py'
 venv/bin/python scripts/data_audit.py
 ```
 
@@ -62,7 +63,19 @@ summary result. Every exact key is checked, including keys outside the candidate
 ## Synthetic Scale
 
 Each identity occurs once, followed by Zipf(1.2) events. Weights come from a seeded
-reservoir of successful requests in the hosted-model records.
+reservoir of successful requests in BurstGPT v2.0, after removing 1,379,449 copied
+rows. Before sampling, `data_audit.py` matches all six fields with timestamp
+shifts and row multiplicity: file 2 source lines 2-710,854 recur 604,800 seconds
+later, and lines 2,296,677-2,965,272 recur 518,400 seconds later. Only the later
+matches are removed; source occurrences and extra unmatched rows are retained.
+Sampling stops if either complete block fails to match. The audit also records
+daily gaps before and after removal, including day edges and empty retained
+days; gaps represent absent observations rather than measured zero demand.
+
+The original rows remain in the separate accounting replay and its exact
+counter reconciliation. Only the deduplicated successful population supplies
+scale weights. [recorded/sampling.json](recorded/sampling.json) records the
+matched blocks, daily gaps, population and weight-sample digest.
 
 ```sh
 venv/bin/python -c 'import json; from pathlib import Path; source=json.loads(Path("data/oracle.json").read_text()); Path("data/weights.json").write_text(json.dumps(source["burstgpt"]["success_weight_sample"]))'
