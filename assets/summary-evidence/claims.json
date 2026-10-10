@@ -1,20 +1,319 @@
 {
-  "report_sha256": "bc88572276d41ee3c714040e278ebe00a5512b1aca968dbfed77c388f490c855",
-  "status": "Draft for text and precedent review; not approved for site publication",
-  "environment": {
-    "machine": "Apple M4 Max",
-    "os": "Darwin 27.0.0 arm64",
-    "go": "1.26.9",
-    "python": "3.11.14",
-    "sketchkit": "0.2.2",
-    "collector_source": "32bd078e61fefa7294d6d4748a3db4e1aa562994"
-  },
   "claims": {
-    "overlap": {"report_section": "B1", "dataset": "TraceLab v0.0.2", "values": [46, 26, 52, 72], "method": "Exact released pseudonym sets; compatible HLL++ union compared with the exact union", "command": "venv/bin/python scripts/data_audit.py", "evidence": "recorded/overlap.json"},
-    "ranges": {"report_section": "B2", "dataset": "TraceLab v0.0.2", "days": [7, 28, 90], "method": "Every contiguous range, from retained daily HLL++ states", "command": "venv/bin/python scripts/sketch_experiments.py", "evidence": "recorded/sketch-results.json"},
-    "storage": {"report_section": "B2", "dataset": "TraceLab v0.0.2", "summary_bytes": 2087216, "days": 305, "raw_uncompressed_bytes": 1245532297, "raw_compressed_bytes": 100939722, "method": "Sum two platform summary files per day; separately measure source JSONL and its gzip download", "command": "venv/bin/python scripts/sketch_experiments.py", "evidence": "recorded/sketch-results.json"},
-    "scale": {"report_section": "B3", "dataset": "Synthetic identities with BurstGPT v2.0 successful-request weights", "users": 1000000, "wire_bytes": 27221, "top_k": 20, "recall": 1.0, "seeds": [20261010, 20261011, 20261012], "method": "Small HLL++ plus weighted frequent-items, one mandatory event per identity followed by Zipf(1.2) events; exact-table comparison", "command": "./scale data/weights.json evidence/scale-isolated-1000000-20261010 1000000 20261010", "evidence": "recorded/scale.json"},
-    "small-lists": {"report_section": "B1", "dataset": "TraceLab v0.0.2", "rounded_mean_sketch_bytes": 116, "rounded_mean_raw_list_bytes": 103, "method": "Daily pair of HLL++ payloads versus compact JSON containing both raw user lists", "command": "venv/bin/python scripts/sketch_experiments.py", "evidence": "recorded/sketch-results.json"},
-    "contributors": {"report_section": "B4", "dataset": "TraceLab v0.0.2", "keys_checked": 19862, "bound_violations": 0, "method": "Every exact key in adjacent user/session windows; signed interval subtraction and positive-growth shares", "command": "venv/bin/python scripts/sketch_experiments.py", "evidence": "recorded/sketch-results.json"}
-  }
+    "contributors": {
+      "command": "venv/bin/python scripts/sketch_experiments.py",
+      "evidence": "recorded/sketch-results.json",
+      "field": "contributors",
+      "method": "Adjacent-day key deltas; flag when the two largest positive lower bounds exceed half of positive total growth.",
+      "sha256": "b24585b61e820987ad0ff6599117b936eb1ff11ccfb5125f05d2b116f74ebc87",
+      "values": {
+        "top_sessions": {
+          "bound_violations": 0,
+          "comparisons": 304,
+          "false_negative": 0,
+          "false_positive": 0,
+          "flagged_next_days": 136,
+          "growth_share_checks": 9295,
+          "keys_checked": 17729,
+          "next_day_reversals": 67,
+          "precision": 1.0,
+          "recall": 1.0,
+          "share_checks": 35405,
+          "true_positive": 136
+        },
+        "top_users": {
+          "bound_violations": 0,
+          "comparisons": 304,
+          "false_negative": 0,
+          "false_positive": 0,
+          "flagged_next_days": 147,
+          "growth_share_checks": 1110,
+          "keys_checked": 2133,
+          "next_day_reversals": 70,
+          "precision": 1.0,
+          "recall": 1.0,
+          "share_checks": 4231,
+          "true_positive": 147
+        }
+      }
+    },
+    "daily-union": {
+      "command": "venv/bin/python scripts/sketch_experiments.py",
+      "evidence": "recorded/sketch-results.json",
+      "field": "unions.1.union_abs_error",
+      "method": "Merge the two daily HLL++ states and compare with the exact union.",
+      "sha256": "b24585b61e820987ad0ff6599117b936eb1ff11ccfb5125f05d2b116f74ebc87",
+      "values": {
+        "max": 0.0006885861360999002,
+        "mean": 0.00010082361532970447,
+        "median": 1.716628321091207e-05,
+        "n": 305,
+        "p95": 0.00037385364058373227
+      }
+    },
+    "overlap": {
+      "command": "venv/bin/python scripts/data_audit.py",
+      "evidence": "recorded/overlap.json",
+      "field": "",
+      "method": "Exact released-label sets in the shared pseudonym namespace.",
+      "sha256": "943c9a95ded482ef477e7163d30ec97aab2a38bd1024ecd669a1213722ce7784",
+      "values": {
+        "both_provider_days": 191,
+        "claude_labels": 46,
+        "codex_labels": 26,
+        "days_with_shared_labels": 137,
+        "interpretation": "Observed pseudonymous label overlap, not inferred humans.",
+        "intersection_labels": 20,
+        "naive_overcount_fraction_of_union": 0.38461538461538464,
+        "naive_overcount_labels": 20,
+        "naive_sum_labels": 72,
+        "union_labels": 52
+      }
+    },
+    "privacy": {
+      "command": "venv/bin/python scripts/isolated_analyst.py && venv/bin/python scripts/privacy_audit.py && venv/bin/python scripts/record_results.py",
+      "evidence": "recorded/privacy.json",
+      "field": "",
+      "method": "Known identifiers in serialized summaries; separate decoded-artifact and injected-leak checks; OS denial probe before analyst execution.",
+      "sha256": "a96edbdc074824daf7b64166cf50d90d0102e7ca9e31cdf8ae9c1da3781a8225",
+      "values": {
+        "analyst_artifact_scan": {
+          "checks": {
+            "all_marker_patterns_indexed": true,
+            "decode_or_validation_errors": 0,
+            "files_scanned": 855,
+            "injected_leak_tests": [
+              {
+                "cases": 100,
+                "name": "prefix_scan_vs_naive_short_overlap_collision_unicode",
+                "passed": true
+              },
+              {
+                "cases": 24,
+                "name": "full_index_injected_plaintext",
+                "passed": true
+              },
+              {
+                "cases": 8,
+                "name": "full_index_base64_protobuf_only_leaks",
+                "passed": true
+              },
+              {
+                "cases": 2,
+                "name": "decoded_json_and_csv_escaped_leaks",
+                "passed": true
+              },
+              {
+                "cases": 1,
+                "name": "negative_control",
+                "passed": true
+              }
+            ],
+            "leak_findings": 0,
+            "protobuf_payloads": 5118,
+            "stable_inventory": true,
+            "stable_marker_sources": true
+          },
+          "passed": true,
+          "planted_sentinel_count": 5,
+          "raw_identity_count": 2076518
+        },
+        "isolation": {
+          "network_denied": true,
+          "raw_read_denied": true
+        },
+        "known_identifier_scan": {
+          "all_serialized_sketch_bytes_total_view": 262732,
+          "files_scanned": 1278,
+          "note": "Wire bytes include metadata/registers/weights as well as hashes. Decoded and sentinel checks are recorded separately.",
+          "raw_identity_hits": [],
+          "raw_identity_values": 2076518
+        }
+      }
+    },
+    "ranges": {
+      "command": "venv/bin/python scripts/sketch_experiments.py",
+      "evidence": "recorded/sketch-results.json",
+      "field": "ranges.queries",
+      "method": "Every contiguous range; timing is median of five whole batches divided by query count.",
+      "sha256": "b24585b61e820987ad0ff6599117b936eb1ff11ccfb5125f05d2b116f74ebc87",
+      "values": [
+        {
+          "absolute_error": {
+            "max": 0.001289452911578337,
+            "mean": 0.0003173819742030904,
+            "median": 9.346176122804195e-05,
+            "n": 299,
+            "p95": 0.001009046447375539
+          },
+          "batch_seconds": [
+            0.000673541973810643,
+            0.0006721250247210264,
+            0.0007034579757601023,
+            0.0007102499948814511,
+            0.0007202919805422425
+          ],
+          "days": 7,
+          "median_ms_per_query": 0.0023527022600672316,
+          "queries": 299,
+          "slowest_batch_seconds": 0.0007202919805422425
+        },
+        {
+          "absolute_error": {
+            "max": 0.002077276972805464,
+            "mean": 0.0006155930823150786,
+            "median": 0.0002307956547120682,
+            "n": 278,
+            "p95": 0.001953283960268948
+          },
+          "batch_seconds": [
+            0.0023616659455001354,
+            0.002359666978009045,
+            0.0023556670057587326,
+            0.002363458974286914,
+            0.002382167032919824
+          ],
+          "days": 28,
+          "median_ms_per_query": 0.008495201242806243,
+          "queries": 278,
+          "slowest_batch_seconds": 0.002382167032919824
+        },
+        {
+          "absolute_error": {
+            "max": 0.003364922407428139,
+            "mean": 0.0012895243926615706,
+            "median": 0.0006180092415846161,
+            "n": 216,
+            "p95": 0.0032065874050104526
+          },
+          "batch_seconds": [
+            0.005555125011596829,
+            0.005578916985541582,
+            0.005570042005274445,
+            0.005593665991909802,
+            0.005627500009723008
+          ],
+          "days": 90,
+          "median_ms_per_query": 0.025828319377507323,
+          "queries": 216,
+          "slowest_batch_seconds": 0.005627500009723008
+        }
+      ]
+    },
+    "scale": {
+      "command": "for seed in 20261010 20261011 20261012; do ./scale data/weights.json evidence/scale-isolated-1000000-$seed 1000000 $seed; done",
+      "evidence": "recorded/scale.json",
+      "field": "",
+      "method": "Isolated processes, mandatory identity events then Zipf(1.2), exact keyed-table comparison.",
+      "sha256": "7ee0ec5267ba0f674d58fba8541624045ce29267dca32ab23dcc0bb67a59b227",
+      "values": [
+        {
+          "aggregate_metric_series": 12,
+          "bound_violations": 0,
+          "distinct_estimate": 996116.7935345507,
+          "distinct_relative_error": 0.003883206465449301,
+          "events": 5000000,
+          "exact_heap_delta_bytes": 37758464,
+          "exact_json_bytes": 26515692,
+          "exact_table_entries": 1000000,
+          "fi_bytes": 10797,
+          "fi_capacity": 512,
+          "heap_delta_bytes": 93408,
+          "hll_bytes": 16424,
+          "hll_register_storage_bytes": 16384,
+          "isolated_process": true,
+          "minimum_exact_key_weight_payload_bytes": 16000000,
+          "n": 1000000,
+          "per_user_metric_series": 12000000,
+          "seconds": 1.864581458,
+          "seed": 20261010,
+          "top20_precision": 1,
+          "top20_recall": 1,
+          "untracked_checked": 999488,
+          "weight_conserved": true
+        },
+        {
+          "aggregate_metric_series": 12,
+          "bound_violations": 0,
+          "distinct_estimate": 992837.6811310343,
+          "distinct_relative_error": 0.007162318868965726,
+          "events": 5000000,
+          "exact_heap_delta_bytes": 37721424,
+          "exact_json_bytes": 26516745,
+          "exact_table_entries": 1000000,
+          "fi_bytes": 10797,
+          "fi_capacity": 512,
+          "heap_delta_bytes": 93856,
+          "hll_bytes": 16424,
+          "hll_register_storage_bytes": 16384,
+          "isolated_process": true,
+          "minimum_exact_key_weight_payload_bytes": 16000000,
+          "n": 1000000,
+          "per_user_metric_series": 12000000,
+          "seconds": 1.851350916,
+          "seed": 20261011,
+          "top20_precision": 1,
+          "top20_recall": 1,
+          "untracked_checked": 999488,
+          "weight_conserved": true
+        },
+        {
+          "aggregate_metric_series": 12,
+          "bound_violations": 0,
+          "distinct_estimate": 993297.1699813675,
+          "distinct_relative_error": 0.0067028300186324635,
+          "events": 5000000,
+          "exact_heap_delta_bytes": 37776928,
+          "exact_json_bytes": 26516830,
+          "exact_table_entries": 1000000,
+          "fi_bytes": 10797,
+          "fi_capacity": 512,
+          "heap_delta_bytes": 93520,
+          "hll_bytes": 16424,
+          "hll_register_storage_bytes": 16384,
+          "isolated_process": true,
+          "minimum_exact_key_weight_payload_bytes": 16000000,
+          "n": 1000000,
+          "per_user_metric_series": 12000000,
+          "seconds": 1.8463689589999999,
+          "seed": 20261012,
+          "top20_precision": 1,
+          "top20_recall": 1,
+          "untracked_checked": 999488,
+          "weight_conserved": true
+        }
+      ]
+    },
+    "small-lists": {
+      "command": "venv/bin/python scripts/sketch_experiments.py",
+      "evidence": "recorded/sketch-results.json",
+      "field": "unions.1",
+      "method": "Mean daily size of the pair of HLL++ payloads versus compact JSON for the pair of raw label lists.",
+      "sha256": "b24585b61e820987ad0ff6599117b936eb1ff11ccfb5125f05d2b116f74ebc87",
+      "values": {
+        "raw_list_mean_bytes": 103.00983606557377,
+        "sketch_mean_bytes": 116.7672131147541
+      }
+    },
+    "storage": {
+      "command": "venv/bin/python scripts/sketch_experiments.py",
+      "evidence": "recorded/sketch-results.json",
+      "field": "ranges.storage.tracelab",
+      "method": "Sum the two platform-summary files per day; measure source JSONL and compressed download separately.",
+      "sha256": "b24585b61e820987ad0ff6599117b936eb1ff11ccfb5125f05d2b116f74ebc87",
+      "values": {
+        "days": 305,
+        "raw_bytes": 1245532297,
+        "raw_compressed_bytes": 100939722,
+        "raw_years_per_decimal_GB": 0.6704318242783318,
+        "summary_bytes": 2093440,
+        "summary_bytes_per_day": 6863.737704918033,
+        "summary_files": 610,
+        "summary_gzip_bytes": 222397,
+        "summary_years_per_decimal_GB": 398.8862781237059
+      }
+    }
+  },
+  "environment_evidence": "recorded/run.json",
+  "status": "Draft for review; site publication held"
 }

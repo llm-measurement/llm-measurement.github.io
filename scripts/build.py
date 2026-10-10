@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import shutil
 from string import Template
+import summary_evidence
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://llm-measurement.github.io/"
@@ -27,11 +28,15 @@ FRAME = Template('''<!doctype html>
 def build():
     out = ROOT / "docs"
     out.mkdir(exist_ok=True)
+    (ROOT / "assets/summary-evidence/claims.json").write_text(
+        json.dumps(summary_evidence.claims(ROOT), indent=2, sort_keys=True) + "\n")
     # Experimental inputs and generated evidence must never become site assets.
     excluded = shutil.ignore_patterns("data", "collector", "evidence", "analyst-inputs",
         "analyst-output", "venv", "wheels", "go-build", "go-mod", "__pycache__",
         "replay", "scale", "DATA_AUDIT.md", "policy.sb", ".gitignore")
-    shutil.copytree(ROOT / "assets", out / "assets", dirs_exist_ok=True, ignore=excluded)
+    if (out / "assets").exists():
+        shutil.rmtree(out / "assets")
+    shutil.copytree(ROOT / "assets", out / "assets", ignore=excluded)
     names = ["All questions", "Prometheus cardinality", "A token spike", "Unusual windows", "Distinct users", "Why summaries"]
     for page in PAGES:
         nav = "".join(
@@ -41,7 +46,8 @@ def build():
         rendered = FRAME.substitute(
             title=html.escape(page["title"]), description=html.escape(page["description"], quote=True),
             canonical=BASE + ("" if page["slug"] == "index" else page["slug"] + ".html"),
-            nav=nav, body=(ROOT / "pages" / (page["slug"] + ".html")).read_text(),
+            nav=nav, body=(summary_evidence.render(ROOT) if page["slug"] == "summaries"
+                           else (ROOT / "pages" / (page["slug"] + ".html")).read_text()),
         )
         (out / (page["slug"] + ".html")).write_text(rendered)
     urls = [BASE + ("" if p["slug"] == "index" else p["slug"] + ".html") for p in PAGES]

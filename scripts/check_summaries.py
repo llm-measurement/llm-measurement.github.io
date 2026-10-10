@@ -1,11 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # Code authors: Vijay and Codex
-"""Keep the page's measured claims tied to the reviewed aggregate evidence."""
+"""Check evidence bindings, generated measurements and publication boundaries."""
 from html.parser import HTMLParser
+import hashlib
 import json
 from pathlib import Path
+import shutil
 import subprocess
+import tempfile
 from urllib.parse import urlsplit
+
+import summary_evidence
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "assets/summary-evidence"
@@ -28,49 +33,63 @@ class Article(HTMLParser):
             self.links.append(attrs.get("href", ""))
 
 
+def mutation_check():
+    with tempfile.TemporaryDirectory() as directory:
+        root = Path(directory)
+        shutil.copytree(EVIDENCE / "recorded", root / "assets/summary-evidence/recorded")
+        (root / "pages").mkdir()
+        shutil.copy2(ROOT / "pages/summaries.html", root / "pages/summaries.html")
+        original = summary_evidence.render(root)
+        path = root / "assets/summary-evidence/recorded/sketch-results.json"
+        data = json.loads(path.read_text())
+        data["ranges"]["storage"]["tracelab"]["summary_bytes"] = 3_400_000
+        data["unions"]["1"]["union_abs_error"]["max"] = 0.01231
+        data["contributors"]["top_users"]["true_positive"] = 123
+        path.write_text(json.dumps(data))
+        changed = summary_evidence.render(root)
+        assert changed != original
+        assert "3.4 MB" in changed and "0.0124 users" in changed and "123 matching user flags" in changed
+        assert summary_evidence.claims(root) != summary_evidence.claims(ROOT)
+
+
 def main():
     ledger = json.loads((EVIDENCE / "claims.json").read_text())
-    results = json.loads((EVIDENCE / "recorded/sketch-results.json").read_text())
-    overlap = json.loads((EVIDENCE / "recorded/overlap.json").read_text())
-    scale = json.loads((EVIDENCE / "recorded/scale.json").read_text())
-    claims = ledger["claims"]
-    assert claims["overlap"]["values"] == [overlap[k] for k in
-        ("claude_labels", "codex_labels", "union_labels", "naive_sum_labels")]
-    assert claims["ranges"]["days"] == [q["days"] for q in results["B2"]["queries"]]
-    storage = results["B2"]["storage"]["tracelab"]
-    for left, right in (("summary_bytes", "summary_bytes"), ("days", "days"),
-                        ("raw_uncompressed_bytes", "raw_bytes"),
-                        ("raw_compressed_bytes", "raw_compressed_bytes")):
-        assert claims["storage"][left] == storage[right]
-    daily = results["B1"]["1"]
-    assert claims["small-lists"]["rounded_mean_sketch_bytes"] == round(daily["hll_exchange_bytes"]["mean"])
-    assert claims["small-lists"]["rounded_mean_raw_list_bytes"] == round(daily["raw_list_bytes"]["mean"])
-    assert len(scale) == len(claims["scale"]["seeds"])
-    assert {s["seed"] for s in scale} == set(claims["scale"]["seeds"])
-    for run in scale:
-        assert run["n"] == claims["scale"]["users"]
-        assert run["hll_bytes"] + run["fi_bytes"] == claims["scale"]["wire_bytes"]
-        assert run["top20_recall"] == claims["scale"]["recall"]
-        assert run["bound_violations"] == 0 and run["weight_conserved"]
-    assert claims["contributors"]["keys_checked"] == sum(v["keys_checked"] for v in results["B4"].values())
-    assert claims["contributors"]["bound_violations"] == sum(v["bound_violations"] for v in results["B4"].values())
+    assert ledger == summary_evidence.claims(ROOT), "regenerate the evidence ledger"
+    recorded = summary_evidence.evidence(ROOT)
+    assert recorded["privacy"]["isolation"] == {"raw_read_denied": True, "network_denied": True}
+    assert recorded["privacy"]["analyst_artifact_scan"]["passed"]
+    assert recorded["run"]["accounting_mismatches"] == 0
+    assert recorded["run"]["test_key"] == "llm-measurement-summary-evidence-test-key-20261010"
+    for name, digest in recorded["run"]["source_sha256"].items():
+        assert hashlib.sha256((EVIDENCE / name).read_bytes()).hexdigest() == digest, name
+    for row in recorded["scale"]:
+        assert row["bound_violations"] == 0 and row["weight_conserved"]
+    source = summary_evidence.render(ROOT)
+    assert source in (ROOT / "docs/summaries.html").read_text(), "regenerate page values"
+    assert source.count("What the numbers mean") == 1
+    assert "A raw-data system can compute exact answers." in source
     article = Article()
-    source = (ROOT / "pages/summaries.html").read_text()
     article.feed(source)
-    assert article.claims == set(claims)
-    for claim in claims.values():
-        assert (EVIDENCE / claim["evidence"]).is_file()
+    assert article.claims == set(ledger["claims"])
+    for claim in ledger["claims"].values():
+        path = Path(claim["evidence"])
+        assert path.parent == Path("recorded") and path.suffix == ".json"
+        assert hashlib.sha256((EVIDENCE / path).read_bytes()).hexdigest() == claim["sha256"]
         subprocess.run(["bash", "-n"], input=claim["command"], text=True, check=True)
     for link in article.links:
         target = urlsplit(link)
         if not target.path and target.fragment:
             assert target.fragment in article.ids, link
-    assert "A raw-data system can compute exact answers." in source
-    for private in ("/Users/", "/private/tmp/", "docs/local/", "Erramilli"):
-        assert private not in source
+    forbidden = ("phase0", "phase 0", "forecast", "private oracle", "private audit", "report_sha256", "report_section", "\"B6\"", "/Users/", "/private/tmp/", "Erramilli")
+    for path in [ROOT / "pages/summaries.html", *EVIDENCE.rglob("*")]:
+        if not path.is_file() or "__pycache__" in path.parts:
+            continue
+        text = path.read_text()
+        assert not any(term.lower() in text.lower() for term in forbidden), path
     for path in (ROOT / "docs/assets/summary-evidence").rglob("*"):
         assert path.name not in {"oracle.json", "venv", "collector", "data", "analyst-inputs", "analyst-output"}, path
-    print("PASS: summary claim ledger, aggregate evidence, local anchors, command syntax, publication boundary")
+    mutation_check()
+    print("PASS: recorded-only claims, source hashes, generated values, mutation checks, links and publication boundary")
 
 
 if __name__ == "__main__":

@@ -17,11 +17,11 @@ import (
 )
 
 func TestSingleWindowMemory(t *testing.T) {
-	out := os.Getenv("PHASE0_MEMORY_OUT")
+	out := os.Getenv("SUMMARY_EVIDENCE_MEMORY_OUT")
 	if out == "" {
-		t.Skip("explicit private output required")
+		t.Skip("explicit local output required")
 	}
-	t.Setenv("GENAI_SKETCH_SECRET", "forecast-phase0-public-test-key-20261010")
+	t.Setenv("GENAI_SKETCH_SECRET", "llm-measurement-summary-evidence-test-key-20261010")
 	var results []map[string]any
 	for _, n := range []int{1000, 100000} {
 		cfg := connector.NewFactory().CreateDefaultConfig().(*connector.Config)
@@ -30,7 +30,7 @@ func TestSingleWindowMemory(t *testing.T) {
 		cfg.MaxSlices = 1
 		cfg.Slices = []connector.SliceConfig{{Name: "app", Keys: []string{"service.name"}, FromResourceAttributes: []string{"service.name"}}}
 		cfg.TopKKeys = []connector.TopKKeyConfig{{Field: "prompt_key", Weight: "tokens"}, {Field: "user_key", Weight: "tokens"}, {Field: "session_key", Weight: "tokens"}}
-		cfg.SummaryExport = connector.SummaryExportConfig{Directory: t.TempDir(), ProducerID: "memory", ScopeID: "phase0-memory", KeyID: "public-test", Interval: time.Second}
+		cfg.SummaryExport = connector.SummaryExportConfig{Directory: t.TempDir(), ProducerID: "memory", ScopeID: "summary-evidence-memory", KeyID: "public-test", Interval: time.Second}
 		if err := os.Chmod(cfg.SummaryExport.Directory, 0700); err != nil {
 			t.Fatal(err)
 		}

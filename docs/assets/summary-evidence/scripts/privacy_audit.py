@@ -24,7 +24,7 @@ from data_audit import ROOT, dates_between, require, sha256, write_json, write_t
 
 
 SCOPES = ("analyst-inputs", "analyst-output", "data/sentinel")
-TEST_SOURCE = ROOT / "collector/connector/genaisketchconnector/cmd/phase0-replay/main_test.go"
+TEST_SOURCE = ROOT / "collector/connector/genaisketchconnector/cmd/summary-replay/main_test.go"
 LOG = ROOT / "evidence/analyst-sandbox.log"
 EXPECTED = {
     "tracelab/platform-claude": ("claude", "2025-09-23", "2026-07-25"),
@@ -88,7 +88,7 @@ def inventory():
         folder = ROOT / scope
         require(folder.is_dir() and not folder.is_symlink(), "missing or symlinked audit root")
         for path in sorted(folder.rglob("*")):
-            require(not path.is_symlink(), "symlinks are excluded from this private audit")
+            require(not path.is_symlink(), "symlinks are excluded from this local audit")
             if path.is_file():
                 result.append((scope, path, stamp(path)))
     require(all(any(s == scope for s, _, _ in result) for scope in SCOPES), "empty audit scope")
@@ -132,7 +132,7 @@ def completion_check(files):
             "result": result, "fixed_directory_roster_verified": True,
             "fixed_daily_file_rosters_verified": True, "input_manifest_verified": True,
             "raw_reference_feature_fields_absent": True,
-            "isolation_evidence_limit": "Completion marker and artifacts verified here. The OS deny-read/network policy and its initial probe were not re-executed by this audit; this audit deliberately reads the private oracle as validation input."}
+            "isolation_evidence_limit": "Completion marker and artifacts verified here. The OS deny-read/network policy and its initial probe were not re-executed by this audit; this audit deliberately reads the local reference as validation input."}
 
 
 def protobuf_scalars(message):
@@ -294,7 +294,7 @@ def public_fi(groups):
 
 def report_markdown(result):
     checks = result["checks"]
-    lines = ["# Private Analyst Privacy Audit", "", "## Result", "",
+    lines = ["# Analyst Privacy Audit", "", "## Result", "",
              f"- Files scanned: {checks['files_scanned']}; decoded protobuf payloads: {checks['protobuf_payloads']:,}.",
              f"- Exact raw-identifier patterns: {result['patterns']['raw_identity_count']:,}; planted sentinels: {result['patterns']['planted_sentinel_count']}.",
              f"- Known-pattern leak findings: {checks['leak_findings']}; decode/validation errors: {checks['decode_or_validation_errors']}.",
@@ -311,15 +311,15 @@ def report_markdown(result):
         "The analyst-input prompt:v1 hash represents the constant synthetic accounting group, not a real prompt count. The separate sentinel fixture deliberately hashes a planted prompt marker.",
         "", "## Evidence And Limits", "",
         "- Evidence: evidence/privacy-audit.json (checks and counts); evidence/privacy-audit-files.json (file hashes and scoped findings). Test leaks were in memory only and were never written into analyst artifacts.",
-        "- Marker sources are the private oracle and the five literals in the pinned local main_test.go. Those inputs contain identifiers by design and are excluded from the scanned sharing surface. Evidence findings retain marker hashes, never raw values.",
-        "- The audit reads the private oracle for validation; it is not itself the isolated analyst run. The prior OS raw-read/network denial test was not re-executed here. The completion marker verifies the runner reached its post-output completion statement, not the policy configuration.",
+        "- Marker sources are the local reference and the five literals in the pinned local main_test.go. Those inputs contain identifiers by design and are excluded from the scanned sharing surface. Evidence findings retain marker hashes, never raw values.",
+        "- The audit reads the local reference for validation; it is not itself the isolated analyst run. The prior OS raw-read/network denial test was not re-executed here. The completion marker verifies the runner reached its post-output completion statement, not the policy configuration.",
         "- Zero detected exact known patterns is a scoped non-disclosure check, not anonymity, non-linkability, resistance to reidentification, or absence of arbitrary encodings/transformed/unknown identifiers. The public experiment key is not a privacy secret.",
         "- Reproduce after analyst completion: `venv/bin/python -B scripts/privacy_audit.py` from this experiment directory.",
         "", "## Judgment And Next Steps", "",
         ("Positive for this fixed artifact snapshot: all known-pattern checks and validation checks passed. "
          if result["passed"] else "Negative for this artifact snapshot: leaks or validation failures require investigation. ")
-        + "Neutral on anonymity and scientific forecasting value; neither is established by this audit.",
-        "Next: retain the file hashes and private evidence, re-audit after any artifact change, and keep release approval separate. Use a fixed analyst input manifest and explicit day alignment checks in the runner before claiming missing-directory refusal.", ""])
+        + "The result establishes known-pattern exclusion for this artifact set.",
+        "Next: retain the file hashes and local evidence, re-audit after any artifact change, and keep release approval separate. Use a fixed analyst input manifest and explicit day alignment checks in the runner before claiming missing-directory refusal.", ""])
     return "\n".join(lines)
 
 
@@ -398,7 +398,7 @@ def main():
     require(inventory() == files and sha256(LOG) == completion["log_sha256"],
             "artifact inventory or analyst completion log changed during audit")
     require(all(stamp(p) == before for p, before in marker_source_stamps.items()),
-            "private marker source changed during audit")
+            "local marker source changed during audit")
     result = {"schema_version": 1, "passed": not findings and not errors,
         "scope": list(SCOPES), "scopes": scopes, "fi_by_hash_domain": {s: public_fi(g) for s, g in by_domain.items()},
         "patterns": {"raw_identity_count": raw_count, "raw_identity_utf8_bytes": raw_bytes,
@@ -428,7 +428,7 @@ def main():
     write_text(evidence / "privacy-audit.md", report_markdown(result))
     print(json.dumps({"passed": result["passed"], "checks": result["checks"], "scopes": scopes,
                       "fi_by_hash_domain": result["fi_by_hash_domain"]}, indent=2))
-    require(result["passed"], "privacy audit found leaks or validation errors; inspect private hashed findings")
+    require(result["passed"], "privacy audit found leaks or validation errors; inspect local hashed findings")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,85 @@
+{
+  "accounting_checks": 97890,
+  "accounting_mismatches": 0,
+  "collector_source": "32bd078e61fefa7294d6d4748a3db4e1aa562994",
+  "go": "go version go1.26.9 darwin/arm64",
+  "inputs": {
+    "BurstGPT_1.csv": {
+      "bytes": 52283111,
+      "sha256": "4bb3783693d0a435686fbfc885615d2349bd067239079fa4b749f2e679e12122",
+      "verified": true
+    },
+    "BurstGPT_2.csv": {
+      "bytes": 144819209,
+      "sha256": "44bf5942b03fca42c01a226a545ad3a750ec62688faecd67b6831c56a8928bf7",
+      "verified": true
+    },
+    "syfi_coding_trace.jsonl.gz": {
+      "bytes": 100939722,
+      "sha256": "11ce51ec0a25e3d1d95b025bca2f7d1647e47571eb7cc968acd5fc64d4b4fb65",
+      "verified": true
+    }
+  },
+  "machine": "Apple M4 Max",
+  "os": "Darwin 27.0.0 arm64",
+  "protobuf": "6.33.5",
+  "python": "3.11.14",
+  "sketchkit": "0.2.2",
+  "source_sha256": {
+    "go/summary-replay/main.go": "c8ba7aacaa18cc3c7e71597ffc9a75ed2a77d23db7e0fca3b3bf647b8155c690",
+    "go/summary-replay/main_test.go": "39ff389f73c81df06bd9637460ba22fe2149351e7a15e57cd63d4386437df779",
+    "go/summary-replay/memory_test.go": "b4ca572b0e48a910eb1bc4cf86eb3b2b8663579065311b68db9b33f8ee010596",
+    "go/summary-scale/growth_test.go": "61c471ff3844d3bd3c5792fcb9f6489dc0b7dd6365b558c346d4c27fa0fe91d0",
+    "go/summary-scale/main.go": "a4d594cc7de2c21d23a2460a6b803edcb5bb565987e6fa0de64be7d6d11f98ad",
+    "scripts/analyst_run.py": "1167fa2ab58fa396c45c8fa3a51309cc836f33b8523555b459bffaa15c5f4607",
+    "scripts/data_audit.py": "8027ef24ba8677defa912dfdf578f7eb7d046dee6ede71255ac893eabe30b9b6",
+    "scripts/features.py": "5da587454ba0e586a0c1841d517494e9ccc9618821d60f526d79db8297b259be",
+    "scripts/isolated_analyst.py": "279df23a4ef23cd8bf2c79e661f822237749c744490d6825ab294d2edcc6caaf",
+    "scripts/privacy_audit.py": "81304819645dc313230789824be962dc5c3fa3bff7475ef0851bf6d6ee96ced3",
+    "scripts/record_results.py": "b240111b21ba3aec2b3ac2222fd5098e78d9660f38d17e0a2803ccd7e71fdb9d",
+    "scripts/sketch_experiments.py": "a16ccd25f721048acd038a7cbd530153ce248bdb5566c75d35b1b4cf717fa592"
+  },
+  "sources": {
+    "burstgpt-license.txt": {
+      "bytes": 18656,
+      "download_url": "https://raw.githubusercontent.com/HPMLL/BurstGPT/7eb2c4f8350f8a6985272386f5c14af1f678b299/LICENSE",
+      "local_license_matches": true,
+      "revision": "7eb2c4f8350f8a6985272386f5c14af1f678b299",
+      "sha256": "9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94",
+      "source_url": "https://github.com/HPMLL/BurstGPT/blob/7eb2c4f8350f8a6985272386f5c14af1f678b299/LICENSE"
+    },
+    "burstgpt-readme.md": {
+      "bytes": 5176,
+      "download_url": "https://raw.githubusercontent.com/HPMLL/BurstGPT/7eb2c4f8350f8a6985272386f5c14af1f678b299/README.md",
+      "local_license_matches": null,
+      "revision": "7eb2c4f8350f8a6985272386f5c14af1f678b299",
+      "sha256": "7e0443b352b6db6a3cc6aa1929662e44f548752b80517e534b9ee2e81b6eb999",
+      "source_url": "https://github.com/HPMLL/BurstGPT/blob/7eb2c4f8350f8a6985272386f5c14af1f678b299/README.md"
+    },
+    "tracelab-license.md": {
+      "bytes": 2061,
+      "download_url": "https://raw.githubusercontent.com/uw-syfi/TraceLab/61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c/LICENSE-DATASET.md",
+      "local_license_matches": true,
+      "revision": "61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c",
+      "sha256": "1e96a0ec55f98ee0e4e2432626c0201104ebfb7f98cecf0a31d5313ddad92e9a",
+      "source_url": "https://github.com/uw-syfi/TraceLab/blob/61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c/LICENSE-DATASET.md"
+    },
+    "tracelab-privacy.py": {
+      "bytes": 4222,
+      "download_url": "https://raw.githubusercontent.com/uw-syfi/TraceLab/61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c/scripts/trace_privacy.py",
+      "local_license_matches": null,
+      "revision": "61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c",
+      "sha256": "68b1975082813d98a17ba9d8329e66e620cba7a53dbf333ac1337eb7fb6f0bef",
+      "source_url": "https://github.com/uw-syfi/TraceLab/blob/61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c/scripts/trace_privacy.py"
+    },
+    "tracelab-sanitizer.py": {
+      "bytes": 15461,
+      "download_url": "https://raw.githubusercontent.com/uw-syfi/TraceLab/61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c/scripts/sanitize_round_trace.py",
+      "local_license_matches": null,
+      "revision": "61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c",
+      "sha256": "a9daa8cd47ef22b0e7b9de9256bfda40036cec6d349332d93214cc5b94a5842c",
+      "source_url": "https://github.com/uw-syfi/TraceLab/blob/61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c/scripts/sanitize_round_trace.py"
+    }
+  },
+  "test_key": "llm-measurement-summary-evidence-test-key-20261010"
+}

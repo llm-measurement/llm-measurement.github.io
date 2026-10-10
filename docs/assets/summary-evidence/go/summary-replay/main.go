@@ -1,6 +1,6 @@
 //go:build tracelab_replay
 
-// Private experiment adapter. Accounting remains in the existing connector.
+// Event-time experiment adapter. Accounting remains in the existing connector.
 package main
 
 import (
@@ -175,7 +175,7 @@ func run() error {
 		if err := os.Mkdir(dir, 0700); err != nil {
 			return err
 		}
-		scratch, err := os.MkdirTemp(filepath.Dir(*out), ".phase0-")
+		scratch, err := os.MkdirTemp(filepath.Dir(*out), ".summary-evidence-")
 		if err != nil {
 			return err
 		}
@@ -186,9 +186,9 @@ func run() error {
 		cfg.Slices = []connector.SliceConfig{{Name: "app", Keys: []string{"service.name"}, FromResourceAttributes: []string{"service.name"}}}
 		cfg.TopK = 100
 		cfg.TopKKeys = []connector.TopKKeyConfig{{Field: "prompt_key", Weight: "tokens"}, {Field: "user_key", Weight: "tokens"}, {Field: "session_key", Weight: "tokens"}}
-		cfg.Fields["prompt_key"] = connector.FieldConfig{FromAttributes: []string{"phase0.accounting.group"}, Canonicalization: "text_v1", Domain: "prompt:v1"}
+		cfg.Fields["prompt_key"] = connector.FieldConfig{FromAttributes: []string{"summary_evidence.accounting.group"}, Canonicalization: "text_v1", Domain: "prompt:v1"}
 		keyID := sha256.Sum256([]byte(secret))
-		cfg.SummaryExport = connector.SummaryExportConfig{Directory: scratch, ProducerID: g.Directory, ScopeID: *dataset + "-phase0", KeyID: hex.EncodeToString(keyID[:16]), Interval: time.Second}
+		cfg.SummaryExport = connector.SummaryExportConfig{Directory: scratch, ProducerID: g.Directory, ScopeID: *dataset + "-summary-evidence", KeyID: hex.EncodeToString(keyID[:16]), Interval: time.Second}
 		runner, err := newRunner(cfg)
 		if err != nil {
 			return err
@@ -223,7 +223,7 @@ func run() error {
 					sp.Status().SetCode(ptrace.StatusCodeError)
 				}
 			}
-			td.ResourceSpans().At(0).ScopeSpans().At(0).Spans().At(0).Attributes().PutStr("phase0.accounting.group", "all")
+			td.ResourceSpans().At(0).ScopeSpans().At(0).Spans().At(0).Attributes().PutStr("summary_evidence.accounting.group", "all")
 			return e.at, td, nil
 		}, func(at time.Time, b []byte) error {
 			return os.WriteFile(filepath.Join(dir, at.Format("2006-01-02")+".json"), b, 0600)

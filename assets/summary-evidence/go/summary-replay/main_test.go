@@ -18,7 +18,7 @@ import (
 )
 
 func TestSentinelSummaryOnly(t *testing.T) {
-	t.Setenv("GENAI_SKETCH_SECRET", "forecast-phase0-public-test-key-20261010")
+	t.Setenv("GENAI_SKETCH_SECRET", "llm-measurement-summary-evidence-test-key-20261010")
 	sentinels := []string{"SENTINEL-user-7391@example.invalid", "SENTINEL-session-88de42", "SENTINEL-prompt-41cd", "def SENTINEL_secret_function(): return 481921", "/private/SENTINEL-project/customer/secret.go"}
 	start := time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC)
 	cfg := connector.NewFactory().CreateDefaultConfig().(*connector.Config)
@@ -27,7 +27,7 @@ func TestSentinelSummaryOnly(t *testing.T) {
 	cfg.MaxSlices = 1
 	cfg.Slices = []connector.SliceConfig{{Name: "app", Keys: []string{"service.name"}, FromResourceAttributes: []string{"service.name"}}}
 	cfg.TopKKeys = []connector.TopKKeyConfig{{Field: "prompt_key", Weight: "tokens"}, {Field: "user_key", Weight: "tokens"}, {Field: "session_key", Weight: "tokens"}}
-	cfg.SummaryExport = connector.SummaryExportConfig{Directory: t.TempDir(), ProducerID: "sentinel", ScopeID: "phase0-sentinel", KeyID: "public-test", Interval: time.Second}
+	cfg.SummaryExport = connector.SummaryExportConfig{Directory: t.TempDir(), ProducerID: "sentinel", ScopeID: "summary-evidence-sentinel", KeyID: "public-test", Interval: time.Second}
 	if err := os.Chmod(cfg.SummaryExport.Directory, 0700); err != nil {
 		t.Fatal(err)
 	}
@@ -88,7 +88,7 @@ func TestSentinelSummaryOnly(t *testing.T) {
 				t.Fatal("sentinel leaked")
 			}
 		}
-		if out := os.Getenv("PHASE0_SENTINEL_DIR"); out != "" {
+		if out := os.Getenv("SUMMARY_EVIDENCE_SENTINEL_DIR"); out != "" {
 			if err := os.MkdirAll(out, 0700); err != nil {
 				return err
 			}

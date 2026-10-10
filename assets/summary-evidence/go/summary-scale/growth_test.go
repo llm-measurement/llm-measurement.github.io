@@ -10,9 +10,9 @@ import (
 )
 
 func TestGrowthBounds(t *testing.T) {
-	path := os.Getenv("PHASE0_WEIGHTS")
+	path := os.Getenv("SUMMARY_EVIDENCE_WEIGHTS")
 	if path == "" {
-		t.Skip("explicit private weight reservoir required")
+		t.Skip("explicit local weight reservoir required")
 	}
 	raw, err := os.ReadFile(path)
 	if err != nil {
@@ -22,7 +22,7 @@ func TestGrowthBounds(t *testing.T) {
 	if err = json.Unmarshal(raw, &weights); err != nil {
 		t.Fatal(err)
 	}
-	t.Setenv("GENAI_SKETCH_SECRET", "forecast-phase0-public-test-key-20261010")
+	t.Setenv("GENAI_SKETCH_SECRET", "llm-measurement-summary-evidence-test-key-20261010")
 	secret, err := sh.SecretFromEnv("GENAI_SKETCH_SECRET")
 	if err != nil {
 		t.Fatal(err)
@@ -81,7 +81,7 @@ func TestGrowthBounds(t *testing.T) {
 		}
 	}
 	b, _ := json.MarshalIndent(records, "", "  ")
-	if out := os.Getenv("PHASE0_GROWTH_OUT"); out != "" {
+	if out := os.Getenv("SUMMARY_EVIDENCE_GROWTH_OUT"); out != "" {
 		if err := os.WriteFile(out, b, 0600); err != nil {
 			t.Fatal(err)
 		}

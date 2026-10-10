@@ -1,294 +1,261 @@
 {
-  "B1": {
-    "1": {
-      "union_abs_error": {
-        "n": 305,
-        "mean": 0.00010082361532970447,
-        "median": 1.716628321091207e-05,
-        "p95": 0.00037385364058373227,
-        "max": 0.0006885861360999002
-      },
-      "naive_overcount": {
-        "n": 305,
-        "mean": 0.6295081967213115,
-        "median": 0,
-        "p95": 2,
-        "max": 5
-      },
-      "minhash_overlap_abs_error": {
-        "n": 305,
-        "mean": 0.09631227015013884,
-        "median": 0.0,
-        "p95": 0.45309844552553047,
-        "max": 0.9688066258524461
-      },
-      "hll_exchange_bytes": {
-        "n": 305,
-        "mean": 116.47213114754098,
-        "median": 100,
-        "p95": 196,
-        "max": 235
-      },
-      "hll_plus_minhash_exchange_bytes": {
-        "n": 305,
-        "mean": 2239.6,
-        "median": 2224,
-        "p95": 2320,
-        "max": 2359
-      },
-      "raw_list_bytes": {
-        "n": 305,
-        "mean": 103.00983606557377,
-        "median": 69,
-        "p95": 261,
-        "max": 341
-      }
+  "contributors": {
+    "top_sessions": {
+      "bound_violations": 0,
+      "comparisons": 304,
+      "false_negative": 0,
+      "false_positive": 0,
+      "flagged_next_days": 136,
+      "growth_share_checks": 9295,
+      "keys_checked": 17729,
+      "next_day_reversals": 67,
+      "precision": 1.0,
+      "recall": 1.0,
+      "share_checks": 35405,
+      "true_positive": 136
     },
-    "7": {
-      "union_abs_error": {
-        "n": 299,
-        "mean": 0.0003173819742030904,
-        "median": 9.346176122804195e-05,
-        "p95": 0.001009046447375539,
-        "max": 0.001289452911578337
-      },
-      "naive_overcount": {
-        "n": 299,
-        "mean": 1.7892976588628762,
-        "median": 1,
-        "p95": 5,
-        "max": 9
-      },
-      "minhash_overlap_abs_error": {
-        "n": 299,
-        "mean": 0.3344731304180743,
-        "median": 0.17968280609443454,
-        "p95": 1.515571204208117,
-        "max": 2.343648666950963
-      },
-      "hll_exchange_bytes": {
-        "n": 299,
-        "mean": 164.03010033444815,
-        "median": 132,
-        "p95": 283,
-        "max": 339
-      },
-      "hll_plus_minhash_exchange_bytes": {
-        "n": 299,
-        "mean": 2287.521739130435,
-        "median": 2256,
-        "p95": 2407,
-        "max": 2463
-      },
-      "raw_list_bytes": {
-        "n": 299,
-        "mean": 198.2173913043478,
-        "median": 133,
-        "p95": 437,
-        "max": 549
-      }
-    },
-    "28": {
-      "union_abs_error": {
-        "n": 278,
-        "mean": 0.0006155930823150786,
-        "median": 0.0002307956547120682,
-        "p95": 0.001953283960268948,
-        "max": 0.002077276972805464
-      },
-      "naive_overcount": {
-        "n": 278,
-        "mean": 3.4784172661870505,
-        "median": 3.0,
-        "p95": 9,
-        "max": 11
-      },
-      "minhash_overlap_abs_error": {
-        "n": 278,
-        "mean": 0.6752935457812871,
-        "median": 0.25780542186059463,
-        "p95": 2.3356241799772226,
-        "max": 2.874672866409573
-      },
-      "hll_exchange_bytes": {
-        "n": 278,
-        "mean": 213.3884892086331,
-        "median": 184.0,
-        "p95": 379,
-        "max": 410
-      },
-      "hll_plus_minhash_exchange_bytes": {
-        "n": 278,
-        "mean": 2337.4172661870502,
-        "median": 2308.0,
-        "p95": 2504,
-        "max": 2535
-      },
-      "raw_list_bytes": {
-        "n": 278,
-        "mean": 297.1546762589928,
-        "median": 237.0,
-        "p95": 629,
-        "max": 693
-      }
+    "top_users": {
+      "bound_violations": 0,
+      "comparisons": 304,
+      "false_negative": 0,
+      "false_positive": 0,
+      "flagged_next_days": 147,
+      "growth_share_checks": 1110,
+      "keys_checked": 2133,
+      "next_day_reversals": 70,
+      "precision": 1.0,
+      "recall": 1.0,
+      "share_checks": 4231,
+      "true_positive": 147
     }
   },
-  "B2": {
+  "identifier_exclusion": {
+    "all_serialized_sketch_bytes_total_view": 262732,
+    "files_scanned": 1278,
+    "note": "Wire bytes include metadata/registers/weights as well as hashes. Decoded and sentinel checks are recorded separately.",
+    "raw_identity_hits": [],
+    "raw_identity_values": 2076518
+  },
+  "ranges": {
     "queries": [
       {
-        "days": 7,
-        "queries": 299,
         "absolute_error": {
-          "n": 299,
+          "max": 0.001289452911578337,
           "mean": 0.0003173819742030904,
           "median": 9.346176122804195e-05,
-          "p95": 0.001009046447375539,
-          "max": 0.001289452911578337
+          "n": 299,
+          "p95": 0.001009046447375539
         },
         "batch_seconds": [
-          0.000744915974792093,
-          0.0007489999989047647,
-          0.0007497909828089178,
-          0.0007702920120209455,
-          0.0007461250061169267
+          0.000673541973810643,
+          0.0006721250247210264,
+          0.0007034579757601023,
+          0.0007102499948814511,
+          0.0007202919805422425
         ],
-        "median_ms_per_query": 0.0025050167187450323,
-        "slowest_batch_seconds": 0.0007702920120209455
+        "days": 7,
+        "median_ms_per_query": 0.0023527022600672316,
+        "queries": 299,
+        "slowest_batch_seconds": 0.0007202919805422425
       },
       {
-        "days": 28,
-        "queries": 278,
         "absolute_error": {
-          "n": 278,
+          "max": 0.002077276972805464,
           "mean": 0.0006155930823150786,
           "median": 0.0002307956547120682,
-          "p95": 0.001953283960268948,
-          "max": 0.002077276972805464
+          "n": 278,
+          "p95": 0.001953283960268948
         },
         "batch_seconds": [
-          0.0024715419858694077,
-          0.0025008749798871577,
-          0.0024670420098118484,
-          0.0025110000278800726,
-          0.002459125011228025
+          0.0023616659455001354,
+          0.002359666978009045,
+          0.0023556670057587326,
+          0.002363458974286914,
+          0.002382167032919824
         ],
-        "median_ms_per_query": 0.008890438798091394,
-        "slowest_batch_seconds": 0.0025110000278800726
+        "days": 28,
+        "median_ms_per_query": 0.008495201242806243,
+        "queries": 278,
+        "slowest_batch_seconds": 0.002382167032919824
       },
       {
-        "days": 90,
-        "queries": 216,
         "absolute_error": {
-          "n": 216,
+          "max": 0.003364922407428139,
           "mean": 0.0012895243926615706,
           "median": 0.0006180092415846161,
-          "p95": 0.0032065874050104526,
-          "max": 0.003364922407428139
+          "n": 216,
+          "p95": 0.0032065874050104526
         },
         "batch_seconds": [
-          0.005816666001919657,
-          0.005819041980430484,
-          0.005925667006522417,
-          0.0057037079823203385,
-          0.005847499996889383
+          0.005555125011596829,
+          0.005578916985541582,
+          0.005570042005274445,
+          0.005593665991909802,
+          0.005627500009723008
         ],
-        "median_ms_per_query": 0.026940009168659646,
-        "slowest_batch_seconds": 0.005925667006522417
+        "days": 90,
+        "median_ms_per_query": 0.025828319377507323,
+        "queries": 216,
+        "slowest_batch_seconds": 0.005627500009723008
       }
     ],
     "storage": {
-      "tracelab": {
-        "days": 305,
-        "summary_bytes": 2087216,
-        "summary_gzip_bytes": 222086,
-        "raw_bytes": 1245532297,
-        "raw_compressed_bytes": 100939722,
-        "summary_bytes_per_day": 6843.331147540984,
-        "summary_years_per_decimal_GB": 400.07574207714526,
-        "raw_years_per_decimal_GB": 0.6704318242783318,
-        "summary_files": 610
-      },
       "burstgpt": {
         "days": 121,
-        "summary_bytes": 725693,
-        "summary_gzip_bytes": 22135,
         "raw_bytes": 197102320,
         "raw_compressed_bytes": null,
-        "summary_bytes_per_day": 5997.462809917355,
-        "summary_years_per_decimal_GB": 456.5015030363862,
         "raw_years_per_decimal_GB": 1.6807511207528367,
-        "summary_files": 242
+        "summary_bytes": 728113,
+        "summary_bytes_per_day": 6017.462809917355,
+        "summary_files": 242,
+        "summary_gzip_bytes": 22133,
+        "summary_years_per_decimal_GB": 454.9842472843971
+      },
+      "tracelab": {
+        "days": 305,
+        "raw_bytes": 1245532297,
+        "raw_compressed_bytes": 100939722,
+        "raw_years_per_decimal_GB": 0.6704318242783318,
+        "summary_bytes": 2093440,
+        "summary_bytes_per_day": 6863.737704918033,
+        "summary_files": 610,
+        "summary_gzip_bytes": 222397,
+        "summary_years_per_decimal_GB": 398.8862781237059
       }
     }
   },
-  "B4": {
-    "top_users": {
-      "comparisons": 304,
-      "keys_checked": 2133,
-      "share_checks": 4231,
-      "growth_share_checks": 1110,
-      "bound_violations": 0,
-      "true_positive": 147,
-      "false_positive": 0,
-      "false_negative": 0,
-      "precision": 1.0,
-      "recall": 1.0,
-      "flagged_next_days": 147,
-      "next_day_reversals": 70
+  "unions": {
+    "1": {
+      "hll_exchange_bytes": {
+        "max": 236,
+        "mean": 116.7672131147541,
+        "median": 100,
+        "n": 305,
+        "p95": 196
+      },
+      "hll_plus_minhash_exchange_bytes": {
+        "max": 2360,
+        "mean": 2239.895081967213,
+        "median": 2224,
+        "n": 305,
+        "p95": 2320
+      },
+      "minhash_overlap_abs_error": {
+        "max": 0.8124415853686586,
+        "mean": 0.061346962851449666,
+        "median": 0.0,
+        "n": 305,
+        "p95": 0.3203452389318808
+      },
+      "naive_overcount": {
+        "max": 5,
+        "mean": 0.6295081967213115,
+        "median": 0,
+        "n": 305,
+        "p95": 2
+      },
+      "raw_list_bytes": {
+        "max": 341,
+        "mean": 103.00983606557377,
+        "median": 69,
+        "n": 305,
+        "p95": 261
+      },
+      "union_abs_error": {
+        "max": 0.0006885861360999002,
+        "mean": 0.00010082361532970447,
+        "median": 1.716628321091207e-05,
+        "n": 305,
+        "p95": 0.00037385364058373227
+      }
     },
-    "top_sessions": {
-      "comparisons": 304,
-      "keys_checked": 17729,
-      "share_checks": 35405,
-      "growth_share_checks": 9295,
-      "bound_violations": 0,
-      "true_positive": 136,
-      "false_positive": 0,
-      "false_negative": 0,
-      "precision": 1.0,
-      "recall": 1.0,
-      "flagged_next_days": 136,
-      "next_day_reversals": 67
+    "28": {
+      "hll_exchange_bytes": {
+        "max": 412,
+        "mean": 214.25539568345323,
+        "median": 184.0,
+        "n": 278,
+        "p95": 381
+      },
+      "hll_plus_minhash_exchange_bytes": {
+        "max": 2537,
+        "mean": 2338.2841726618703,
+        "median": 2308.0,
+        "n": 278,
+        "p95": 2506
+      },
+      "minhash_overlap_abs_error": {
+        "max": 2.6568801303854332,
+        "mean": 0.29341573369853574,
+        "median": 0.15645302665269378,
+        "n": 278,
+        "p95": 1.0238528132085811
+      },
+      "naive_overcount": {
+        "max": 11,
+        "mean": 3.4784172661870505,
+        "median": 3.0,
+        "n": 278,
+        "p95": 9
+      },
+      "raw_list_bytes": {
+        "max": 693,
+        "mean": 297.1546762589928,
+        "median": 237.0,
+        "n": 278,
+        "p95": 629
+      },
+      "union_abs_error": {
+        "max": 0.002077276972805464,
+        "mean": 0.0006155930823150786,
+        "median": 0.0002307956547120682,
+        "n": 278,
+        "p95": 0.001953283960268948
+      }
+    },
+    "7": {
+      "hll_exchange_bytes": {
+        "max": 340,
+        "mean": 164.65551839464882,
+        "median": 132,
+        "n": 299,
+        "p95": 285
+      },
+      "hll_plus_minhash_exchange_bytes": {
+        "max": 2464,
+        "mean": 2288.1471571906354,
+        "median": 2256,
+        "n": 299,
+        "p95": 2409
+      },
+      "minhash_overlap_abs_error": {
+        "max": 1.7426997599943501,
+        "mean": 0.21532375508979418,
+        "median": 0.10155393172598304,
+        "n": 299,
+        "p95": 0.80449921472841
+      },
+      "naive_overcount": {
+        "max": 9,
+        "mean": 1.7892976588628762,
+        "median": 1,
+        "n": 299,
+        "p95": 5
+      },
+      "raw_list_bytes": {
+        "max": 549,
+        "mean": 198.2173913043478,
+        "median": 133,
+        "n": 299,
+        "p95": 437
+      },
+      "union_abs_error": {
+        "max": 0.001289452911578337,
+        "mean": 0.0003173819742030904,
+        "median": 9.346176122804195e-05,
+        "n": 299,
+        "p95": 0.001009046447375539
+      }
     }
-  },
-  "B5": {
-    "files_scanned": 1278,
-    "raw_identity_values": 2076518,
-    "raw_identity_hits": [],
-    "all_serialized_sketch_bytes_total_view": 262648,
-    "note": "Wire bytes include metadata/registers/weights, not only linkable hash bytes. Separate sentinel test required."
-  },
-  "B6": [
-    {
-      "case": "complete",
-      "missing": [],
-      "partial": [],
-      "forecast_guard_refused": false
-    },
-    {
-      "case": "missing_producer",
-      "missing": [
-        "codex"
-      ],
-      "partial": [],
-      "forecast_guard_refused": true
-    },
-    {
-      "case": "partial_window",
-      "missing": [],
-      "partial": [
-        "claude"
-      ],
-      "forecast_guard_refused": true
-    },
-    {
-      "case": "failed_burst_requests",
-      "requests": 5288173,
-      "missing_usage": 99666,
-      "complete_attempt_tokens": 2175523268,
-      "known_tokens_including_partial_input": 2175534999,
-      "partial_input_tokens": 11731,
-      "missing_usage_preserved": true
-    }
-  ]
+  }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Private Phase 0 raw-reference audit; does not produce forecast summaries."""
+"""Validate pinned source records against exact reference totals and identities."""
 
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 EVIDENCE = ROOT / "evidence"
 SOURCES = EVIDENCE / "data-audit-sources"
-KEY = "forecast-phase0-public-test-key-20261010"
+KEY = "llm-measurement-summary-evidence-test-key-20261010"
 SEED = 20261010
 TRACE_REV = "61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c"
 BURST_REV = "7eb2c4f8350f8a6985272386f5c14af1f678b299"
@@ -77,7 +77,7 @@ def write_json(path, value, *, compact=False):
 
 
 def fetch(url):
-    request = urllib.request.Request(url, headers={"User-Agent": "forecast-phase0-data-audit"})
+    request = urllib.request.Request(url, headers={"User-Agent": "llm-measurement-summary-evidence"})
     with urllib.request.urlopen(request, timeout=60) as response:
         return response.read()
 
@@ -255,7 +255,7 @@ def audit_tracelab():
     models, cells, model_times = set(), set(), {}
     raw_bytes = 0
     first = last = None
-    print("TraceLab: building private daily sets, cells, and keyed weights.", flush=True)
+    print("TraceLab: building local daily sets, cells, and keyed weights.", flush=True)
     with gzip.open(path, "rb") as stream:
         for line in stream:
             raw_bytes += len(line)
@@ -472,13 +472,13 @@ def contract_tests():
 
 def render_report(evidence):
     t, b = evidence["tracelab"], evidence["burstgpt"]
-    lines = ["# Forecast Phase 0 Data Audit", "", "Private audit only. No forecast results or product changes.", "",
+    lines = ["# Summary Evidence Data Audit", "", "Exact source validation for the summary measurements.", "",
         "## Inputs And Attribution", "",
         f"- TraceLab v0.0.2, SyFI Lab, University of Washington; revision `{TRACE_REV}`.",
         f"- BurstGPT v2.0, Wang et al.; revision `{BURST_REV}`. [Paper](https://doi.org/10.1145/3711896.3737413).",
         "- Both saved licenses match their pinned sources byte-for-byte and identify CC BY 4.0. TraceLab explicitly separates released data from Apache-2.0 source code.",
         "- This is provenance verification, not a legal opinion or a guarantee of underlying contributor rights. Retain attribution, source/license links, and a modification notice in any approved derived release; imply no endorsement.",
-        "- Changes here: UTC model-event daily grouping, keyed pseudonyms, exact aggregate validation, and a synthetic BurstGPT replay calendar. Raw-reference outputs stay private.", ""]
+        "- Changes here: UTC model-event daily grouping, keyed pseudonyms, exact aggregate validation, and a synthetic BurstGPT replay calendar. Raw-reference outputs stay local.", ""]
     for name, info in evidence["inputs"].items():
         lines.append(f"- `{name}`: SHA256 `{info['sha256']}`; {info['bytes']:,} bytes; verified.")
     lines.extend(["", "Pinned sources and license hashes:", ""])
@@ -511,15 +511,15 @@ def render_report(evidence):
         for group, counts in info["counts"].items():
             lines.append("| " + dataset + " / " + group + " | " + " | ".join(f"{counts[k]:,}" for k in METRICS) + " |")
     lines.extend(["", "## Reproduction And Privacy", "",
-        "- Private oracle: data/oracle.json (mode 0600), containing exact daily user sets, keyed user/session weights, raw identity scan values, all daily cells, and the BurstGPT reservoir. Do not copy it into shareable evidence or use it to generate forecast summaries.",
+        "- Local reference: data/oracle.json (mode 0600), containing exact daily user sets, keyed user/session weights, raw identity scan values, all daily cells, and the BurstGPT reservoir. Keep it local and use it only for validation.",
         "- Small evidence: evidence/data-audit.json and evidence/data-audit-source-pins.json. Source snapshots: evidence/data-audit-sources/. No raw data rows or identity values are copied into the report.",
-        "- The public experiment key is forecast-phase0-public-test-key-20261010; it is not a credential or a privacy secret. Keyed values remain linkable.",
-        "- Replay may use a constant synthetic accounting-group prompt solely to expose connector complete-attempt total weight. This is not real prompt cardinality; the raw oracle here emits no summaries or forecast inputs.",
+        "- The public experiment key is llm-measurement-summary-evidence-test-key-20261010; it is not a credential or a privacy secret. Keyed values remain linkable.",
+        "- Replay uses a constant synthetic accounting-group prompt to expose connector complete-attempt total weight. The connector produces summaries; the reference tables validate them.",
         f"- Reproduce from `{ROOT}`: `venv/bin/python -B scripts/data_audit.py --fetch-sources`, then `venv/bin/python -B scripts/data_audit.py`. Offline reruns use verified cached source snapshots.",
-        f"- Contract checks: {evidence['checks']['contract_tests']}; own script/evidence raw-identity scan hits: {evidence['checks']['raw_identity_leaks_in_shareable_audit_artifacts']}. This is not the full B5 analyst-artifact scan.",
+        f"- Contract checks: {evidence['checks']['contract_tests']}; own script/evidence raw-identity scan hits: {evidence['checks']['raw_identity_leaks_in_shareable_audit_artifacts']}. Run privacy_audit.py separately on the analyst artifacts.",
         "", "## Judgment And Next Steps", "",
-        "Positive for private audit readiness: file pins, source/license provenance, daily exact counters, and namespace evidence are verified. Neutral on forecasting and scientific value: this audit executes no backtest or sketch-accuracy claim.",
-        "Next: reconcile every replay total/platform/model/cell against oracle.json, use only connector summaries for forecast features, keep failed-attempt input separate from complete tokens, and exclude the two conservative BurstGPT boundary days from quality scoring. Stop cross-platform human-identity claims; use only released pseudonym overlap. Keep all artifacts private pending review.", ""])
+        "Positive for source validation: file pins, source/license provenance, daily exact counters and namespace evidence are verified. Sketch accuracy is measured in the subsequent experiments.",
+        "Next: reconcile replay totals against oracle.json, read measurements from connector summaries, and keep failed-attempt input separate from complete tokens. Keep raw-reference artifacts local; report released pseudonym overlap.", ""])
     return "\n".join(lines)
 
 
@@ -547,7 +547,7 @@ def main():
     write_json(DATA / "oracle.json", oracle, compact=True)
     reference_files = [ROOT / "collector/examples/tracelab/audit.py", ROOT / "collector/examples/tracelab/run.py",
                        ROOT / "collector/connector/genaisketchconnector/internal/tracelab/rows.go"]
-    evidence = {"schema_version": 1, "purpose": "Private exact source validation only; no summary production or forecast results",
+    evidence = {"schema_version": 1, "purpose": "Exact source validation for the summary measurements",
         "inputs": inputs, "sources": sources, "tracelab": tracelab, "burstgpt": burstgpt,
         "checks": checks, "reproducibility": {"python": sys.version, "platform": platform.platform(),
             "machine": platform.machine(), "llm_sketchkit": importlib.metadata.version("llm-sketchkit"),

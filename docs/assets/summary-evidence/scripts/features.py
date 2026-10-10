@@ -95,7 +95,7 @@ def build():
                     est.append(h.estimate());exact.append(len(left|right));naive.append(len(left)+len(right))
                 features['series'].append({'name':f'tracelab:users:{length}','dataset':dataset,'kind':'users','dates':dates[length-1:],'values':est,'exact_values':exact,'naive_values':naive})
     (ROOT/'evidence/features-validation.json').write_text(json.dumps(checks,indent=2))
-    if checks['mismatches']:raise AssertionError(f"{len(checks['mismatches'])} accounting mismatches; inspect private evidence")
+    if checks['mismatches']:raise AssertionError(f"{len(checks['mismatches'])} accounting mismatches; inspect local evidence")
     (ROOT/'evidence/features.json').write_text(json.dumps(features,separators=(',',':')))
     print(json.dumps(checks,indent=2))
 
