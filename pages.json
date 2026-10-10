@@ -1,5 +1,5 @@
 [
-  {"slug":"index","title":"Questions about LLM token usage","description":"Practical guides to LLM token spikes, Prometheus cardinality, unusual usage and distinct users, with local open-source tools."},
+  {"slug":"index","title":"LLM Measurement","document_title":"LLM Measurement: open-source tools for LLM usage questions","description":"LLM Measurement provides open-source tools to answer questions about token spikes, distinct users, usage completeness and comparisons across teams and tools from existing telemetry, using keyed hashes instead of raw user or session IDs and no per-user metric labels."},
   {"slug":"cardinality","title":"How do I avoid Prometheus cardinality explosion from per-user LLM metrics?","description":"Keep per-user LLM answers without per-user Prometheus labels. Check a collector configuration with fleetdiff and use keyed rankings."},
   {"slug":"token-spike","title":"Which user is driving my LLM token spike?","description":"Compare two windows of LLM usage with fleetdiff. Find token-heavy users and sessions, with a released-binary example."},
   {"slug":"anomalies","title":"How do I detect anomalies in LLM token consumption?","description":"Scan retained LLM summary windows for unusual token usage, session concentration, tool errors and missing usage."},

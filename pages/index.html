@@ -1,5 +1,7 @@
-<p class="lead">Find the users behind a token spike, spot unusual usage, and keep useful measurements without a Prometheus label for every user.</p>
-<p>These guides use local, open-source tools and synthetic examples you can run against released versions.</p>
+<p class="lead">LLM Measurement is a set of open-source tools that make everyday questions about LLM usage simple to ask and rigorous to answer. Which users and sessions drove a token spike? How many distinct users did an application have this week? Are the usage records complete? How does usage compare across teams and tools? The tools answer from the telemetry you already collect, without a metric label for every user. Their outputs carry keyed hashes instead of raw user or session IDs.</p>
+<p>They are designed with care and built on peer-reviewed sketching algorithms. Rankings come with guaranteed bounds, distinct counts come with a known statistical error, and missing usage is counted separately as missing. Every result on this site comes with the commands to reproduce it.</p>
+<h2>Questions</h2>
+<p>Each guide runs released versions on synthetic examples.</p>
 <ul class="questions">
 <li><a href="cardinality.html">How do I avoid per-user metric cardinality?</a><p>Check the labels in your collector configuration and keep user rankings separately.</p></li>
 <li><a href="token-spike.html">Which user is driving my token spike?</a><p>Compare two windows and see the users and sessions behind the increase.</p></li>

@@ -2,6 +2,7 @@
 # Code authors: Vijay and Codex
 """Check generated pages, local links, question titles and the text indexes."""
 from html.parser import HTMLParser
+import html
 import json
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -35,6 +36,9 @@ def main():
         page = Page()
         page.feed(path.read_text())
         assert page.h1 == 1 and page.has_description, path.name
+        title = entry.get("document_title", entry["title"] + " | LLM Measurement")
+        assert f"<title>{html.escape(title)}</title>" in path.read_text(), path.name
+        assert f'<h1>{html.escape(entry["title"])}</h1>' in path.read_text(), path.name
         if entry.get("kind") == "evidence":
             assert page.commands == 0, path.name
             assert 'id="reproduce"' in path.read_text(), path.name

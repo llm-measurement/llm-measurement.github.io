@@ -13,7 +13,7 @@ BASE = "https://llm-measurement.github.io/"
 PAGES = json.loads((ROOT / "pages.json").read_text())
 FRAME = Template('''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>$title | LLM Measurement</title><meta name="description" content="$description">
+<title>$document_title</title><meta name="description" content="$description">
 <link rel="canonical" href="$canonical"><link rel="stylesheet" href="assets/site.css">
 <meta property="og:title" content="$title"><meta property="og:description" content="$description">
 <meta property="og:type" content="article"><meta property="og:url" content="$canonical">
@@ -44,6 +44,7 @@ def build():
             for p, label in zip(PAGES, names)
         )
         rendered = FRAME.substitute(
+            document_title=html.escape(page.get("document_title", page["title"] + " | LLM Measurement")),
             title=html.escape(page["title"]), description=html.escape(page["description"], quote=True),
             canonical=BASE + ("" if page["slug"] == "index" else page["slug"] + ".html"),
             nav=nav, body=(summary_evidence.render(ROOT) if page["slug"] == "summaries"
