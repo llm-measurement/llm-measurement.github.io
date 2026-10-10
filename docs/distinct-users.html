@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How do I count distinct LLM users without storing user IDs? | LLM Measurement</title><meta name="description" content="Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers.">
+<link rel="canonical" href="https://llm-measurement.github.io/distinct-users.html"><link rel="stylesheet" href="assets/site.css">
+<meta property="og:title" content="How do I count distinct LLM users without storing user IDs?"><meta property="og:description" content="Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers.">
+<meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/distinct-users.html">
+</head><body><a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html">LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
+<div class="layout"><nav aria-label="Guides"><a href="index.html">All questions</a><a href="cardinality.html">Prometheus cardinality</a><a href="token-spike.html">A token spike</a><a href="anomalies.html">Unusual windows</a><a href="distinct-users.html" aria-current="page">Distinct users</a></nav><main id="main"><h1>How do I count distinct LLM users without storing user IDs?</h1><p class="lead">Hash each user ID locally, then add the keyed value to a distinct-count sketch. llm-sketchkit stores the measurement state rather than the original IDs, and compatible workers can merge their sketches before estimating the total.</p>
+<h2>Count a small example</h2>
+<p class="meta">Requires Python 3.11 or later. Installation downloads the pinned release from PyPI; counting runs locally.</p>
+<pre data-run="distinct-users" data-exit="0"><code>python3 -m venv .venv
+.venv/bin/python -m pip install --no-cache-dir llm-sketchkit==0.2.2
+.venv/bin/python - &lt;&lt;'PY'
+import secrets
+from llm_sketchkit import USER_V1, canonicalize_text_v1, hash64, hllpp
+from llm_sketchkit.hash import Secret
+
+secret = Secret(secrets.token_bytes(32))
+users = hllpp.new("small", USER_V1)
+for user_id in ("sample-user-a", "sample-user-b", "sample-user-a", "sample-user-c"):
+    users.add_hash(hash64(secret, USER_V1, canonicalize_text_v1(user_id)))
+print(f"Estimated distinct users: {users.estimate():.0f}")
+PY</code></pre>
+<pre class="output" data-output="distinct-users"><code>Estimated distinct users: 3</code></pre>
+<h2>Across workers and languages</h2>
+<p>Give compatible workers the same protected secret, profile and hash domain. Merge the sketch states, then estimate once; adding workers' distinct-count estimates would count overlapping users more than once. The <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.2.2/examples/go-to-python">Go-to-Python example</a> shows how measurements move into a notebook.</p>
+<p>If your application already emits GenAI spans, the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/CONFIGURATION.md">collector's user_key mapping</a> provides the collection path. To rank token-heavy users instead, <a href="token-spike.html">compare user rankings</a>.</p>
+<h2>What the numbers mean</h2>
+<p>The example contains three distinct synthetic IDs. HyperLogLog++ has statistical error; this small result is not an accuracy benchmark. Raw IDs pass through your application before hashing, but do not enter the sketch. Keyed hashes are pseudonymous; protect the secret and state, and start a new comparison period when rotating the key.</p>
+<p class="meta">Source: <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.2.2">llm-sketchkit v0.2.2</a>. The checked command above defines the complete synthetic input. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+</main></div>
+<footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
+<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How do I avoid Prometheus cardinality explosion from per-user LLM metrics? | LLM Measurement</title><meta name="description" content="Keep per-user LLM answers without per-user Prometheus labels. Check a collector configuration with fleetdiff and use keyed rankings.">
+<link rel="canonical" href="https://llm-measurement.github.io/cardinality.html"><link rel="stylesheet" href="assets/site.css">
+<meta property="og:title" content="How do I avoid Prometheus cardinality explosion from per-user LLM metrics?"><meta property="og:description" content="Keep per-user LLM answers without per-user Prometheus labels. Check a collector configuration with fleetdiff and use keyed rankings.">
+<meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/cardinality.html">
+</head><body><a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html">LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
+<div class="layout"><nav aria-label="Guides"><a href="index.html">All questions</a><a href="cardinality.html" aria-current="page">Prometheus cardinality</a><a href="token-spike.html">A token spike</a><a href="anomalies.html">Unusual windows</a><a href="distinct-users.html">Distinct users</a></nav><main id="main"><h1>How do I avoid Prometheus cardinality explosion from per-user LLM metrics?</h1><p class="lead">Keep user identities in keyed rankings, and use a small set of non-sensitive labels for Prometheus. The genaisketch connector can report distinct users and token-heavy users without creating a series for every user.</p>
+<p>The check below finds an <code>enduser.id</code> label in a synthetic collector configuration. fleetdiff points to the YAML setting that needs changing.</p>
+<h2>Check a configuration</h2>
+<p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The installer verifies the v0.5.0 release before extraction.</p>
+<pre data-run="cardinality" data-exit="3"><code>git clone --depth 1 --branch v0.5.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-cardinality
+cd fleetdiff-cardinality
+sh scripts/install.sh v0.5.0 ./release
+./release/fleetdiff diagnose - &lt; examples/diagnose/unsafe.yaml</code></pre>
+<p>The relevant output is:</p>
+<pre class="output" data-output="cardinality"><code>2 problems to fix:
+  connectors.genaisketch.operation_filter.llm_operations (line 10): Keep only model operations (chat, generate_content, text_completion, embeddings), each once. Tool and agent operations count as model attempts if included.
+  connectors.genaisketch.slices[0].keys (line 12): enduser.id is a metric label; remove it from slices and use a hashed field instead.</code></pre>
+<p>Exit code <code>3</code> means the configuration has a blocking finding. It is the expected result for this example.</p>
+<h2>Keep the user answer</h2>
+<p>Remove the user identity from <code>slices</code>. Configure a hashed <code>user_key</code> and enable its token-weighted ranking with <code>topk_keys</code>. The ranking goes to snapshot logs and summary files; Prometheus receives aggregate metrics. Limit model or route slices with the connector's configured cardinality cap.</p>
+<p>Follow the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/TOPK_KEYS.md">v0.3.1 user-ranking configuration</a> and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/CONFIGURATION.md">slice configuration reference</a>. Then use <a href="token-spike.html">fleetdiff to compare users across windows</a>.</p>
+<h2>What the numbers mean</h2>
+<p>This is a static configuration check, not a measurement of live series count. Keyed hashes are pseudonymous. Restrict access to the hashing secret, rankings and summary files. Trace fan-out preserves original spans, so apply any required content redaction before forwarding them.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.5.0/examples/diagnose">released synthetic diagnosis fixtures</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+</main></div>
+<footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
+<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>

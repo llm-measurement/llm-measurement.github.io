@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questions about LLM token usage | LLM Measurement</title><meta name="description" content="Practical guides to LLM token spikes, Prometheus cardinality, unusual usage and distinct users, with local open-source tools.">
+<link rel="canonical" href="https://llm-measurement.github.io/"><link rel="stylesheet" href="assets/site.css">
+<meta property="og:title" content="Questions about LLM token usage"><meta property="og:description" content="Practical guides to LLM token spikes, Prometheus cardinality, unusual usage and distinct users, with local open-source tools.">
+<meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/">
+</head><body><a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html">LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
+<div class="layout"><nav aria-label="Guides"><a href="index.html" aria-current="page">All questions</a><a href="cardinality.html">Prometheus cardinality</a><a href="token-spike.html">A token spike</a><a href="anomalies.html">Unusual windows</a><a href="distinct-users.html">Distinct users</a></nav><main id="main"><h1>Questions about LLM token usage</h1><p class="lead">Find the users behind a token spike, spot unusual usage, and keep useful measurements without a Prometheus label for every user.</p>
+<p>These guides use local, open-source tools and synthetic examples you can run against released versions.</p>
+<ul class="questions">
+<li><a href="cardinality.html">How do I avoid per-user metric cardinality?</a><p>Check the labels in your collector configuration and keep user rankings separately.</p></li>
+<li><a href="token-spike.html">Which user is driving my token spike?</a><p>Compare two windows and see the users and sessions behind the increase.</p></li>
+<li><a href="anomalies.html">Which windows look unusual?</a><p>Scan usage history for changes in tokens, coverage and contributors.</p></li>
+<li><a href="distinct-users.html">How many distinct users were active?</a><p>Count with keyed measurements that can be merged across workers.</p></li>
+</ul>
+<figure><img src="assets/sessions.gif" alt="fleetdiff terminal report showing a flagged session in a synthetic token-usage comparison"><figcaption>fleetdiff's synthetic session example. <a href="token-spike.html">Run it with the released binary.</a></figcaption></figure>
+<h2>Using LiteLLM?</h2>
+<p>Start with the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">released LiteLLM telemetry recipe</a>. It sends spans through the collector and compares exported summaries with fleetdiff. The Python and Go library also works directly in your own measurement code.</p>
+<h2>Choose a tool</h2>
+<p><a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> reads local trace or summary files. <a href="https://github.com/llm-measurement/otelcol-genai-sketches">The Collector connector</a> creates metrics and summaries continuously. <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a> supplies the measurement library for Go services and Python analysis.</p>
+</main></div>
+<footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
+<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>

@@ -1,0 +1,23 @@
+<p class="lead">Run fleetdiff scan over retained summary windows to find unusual token use, concentrated users or sessions, tool errors and gaps in usage reporting. Each finding includes the observed value and its baseline.</p>
+<p>The synthetic history below produces two unusual windows. Tokens per attempt rise to 3.1 times the baseline; the following window has missing usage on 40% of attempts.</p>
+<h2>Scan a history</h2>
+<p class="meta">Requires Git, curl, gh, shasum, tar, and Go 1.26.9 or later. Go generates synthetic inputs from the released tag; the scan runs with the verified v0.5.0 binary. No model API key or Docker is needed.</p>
+<pre data-run="anomalies" data-exit="3"><code>git clone --depth 1 --branch v0.5.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-anomalies
+cd fleetdiff-anomalies
+sh scripts/install.sh v0.5.0 ./release
+GOWORK=off go run ./examples/scan --out ./synthetic-windows
+./release/fleetdiff scan ./synthetic-windows --expected app --recent 2 \
+  --as-of 2026-10-04T00:30:00Z</code></pre>
+<p>Selected output:</p>
+<pre class="output" data-output="anomalies"><code>2 unusual windows among 2 checked.</code></pre>
+<pre class="output" data-output="anomalies"><code>2026-10-04T00:28:00Z
+  reported tokens per attempt: 310.00; typical 100.00 (3.10x).
+  session-1 now holds 62% of tokens (newly prominent in this scan).</code></pre>
+<pre class="output" data-output="anomalies"><code>2026-10-04T00:29:00Z
+  Missing usage: 40.00% of model attempts; typical 0.00% (coverage change, not lower usage).</code></pre>
+<p>Exit code <code>3</code> means findings were detected; <code>0</code> means none were found. The fixed date reproduces this sample. For current traffic, omit <code>--as-of</code>.</p>
+<h2>Keep watching your application</h2>
+<p>Retain enough exported windows for a baseline, then run the same command on that directory from a scheduled job. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.5.0/docs/SCAN.md">scan guide</a> explains thresholds, minimum history and persistence. The collector's <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/SUMMARY_EXPORT_HELM.md">Kubernetes summary guide</a> covers durable storage and readback.</p>
+<h2>What the numbers mean</h2>
+<p>This example verifies planted changes, not detection accuracy on production workloads. Review flags against your own history: sessions that turn over often can appear newly prominent. The scanner uses recent-window baselines, not a seasonality model; incomplete usage is a coverage finding. Keyed user and session rankings are pseudonymous and stay out of metric labels.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.5.0/examples/scan">released history generator and tests</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>

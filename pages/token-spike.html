@@ -1,0 +1,24 @@
+<p class="lead">Compare the user and session rankings in two summary windows. In this synthetic example, one user adds 3,000 reported tokens while the application's total rises from 400 to 3,300.</p>
+<p>fleetdiff shows both the contributors and the split between more model attempts and more tokens per attempt.</p>
+<h2>Run the comparison</h2>
+<p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. No collector, Docker or model API key is needed for the sample.</p>
+<pre data-run="token-spike" data-exit="0"><code>git clone --depth 1 --branch v0.5.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-token-spike
+cd fleetdiff-token-spike
+sh scripts/install.sh v0.5.0 ./release
+./release/fleetdiff investigate --before examples/sessions/data/before \
+  --after examples/sessions/data/after --expected app</code></pre>
+<p>The report opens with:</p>
+<pre class="output" data-output="token-spike"><code>1 of 8 tracked sessions flagged for review: 90.91% of attributed tokens.
+Reported tokens: 400 -&gt; 3300; model attempts: 4 -&gt; 13.
+  +1592 tokens from attempt count; +1308 tokens from tokens per attempt.
+  Tokens per attempt: 100.00 -&gt; 253.85.</code></pre>
+<p>The user section identifies the leading contributor:</p>
+<pre class="output" data-output="token-spike"><code>Which tracked users contribute tokens or model attempts?
+  key / measurement   before -&gt; after  after share  review
+  user-1 / top_users  0 -&gt; 3000        90.91%</code></pre>
+<h2>Use your own application</h2>
+<p>Enable token-weighted <code>user_key</code> and <code>session_key</code> rankings in the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/TOPK_KEYS.md">released collector</a>, retain two complete summary windows, and pass their directories as <code>--before</code> and <code>--after</code>. Set <code>--expected</code> to your actual producer inventory and keep the hashing key consistent across the comparison.</p>
+<p>For a gateway setup, start with the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">LiteLLM recipe</a>. To keep watching, <a href="anomalies.html">scan retained history</a>.</p>
+<h2>What the numbers mean</h2>
+<p>These inputs are synthetic and retain every ranked key, so their bounds are exact. The production report shows ranges when bounds differ. A flagged session warrants investigation; it is not proof of a loop. Aliases are local to a measurement and the hashes are pseudonymous. Reported tokens describe usage, not an invoice or a causal explanation of LLM cost.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.5.0/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
