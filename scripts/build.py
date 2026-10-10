@@ -12,6 +12,7 @@ import summary_evidence
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://llm-measurement.github.io/"
 PAGES = json.loads((ROOT / "pages.json").read_text())
+STATIC_ROOT_FILES = ("googled831a5845f87080c.html",)
 FRAME = Template('''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>$document_title</title><meta name="description" content="$description">
@@ -44,6 +45,8 @@ def build():
     if (out / "assets").exists():
         shutil.rmtree(out / "assets")
     shutil.copytree(ROOT / "assets", out / "assets", ignore=excluded)
+    for name in STATIC_ROOT_FILES:
+        shutil.copyfile(ROOT / name, out / name)
     names = ["All questions", "Prometheus cardinality", "A token spike", "Unusual windows", "Distinct users", "Why summaries"]
     for page in PAGES:
         nav = "".join(

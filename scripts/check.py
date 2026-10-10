@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
+from build import STATIC_ROOT_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 GUIDE_CONTEXT = {
@@ -77,8 +78,10 @@ def main():
     text_index = (ROOT / "docs/llms.txt").read_text()
     assert all(p["slug"] + ".html" in text_index for p in pages[1:])
     assert (ROOT / "docs/.nojekyll").exists()
+    for name in STATIC_ROOT_FILES:
+        assert (ROOT / "docs" / name).read_bytes() == (ROOT / name).read_bytes(), name
     guides = sum(p["slug"] != "index" and p.get("kind") != "evidence" for p in pages)
-    print(f"PASS: {len(pages)} pages, {guides} runnable guides, local links, sitemap and llms.txt")
+    print(f"PASS: {len(pages)} pages, {guides} runnable guides, local links, sitemap, llms.txt and static root files")
 
 
 if __name__ == "__main__":
