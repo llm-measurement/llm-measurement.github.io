@@ -6,6 +6,7 @@
 <li><a href="anomalies.html">Which windows look unusual?</a><p>Scan usage history for changes in tokens, coverage and contributors.</p></li>
 <li><a href="distinct-users.html">How many distinct users were active?</a><p>Count with keyed measurements that can be merged across workers.</p></li>
 </ul>
+<p><a href="summaries.html">Why summaries instead of raw logs?</a> See the measured sharing and retention properties, with source data and methods.</p>
 <figure><img src="assets/sessions.gif" alt="fleetdiff terminal report showing a flagged session in a synthetic token-usage comparison"><figcaption>fleetdiff's synthetic session example. <a href="token-spike.html">Run it with the released binary.</a></figcaption></figure>
 <h2>Using LiteLLM?</h2>
 <p>Start with the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">released LiteLLM telemetry recipe</a>. It sends spans through the collector and compares exported summaries with fleetdiff. The Python and Go library also works directly in your own measurement code.</p>

@@ -1,6 +1,7 @@
 # LLM Measurement Guides
 
 Four questions about LLM token usage, with commands and output from released tools.
+An evidence page explains what can be shared and retained with summaries.
 
 | Question | Page |
 | --- | --- |
@@ -8,6 +9,7 @@ Four questions about LLM token usage, with commands and output from released too
 | Which user is driving my LLM token spike? | [Token spike](docs/token-spike.html) |
 | How do I detect anomalies in LLM token consumption? | [Anomalies](docs/anomalies.html) |
 | How do I count distinct LLM users without storing user IDs? | [Distinct users](docs/distinct-users.html) |
+| Why summaries instead of raw logs | [Summaries](docs/summaries.html) |
 
 ## Build And Check
 

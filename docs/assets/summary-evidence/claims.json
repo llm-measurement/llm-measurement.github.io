@@ -1,0 +1,20 @@
+{
+  "report_sha256": "bc88572276d41ee3c714040e278ebe00a5512b1aca968dbfed77c388f490c855",
+  "status": "Draft for text and precedent review; not approved for site publication",
+  "environment": {
+    "machine": "Apple M4 Max",
+    "os": "Darwin 27.0.0 arm64",
+    "go": "1.26.9",
+    "python": "3.11.14",
+    "sketchkit": "0.2.2",
+    "collector_source": "32bd078e61fefa7294d6d4748a3db4e1aa562994"
+  },
+  "claims": {
+    "overlap": {"report_section": "B1", "dataset": "TraceLab v0.0.2", "values": [46, 26, 52, 72], "method": "Exact released pseudonym sets; compatible HLL++ union compared with the exact union", "command": "venv/bin/python scripts/data_audit.py", "evidence": "recorded/overlap.json"},
+    "ranges": {"report_section": "B2", "dataset": "TraceLab v0.0.2", "days": [7, 28, 90], "method": "Every contiguous range, from retained daily HLL++ states", "command": "venv/bin/python scripts/sketch_experiments.py", "evidence": "recorded/sketch-results.json"},
+    "storage": {"report_section": "B2", "dataset": "TraceLab v0.0.2", "summary_bytes": 2087216, "days": 305, "raw_uncompressed_bytes": 1245532297, "raw_compressed_bytes": 100939722, "method": "Sum two platform summary files per day; separately measure source JSONL and its gzip download", "command": "venv/bin/python scripts/sketch_experiments.py", "evidence": "recorded/sketch-results.json"},
+    "scale": {"report_section": "B3", "dataset": "Synthetic identities with BurstGPT v2.0 successful-request weights", "users": 1000000, "wire_bytes": 27221, "top_k": 20, "recall": 1.0, "seeds": [20261010, 20261011, 20261012], "method": "Small HLL++ plus weighted frequent-items, one mandatory event per identity followed by Zipf(1.2) events; exact-table comparison", "command": "./scale data/weights.json evidence/scale-isolated-1000000-20261010 1000000 20261010", "evidence": "recorded/scale.json"},
+    "small-lists": {"report_section": "B1", "dataset": "TraceLab v0.0.2", "rounded_mean_sketch_bytes": 116, "rounded_mean_raw_list_bytes": 103, "method": "Daily pair of HLL++ payloads versus compact JSON containing both raw user lists", "command": "venv/bin/python scripts/sketch_experiments.py", "evidence": "recorded/sketch-results.json"},
+    "contributors": {"report_section": "B4", "dataset": "TraceLab v0.0.2", "keys_checked": 19862, "bound_violations": 0, "method": "Every exact key in adjacent user/session windows; signed interval subtraction and positive-growth shares", "command": "venv/bin/python scripts/sketch_experiments.py", "evidence": "recorded/sketch-results.json"}
+  }
+}
