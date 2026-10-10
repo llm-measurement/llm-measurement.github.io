@@ -45,7 +45,8 @@ canonical URLs use `https://llm-measurement.github.io/`; they become live on
 publication. This scaffold does not enable hosting or change repository settings.
 
 Change the source pages, rebuild, and check the generated diff in the same PR.
-Keep results tied to released versions and put limits once on each guide.
+Keep results tied to released versions. Each guide keeps a short interpretation
+line linked to the shared Measurement notes section on the summaries page.
 Commits must be signed and signed off (`git commit -s -S`).
 
 Licensed under Apache-2.0. The sessions image comes from fleetdiff under the same license.

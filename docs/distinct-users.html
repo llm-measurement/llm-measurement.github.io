@@ -29,9 +29,9 @@ PY</code></pre>
 <h2>Across workers and languages</h2>
 <p>Give compatible workers the same protected secret, profile and hash domain. Merge the sketch states, then estimate once; adding workers' distinct-count estimates would count overlapping users more than once. The <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.2.2/examples/go-to-python">Go-to-Python example</a> shows how measurements move into a notebook.</p>
 <p>If your application already emits GenAI spans, the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/CONFIGURATION.md">collector's user_key mapping</a> provides the collection path. To rank token-heavy users instead, <a href="token-spike.html">compare user rankings</a>.</p>
-<h2>What the numbers mean</h2>
-<p>The example contains three distinct synthetic IDs. HyperLogLog++ has statistical error; this small result is not an accuracy benchmark. Raw IDs pass through your application before hashing, but do not enter the sketch. Keyed hashes are pseudonymous; protect the secret and state, and start a new comparison period when rotating the key.</p>
 <p class="meta">Source: <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.2.2">llm-sketchkit v0.2.2</a>. The checked command above defines the complete synthetic input. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="measurement-context">Distinct counts are statistical estimates. Your application hashes raw IDs before they reach the sketch.<br>
+<a href="summaries.html#measurement-notes">Measurement notes</a></p>
 </main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 <a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>

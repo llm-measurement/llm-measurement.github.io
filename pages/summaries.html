@@ -18,15 +18,6 @@
 <h2>How it works</h2>
 <p>These are standard mergeable-sketch properties (<a href="https://www.cs.ox.ac.uk/people/graham.cormode/pubs/html/AgarwalCormodeHuangPhillipsWeiYi12.html">Agarwal et al., PODS 2012</a>), also used in <a href="https://datasketches.apache.org/docs/Community/Research.html">Apache DataSketches</a> and <a href="https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/hll_functions">BigQuery HLL_COUNT</a>, measured here on LLM usage records.</p>
 
-<h2 id="meaning">What the numbers mean</h2>
-<ul>
-<li><strong>Compatible identities.</strong> Merging requires the same identity field, canonicalization, hash domain and key. The coding records' user labels are released pseudonyms that share one namespace across both tools.</li>
-<li><strong>Keyed and pseudonymous, not anonymous.</strong> Whoever holds the key can hash a known ID and test it against exposed hashes. Cardinality sketches can also leak membership information; see <a href="https://petsymposium.org/popets/2019/popets-2019-0018.php">Desfontaines, Lochbihler and Basin, PoPETs 2019</a>. Protect the key and summary access. The experiment uses a public test key, so anyone can reproduce its hashes.</li>
-<li><strong>Raw records and summaries.</strong> A raw-data system computes exact answers, and raw records remain the source for billing and for questions you didn't choose in advance. Summaries keep selected measurements, which is why they're small. For a few dozen users, raw lists were smaller: <span data-claim="small-lists">$sketch_daily_bytes versus $list_daily_bytes bytes per day</span> for sketches and lists respectively.</li>
-<li><strong>Guarantees.</strong> Distinct counts are statistical estimates; contributor bounds are deterministic. Errors and flag agreement were measured on these workloads.</li>
-<li><strong>Scope.</strong> One lab's Claude Code and Codex records, synthetic scale workloads, one machine. Sizes are decimal MB and GB; sketch bytes are serialized state, not process memory. Query times are batch averages.</li>
-</ul>
-
 <h2 id="sources">Data and reproduction</h2>
 <p>The coding records come from <a href="https://github.com/uw-syfi/TraceLab/releases/tag/v0.0.2">TraceLab v0.0.2</a>, revision <code>61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c</code>, <a href="https://github.com/uw-syfi/TraceLab/blob/61fea8f97277d0aa247cc2e4c7e31f90ed2bea1c/LICENSE-DATASET.md">CC BY 4.0, SyFI Lab, University of Washington</a>. Synthetic scale weights come from <span data-claim="sampling">successful requests in <a href="https://github.com/HPMLL/BurstGPT/releases/tag/v2.0">BurstGPT v2.0</a>, after removing $copied_rows copied rows</span>; revision <code>7eb2c4f8350f8a6985272386f5c14af1f678b299</code>, <a href="https://github.com/HPMLL/BurstGPT/blob/7eb2c4f8350f8a6985272386f5c14af1f678b299/LICENSE">CC BY 4.0, Wang et al.</a> Changes are daily event-time aggregation, keyed summaries, merging and synthetic workloads.</p>
 <p id="machine">Recorded environment: $machine, $os; $go; Python $python; sketchkit $sketchkit. Collector source: <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/$collector_source">$collector_source</a>. Replay uses the connector's accounting and event-time clock; exact reference tables validate the answers.</p>
@@ -60,3 +51,15 @@ venv/bin/python scripts/record_results.py</code></pre>
 </details>
 
 <p>Try <a href="token-spike.html">a user and session investigation</a>, <a href="distinct-users.html">a distinct-user count</a>, or <a href="cardinality.html">the cardinality guide</a>.</p>
+
+<section id="meaning" aria-labelledby="measurement-notes">
+<h2 id="measurement-notes">Measurement notes</h2>
+<ul>
+<li><strong>Compatible identities.</strong> Merge measurements with the same identity field, canonicalization, hash domain and key. Start a new comparison period when rotating the key. Report aliases are local to a measurement. The coding records' released user pseudonyms share one namespace across both tools.</li>
+<li><strong>Identity protection.</strong> Applications hash IDs before adding them to sketches. Hashes are keyed and pseudonymous, not anonymous: a key holder can test known IDs against exposed hashes, and cardinality sketches can reveal membership (<a href="https://petsymposium.org/popets/2019/popets-2019-0018.php">Desfontaines, Lochbihler and Basin, PoPETs 2019</a>). Protect the key, rankings and summary files. Trace fan-out preserves original spans; apply content redaction before forwarding them. The evidence experiment uses a public test key so anyone can reproduce its hashes.</li>
+<li><strong>Estimates and bounds.</strong> Distinct counts are statistical estimates; contributor bounds are deterministic. The token-spike example retains every ranked key, giving exact bounds; reports show ranges when bounds differ. The three-user example demonstrates the counting workflow. Measured errors and flag agreement describe the workloads in the evidence bundle.</li>
+<li><strong>Reading findings.</strong> <code>diagnose</code> checks configuration; live series counts come from your metrics backend. <code>scan</code> compares recent windows, with seasonal patterns and session turnover evaluated against your own history. Flags identify sessions to investigate; confirming a loop takes run-level evidence. Missing usage is a coverage finding, and usage changes identify contributors rather than establish cause. Reported tokens describe usage; they are not an invoice, a cost, or a measure of useful work.</li>
+<li><strong>Raw records and summaries.</strong> A raw-data system computes exact answers, and raw records remain the source for billing and for questions you didn't choose in advance. Summaries keep selected measurements, which is why they're small. For a few dozen users, raw lists were smaller: <span data-claim="small-lists">$sketch_daily_bytes versus $list_daily_bytes bytes per day</span> for sketches and lists respectively.</li>
+<li><strong>Scope.</strong> The command guides use synthetic inputs with known outcomes. The evidence measurements use one lab's Claude Code and Codex records and synthetic scale workloads on one machine. Sizes are decimal MB and GB; sketch bytes are serialized state, not process memory. Query times are batch averages.</li>
+</ul>
+</section>

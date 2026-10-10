@@ -25,7 +25,7 @@ FRAME = Template('''<!doctype html>
 <header><a class="brand" href="index.html">$header_mark LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
 <div class="layout"><nav aria-label="Guides">$nav</nav><main id="main"><h1>$title</h1>$body</main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
-<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>
+$measurement_link<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>
 ''')
 
 
@@ -51,6 +51,8 @@ def build():
             for p, label in zip(PAGES, names)
         )
         rendered = FRAME.substitute(
+            measurement_link=('<a href="summaries.html#measurement-notes">Measurement notes</a> · '
+                              if page["slug"] == "index" or page.get("kind") == "evidence" else ""),
             header_mark=ET.tostring(header_mark, encoding="unicode"),
             document_title=html.escape(page.get("document_title", page["title"] + " | LLM Measurement")),
             title=html.escape(page["title"]), description=html.escape(page["description"], quote=True),

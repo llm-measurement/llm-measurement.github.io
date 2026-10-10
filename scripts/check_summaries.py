@@ -71,7 +71,7 @@ def main():
         assert row["bound_violations"] == 0 and row["weight_conserved"]
     source = summary_evidence.render(ROOT)
     assert source in (ROOT / "docs/summaries.html").read_text(), "regenerate page values"
-    assert source.count("What the numbers mean") == 1
+    assert source.count('<h2 id="measurement-notes">Measurement notes</h2>') == 1
     assert "A raw-data system computes exact answers," in source
     sampling = recorded["sampling"]
     assert sampling["deduplication"]["removed_rows"] == 1379449
