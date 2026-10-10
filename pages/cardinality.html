@@ -1,0 +1,35 @@
+<p class="lead">Remove user IDs from your Prometheus labels. Keep aggregate metrics for totals and rates, a bounded top-users ranking for the biggest contributors, and a distinct-user count whose labels contain no user identities.</p>
+<h2>Why per-user labels grow so quickly</h2>
+<p>Prometheus stores a separate time series for each observed combination of label values. For one metric, <strong>series ≈ users × other label combinations</strong> when each user appears across those combinations. Model, route, status and instance labels multiply the count further. The exact number depends on which combinations occur; histogram buckets and multiple metrics add more series.</p>
+<h2>Keep the answers without identity labels</h2>
+<p>Use aggregate counters for token usage and model attempts, with a small, capped set of model or route labels. Keep the top token-consuming users in a fixed-capacity ranking outside Prometheus labels. Track the number of distinct users as a scalar estimate, also without a user label. This preserves both questions: how many users were active, and which users accounted for most tokens.</p>
+<h2>For OpenTelemetry users</h2>
+<p>With the released genaisketch connector, map your span's user attribute and enable token-weighted user rankings:</p>
+<pre><code>connectors:
+  genaisketch:
+    fields:
+      user_key:
+        from_attributes: [enduser.id, user.id]
+        canonicalization: text_v1
+        domain: user:v1
+    topk: 20
+    topk_keys:
+      - field: user_key
+        weight: tokens</code></pre>
+<p>This fragment goes into a complete collector configuration with the hashing secret and trace pipeline set up. The distinct-user estimate is a metric value; keyed top-user rankings go to snapshot logs and optional summary files. Keep user identity attributes out of <code>slices</code>. <code>topk</code> limits displayed candidates; the configured sketch profile sets the ranking's fixed capacity.</p>
+<p>See the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/TOPK_KEYS.md">v0.3.1 ranking guide</a> and <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/CONFIGURATION.md">complete configuration reference</a>. Then use <a href="token-spike.html">fleetdiff to compare users across windows</a>.</p>
+<h2>Then check your collector configuration</h2>
+<p>The secondary check below finds an <code>enduser.id</code> label in a synthetic collector configuration. fleetdiff points to the YAML setting that needs changing.</p>
+<p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The installer verifies the v0.5.0 release before extraction.</p>
+<pre data-run="cardinality" data-exit="3"><code>git clone --depth 1 --branch v0.5.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-cardinality
+cd fleetdiff-cardinality
+sh scripts/install.sh v0.5.0 ./release
+./release/fleetdiff diagnose - &lt; examples/diagnose/unsafe.yaml</code></pre>
+<p>The relevant output is:</p>
+<pre class="output" data-output="cardinality"><code>2 problems to fix:
+  connectors.genaisketch.operation_filter.llm_operations (line 10): Keep only model operations (chat, generate_content, text_completion, embeddings), each once. Tool and agent operations count as model attempts if included.
+  connectors.genaisketch.slices[0].keys (line 12): enduser.id is a metric label; remove it from slices and use a hashed field instead.</code></pre>
+<p>Exit code <code>3</code> means the configuration has a blocking finding. It is the expected result for this example.</p>
+<h2>What the numbers mean</h2>
+<p>This is a static configuration check, not a measurement of live series count. Keyed hashes are pseudonymous. Restrict access to the hashing secret, rankings and summary files. Trace fan-out preserves original spans, so apply any required content redaction before forwarding them.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.5.0/examples/diagnose">released synthetic diagnosis fixtures</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
