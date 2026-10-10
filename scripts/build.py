@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import shutil
 from string import Template
+import xml.etree.ElementTree as ET
 import summary_evidence
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,10 +16,13 @@ FRAME = Template('''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>$document_title</title><meta name="description" content="$description">
 <link rel="canonical" href="$canonical"><link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta property="og:title" content="$title"><meta property="og:description" content="$description">
 <meta property="og:type" content="article"><meta property="og:url" content="$canonical">
 </head><body><a class="skip" href="#main">Skip to content</a>
-<header><a class="brand" href="index.html">LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
+<header><a class="brand" href="index.html">$header_mark LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
 <div class="layout"><nav aria-label="Guides">$nav</nav><main id="main"><h1>$title</h1>$body</main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 <a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>
@@ -28,6 +32,9 @@ FRAME = Template('''<!doctype html>
 def build():
     out = ROOT / "docs"
     out.mkdir(exist_ok=True)
+    ET.register_namespace("", "http://www.w3.org/2000/svg")
+    header_mark = ET.parse(ROOT / "assets/header-mark.svg").getroot()
+    header_mark.attrib.update({"aria-hidden": "true", "width": "20", "height": "20"})
     (ROOT / "assets/summary-evidence/claims.json").write_text(
         json.dumps(summary_evidence.claims(ROOT), indent=2, sort_keys=True) + "\n")
     # Experimental inputs and generated evidence must never become site assets.
@@ -44,6 +51,7 @@ def build():
             for p, label in zip(PAGES, names)
         )
         rendered = FRAME.substitute(
+            header_mark=ET.tostring(header_mark, encoding="unicode"),
             document_title=html.escape(page.get("document_title", page["title"] + " | LLM Measurement")),
             title=html.escape(page["title"]), description=html.escape(page["description"], quote=True),
             canonical=BASE + ("" if page["slug"] == "index" else page["slug"] + ".html"),
