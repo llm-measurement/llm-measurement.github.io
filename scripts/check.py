@@ -46,6 +46,38 @@ class Page(HTMLParser):
             self.has_description = bool(attrs.get("content"))
 
 
+class ReadingFlow(HTMLParser):
+    """Track block order while treating links and emphasis as inline text."""
+    def __init__(self):
+        super().__init__()
+        self.blocks = []
+        self.text_block = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag in {"h1", "h2", "h3", "h4", "h5", "h6", "p", "pre", "ul", "ol"}:
+            self.blocks.append([tag, ""])
+            self.text_block = self.blocks[-1] if tag == "p" or tag.startswith("h") else None
+
+    def handle_endtag(self, tag):
+        if self.text_block is not None and tag == self.text_block[0]:
+            self.text_block = None
+
+    def handle_data(self, data):
+        if self.text_block is not None:
+            self.text_block[1] += data
+
+
+def check_reading_flow(source):
+    flow = ReadingFlow()
+    flow.feed(source)
+    for index, (tag, text) in enumerate(flow.blocks):
+        following = flow.blocks[index + 1][0] if index + 1 < len(flow.blocks) else None
+        if tag.startswith("h") and following and following.startswith("h"):
+            raise AssertionError(f"heading followed directly by a heading: {text.strip()}")
+        if tag == "p" and text.rstrip().endswith(":") and following not in {"pre", "ul", "ol"}:
+            raise AssertionError(f"colon introduction needs a code block or list: {text.strip()}")
+
+
 def main():
     pages = json.loads((ROOT / "pages.json").read_text())
     measurement_sections = 0
@@ -53,6 +85,7 @@ def main():
         path = ROOT / "docs" / (entry["slug"] + ".html")
         page = Page()
         page.feed(path.read_text())
+        check_reading_flow((ROOT / "pages" / (entry["slug"] + ".html")).read_text())
         nav = path.read_text().split('<nav aria-label="Guides">', 1)[1].split('</nav>', 1)[0]
         assert nav.index('href="token-spike.html"') < nav.index('href="tokenmaxxing.html"') < nav.index('href="cardinality.html"'), path.name
         assert '>A token spike</a>' in nav and '>Tokenmaxxing</a>' in nav and '>Per-user metrics</a>' in nav, path.name
@@ -119,7 +152,7 @@ def main():
             assert expected in path.read_text(), (path.name, "guide context must precede its notes link")
             assert path.read_text().count('class="measurement-context"') == 1, path.name
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
-            ordered = ['class="lead"', 'class="own-data"', "What you'll see", "No data handy? Try the sample", "Reading the result", 'class="measurement-context"']
+            ordered = ['class="lead"', 'class="own-data"', "What you'll see", "No data handy? Try the sample", 'class="measurement-context"']
             positions = [source.index(marker) for marker in ordered]
             assert positions == sorted(positions), (path.name, "own-data-first order")
             parsed = Blocks()

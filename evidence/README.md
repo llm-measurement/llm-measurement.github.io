@@ -54,7 +54,10 @@ Each page gets a fresh directory and caches. Fixture source is anonymously clone
 at the release tag; the visitor's install/analyze blocks never clone a repository.
 The scan fixture is shifted to recent complete windows while preserving canonical
 summary serialization. Private sentinel identities must stay out of output.
-`own-data-verified.json` binds the 15 successful command blocks to their source
+The installer checks run with `GH_TOKEN` and `GITHUB_TOKEN` removed and a fresh
+`GH_CONFIG_DIR`: gh must be installed but need not be signed in. The LiteLLM path
+exports first, installs next, and investigates that same exported file.
+`own-data-verified.json` binds the 16 successful command blocks to their source
 hashes and records the released fixture commit. CI reruns these checks.
 
 ## Manual release checks

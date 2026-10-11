@@ -6,6 +6,8 @@ header { border-bottom: 1px solid #dde4e0; padding: 22px 5%; display: flex; just
 .brand { color: #202624; font-size: 22px; font-weight: 650; text-decoration: none; display: inline-flex; align-items: center; gap: 9px; }
 .brand svg { flex-shrink: 0; }
 .layout { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 215px minmax(0, 1fr); gap: 48px; padding: 40px 32px 64px; }
+.mobile-guides { display: none; }
+.mobile-guides summary { cursor: pointer; font-weight: 600; padding: 4px 0; }
 nav { font-size: 14px; padding-top: 4px; }
 nav a { display: block; padding: 9px 12px; text-decoration: none; border-left: 2px solid transparent; color: #46544c; }
 nav a[aria-current] { color: #116447; border-color: #148355; background: #f0f6f2; font-weight: 600; }
@@ -46,4 +48,4 @@ footer { border-top: 1px solid #dde4e0; max-width: 1180px; margin: auto; padding
   pre.output { background: var(--output); }
   .skip:focus { background: var(--paper); }
 }
-@media (max-width: 760px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 24px 20px 40px; } nav { display: flex; flex-wrap: wrap; border-bottom: 1px solid #dde4e0; padding-bottom: 12px; } nav a { border-left: none; border-bottom: 2px solid transparent; padding: 6px 10px; } h1 { font-size: 26px; } header { padding: 18px 20px; } }
+@media (max-width: 767px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 20px 20px 40px; } .desktop-guides { display: none; } .mobile-guides { display: block; } nav { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 12px; } nav a { border-left: none; border-bottom: 2px solid transparent; padding: 6px 10px; } h1 { font-size: 26px; } header { padding: 18px 20px; } }

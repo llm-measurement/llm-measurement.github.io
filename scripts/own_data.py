@@ -28,7 +28,8 @@ EXPECTED = {
     "token-spike": ("Logged model requests:", "user-1:"),
     "token-spike-summaries": ("Reported tokens: 400 -> 3300", "user-1"),
     "litellm-spend": ("Logged model requests:", "key-1:"),
-    "spend-export": ("Logged model requests:", "key-1:"),
+    "spend-export": ("Exported request-level rows to ./litellm-export/spend.csv",),
+    "litellm-install": ("Verified", "installation in ././bin"),
     "cache-check": ("Cache-read share of recorded input:", "session-1:"),
     "cardinality": ("2 problems to fix:", "enduser.id is a metric label"),
     "traces-usage": ("4 model attempts across 6 captured spans; 170 reported tokens.",),
@@ -173,7 +174,7 @@ def check(output, page=None):
                             try:
                                 result = execute(db_env)
                             finally:
-                                for diagnostics in fresh.glob("litellm-export.*/private-psql.*"):
+                                for diagnostics in fresh.glob("litellm-export/private-psql.*"):
                                     shutil.copyfile(diagnostics, output / diagnostics.name)
                     else:
                         result = execute(env)
@@ -185,7 +186,7 @@ def check(output, page=None):
                     if block["id"] == "home-go":
                         assert "github.com/llm-measurement/llm-sketchkit v0.3.0" in (fresh / "measurement-go/go.mod").read_text()
                     if block["id"] == "spend-export":
-                        exported = next(fresh.glob("litellm-export.*/spend.csv"))
+                        exported = fresh / "litellm-export/spend.csv"
                         with exported.open() as handle:
                             rows = list(csv.DictReader(handle))
                         assert len(rows) == 160 and "messages" not in rows[0] and "response" not in rows[0]

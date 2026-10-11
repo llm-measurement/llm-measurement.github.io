@@ -12,6 +12,14 @@ from own_data import EXPECTED, PAGES, refresh_history
 
 
 class OwnDataTests(unittest.TestCase):
+    def test_litellm_exports_before_installing_and_analyzing(self):
+        blocks = Blocks()
+        blocks.feed((ROOT / "pages/litellm-spend.html").read_text())
+        self.assertEqual([b["id"] for b in blocks.own],
+                         ["spend-export", "litellm-install", "litellm-spend"])
+        self.assertIn("./litellm-export/spend.csv", blocks.own[0]["text"])
+        self.assertIn("./litellm-export/spend.csv", blocks.own[2]["text"])
+
     def test_slow_install_does_not_expire_the_scan_standin(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -35,10 +35,12 @@ if total:
     low = sum(item.lower_bound for item in items) / total
     high = min(1, sum(item.upper_bound for item in items) / total)
     print(f"Displayed users account for {low:.1%} to {high:.1%} of tokens.")
-PY</code></pre><p>For continuous rankings from GenAI spans, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/TOPK_KEYS.md">collector’s user-key configuration</a>.</p>
+PY</code></pre><p>For continuous rankings from GenAI spans, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/TOPK_KEYS.md">collector’s user-key configuration</a>. The released connector keeps the same keyed, token-weighted ranking in snapshot logs and summary files, without user labels on your metrics. See <a href="cardinality.html">per-user metrics</a>.</p>
+<p>Teams are few, so count them exactly; a few dozen budget lines don't need a sketch. Use the keyed ranking for people, where the list is long and names are sensitive.</p>
 </aside>
 <h2>What you'll see</h2>
 <p>Example output from the synthetic sample below; your values will reflect your input.</p>
+<p>In this synthetic week, 5 of 60 people account for 43% of reported tokens. The ranking holds keyed values, not names; whoever holds the key can look up a person by hashing a known ID.</p>
 <pre class="output" data-output="tokenmaxxing"><code>People using AI this week: 60
 Total reported tokens: 78,126,732
 Heaviest users (keyed; only the key holder can look them up):
@@ -48,6 +50,7 @@ Heaviest users (keyed; only the key holder can look them up):
   #4: 2,615,589 tokens
   #5: 2,273,034 tokens
 The top 5 of 60 people account for 43% of all tokens.</code></pre>
+<p>To see who caused a jump between two periods, see <a href="token-spike.html">Which user is driving my token spike?</a></p>
 <h2>No data handy? Try the sample</h2>
 <p class="meta">Requires Python 3.11 or later. Installation downloads the pinned release from PyPI; ranking runs locally.</p>
 <pre data-run="tokenmaxxing" data-exit="0"><code>python3 -m venv .venv
@@ -87,17 +90,6 @@ high = min(1.0, sum(i.upper_bound for i in top) / total)
 share = f"{low:.0%}" if f"{low:.0%}" == f"{high:.0%}" else f"{low:.0%} to {high:.0%}"
 print(f"The top 5 of {people} people account for {share} of all tokens.")
 PY</code></pre>
-<h2>Reading the result</h2>
-<p>To see who caused a jump between two periods, see <a href="token-spike.html">Which user is driving my token spike?</a></p>
-
-
-
-
-<p>In this synthetic week, 5 of 60 people account for 43% of reported tokens. The ranking holds keyed values, not names, so it can be shared with a manager or a finance team as it is. Whoever holds the key can look up a person by hashing a known ID.</p>
-<h2>Teams and budgets</h2>
-<p>Teams are few, so count them exactly; a few dozen budget lines don't need a sketch. Use the keyed ranking for people, where the list is long and names are sensitive.</p>
-<h2>From your gateway or collector</h2>
-<p>If your usage flows through an OpenTelemetry Collector, the released connector keeps the same keyed, token-weighted ranking continuously, in snapshot logs and summary files, without user labels on your metrics. See <a href="cardinality.html">per-user metrics</a> and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/TOPK_KEYS.md">ranking configuration</a>.</p>
 <p class="meta">Source: <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.3.0">llm-sketchkit v0.3.0</a>. The checked command above defines the complete synthetic input. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
