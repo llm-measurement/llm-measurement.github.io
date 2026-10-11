@@ -28,6 +28,14 @@
       "stdout_sha256": "8d04bc965b8ec82a9337ef2fce144fc847649f1fd2ac9acf9fad10a6de323835"
     },
     {
+      "page": "cache-check",
+      "exit": 0,
+      "pass": true,
+      "seconds": 1.4,
+      "command_sha256": "b30c093cae59d3f42366d08f8adcbd91cc8a0bc14244bd0f8a885053086715d1",
+      "stdout_sha256": "4c126d58703e026f39e89d091f851d38bc44265e3360013cb3a95257975a39d8"
+    },
+    {
       "page": "cardinality",
       "exit": 3,
       "pass": true,

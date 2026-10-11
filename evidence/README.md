@@ -10,6 +10,7 @@ credentials are needed.
 | Token spike | fleetdiff v0.5.0 | Checked-in `examples/sessions/data` from the v0.5.0 tag; expected exit 0 |
 | Tokenmaxxing | PyPI llm-sketchkit 0.2.2 | One synthetic week of reported tokens for 60 people, defined in the page's command; expected exit 0 |
 | LiteLLM spend | fleetdiff v0.7.0 | `examples/litellm-spend/synthetic.csv` from the v0.7.0 tag; headline, keyed contributors and completeness; expected exit 0 |
+| Cache check | fleetdiff v0.7.0 | `examples/litellm-spend/cache-drop.csv` from the v0.7.0 tag; cache-read/write shares and keyed uncached-input growth; expected exit 0 |
 | Anomalies | fleetdiff v0.5.0 | `examples/scan` generator from the v0.5.0 tag; fixed reference time; expected exit 3 |
 | Trace check | fleetdiff v0.7.0 | Shipped `examples/inspect/synthetic-traces.json` from the v0.7.0 tag; synthetic OTLP usage and identity fields, no Go generator; expected exit 0 |
 | Distinct users | PyPI llm-sketchkit 0.2.2 | Four synthetic events, three distinct IDs, defined in the page's command |
@@ -32,6 +33,8 @@ Trailing whitespace is ignored; numbers and wording must match. It saves output,
 machine details, command digests and results under the ignored output directory.
 
 The recorded local check uses macOS arm64 and Go 1.26.9 for the anomaly fixture generator.
-The LiteLLM spend and trace-check commands use the released binary without Go.
+The LiteLLM spend, cache-check and trace-check commands use the released binary without Go.
+The cache example checks recorded arithmetic and coverage, not provider cache behavior,
+cause diagnosis or billing impact.
 This is a functional example check, not a throughput or anomaly-accuracy study.
 The checked-in `verified.json` records the run without local paths or credentials.
