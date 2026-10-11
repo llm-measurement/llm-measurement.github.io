@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-11",
+  "release": "v0.7.0",
+  "release_commit": "25694f060c01af075a612b2ec1c67482a9c6c695",
+  "harness_commit": "d44056043628c421c6bb190b1a23e8665be92169",
+  "production_comparison": {
+    "command": "git diff --stat v0.7.0 d44056043628c421c6bb190b1a23e8665be92169 -- cmd internal ':(exclude)*_test.go'",
+    "stdout": "",
+    "exit": 0,
+    "diff_exit_code_check": 0
+  },
+  "archive": "fleetdiff_v0.7.0_linux_arm64.tar.gz",
+  "archive_sha256": "5b4a64b52d48320b6d8051334d0a7372e884ef9e2d01a298576557b0065c9e75",
+  "checksum_manifest_sha256": "54b4f7da6813bc7cbe57354b39e02b9ccf975177905044ea8e69eb9e8a387931",
+  "provenance_bundle_sha256": "1eb97c0c8460ad0aa58db450aa4faa7d68832f102c6d6aa6724922e82a7e9495",
+  "verification": {
+    "tool": "gh 2.69.0",
+    "subjects": ["fleetdiff_v0.7.0_linux_arm64.tar.gz", "SHA256SUMS"],
+    "repository": "llm-measurement/fleetdiff",
+    "signer_workflow": "llm-measurement/fleetdiff/.github/workflows/release.yml",
+    "source_ref": "refs/tags/v0.7.0",
+    "deny_self_hosted_runners": true,
+    "anonymous_fresh_gh_config": true,
+    "before_extraction": true,
+    "attestation_exit_codes": [0, 0],
+    "checksum_exit": 0
+  },
+  "host": "macOS arm64",
+  "runtime": "Docker Desktop native Linux/arm64 VM",
+  "harness_go": "go1.26.9 darwin/arm64",
+  "command": "sh scripts/restricted-smoke.sh \"${VERIFIED_ARCHIVE:?set the verified archive path}\" linux/arm64",
+  "network_modes": ["bridge", "none"],
+  "route_probe": {"bridge": "available", "none": "ENETUNREACH"},
+  "results": [
+    {"case": "compare", "exit": 0, "stdout_equal": true, "stderr_equal": true},
+    {"case": "investigate-summaries", "exit": 0, "stdout_equal": true, "stderr_equal": true},
+    {"case": "investigate-spend", "exit": 0, "stdout_equal": true, "stderr_equal": true},
+    {"case": "inspect", "exit": 0, "stdout_equal": true, "stderr_equal": true},
+    {"case": "diagnose", "exit": 0, "stdout_equal": true, "stderr_equal": true},
+    {"case": "scan", "exit": 3, "stdout_equal": true, "stderr_equal": true}
+  ],
+  "pass": true
+}

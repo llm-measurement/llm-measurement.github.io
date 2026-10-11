@@ -74,3 +74,42 @@ fleetdiff v0.7.0, the collector v0.3.2 image and chart 0.3.4 with fresh credenti
 configuration. No container is started or cluster changed by these blocks.
 `release-review-verified.json` binds the commands to the successful check. The
 default site check rejects stale own-data or manual-verification command records.
+
+## Offline analysis evidence
+
+The production code under `cmd/` and `internal/` is unchanged between fleetdiff
+v0.7.0 (`25694f060c01af075a612b2ec1c67482a9c6c695`) and merged guard commit
+`d44056043628c421c6bb190b1a23e8665be92169`. In a fleetdiff checkout, this command
+prints nothing; the same comparison with `--exit-code` also exits 0:
+
+```sh
+git diff --stat v0.7.0 d44056043628c421c6bb190b1a23e8665be92169 -- cmd internal ':(exclude)*_test.go'
+```
+
+On October 11, 2026, the offline smoke at that merged commit also passed against
+the exact released `fleetdiff_v0.7.0_linux_arm64.tar.gz`, not a rebuilt binary.
+Before extraction, GitHub CLI verified the archive and SHA256SUMS attestations
+against the release workflow, repository and `refs/tags/v0.7.0`, with self-hosted
+runners denied; the archive then passed its SHA-256 check. Verification used
+anonymous access and a fresh gh configuration.
+
+To repeat, use the download, attestation and checksum portions of the
+[manual verification steps](https://llm-measurement.github.io/security.html#verify-fleetdiff)
+with `os=linux` and `arch=arm64`. The harness handles extraction and execution
+inside Docker. From a fleetdiff checkout at
+`d44056043628c421c6bb190b1a23e8665be92169`, run the following with
+`VERIFIED_ARCHIVE` set to the absolute path of that verified archive. The harness
+requires Go 1.26.9, Docker, jq and tar; the recorded run used Docker Desktop's
+native Linux/arm64 VM on macOS arm64.
+
+```sh
+sh scripts/restricted-smoke.sh "${VERIFIED_ARCHIVE:?set the verified archive path}" linux/arm64
+```
+
+The route probe confirmed bridge routing was available and `--network none`
+returned `ENETUNREACH`. All six cases had identical exit status, stdout and stderr:
+compare, investigate (summaries), investigate (LiteLLM spend), inspect, diagnose
+and scan. Scan returned the expected 3; the other cases returned 0.
+[`offline-verified.json`](offline-verified.json) records the commits, artifact
+hashes, verification constraints and results. This released-binary run covers
+Linux arm64; the earlier built-binary checks covered Linux arm64 and amd64.

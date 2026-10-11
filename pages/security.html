@@ -1,7 +1,7 @@
 <p class="lead">Review what each tool reads, where it runs, and how to verify the exact release before using your data.</p>
 <h2>Data paths</h2>
 <ul>
-<li><a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/docs/OPERATIONS.md">fleetdiff v0.7.0</a> runs on your machine and reads local spend exports, summary files, collector configurations or OTLP captures (including stdin). Installation downloads release files; analysis uses the inputs you supply.</li>
+<li><a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/docs/OPERATIONS.md">fleetdiff v0.7.0</a> runs on your machine and reads local spend exports, summary files, collector configurations or OTLP captures (including stdin). fleetdiff makes no network connections during analysis, checked by the <a href="https://github.com/llm-measurement/fleetdiff/blob/d44056043628c421c6bb190b1a23e8665be92169/internal/cli/network_test.go">production-code guard</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/d44056043628c421c6bb190b1a23e8665be92169/.github/workflows/ci.yml#L29-L36">network-isolated Linux CI step</a>. Installation downloads release files; analysis uses the inputs you supply.</li>
 <li><a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/SHADOW_MODE.md">The collector</a> runs inside your pipeline. Its configured exporters send metrics and original spans to your selected destinations; optional summary files stay on the configured volume.</li>
 <li><a href="https://github.com/llm-measurement/llm-sketchkit/blob/v0.3.0/SECURITY.md">llm-sketchkit</a> runs inside your Go or Python process. Your application chooses the identities to hash and where to store or share the summaries.</li>
 </ul>
