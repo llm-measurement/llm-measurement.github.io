@@ -48,7 +48,7 @@ def main():
         page.feed(path.read_text())
         nav = path.read_text().split('<nav aria-label="Guides">', 1)[1].split('</nav>', 1)[0]
         assert nav.index('href="token-spike.html"') < nav.index('href="cardinality.html"'), path.name
-        assert '>A token spike</a>' in nav and '>Prometheus cardinality</a>' in nav, path.name
+        assert '>A token spike</a>' in nav and '>Per-user metrics</a>' in nav, path.name
         measurement_sections += "measurement-notes" in page.ids
         assert "What the numbers mean" not in path.read_text(), path.name
         assert page.links.count("summaries.html#measurement-notes") == 1, path.name
@@ -56,6 +56,18 @@ def main():
         title = entry.get("document_title", entry["title"] + " | LLM Measurement")
         assert f"<title>{html.escape(title)}</title>" in path.read_text(), path.name
         assert f'<h1>{html.escape(entry["title"])}</h1>' in path.read_text(), path.name
+        assert f'<meta name="description" content="{html.escape(entry["description"])}">' in path.read_text(), path.name
+        if entry["slug"] == "cardinality":
+            assert entry["title"] == "How do I see LLM usage per user without a metric label for every user?"
+            assert '<p class="lead">Keep user IDs out of your metric labels.' in path.read_text()
+            for source in (
+                "https://prometheus.io/docs/concepts/data_model/",
+                "https://grafana.com/docs/grafana-cloud/platform/pricing-and-usage/metrics/",
+                "https://docs.datadoghq.com/account_management/billing/custom_metrics/",
+                "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html",
+                "https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/builder.yaml",
+            ):
+                assert source in page.links, source
         if entry.get("kind") == "evidence":
             assert page.commands == 0, path.name
             assert 'id="reproduce"' in path.read_text(), path.name
