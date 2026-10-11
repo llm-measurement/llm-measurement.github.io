@@ -77,6 +77,13 @@ def main():
                 "https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/builder.yaml",
             ):
                 assert source in page.links, source
+        if entry["slug"] in {"litellm-spend", "traces-usage"}:
+            source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
+            assert "--branch v0.7.0" in source and "sh scripts/install.sh v0.7.0 ./release" in source
+            assert "v0.6.0" not in source
+            if entry["slug"] == "traces-usage":
+                assert "./release/fleetdiff inspect examples/inspect/synthetic-traces.json" in source
+                assert "go run" not in source and "Go 1.26" not in source
         if entry.get("kind") == "evidence":
             assert page.commands == 0, path.name
             assert 'id="reproduce"' in path.read_text(), path.name
@@ -118,7 +125,7 @@ def main():
     assert ('To see who caused a jump between two periods, see '
             '<a href="token-spike.html">Which user is driving my token spike?</a>') in (ROOT / "docs/tokenmaxxing.html").read_text()
     litellm_home = (ROOT / "docs/index.html").read_text().split('<h2>Using LiteLLM?</h2>', 1)[1].split('<h2>', 1)[0]
-    assert litellm_home.index('fleetdiff/blob/v0.6.0/README.md#using-litellm') < litellm_home.index('otelcol-genai-sketches/tree/v0.3.1')
+    assert litellm_home.index('fleetdiff/blob/v0.7.0/README.md#using-litellm') < litellm_home.index('otelcol-genai-sketches/tree/v0.3.1')
     urls = ET.parse(ROOT / "docs/sitemap.xml").findall("{*}url")
     assert len(urls) == len(pages)
     text_index = (ROOT / "docs/llms.txt").read_text()

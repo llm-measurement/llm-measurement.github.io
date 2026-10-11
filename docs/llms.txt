@@ -15,7 +15,7 @@
 
 ## Released tools used in these examples
 
-- fleetdiff v0.6.0 (LiteLLM spend and trace check); v0.5.0 (summary and configuration guides)
+- fleetdiff v0.7.0 (LiteLLM spend and trace check); v0.5.0 (summary and configuration guides)
 - llm-sketchkit v0.2.2
 - Collector configuration guidance: v0.3.1
 
