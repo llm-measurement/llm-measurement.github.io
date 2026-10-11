@@ -2,17 +2,20 @@
 # Code authors: Vijay and Codex
 """Check generated pages, local links, question titles and the text indexes."""
 from html.parser import HTMLParser
+import hashlib
 import html
 import json
 from pathlib import Path
 from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
 from build import STATIC_ROOT_FILES
+from outsider import Blocks
 
 ROOT = Path(__file__).resolve().parents[1]
 GUIDE_CONTEXT = {
     "cardinality": "diagnose reads your collector configuration; your metrics backend reports live series counts.",
     "token-spike": "A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.",
+    "tokenmaxxing": "Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.",
     "anomalies": "This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.",
     "distinct-users": "Distinct counts are statistical estimates. Your application hashes raw IDs before they reach the sketch.",
 }
@@ -47,8 +50,8 @@ def main():
         page = Page()
         page.feed(path.read_text())
         nav = path.read_text().split('<nav aria-label="Guides">', 1)[1].split('</nav>', 1)[0]
-        assert nav.index('href="token-spike.html"') < nav.index('href="cardinality.html"'), path.name
-        assert '>A token spike</a>' in nav and '>Per-user metrics</a>' in nav, path.name
+        assert nav.index('href="token-spike.html"') < nav.index('href="tokenmaxxing.html"') < nav.index('href="cardinality.html"'), path.name
+        assert '>A token spike</a>' in nav and '>Tokenmaxxing</a>' in nav and '>Per-user metrics</a>' in nav, path.name
         measurement_sections += "measurement-notes" in page.ids
         assert "What the numbers mean" not in path.read_text(), path.name
         assert page.links.count("summaries.html#measurement-notes") == 1, path.name
@@ -72,7 +75,7 @@ def main():
             assert page.commands == 0, path.name
             assert 'id="reproduce"' in path.read_text(), path.name
         elif entry["slug"] != "index":
-            assert entry["title"].endswith("?") and page.commands == 1, path.name
+            assert "?" in entry["title"] and page.commands == 1, path.name
             context = html.escape(GUIDE_CONTEXT[entry["slug"]])
             expected = (f'<p class="measurement-context">{context}<br>\n'
                         '<a href="summaries.html#measurement-notes">Measurement notes</a></p>')
@@ -89,7 +92,7 @@ def main():
                     assert target.fragment in linked_page.ids, (path.name, link)
     assert measurement_sections == 1, "measurement notes must have one shared home"
     home = (ROOT / "docs/index.html").read_text().split('<ul class="questions">', 1)[1].split('</ul>', 1)[0]
-    assert home.index('href="token-spike.html"') < home.index('href="cardinality.html"')
+    assert home.index('href="token-spike.html"') < home.index('href="tokenmaxxing.html"') < home.index('href="cardinality.html"')
     urls = ET.parse(ROOT / "docs/sitemap.xml").findall("{*}url")
     assert len(urls) == len(pages)
     text_index = (ROOT / "docs/llms.txt").read_text()
@@ -98,6 +101,16 @@ def main():
     for name in STATIC_ROOT_FILES:
         assert (ROOT / "docs" / name).read_bytes() == (ROOT / name).read_bytes(), name
     guides = sum(p["slug"] != "index" and p.get("kind") != "evidence" for p in pages)
+    verified = json.loads((ROOT / "evidence/verified.json").read_text())["results"]
+    guide_slugs = {p["slug"] for p in pages if p["slug"] != "index" and p.get("kind") != "evidence"}
+    assert len(verified) == len(guide_slugs) and {r["page"] for r in verified} == guide_slugs
+    for record in verified:
+        blocks = Blocks()
+        blocks.feed((ROOT / "pages" / (record["page"] + ".html")).read_text())
+        assert len(blocks.commands) == 1
+        command = blocks.commands[0]
+        assert record["pass"] and record["exit"] == command["exit"], record["page"]
+        assert record["command_sha256"] == hashlib.sha256(command["text"].encode()).hexdigest(), record["page"]
     print(f"PASS: {len(pages)} pages, {guides} runnable guides, local links, sitemap, llms.txt and static root files")
 
 

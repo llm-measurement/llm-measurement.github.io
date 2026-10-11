@@ -8,8 +8,13 @@ credentials are needed.
 | --- | --- | --- |
 | Cardinality | fleetdiff v0.5.0 | `examples/diagnose/unsafe.yaml` from the v0.5.0 tag; expected exit 3 |
 | Token spike | fleetdiff v0.5.0 | Checked-in `examples/sessions/data` from the v0.5.0 tag; expected exit 0 |
+| Tokenmaxxing | PyPI llm-sketchkit 0.2.2 | One synthetic week of reported tokens for 60 people, defined in the page's command; expected exit 0 |
 | Anomalies | fleetdiff v0.5.0 | `examples/scan` generator from the v0.5.0 tag; fixed reference time; expected exit 3 |
 | Distinct users | PyPI llm-sketchkit 0.2.2 | Four synthetic events, three distinct IDs, defined in the page's command |
+
+The tokenmaxxing command uses a fixed public test key and a seeded workload so
+the printed estimates and rankings are reproducible. Real usage uses a protected
+key. The example's records and identities are synthetic.
 
 The fleetdiff tag resolves to `b214e8466291879aa7862f7d26875778ee20ea95`.
 The installer checks the binary and checksum-file attestations before extraction.
