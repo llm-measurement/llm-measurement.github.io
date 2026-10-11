@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Code authors: Vijay and Codex
-"""Check root-file preservation across clean builds and asset cleanup."""
+"""Check shared analytics and root-file preservation across clean builds."""
+from html.parser import HTMLParser
 from pathlib import Path
 import shutil
 import tempfile
@@ -10,7 +11,52 @@ from unittest.mock import patch
 import build
 
 
+class Scripts(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.in_head = False
+        self.current = None
+        self.scripts = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "head":
+            self.in_head = True
+        elif tag == "script":
+            self.current = {"attrs": dict(attrs), "text": "", "in_head": self.in_head}
+            self.scripts.append(self.current)
+
+    def handle_data(self, data):
+        if self.current is not None:
+            self.current["text"] += data
+
+    def handle_endtag(self, tag):
+        if tag == "head":
+            self.in_head = False
+        elif tag == "script":
+            self.current = None
+
+
 class BuildTests(unittest.TestCase):
+    def test_every_page_has_the_supplied_analytics_once_in_head(self):
+        for page in build.PAGES:
+            with self.subTest(page=page["slug"]):
+                parsed = Scripts()
+                parsed.feed((build.ROOT / "docs" / (page["slug"] + ".html")).read_text())
+                self.assertEqual(len(parsed.scripts), 2)
+                external, bootstrap = parsed.scripts
+                self.assertTrue(external["in_head"] and bootstrap["in_head"])
+                self.assertEqual(external["attrs"], {
+                    "async": None,
+                    "src": "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js",
+                })
+                self.assertEqual(external["text"], "")
+                self.assertEqual(bootstrap["attrs"], {})
+                self.assertEqual(bootstrap["text"].strip(), (
+                    "window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},"
+                    "plausible.init=plausible.init||function(i){plausible.o=i||{}};\n"
+                    "  plausible.init()"
+                ))
+
     def test_verification_survives_rebuild_and_stale_asset_cleanup(self):
         source = build.ROOT
         name = "googled831a5845f87080c.html"
