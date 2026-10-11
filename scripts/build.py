@@ -22,6 +22,12 @@ FRAME = Template('''<!doctype html>
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta property="og:title" content="$title"><meta property="og:description" content="$description">
 <meta property="og:type" content="article"><meta property="og:url" content="$canonical">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html">$header_mark LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
 <div class="layout"><nav aria-label="Guides">$nav</nav><main id="main"><h1>$title</h1>$body</main></div>

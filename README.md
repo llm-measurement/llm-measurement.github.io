@@ -24,8 +24,8 @@ python3 -m unittest discover -s scripts -p 'test_*.py'
 python3 scripts/check.py
 ```
 
-Open `docs/index.html` in a browser. There is no server, JavaScript, tracking,
-external font, or account requirement for reading these pages.
+Open `docs/index.html` in a browser. The site uses Plausible for visitor analytics.
+The guides are static HTML and require no account or external fonts to read.
 
 The [outsider check](scripts/outsider.py) extracts the exact command blocks from
 each guide, runs them in separate new temporary directories with fresh caches,
