@@ -47,7 +47,7 @@ def normalize(text):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--page", choices=["cardinality", "token-spike", "anomalies", "distinct-users"])
+    parser.add_argument("--page", choices=["cardinality", "token-spike", "tokenmaxxing", "anomalies", "distinct-users"])
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     records = []

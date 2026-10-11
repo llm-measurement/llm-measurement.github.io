@@ -4,26 +4,34 @@
   "python": "3.14.2",
   "results": [
     {
-      "page": "cardinality",
-      "exit": 3,
-      "pass": true,
-      "seconds": 2.0,
-      "command_sha256": "8b0e64900e60a5a2b30a99fc1e22de93ad9ac914ca3b4f083a201eef909766ff",
-      "stdout_sha256": "19102e27feb202da2273993f2769802e503fccfe2f60cb6f3463c066018ee5a4"
-    },
-    {
       "page": "token-spike",
       "exit": 0,
       "pass": true,
-      "seconds": 1.52,
+      "seconds": 1.54,
       "command_sha256": "b0699a7cdd46e84153594218782d91e05df24497557edd9974965492e3522abc",
       "stdout_sha256": "6248a7dbf5a11de59ae5b1e2a1a9203a5b9e99de5e0c71adcc480c6118ba4bbf"
+    },
+    {
+      "page": "tokenmaxxing",
+      "exit": 0,
+      "pass": true,
+      "seconds": 1.81,
+      "command_sha256": "2c0b0ff997beb66deb23223ebfeefd08f822762c51029edcdf5fd055bb9d4674",
+      "stdout_sha256": "8907b108e9c0eac5fd33c81a8ad547c2d71ffc8d6ba830df0a4840e59dd609ba"
+    },
+    {
+      "page": "cardinality",
+      "exit": 3,
+      "pass": true,
+      "seconds": 1.45,
+      "command_sha256": "8b0e64900e60a5a2b30a99fc1e22de93ad9ac914ca3b4f083a201eef909766ff",
+      "stdout_sha256": "19102e27feb202da2273993f2769802e503fccfe2f60cb6f3463c066018ee5a4"
     },
     {
       "page": "anomalies",
       "exit": 3,
       "pass": true,
-      "seconds": 3.92,
+      "seconds": 4.1,
       "command_sha256": "c84420b308f5e4c525a8acbc8bcc94d3bc53cd77b05d7ac3c5a76a59620da3bb",
       "stdout_sha256": "a0d5cbf3f427d57a6837596cc8e7669c128e75977230583507a159949aaa7f3a"
     },
@@ -31,7 +39,7 @@
       "page": "distinct-users",
       "exit": 0,
       "pass": true,
-      "seconds": 2.57,
+      "seconds": 1.74,
       "command_sha256": "7ea2be619d7dcb82c2f733b23fb0a2be88da5a76e9d8fb76476ac800bc007693",
       "stdout_sha256": "d4811a0a8cc5e5b36f30429c6612a91d921278400ca7dc1248e26d59dca8dc35"
     }

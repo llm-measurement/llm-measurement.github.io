@@ -8,6 +8,7 @@ credentials are needed.
 | --- | --- | --- |
 | Cardinality | fleetdiff v0.5.0 | `examples/diagnose/unsafe.yaml` from the v0.5.0 tag; expected exit 3 |
 | Token spike | fleetdiff v0.5.0 | Checked-in `examples/sessions/data` from the v0.5.0 tag; expected exit 0 |
+| Tokenmaxxing | PyPI llm-sketchkit 0.2.2 | One synthetic week of reported tokens for 60 people, defined in the page's command; expected exit 0 |
 | Anomalies | fleetdiff v0.5.0 | `examples/scan` generator from the v0.5.0 tag; fixed reference time; expected exit 3 |
 | Distinct users | PyPI llm-sketchkit 0.2.2 | Four synthetic events, three distinct IDs, defined in the page's command |
 

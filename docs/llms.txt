@@ -5,6 +5,7 @@
 ## Guides
 
 - [Which user is driving my LLM token spike?](https://llm-measurement.github.io/token-spike.html): Compare two windows of LLM usage with fleetdiff. Find token-heavy users and sessions, with a released-binary example.
+- [Who is tokenmaxxing? Find your heaviest AI token users](https://llm-measurement.github.io/tokenmaxxing.html): Rank your heaviest AI token users from keyed IDs and see how concentrated usage is, with an open-source Python library and OpenTelemetry collector.
 - [How do I see LLM usage per user without a metric label for every user?](https://llm-measurement.github.io/cardinality.html): Keep per-user LLM answers without per-user labels in Prometheus, Grafana Cloud, Datadog, CloudWatch or other metrics backends. Check a collector configuration with fleetdiff and use keyed rankings.
 - [How do I detect anomalies in LLM token consumption?](https://llm-measurement.github.io/anomalies.html): Scan retained LLM summary windows for unusual token usage, session concentration, tool errors and missing usage.
 - [How do I count distinct LLM users without storing user IDs?](https://llm-measurement.github.io/distinct-users.html): Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers.
