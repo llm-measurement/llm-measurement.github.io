@@ -16,27 +16,28 @@
 .venv/bin/python -m pip install --no-cache-dir llm-sketchkit==0.2.2
 .venv/bin/python - &lt;&lt;'PY'
 import random
-from llm_sketchkit import USER_V1, canonicalize_text_v1, frequentitems, hash64, hllpp
+import secrets
+from llm_sketchkit import USER_V1, canonicalize_text_v1, frequentitems, hash64
 from llm_sketchkit.hash import Secret
 
-secret = Secret(b"tokenmaxxing-synthetic-example-key-2026")  # public demo key; use your protected key in practice
+secret = Secret(secrets.token_bytes(32))  # use your protected key in practice
 ranking = frequentitems.Sketch("small", USER_V1)
-people = hllpp.new("small", USER_V1)
 total = 0
 
 # One synthetic week: 60 people with heavy-tailed session sizes.
 rng = random.Random(2026)
 for n in range(60):
     digest = hash64(secret, USER_V1, canonicalize_text_v1(f"person-{n:02d}@example.com"))
-    people.add_hash(digest)
     for _ in range(rng.randint(3, 25)):
         tokens = int(20_000 * rng.paretovariate(1.2))
         ranking.add_hash(digest, tokens)
         total += tokens
 
 items = ranking.frequent_items(frequentitems.NO_FALSE_NEGATIVES)
+assert ranking.max_error() == 0  # This 60-user example fits in the 512-entry ranking.
+people = len(items)
 top = sorted(items, key=lambda i: i.lower_bound, reverse=True)[:5]
-print(f"People using AI this week: {people.estimate():.0f}")
+print(f"People using AI this week: {people}")
 print(f"Total reported tokens: {total:,}")
 print("Heaviest users (keyed; only the key holder can look them up):")
 for rank, item in enumerate(top, 1):
@@ -46,7 +47,7 @@ for rank, item in enumerate(top, 1):
 low = sum(i.lower_bound for i in top) / total
 high = min(1.0, sum(i.upper_bound for i in top) / total)
 share = f"{low:.0%}" if f"{low:.0%}" == f"{high:.0%}" else f"{low:.0%} to {high:.0%}"
-print(f"The top 5 of {people.estimate():.0f} people account for {share} of all tokens.")
+print(f"The top 5 of {people} people account for {share} of all tokens.")
 PY</code></pre>
 <pre class="output" data-output="tokenmaxxing"><code>People using AI this week: 60
 Total reported tokens: 78,126,732

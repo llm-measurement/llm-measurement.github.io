@@ -12,10 +12,6 @@ credentials are needed.
 | Anomalies | fleetdiff v0.5.0 | `examples/scan` generator from the v0.5.0 tag; fixed reference time; expected exit 3 |
 | Distinct users | PyPI llm-sketchkit 0.2.2 | Four synthetic events, three distinct IDs, defined in the page's command |
 
-The tokenmaxxing command uses a fixed public test key and a seeded workload so
-the printed estimates and rankings are reproducible. Real usage uses a protected
-key. The example's records and identities are synthetic.
-
 The fleetdiff tag resolves to `b214e8466291879aa7862f7d26875778ee20ea95`.
 The installer checks the binary and checksum-file attestations before extraction.
 Collector links describe v0.3.1 configuration; these guide commands do not start
