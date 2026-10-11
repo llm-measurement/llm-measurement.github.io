@@ -7,14 +7,15 @@
 - [Which user is driving my LLM token spike?](https://llm-measurement.github.io/token-spike.html): Usage jumped? Compare two periods and see which users and sessions account for the increase.
 - [Who is tokenmaxxing? Find your heaviest AI token users](https://llm-measurement.github.io/tokenmaxxing.html): No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.
 - [Why did our LiteLLM usage jump, and are the spend logs complete?](https://llm-measurement.github.io/litellm-spend.html): The same comparison straight from LiteLLM's spend logs, plus a check on whether the records are complete.
-- [How do I see LLM usage per user without a metric label for every user?](https://llm-measurement.github.io/cardinality.html): Keep per-user LLM answers without per-user labels in Prometheus, Grafana Cloud, Datadog, CloudWatch or other metrics backends. Check a collector configuration with fleetdiff and use keyed rankings.
+- [How do I see LLM usage per user without a metric label for every user?](https://llm-measurement.github.io/cardinality.html): Check a collector configuration with fleetdiff diagnose and keep user rankings out of metric labels.
 - [How do I detect anomalies in LLM token consumption?](https://llm-measurement.github.io/anomalies.html): Scan retained LLM summary windows for unusual token usage, session concentration, tool errors and missing usage.
+- [Do my LLM traces record token usage and user IDs?](https://llm-measurement.github.io/traces-usage.html): Check a local OTLP capture for usage and identity fields that are present, missing or zero.
 - [How do I count distinct LLM users without storing user IDs?](https://llm-measurement.github.io/distinct-users.html): Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers.
 - [Why summaries instead of raw logs](https://llm-measurement.github.io/summaries.html): Measured sharing, retention and attribution properties of keyed summaries, with pinned coding-agent data and labeled synthetic workloads.
 
 ## Released tools used in these examples
 
-- fleetdiff v0.6.0 (LiteLLM spend); v0.5.0 (summary and configuration guides)
+- fleetdiff v0.6.0 (LiteLLM spend and trace check); v0.5.0 (summary and configuration guides)
 - llm-sketchkit v0.2.2
 - Collector configuration guidance: v0.3.1
 

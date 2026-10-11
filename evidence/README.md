@@ -11,6 +11,7 @@ credentials are needed.
 | Tokenmaxxing | PyPI llm-sketchkit 0.2.2 | One synthetic week of reported tokens for 60 people, defined in the page's command; expected exit 0 |
 | LiteLLM spend | fleetdiff v0.6.0 | `examples/litellm-spend/synthetic.csv` from the v0.6.0 tag; headline, keyed contributors and completeness; expected exit 0 |
 | Anomalies | fleetdiff v0.5.0 | `examples/scan` generator from the v0.5.0 tag; fixed reference time; expected exit 3 |
+| Trace check | fleetdiff v0.6.0 | `examples/inspect` generator from the v0.6.0 tag; synthetic OTLP usage and identity fields; expected exit 0 |
 | Distinct users | PyPI llm-sketchkit 0.2.2 | Four synthetic events, three distinct IDs, defined in the page's command |
 
 The fleetdiff v0.5.0 tag resolves to `b214e8466291879aa7862f7d26875778ee20ea95`;

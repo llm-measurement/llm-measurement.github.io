@@ -3,8 +3,9 @@
   {"slug":"token-spike","title":"Which user is driving my LLM token spike?","description":"Usage jumped? Compare two periods and see which users and sessions account for the increase."},
   {"slug":"tokenmaxxing","title":"Who is tokenmaxxing? Find your heaviest AI token users","description":"No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is."},
   {"slug":"litellm-spend","title":"Why did our LiteLLM usage jump, and are the spend logs complete?","description":"The same comparison straight from LiteLLM's spend logs, plus a check on whether the records are complete."},
-  {"slug":"cardinality","title":"How do I see LLM usage per user without a metric label for every user?","description":"Keep per-user LLM answers without per-user labels in Prometheus, Grafana Cloud, Datadog, CloudWatch or other metrics backends. Check a collector configuration with fleetdiff and use keyed rankings."},
+  {"slug":"cardinality","title":"How do I see LLM usage per user without a metric label for every user?","description":"Check a collector configuration with fleetdiff diagnose and keep user rankings out of metric labels."},
   {"slug":"anomalies","title":"How do I detect anomalies in LLM token consumption?","description":"Scan retained LLM summary windows for unusual token usage, session concentration, tool errors and missing usage."},
+  {"slug":"traces-usage","title":"Do my LLM traces record token usage and user IDs?","description":"Check a local OTLP capture for usage and identity fields that are present, missing or zero."},
   {"slug":"distinct-users","title":"How do I count distinct LLM users without storing user IDs?","description":"Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers."},
   {"slug":"summaries","title":"Why summaries instead of raw logs","description":"Measured sharing, retention and attribution properties of keyed summaries, with pinned coding-agent data and labeled synthetic workloads.","kind":"evidence"}
 ]

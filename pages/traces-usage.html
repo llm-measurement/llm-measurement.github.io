@@ -1,0 +1,26 @@
+<p class="lead">fleetdiff inspect reads a local OTLP capture and reports which usage and identity fields are present, missing or zero.</p>
+<p>In this synthetic capture, all four model attempts have user IDs, two have session IDs, and one is missing token fields. Another has input and output recorded as zero, with no declared origin.</p>
+<h2>Check a capture</h2>
+<p class="meta">Requires Git, curl, gh, shasum, tar, and Go 1.26.9 or later. Linux or macOS, amd64 or arm64. Go generates the synthetic capture from the released tag; inspection runs with the verified v0.6.0 binary.</p>
+<pre data-run="traces-usage" data-exit="0"><code>git clone --depth 1 --branch v0.6.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-traces-usage
+cd fleetdiff-traces-usage
+sh scripts/install.sh v0.6.0 ./release
+GOWORK=off go run ./examples/inspect &gt; synthetic-traces.json
+./release/fleetdiff inspect synthetic-traces.json</code></pre>
+<p>The report starts with readiness and the next step:</p>
+<pre class="output" data-output="traces-usage"><code>Your traces can fully answer 2 of 7 questions.
+Next: Record both input and output usage; resolve invalid, conflicting, or subset-violating values. Declare unavailable usage instead of filling in zeros.</code></pre>
+<h2>Usage fields</h2>
+<pre class="output" data-output="traces-usage"><code>4 model attempts across 6 captured spans; 170 reported tokens.
+Usage: 3 complete, 1 missing either field.
+Origin unknown: input 4, output 4 attempts.</code></pre>
+<p>The zero-valued fields are present, so they are included in the three complete observations. The origin check keeps their source unknown.</p>
+<h2>User and session fields</h2>
+<pre class="output" data-output="traces-usage"><code>user: ~4 distinct; identity present on 4/4 attempts</code></pre>
+<pre class="output" data-output="traces-usage"><code>session: ~2 distinct; identity present on 2/4 attempts</code></pre>
+<p>The report also lists standard attribute names and uses local aliases for individual users and sessions.</p>
+<h2>Check your own traces</h2>
+<p>Use the <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.6.0/examples/inspect">capture recipes</a> for a collector file exporter, a Python SDK or LiteLLM, then pass your local capture to <code>fleetdiff inspect</code>. Keep the capture local and share the default report instead of the raw file. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/docs/INSPECT.md">inspect guide</a> covers accepted formats and field mappings.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/examples/inspect/synthetic-spans.json">released synthetic spans</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/examples/inspect/main.go">OTLP capture generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="measurement-context">Readiness describes fields in the captured model attempts; zeros without declared usage origin remain unknown.<br>
+<a href="summaries.html#measurement-notes">Measurement notes</a></p>

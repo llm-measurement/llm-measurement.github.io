@@ -18,6 +18,7 @@ GUIDE_CONTEXT = {
     "tokenmaxxing": "Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.",
     "litellm-spend": "This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.",
     "anomalies": "This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.",
+    "traces-usage": "Readiness describes fields in the captured model attempts; zeros without declared usage origin remain unknown.",
     "distinct-users": "Distinct counts are statistical estimates. Your application hashes raw IDs before they reach the sketch.",
 }
 
@@ -54,6 +55,9 @@ def main():
         assert nav.index('href="token-spike.html"') < nav.index('href="tokenmaxxing.html"') < nav.index('href="cardinality.html"'), path.name
         assert '>A token spike</a>' in nav and '>Tokenmaxxing</a>' in nav and '>Per-user metrics</a>' in nav, path.name
         assert '>LiteLLM spend</a>' in nav, path.name
+        assert '>All guides</a>' in nav and '>All questions</a>' not in nav, path.name
+        assert '>Trace check</a>' in nav, path.name
+        assert nav.index('href="anomalies.html"') < nav.index('href="traces-usage.html"') < nav.index('href="distinct-users.html"'), path.name
         measurement_sections += "measurement-notes" in page.ids
         assert "What the numbers mean" not in path.read_text(), path.name
         assert page.links.count("summaries.html#measurement-notes") == 1, path.name
@@ -96,11 +100,19 @@ def main():
     home = (ROOT / "docs/index.html").read_text().split('<ul class="questions">', 1)[1].split('</ul>', 1)[0]
     assert home.index('href="token-spike.html"') < home.index('href="tokenmaxxing.html"') < home.index('href="cardinality.html"')
     assert 'href="litellm-spend.html"' in home
+    assert home.index('href="anomalies.html"') < home.index('href="traces-usage.html"') < home.index('href="distinct-users.html"')
+    assert '<h2>Guides</h2>' in (ROOT / "docs/index.html").read_text()
     for entry in pages:
-        if entry["slug"] in {"token-spike", "tokenmaxxing", "litellm-spend"}:
-            guide = (ROOT / "docs" / (entry["slug"] + ".html")).read_text()
+        if entry["slug"] in {"token-spike", "tokenmaxxing", "litellm-spend", "cardinality", "traces-usage"}:
             assert entry["description"] in html.unescape(home), entry["slug"]
+        if entry["slug"] in {"token-spike", "tokenmaxxing"}:
+            guide = (ROOT / "docs" / (entry["slug"] + ".html")).read_text()
             assert f'<p class="lead">{entry["description"]}</p>' in html.unescape(guide), entry["slug"]
+    assert ('<p class="lead">Compare two periods of LiteLLM spend logs to see which models and keys '
+            'drove a change, and which records have incomplete usage.</p>') in (ROOT / "docs/litellm-spend.html").read_text()
+    for slug in ("anomalies", "litellm-spend"):
+        body = (ROOT / "pages" / (slug + ".html")).read_text()
+        assert '<a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a>' in body, slug
     assert ('To see who uses the most overall, rather than who changed, see '
             '<a href="tokenmaxxing.html">Who is tokenmaxxing?</a>') in (ROOT / "docs/token-spike.html").read_text()
     assert ('To see who caused a jump between two periods, see '

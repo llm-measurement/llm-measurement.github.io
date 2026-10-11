@@ -1,13 +1,14 @@
-<p class="lead">LLM Measurement is a set of open-source tools that make everyday questions about LLM usage simple to ask and rigorous to answer. Which users and sessions drove a token spike? How many distinct users did an application have this week? Are the usage records complete? How does usage compare across teams and tools? The tools answer from the telemetry you already collect, without a metric label for every user. Their outputs carry keyed hashes instead of raw user or session IDs.</p>
+<p class="lead">LLM Measurement is a set of open-source tools for understanding LLM usage: what changed, who drove it, and whether the usage records support the answer. They work from the telemetry you already collect, without a metric label for every user, and their outputs carry keyed hashes instead of raw user or session IDs.</p>
 <p>They are designed with care and built on peer-reviewed sketching algorithms. Rankings come with guaranteed bounds, distinct counts come with a known statistical error, and missing usage is counted separately as missing. Every result on this site comes with the commands to reproduce it.</p>
-<h2>Questions</h2>
+<h2>Guides</h2>
 <p>Each guide runs released versions on synthetic examples.</p>
 <ul class="questions">
 <li><a href="token-spike.html">Which user is driving my token spike?</a><p>Usage jumped? Compare two periods and see which users and sessions account for the increase.</p></li>
 <li><a href="tokenmaxxing.html">Who is tokenmaxxing? Find your heaviest AI token users</a><p>No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.</p></li>
 <li><a href="litellm-spend.html">Why did our LiteLLM usage jump, and are the spend logs complete?</a><p>The same comparison straight from LiteLLM's spend logs, plus a check on whether the records are complete.</p></li>
-<li><a href="cardinality.html">How do I see LLM usage per user without a metric label for every user?</a><p>Check the labels in your collector configuration and keep user rankings separately.</p></li>
+<li><a href="cardinality.html">How do I see LLM usage per user without a metric label for every user?</a><p>Check a collector configuration with fleetdiff diagnose and keep user rankings out of metric labels.</p></li>
 <li><a href="anomalies.html">Which windows look unusual?</a><p>Scan usage history for changes in tokens, coverage and contributors.</p></li>
+<li><a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a><p>Check a local OTLP capture for usage and identity fields that are present, missing or zero.</p></li>
 <li><a href="distinct-users.html">How many distinct users were active?</a><p>Count with keyed measurements that can be merged across workers.</p></li>
 </ul>
 <p><a href="summaries.html">Why summaries instead of raw logs?</a> See the measured sharing and retention properties, with source data and methods.</p>

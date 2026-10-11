@@ -1,6 +1,6 @@
 # LLM Measurement Guides
 
-Six questions about LLM token usage, with commands and output from released tools.
+Seven guides to LLM usage, with commands and output from released tools.
 An evidence page explains what can be shared and retained with summaries.
 
 | Question | Page |
@@ -10,6 +10,7 @@ An evidence page explains what can be shared and retained with summaries.
 | Why did our LiteLLM usage jump, and are the spend logs complete? | [LiteLLM spend](docs/litellm-spend.html) |
 | How do I see LLM usage per user without a metric label for every user? | [Per-user metrics](docs/cardinality.html) |
 | How do I detect anomalies in LLM token consumption? | [Anomalies](docs/anomalies.html) |
+| Do my LLM traces record token usage and user IDs? | [Trace check](docs/traces-usage.html) |
 | How do I count distinct LLM users without storing user IDs? | [Distinct users](docs/distinct-users.html) |
 | Why summaries instead of raw logs | [Summaries](docs/summaries.html) |
 
