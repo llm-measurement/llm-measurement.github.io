@@ -6,7 +6,7 @@
 <li><a href="token-spike.html">Which user is driving my token spike?</a><p>Usage jumped? Compare two periods and see which users and sessions account for the increase.</p></li>
 <li><a href="tokenmaxxing.html">Who is tokenmaxxing? Find your heaviest AI token users</a><p>No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.</p></li>
 <li><a href="litellm-spend.html">Why did our LiteLLM usage jump, and are the spend logs complete?</a><p>The same comparison straight from LiteLLM's spend logs, plus a check on whether the records are complete.</p></li>
-<li><a href="cache-check.html">Did cache reuse fall, and whose uncached input grew?</a><p>Compare cache-read and cache-write shares across two periods, and see which keys or sessions added uncached input.</p></li>
+<li><a href="cache-check.html">Prompt cache hit rate dropped after an update? Find whose uncached input grew</a><p>Prompt cache hit rate dropped after an update? Compare recorded cache shares and find which keys or sessions added uncached input with fleetdiff.</p></li>
 <li><a href="cardinality.html">How do I see LLM usage per user without a metric label for every user?</a><p>Check a collector configuration with fleetdiff diagnose and keep user rankings out of metric labels.</p></li>
 <li><a href="anomalies.html">Which windows look unusual?</a><p>Scan usage history for changes in tokens, coverage and contributors.</p></li>
 <li><a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a><p>Check a local OTLP capture for usage and identity fields that are present, missing or zero.</p></li>
@@ -16,6 +16,6 @@
 <figure><img src="assets/sessions.gif" alt="fleetdiff terminal report showing a flagged session in a synthetic token-usage comparison"><figcaption>fleetdiff's synthetic session example. <a href="token-spike.html">Run it with the released binary.</a></figcaption></figure>
 <h2>Using LiteLLM?</h2>
 <p>Export request-level spend logs, install fleetdiff v0.7.0, and investigate what changed. Start with the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/README.md#using-litellm">released export, install and investigate path</a>, or <a href="litellm-spend.html">try a synthetic spend export</a>.</p>
-<p>For continuous measurement, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">collector's LiteLLM recipe</a> to create metrics and summaries as traffic arrives.</p>
+<p>For continuous measurement, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.2/examples/integrations/litellm">collector's LiteLLM recipe</a> to create metrics and summaries as traffic arrives.</p>
 <h2>Choose a tool</h2>
 <p><a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> reads local spend exports, trace captures or summary files. <a href="https://github.com/llm-measurement/otelcol-genai-sketches">The Collector connector</a> creates metrics and summaries continuously. <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a> supplies the measurement library for Go services and Python analysis.</p>

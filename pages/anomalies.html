@@ -1,10 +1,10 @@
 <p class="lead">Run fleetdiff scan over retained summary windows to find unusual token use, concentrated users or sessions, tool errors and gaps in usage reporting. Each finding includes the observed value and its baseline.</p>
 <p>The synthetic history below produces two unusual windows. Tokens per attempt rise to 3.1 times the baseline; the following window has missing usage on 40% of attempts.</p>
 <h2>Scan a history</h2>
-<p class="meta">Requires Git, curl, gh, shasum, tar, and Go 1.26.9 or later. Go generates synthetic inputs from the released tag; the scan runs with the verified v0.5.0 binary. No model API key or Docker is needed.</p>
-<pre data-run="anomalies" data-exit="3"><code>git clone --depth 1 --branch v0.5.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-anomalies
+<p class="meta">Requires Git, curl, gh, shasum, tar, and Go 1.26.9 or later. Go generates synthetic inputs from the released tag; the scan runs with the verified v0.7.0 binary. No model API key or Docker is needed.</p>
+<pre data-run="anomalies" data-exit="3"><code>git clone --depth 1 --branch v0.7.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-anomalies
 cd fleetdiff-anomalies
-sh scripts/install.sh v0.5.0 ./release
+sh scripts/install.sh v0.7.0 ./release
 GOWORK=off go run ./examples/scan --out ./synthetic-windows
 ./release/fleetdiff scan ./synthetic-windows --expected app --recent 2 \
   --as-of 2026-10-04T00:30:00Z</code></pre>
@@ -18,7 +18,7 @@ GOWORK=off go run ./examples/scan --out ./synthetic-windows
 <p>When a window reports missing usage, check the fields in a local capture: <a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a></p>
 <p>Exit code <code>3</code> means findings were detected; <code>0</code> means none were found. The fixed date reproduces this sample. For current traffic, omit <code>--as-of</code>.</p>
 <h2>Keep watching your application</h2>
-<p>Retain enough exported windows for a baseline, then run the same command on that directory from a scheduled job. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.5.0/docs/SCAN.md">scan guide</a> explains thresholds, minimum history and persistence. The collector's <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/SUMMARY_EXPORT_HELM.md">Kubernetes summary guide</a> covers durable storage and readback.</p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.5.0/examples/scan">released history generator and tests</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p>Retain enough exported windows for a baseline, then run the same command on that directory from a scheduled job. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/docs/SCAN.md">scan guide</a> explains thresholds, minimum history and persistence. The collector's <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/SUMMARY_EXPORT_HELM.md">Kubernetes summary guide</a> covers durable storage and readback; use collector v0.3.2 with <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/deploy/helm/otelcol-genai-sketches/Chart.yaml">chart 0.3.4</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.7.0/examples/scan">released history generator and tests</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
