@@ -2,6 +2,7 @@
 # Code authors: Vijay and Codex
 """Check generated pages, local links, question titles and the text indexes."""
 from html.parser import HTMLParser
+import argparse
 import hashlib
 import html
 import json
@@ -107,7 +108,7 @@ def main():
         if entry.get("kind") == "evidence":
             assert page.commands == 0, path.name
             assert 'id="reproduce"' in path.read_text(), path.name
-        elif entry["slug"] != "index":
+        elif entry["slug"] != "index" and entry.get("kind") != "reference":
             assert "?" in entry["title"] and page.commands == 1, path.name
             context = html.escape(GUIDE_CONTEXT[entry["slug"]])
             notes_link = '<a href="summaries.html#measurement-notes">Measurement notes</a>'
@@ -117,6 +118,13 @@ def main():
                         f'{notes_link}</p>')
             assert expected in path.read_text(), (path.name, "guide context must precede its notes link")
             assert path.read_text().count('class="measurement-context"') == 1, path.name
+            source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
+            ordered = ['class="lead"', 'class="own-data"', "What you'll see", "No data handy? Try the sample", "Reading the result", 'class="measurement-context"']
+            positions = [source.index(marker) for marker in ordered]
+            assert positions == sorted(positions), (path.name, "own-data-first order")
+            parsed = Blocks()
+            parsed.feed(source)
+            assert parsed.own and all("git clone" not in b["text"] for b in parsed.own), path.name
         for link in page.links:
             target = urlsplit(link)
             if not target.scheme and (target.path or target.fragment):
@@ -148,8 +156,10 @@ def main():
             '<a href="tokenmaxxing.html">Who is tokenmaxxing?</a>') in (ROOT / "docs/token-spike.html").read_text()
     assert ('To see who caused a jump between two periods, see '
             '<a href="token-spike.html">Which user is driving my token spike?</a>') in (ROOT / "docs/tokenmaxxing.html").read_text()
-    litellm_home = (ROOT / "docs/index.html").read_text().split('<h2>Using LiteLLM?</h2>', 1)[1].split('<h2>', 1)[0]
-    assert litellm_home.index('fleetdiff/blob/v0.7.0/README.md#using-litellm') < litellm_home.index('otelcol-genai-sketches/tree/v0.3.2')
+    homepage = (ROOT / "docs/index.html").read_text()
+    assert homepage.index('Run it on your data') < homepage.index('Built for enterprise review') < homepage.index('<h2>Guides</h2>')
+    assert 'Each guide runs released versions on synthetic examples.' not in homepage
+    assert 'href="security.html"' in homepage
     urls = ET.parse(ROOT / "docs/sitemap.xml").findall("{*}url")
     assert len(urls) == len(pages)
     text_index = (ROOT / "docs/llms.txt").read_text()
@@ -157,9 +167,9 @@ def main():
     assert (ROOT / "docs/.nojekyll").exists()
     for name in STATIC_ROOT_FILES:
         assert (ROOT / "docs" / name).read_bytes() == (ROOT / name).read_bytes(), name
-    guides = sum(p["slug"] != "index" and p.get("kind") != "evidence" for p in pages)
+    guides = sum(p["slug"] != "index" and not p.get("kind") for p in pages)
     verified = json.loads((ROOT / "evidence/verified.json").read_text())["results"]
-    guide_slugs = {p["slug"] for p in pages if p["slug"] != "index" and p.get("kind") != "evidence"}
+    guide_slugs = {p["slug"] for p in pages if p["slug"] != "index" and not p.get("kind")}
     assert len(verified) == len(guide_slugs) and {r["page"] for r in verified} == guide_slugs
     for record in verified:
         blocks = Blocks()
@@ -168,8 +178,42 @@ def main():
         command = blocks.commands[0]
         assert record["pass"] and record["exit"] == command["exit"], record["page"]
         assert record["command_sha256"] == hashlib.sha256(command["text"].encode()).hexdigest(), record["page"]
+    own_verified = json.loads((ROOT / "evidence/own-data-verified.json").read_text())["results"]
+    actual = {}
+    for slug in guide_slugs | {"index"}:
+        blocks = Blocks()
+        blocks.feed((ROOT / "pages" / (slug + ".html")).read_text())
+        for block in blocks.own:
+            assert block["id"] not in actual
+            actual[block["id"]] = (slug, block)
+    assert set(actual) == {r["block"] for r in own_verified}
+    for record in own_verified:
+        slug, block = actual[record["block"]]
+        assert record["pass"] and record["page"] == slug and record["exit"] == block["exit"]
+        assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest(), block["id"]
+    reviewer = Blocks()
+    reviewer.feed((ROOT / "pages/security.html").read_text())
+    release_verified = json.loads((ROOT / "evidence/release-review-verified.json").read_text())["results"]
+    assert {r["block"] for r in release_verified} == {b["id"] for b in reviewer.review}
+    for record in release_verified:
+        block = next(b for b in reviewer.review if b["id"] == record["block"])
+        assert record["pass"] and record["exit"] == 0
+        assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest()
     print(f"PASS: {len(pages)} pages, {guides} runnable guides, local links, sitemap, llms.txt and static root files")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--own-data", action="store_true", help="execute published own-data commands against stand-in inputs")
+    parser.add_argument("--release-review", action="store_true", help="execute manual verification commands (requires trusted gh and cosign)")
+    parser.add_argument("--output", type=Path, default=ROOT / "evidence/local/own-data")
+    parser.add_argument("--page", help="limit runtime verification to one page")
+    args = parser.parse_args()
+    if args.release_review:
+        import review_releases
+        review_releases.check(args.output)
+    elif args.own_data:
+        import own_data
+        own_data.check(args.output, args.page)
+    else:
+        main()

@@ -53,7 +53,7 @@ def build():
     shutil.copytree(ROOT / "assets", out / "assets", ignore=excluded)
     for name in STATIC_ROOT_FILES:
         shutil.copyfile(ROOT / name, out / name)
-    names = ["All guides", "A token spike", "Tokenmaxxing", "LiteLLM spend", "Cache check", "Per-user metrics", "Unusual windows", "Trace check", "Distinct users", "Why summaries"]
+    names = ["All guides", "A token spike", "Tokenmaxxing", "LiteLLM spend", "Cache check", "Per-user metrics", "Unusual windows", "Trace check", "Distinct users", "Why summaries", "Security review"]
     for page in PAGES:
         nav = "".join(
             f'<a href="{p["slug"]}.html"' + (' aria-current="page"' if p == page else '') + f'>{label}</a>'
@@ -61,7 +61,7 @@ def build():
         )
         rendered = FRAME.substitute(
             measurement_link=('<a href="summaries.html#measurement-notes">Measurement notes</a> · '
-                              if page["slug"] == "index" or page.get("kind") == "evidence" else ""),
+                              if page["slug"] == "index" or page.get("kind") in {"evidence", "reference"} else ""),
             header_mark=ET.tostring(header_mark, encoding="unicode"),
             document_title=html.escape(page.get("document_title", page["title"] + " | LLM Measurement")),
             title=html.escape(page["title"]), description=html.escape(page["description"], quote=True),

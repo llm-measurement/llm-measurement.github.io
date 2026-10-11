@@ -13,6 +13,7 @@
 - [Do my LLM traces record token usage and user IDs?](https://llm-measurement.github.io/traces-usage.html): Check a local OTLP capture for usage and identity fields that are present, missing or zero.
 - [How do I count distinct LLM users without storing user IDs?](https://llm-measurement.github.io/distinct-users.html): Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers.
 - [Why summaries instead of raw logs](https://llm-measurement.github.io/summaries.html): Measured sharing, retention and attribution properties of keyed summaries, with pinned coding-agent data and labeled synthetic workloads.
+- [For security reviewers](https://llm-measurement.github.io/security.html): Data paths, identity handling, manual release verification and repository controls for LLM Measurement tools.
 
 ## Released tools used in these examples
 

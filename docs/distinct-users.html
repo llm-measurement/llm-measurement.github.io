@@ -15,8 +15,40 @@
 </script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
-<div class="layout"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html" aria-current="page">Distinct users</a><a href="summaries.html">Why summaries</a></nav><main id="main"><h1>How do I count distinct LLM users without storing user IDs?</h1><p class="lead">Hash each user ID locally, then add the keyed value to a distinct-count sketch. llm-sketchkit stores the measurement state rather than the original IDs, and compatible workers can merge their sketches before estimating the total.</p>
-<h2>Count a small example</h2>
+<div class="layout"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html" aria-current="page">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav><main id="main"><h1>How do I count distinct LLM users without storing user IDs?</h1><p class="lead">Count distinct users from locally keyed IDs, then merge compatible measurements across workers.</p>
+<aside class="own-data" aria-labelledby="own-data-title">
+<h2 id="own-data-title">Run it on your data</h2>
+<p>Requires Python 3.11+ and a local, headered <code>usage.csv</code> with <code>user_id,tokens</code> columns from the period you want to measure. This is a library recipe: your application supplies the IDs and recorded token counts. Keep the CSV private.</p><pre data-own="distinct-users" data-exit="0"><code>python3 -m venv .venv
+.venv/bin/python -m pip install --no-cache-dir llm-sketchkit==0.3.0
+.venv/bin/python - &lt;&lt;'PY'
+import csv
+import secrets
+from llm_sketchkit import USER_V1, canonicalize_text_v1, hash64, hllpp, frequentitems
+from llm_sketchkit.hash import Secret
+
+secret = Secret(secrets.token_bytes(32))  # use your protected key for repeatable reports
+users = hllpp.new("small", USER_V1)
+ranking = frequentitems.Sketch("small", USER_V1)
+total = 0
+with open("usage.csv", newline="") as source:
+    for row in csv.DictReader(source):
+        if not row.get("user_id") or not row.get("tokens", "").isascii() or not row["tokens"].isdigit():
+            raise SystemExit("Each row needs user_id and nonnegative integer tokens.")
+        tokens = int(row["tokens"])
+        if tokens &gt; 2**63 - 1 or total + tokens &gt; 2**63 - 1:
+            raise SystemExit("Token total exceeds this example's supported range.")
+        digest = hash64(secret, USER_V1, canonicalize_text_v1(row["user_id"]))
+        users.add_hash(digest)
+        if tokens:
+            ranking.add_hash(digest, tokens)
+        total += tokens
+print(f"Estimated distinct users: {users.estimate():.0f}")
+PY</code></pre><p>For multiple workers, use the same protected key, domain and canonicalization and merge states before estimating.</p>
+</aside>
+<h2>What you'll see</h2>
+<p>Example output from the synthetic sample below; your values will reflect your input.</p>
+<pre class="output" data-output="distinct-users"><code>Estimated distinct users: 3</code></pre>
+<h2>No data handy? Try the sample</h2>
 <p class="meta">Requires Python 3.11 or later. Installation downloads the pinned release from PyPI; counting runs locally.</p>
 <pre data-run="distinct-users" data-exit="0"><code>python3 -m venv .venv
 .venv/bin/python -m pip install --no-cache-dir llm-sketchkit==0.3.0
@@ -31,7 +63,7 @@ for user_id in ("sample-user-a", "sample-user-b", "sample-user-a", "sample-user-
     users.add_hash(hash64(secret, USER_V1, canonicalize_text_v1(user_id)))
 print(f"Estimated distinct users: {users.estimate():.0f}")
 PY</code></pre>
-<pre class="output" data-output="distinct-users"><code>Estimated distinct users: 3</code></pre>
+<h2>Reading the result</h2>
 <h2>Across workers and languages</h2>
 <p>Give compatible workers the same protected secret, profile and hash domain. Merge the sketch states, then estimate once; adding workers' distinct-count estimates would count overlapping users more than once. The <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.3.0/examples/go-to-python">Go-to-Python example</a> shows how measurements move into a notebook.</p>
 <p>If your application already emits GenAI spans, the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/CONFIGURATION.md">collector's user_key mapping</a> provides the collection path. To rank token-heavy users instead, <a href="token-spike.html">compare user rankings</a>.</p>

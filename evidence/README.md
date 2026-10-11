@@ -37,3 +37,37 @@ The cache example checks recorded arithmetic and coverage, not provider cache be
 cause diagnosis or billing impact.
 This is a functional example check, not a throughput or anomaly-accuracy study.
 The checked-in `verified.json` records the run without local paths or credentials.
+
+## Own-data commands
+
+Every guide and the homepage put the operator's input path first. Run the exact
+published commands with synthetic files placed at those paths:
+
+```sh
+python3 scripts/check.py --own-data --output evidence/local/own-data
+```
+
+This requires Docker for an isolated Postgres fixture as well as the tools named
+on the pages. The SQL command connects through real psql as a SELECT-only role;
+the test transports psql through Docker, rather than replacing it with a stub.
+Each page gets a fresh directory and caches. Fixture source is anonymously cloned
+at the release tag; the visitor's install/analyze blocks never clone a repository.
+The scan fixture is shifted to recent complete windows while preserving canonical
+summary serialization. Private sentinel identities must stay out of output.
+`own-data-verified.json` binds the 15 successful command blocks to their source
+hashes and records the released fixture commit. CI reruns these checks.
+
+## Manual release checks
+
+With trusted gh and Cosign installations, execute the security page's exact
+manual verification blocks:
+
+```sh
+python3 scripts/check.py --release-review --output evidence/local/release-review
+```
+
+The recorded check used gh 2.69.0 and Cosign 3.1.3. It downloads and verifies
+fleetdiff v0.7.0, the collector v0.3.2 image and chart 0.3.4 with fresh credential
+configuration. No container is started or cluster changed by these blocks.
+`release-review-verified.json` binds the commands to the successful check. The
+default site check rejects stale own-data or manual-verification command records.

@@ -1,4 +1,22 @@
-<p class="lead">Keep user IDs out of your metric labels. Keep aggregate metrics for totals and rates, a bounded top-users ranking for the biggest contributors, and a distinct-user count whose labels contain no user identities.</p>
+<p class="lead">Keep user IDs out of your metric labels.</p>
+<aside class="own-data" aria-labelledby="own-data-title">
+<h2 id="own-data-title">Run it on your data</h2>
+<p>You need your existing collector YAML, saved locally as <code>collector.yaml</code>; no running collector or metrics-backend access is required for this configuration check.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). The installer downloads and verifies fleetdiff v0.7.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="cardinality" data-exit="3"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.7.0/scripts/install.sh
+sh install-fleetdiff.sh v0.7.0 ./bin
+./bin/fleetdiff diagnose ./collector.yaml</code></pre><p>Exit 0 means no blocking findings, 3 identifies settings to fix, and 4 means the configuration includes unsupported settings. Follow the reported YAML paths.</p>
+</aside>
+<h2>What you'll see</h2>
+<p>Example output from the synthetic sample below; your values will reflect your input.</p>
+<pre class="output" data-output="cardinality"><code>2 problems to fix:
+  connectors.genaisketch.operation_filter.llm_operations (line 10): Keep only model operations (chat, generate_content, text_completion, embeddings), each once. Tool and agent operations count as model attempts if included.
+  connectors.genaisketch.slices[0].keys (line 12): enduser.id is a metric label; remove it from slices and use a hashed field instead.</code></pre>
+<h2>No data handy? Try the sample</h2>
+<p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The installer verifies the v0.7.0 release before extraction.</p>
+<pre data-run="cardinality" data-exit="3"><code>git clone --depth 1 --branch v0.7.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-cardinality
+cd fleetdiff-cardinality
+sh scripts/install.sh v0.7.0 ./release
+./release/fleetdiff diagnose - &lt; examples/diagnose/unsafe.yaml</code></pre>
+<h2>Reading the result</h2>
 <h2>Why per-user labels grow so quickly</h2>
 <p>Metrics backends store each observed combination of label, tag or dimension values as its own series, and hosted services often bill for those combinations. For one metric, <strong>series ≈ users × other label combinations</strong> when each user appears across those combinations. Model, route, status and instance labels multiply the count further. The exact number depends on which combinations occur; histogram buckets and multiple metrics add more series.</p>
 <ul>
@@ -25,17 +43,12 @@
         weight: tokens</code></pre>
 <p>This fragment goes into a complete collector configuration with the hashing secret and trace pipeline set up. The distinct-user estimate is a metric value; keyed top-user rankings go to snapshot logs and optional summary files. Keep user identity attributes out of <code>slices</code>. <code>topk</code> limits displayed candidates; the configured sketch profile sets the ranking's fixed capacity.</p>
 <p>See the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/TOPK_KEYS.md">v0.3.2 ranking guide</a> and <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/CONFIGURATION.md">complete configuration reference</a>. Then use <a href="token-spike.html">fleetdiff to compare users across windows</a>.</p>
-<h2>Then check your collector configuration</h2>
-<p>The secondary check below finds an <code>enduser.id</code> label in a synthetic collector configuration. fleetdiff points to the YAML setting that needs changing.</p>
-<p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The installer verifies the v0.7.0 release before extraction.</p>
-<pre data-run="cardinality" data-exit="3"><code>git clone --depth 1 --branch v0.7.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-cardinality
-cd fleetdiff-cardinality
-sh scripts/install.sh v0.7.0 ./release
-./release/fleetdiff diagnose - &lt; examples/diagnose/unsafe.yaml</code></pre>
-<p>The relevant output is:</p>
-<pre class="output" data-output="cardinality"><code>2 problems to fix:
-  connectors.genaisketch.operation_filter.llm_operations (line 10): Keep only model operations (chat, generate_content, text_completion, embeddings), each once. Tool and agent operations count as model attempts if included.
-  connectors.genaisketch.slices[0].keys (line 12): enduser.id is a metric label; remove it from slices and use a hashed field instead.</code></pre>
+
+<p>The example check finds an <code>enduser.id</code> label in a synthetic collector configuration. fleetdiff points to the YAML setting that needs changing.</p>
+
+
+
+
 <p>Exit code <code>3</code> means the configuration has a blocking finding. It is the expected result for this example.</p>
 <p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.7.0/examples/diagnose">released synthetic diagnosis fixtures</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">diagnose reads your collector configuration; your metrics backend reports live series counts.<br>
