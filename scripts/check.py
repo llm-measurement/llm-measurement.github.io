@@ -96,6 +96,15 @@ def main():
     home = (ROOT / "docs/index.html").read_text().split('<ul class="questions">', 1)[1].split('</ul>', 1)[0]
     assert home.index('href="token-spike.html"') < home.index('href="tokenmaxxing.html"') < home.index('href="cardinality.html"')
     assert 'href="litellm-spend.html"' in home
+    for entry in pages:
+        if entry["slug"] in {"token-spike", "tokenmaxxing", "litellm-spend"}:
+            guide = (ROOT / "docs" / (entry["slug"] + ".html")).read_text()
+            assert entry["description"] in html.unescape(home), entry["slug"]
+            assert f'<p class="lead">{entry["description"]}</p>' in html.unescape(guide), entry["slug"]
+    assert ('To see who uses the most overall, rather than who changed, see '
+            '<a href="tokenmaxxing.html">Who is tokenmaxxing?</a>') in (ROOT / "docs/token-spike.html").read_text()
+    assert ('To see who caused a jump between two periods, see '
+            '<a href="token-spike.html">Which user is driving my token spike?</a>') in (ROOT / "docs/tokenmaxxing.html").read_text()
     litellm_home = (ROOT / "docs/index.html").read_text().split('<h2>Using LiteLLM?</h2>', 1)[1].split('<h2>', 1)[0]
     assert litellm_home.index('fleetdiff/blob/v0.6.0/README.md#using-litellm') < litellm_home.index('otelcol-genai-sketches/tree/v0.3.1')
     urls = ET.parse(ROOT / "docs/sitemap.xml").findall("{*}url")
