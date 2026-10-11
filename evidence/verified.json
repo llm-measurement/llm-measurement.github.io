@@ -23,9 +23,9 @@
       "page": "litellm-spend",
       "exit": 0,
       "pass": true,
-      "seconds": 1.89,
-      "command_sha256": "36d7d85f4dafaaee1ef5a4c955d49412211dfe4b45f4bba4dfecb58bfe59667f",
-      "stdout_sha256": "d0a51de26f5bf9e77896d1f7c32f933f12376bfeb60ee4b43516bfd820992ea6"
+      "seconds": 1.42,
+      "command_sha256": "39bffd559bc8d021b2675eab57a567e06f0354eccb32a71a044570d0996494ca",
+      "stdout_sha256": "8d04bc965b8ec82a9337ef2fce144fc847649f1fd2ac9acf9fad10a6de323835"
     },
     {
       "page": "cardinality",
@@ -47,9 +47,9 @@
       "page": "traces-usage",
       "exit": 0,
       "pass": true,
-      "seconds": 3.02,
-      "command_sha256": "5bc3a136a053f66b398110c8088e2ac69955d298906cdd54b63025428700023a",
-      "stdout_sha256": "09140442521b234c128fcbaf867c5bf8b6a3a0ed4d28717d8f9ff08c48ef872e"
+      "seconds": 1.39,
+      "command_sha256": "102fef63489cb83c9f54d867ef16d377a19b49e6ae87f3c03cf970f307900330",
+      "stdout_sha256": "71baf2e89561c72cfd6ba3e7cec94ca2393687a6ab621ac25b6938c10a8c7afa"
     },
     {
       "page": "distinct-users",

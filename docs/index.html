@@ -31,7 +31,7 @@
 <p><a href="summaries.html">Why summaries instead of raw logs?</a> See the measured sharing and retention properties, with source data and methods.</p>
 <figure><img src="assets/sessions.gif" alt="fleetdiff terminal report showing a flagged session in a synthetic token-usage comparison"><figcaption>fleetdiff's synthetic session example. <a href="token-spike.html">Run it with the released binary.</a></figcaption></figure>
 <h2>Using LiteLLM?</h2>
-<p>Export request-level spend logs, install fleetdiff v0.6.0, and investigate what changed. Start with the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/README.md#using-litellm">released export, install and investigate path</a>, or <a href="litellm-spend.html">try a synthetic spend export</a>.</p>
+<p>Export request-level spend logs, install fleetdiff v0.7.0, and investigate what changed. Start with the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/README.md#using-litellm">released export, install and investigate path</a>, or <a href="litellm-spend.html">try a synthetic spend export</a>.</p>
 <p>For continuous measurement, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">collector's LiteLLM recipe</a> to create metrics and summaries as traffic arrives.</p>
 <h2>Choose a tool</h2>
 <p><a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> reads local spend exports, trace captures or summary files. <a href="https://github.com/llm-measurement/otelcol-genai-sketches">The Collector connector</a> creates metrics and summaries continuously. <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a> supplies the measurement library for Go services and Python analysis.</p>

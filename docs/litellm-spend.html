@@ -17,12 +17,12 @@
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
 <div class="layout"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html" aria-current="page">LiteLLM spend</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a></nav><main id="main"><h1>Why did our LiteLLM usage jump, and are the spend logs complete?</h1><p class="lead">Compare two periods of LiteLLM spend logs to see which models and keys drove a change, and which records have incomplete usage.</p>
 <p>In this synthetic example, recorded tokens double from 8,000 to 16,000, two keys account for the increase, and the report identifies zero-only and failed records to review.</p>
-<p>fleetdiff v0.6.0 reads request-level CSV, JSON or JSONL locally and separates model-by-model usage changes from contributor rankings and completeness.</p>
+<p>fleetdiff v0.7.0 reads request-level CSV, JSON or JSONL locally and separates model-by-model usage changes from contributor rankings and completeness.</p>
 <h2>Run one spend comparison</h2>
 <p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The sample uses the released binary and a synthetic CSV.</p>
-<pre data-run="litellm-spend" data-exit="0"><code>git clone --depth 1 --branch v0.6.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-litellm-spend
+<pre data-run="litellm-spend" data-exit="0"><code>git clone --depth 1 --branch v0.7.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-litellm-spend
 cd fleetdiff-litellm-spend
-sh scripts/install.sh v0.6.0 ./release
+sh scripts/install.sh v0.7.0 ./release
 ./release/fleetdiff investigate --litellm-spend examples/litellm-spend/synthetic.csv \
   --before-period 2026-10-07 --after-period 2026-10-08</code></pre>
 <p>The headline identifies the model behind the increase:</p>
@@ -45,9 +45,9 @@ Logged model requests: 8 -&gt; 12.</code></pre>
   Failed records (overlap usage categories): 1 -&gt; 2.</code></pre>
 <p>To check usage and identity fields in your telemetry, see <a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a></p>
 <h2>Use your own spend logs</h2>
-<p>Follow the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/README.md#using-litellm">export, install and investigate path</a> to export request-level rows with the read-only SQL projection. Export 16 UTC days for the default comparison of two complete seven-day periods, or choose explicit periods as above.</p>
-<p>Choose <code>--group-by team</code>, <code>user</code>, <code>end-user</code> or <code>session</code> for another contributor view. The <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.6.0/examples/litellm-spend">spend export guide</a> covers the fields and period choices. For continuous metrics and summary windows, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">collector's LiteLLM recipe</a>.</p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/examples/litellm-spend/synthetic.csv">released synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p>Follow the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/README.md#using-litellm">export, install and investigate path</a> to export request-level rows with the read-only SQL projection. Export 16 UTC days for the default comparison of two complete seven-day periods, or choose explicit periods as above.</p>
+<p>Choose <code>--group-by team</code>, <code>user</code>, <code>end-user</code> or <code>session</code> for another contributor view. The <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.7.0/examples/litellm-spend">spend export guide</a> covers the fields and period choices. For continuous metrics and summary windows, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">collector's LiteLLM recipe</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/examples/litellm-spend/synthetic.csv">released synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
 </main></div>
