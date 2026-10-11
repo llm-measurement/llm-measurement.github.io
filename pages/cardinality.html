@@ -1,9 +1,16 @@
-<p class="lead">Remove user IDs from your Prometheus labels. Keep aggregate metrics for totals and rates, a bounded top-users ranking for the biggest contributors, and a distinct-user count whose labels contain no user identities.</p>
+<p class="lead">Keep user IDs out of your metric labels. Keep aggregate metrics for totals and rates, a bounded top-users ranking for the biggest contributors, and a distinct-user count whose labels contain no user identities.</p>
 <h2>Why per-user labels grow so quickly</h2>
-<p>Prometheus stores a separate time series for each observed combination of label values. For one metric, <strong>series ≈ users × other label combinations</strong> when each user appears across those combinations. Model, route, status and instance labels multiply the count further. The exact number depends on which combinations occur; histogram buckets and multiple metrics add more series.</p>
+<p>Metrics backends store each observed combination of label, tag or dimension values as its own series, and hosted services often bill for those combinations. For one metric, <strong>series ≈ users × other label combinations</strong> when each user appears across those combinations. Model, route, status and instance labels multiply the count further. The exact number depends on which combinations occur; histogram buckets and multiple metrics add more series.</p>
+<ul>
+<li><a href="https://prometheus.io/docs/concepts/data_model/">Prometheus</a>: two users with different <code>user_id</code> label values create two time series, even when the metric name and other labels match.</li>
+<li><a href="https://grafana.com/docs/grafana-cloud/platform/pricing-and-usage/metrics/">Grafana Cloud</a>: those per-user series increase the active-series count, one of its metrics billing inputs alongside data points per minute.</li>
+<li><a href="https://docs.datadoghq.com/account_management/billing/custom_metrics/">Datadog</a>: under cardinality-based custom-metrics billing, a different user tag creates a distinct custom metric for each metric name and remaining tag combination, including host.</li>
+<li><a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html">CloudWatch</a>: changing a <code>UserId</code> dimension creates a separate metric, even when the metric name and other dimensions match.</li>
+</ul>
 <h2>Keep the answers without identity labels</h2>
-<p>Use aggregate counters for token usage and model attempts, with a small, capped set of model or route labels. Keep the top token-consuming users in a fixed-capacity ranking outside Prometheus labels. Track the number of distinct users as a scalar estimate, also without a user label. This preserves both questions: how many users were active, and which users accounted for most tokens.</p>
+<p>Use aggregate counters for token usage and model attempts, with a small, capped set of model or route labels. Keep the top token-consuming users in a fixed-capacity ranking outside metric labels. Track the number of distinct users as a scalar estimate, also without a user label. This preserves both questions: how many users were active, and which users accounted for most tokens.</p>
 <h2>For OpenTelemetry users</h2>
+<p>The released <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/builder.yaml">v0.3.1 collector distribution</a> exports counters and distinct-user metrics through Prometheus or OTLP (gRPC or HTTP), so you can use any backend accepting OTLP metrics while keeping keyed rankings in snapshot logs and summary files.</p>
 <p>With the released genaisketch connector, map your span's user attribute and enable token-weighted user rankings:</p>
 <pre><code>connectors:
   genaisketch:
