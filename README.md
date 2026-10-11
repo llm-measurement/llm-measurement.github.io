@@ -5,8 +5,8 @@ An evidence page explains what can be shared and retained with summaries.
 
 | Question | Page |
 | --- | --- |
-| How do I avoid Prometheus cardinality explosion from per-user LLM metrics? | [Cardinality](docs/cardinality.html) |
 | Which user is driving my LLM token spike? | [Token spike](docs/token-spike.html) |
+| How do I avoid Prometheus cardinality explosion from per-user LLM metrics? | [Cardinality](docs/cardinality.html) |
 | How do I detect anomalies in LLM token consumption? | [Anomalies](docs/anomalies.html) |
 | How do I count distinct LLM users without storing user IDs? | [Distinct users](docs/distinct-users.html) |
 | Why summaries instead of raw logs | [Summaries](docs/summaries.html) |

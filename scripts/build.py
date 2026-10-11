@@ -47,7 +47,7 @@ def build():
     shutil.copytree(ROOT / "assets", out / "assets", ignore=excluded)
     for name in STATIC_ROOT_FILES:
         shutil.copyfile(ROOT / name, out / name)
-    names = ["All questions", "Prometheus cardinality", "A token spike", "Unusual windows", "Distinct users", "Why summaries"]
+    names = ["All questions", "A token spike", "Prometheus cardinality", "Unusual windows", "Distinct users", "Why summaries"]
     for page in PAGES:
         nav = "".join(
             f'<a href="{p["slug"]}.html"' + (' aria-current="page"' if p == page else '') + f'>{label}</a>'

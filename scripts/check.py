@@ -46,6 +46,9 @@ def main():
         path = ROOT / "docs" / (entry["slug"] + ".html")
         page = Page()
         page.feed(path.read_text())
+        nav = path.read_text().split('<nav aria-label="Guides">', 1)[1].split('</nav>', 1)[0]
+        assert nav.index('href="token-spike.html"') < nav.index('href="cardinality.html"'), path.name
+        assert '>A token spike</a>' in nav and '>Prometheus cardinality</a>' in nav, path.name
         measurement_sections += "measurement-notes" in page.ids
         assert "What the numbers mean" not in path.read_text(), path.name
         assert page.links.count("summaries.html#measurement-notes") == 1, path.name
@@ -73,6 +76,8 @@ def main():
                     linked_page.feed(linked_path.read_text())
                     assert target.fragment in linked_page.ids, (path.name, link)
     assert measurement_sections == 1, "measurement notes must have one shared home"
+    home = (ROOT / "docs/index.html").read_text().split('<ul class="questions">', 1)[1].split('</ul>', 1)[0]
+    assert home.index('href="token-spike.html"') < home.index('href="cardinality.html"')
     urls = ET.parse(ROOT / "docs/sitemap.xml").findall("{*}url")
     assert len(urls) == len(pages)
     text_index = (ROOT / "docs/llms.txt").read_text()
