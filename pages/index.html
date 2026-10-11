@@ -5,6 +5,7 @@
 <ul class="questions">
 <li><a href="token-spike.html">Which user is driving my token spike?</a><p>Compare two windows and see the users and sessions behind the increase.</p></li>
 <li><a href="tokenmaxxing.html">Who is tokenmaxxing? Find your heaviest AI token users</a><p>Rank reported token volume from keyed IDs and see how concentrated usage is.</p></li>
+<li><a href="litellm-spend.html">Why did our LiteLLM usage jump, and are the spend logs complete?</a><p>Compare a local spend export and see which models and keys drove the change.</p></li>
 <li><a href="cardinality.html">How do I see LLM usage per user without a metric label for every user?</a><p>Check the labels in your collector configuration and keep user rankings separately.</p></li>
 <li><a href="anomalies.html">Which windows look unusual?</a><p>Scan usage history for changes in tokens, coverage and contributors.</p></li>
 <li><a href="distinct-users.html">How many distinct users were active?</a><p>Count with keyed measurements that can be merged across workers.</p></li>
@@ -12,6 +13,7 @@
 <p><a href="summaries.html">Why summaries instead of raw logs?</a> See the measured sharing and retention properties, with source data and methods.</p>
 <figure><img src="assets/sessions.gif" alt="fleetdiff terminal report showing a flagged session in a synthetic token-usage comparison"><figcaption>fleetdiff's synthetic session example. <a href="token-spike.html">Run it with the released binary.</a></figcaption></figure>
 <h2>Using LiteLLM?</h2>
-<p>Start with the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">released LiteLLM telemetry recipe</a>. It sends spans through the collector and compares exported summaries with fleetdiff. The Python and Go library also works directly in your own measurement code.</p>
+<p>Export request-level spend logs, install fleetdiff v0.6.0, and investigate what changed. Start with the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/README.md#using-litellm">released export, install and investigate path</a>, or <a href="litellm-spend.html">try a synthetic spend export</a>.</p>
+<p>For continuous measurement, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">collector's LiteLLM recipe</a> to create metrics and summaries as traffic arrives.</p>
 <h2>Choose a tool</h2>
-<p><a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> reads local trace or summary files. <a href="https://github.com/llm-measurement/otelcol-genai-sketches">The Collector connector</a> creates metrics and summaries continuously. <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a> supplies the measurement library for Go services and Python analysis.</p>
+<p><a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> reads local spend exports, trace captures or summary files. <a href="https://github.com/llm-measurement/otelcol-genai-sketches">The Collector connector</a> creates metrics and summaries continuously. <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a> supplies the measurement library for Go services and Python analysis.</p>

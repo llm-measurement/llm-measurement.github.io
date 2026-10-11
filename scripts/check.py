@@ -16,6 +16,7 @@ GUIDE_CONTEXT = {
     "cardinality": "diagnose reads your collector configuration; your metrics backend reports live series counts.",
     "token-spike": "A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.",
     "tokenmaxxing": "Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.",
+    "litellm-spend": "This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.",
     "anomalies": "This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.",
     "distinct-users": "Distinct counts are statistical estimates. Your application hashes raw IDs before they reach the sketch.",
 }
@@ -52,6 +53,7 @@ def main():
         nav = path.read_text().split('<nav aria-label="Guides">', 1)[1].split('</nav>', 1)[0]
         assert nav.index('href="token-spike.html"') < nav.index('href="tokenmaxxing.html"') < nav.index('href="cardinality.html"'), path.name
         assert '>A token spike</a>' in nav and '>Tokenmaxxing</a>' in nav and '>Per-user metrics</a>' in nav, path.name
+        assert '>LiteLLM spend</a>' in nav, path.name
         measurement_sections += "measurement-notes" in page.ids
         assert "What the numbers mean" not in path.read_text(), path.name
         assert page.links.count("summaries.html#measurement-notes") == 1, path.name
@@ -93,6 +95,9 @@ def main():
     assert measurement_sections == 1, "measurement notes must have one shared home"
     home = (ROOT / "docs/index.html").read_text().split('<ul class="questions">', 1)[1].split('</ul>', 1)[0]
     assert home.index('href="token-spike.html"') < home.index('href="tokenmaxxing.html"') < home.index('href="cardinality.html"')
+    assert 'href="litellm-spend.html"' in home
+    litellm_home = (ROOT / "docs/index.html").read_text().split('<h2>Using LiteLLM?</h2>', 1)[1].split('<h2>', 1)[0]
+    assert litellm_home.index('fleetdiff/blob/v0.6.0/README.md#using-litellm') < litellm_home.index('otelcol-genai-sketches/tree/v0.3.1')
     urls = ET.parse(ROOT / "docs/sitemap.xml").findall("{*}url")
     assert len(urls) == len(pages)
     text_index = (ROOT / "docs/llms.txt").read_text()
