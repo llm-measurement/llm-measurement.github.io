@@ -8,5 +8,6 @@
   {"slug":"anomalies","title":"How do I detect anomalies in LLM token consumption?","description":"Scan retained LLM summary windows for unusual token usage, session concentration, tool errors and missing usage."},
   {"slug":"traces-usage","title":"Do my LLM traces record token usage and user IDs?","description":"Check a local OTLP capture for usage and identity fields that are present, missing or zero."},
   {"slug":"distinct-users","title":"How do I count distinct LLM users without storing user IDs?","description":"Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers."},
-  {"slug":"summaries","title":"Why summaries instead of raw logs","description":"Measured sharing, retention and attribution properties of keyed summaries, with pinned coding-agent data and labeled synthetic workloads.","kind":"evidence"}
+  {"slug":"summaries","title":"Why summaries instead of raw logs","description":"Measured sharing, retention and attribution properties of keyed summaries, with pinned coding-agent data and labeled synthetic workloads.","kind":"evidence"},
+  {"slug":"security","title":"For security reviewers","description":"Data paths, identity handling, manual release verification and repository controls for LLM Measurement tools.","kind":"reference"}
 ]

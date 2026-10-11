@@ -20,12 +20,18 @@ class Blocks(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.commands = []
         self.expected = []
+        self.own = []
+        self.review = []
         self.current = None
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "pre":
-            if "data-run" in attrs:
+            if "data-review" in attrs:
+                self.current = (self.review, {"id": attrs["data-review"], "text": "", "exit": 0})
+            elif "data-own" in attrs:
+                self.current = (self.own, {"id": attrs["data-own"], "text": "", "exit": int(attrs["data-exit"])})
+            elif "data-run" in attrs:
                 self.current = (self.commands, {"text": "", "exit": int(attrs["data-exit"])})
             elif "data-output" in attrs:
                 self.current = (self.expected, {"text": ""})
@@ -54,7 +60,7 @@ def main():
     pages = json.loads((ROOT / "pages.json").read_text())
     for page in pages:
         slug = page["slug"]
-        if slug == "index" or page.get("kind") == "evidence" or (args.page and slug != args.page):
+        if slug == "index" or page.get("kind") in {"evidence", "reference"} or (args.page and slug != args.page):
             continue
         blocks = Blocks()
         source = (ROOT / "pages" / (slug + ".html")).read_text()
@@ -67,7 +73,7 @@ def main():
             env.update({
                 "GH_CONFIG_DIR": fresh + "/gh", "GIT_TERMINAL_PROMPT": "0",
                 "GIT_CONFIG_COUNT": "1", "GIT_CONFIG_KEY_0": "credential.helper",
-                "GIT_CONFIG_VALUE_0": "", "GOWORK": "off", "PYTHONNOUSERSITE": "1",
+                "GIT_CONFIG_VALUE_0": "", "GOWORK": "off", "GOTOOLCHAIN": "go1.26.9", "PYTHONNOUSERSITE": "1",
                 "GOCACHE": fresh + "/go-build", "GOMODCACHE": fresh + "/go-mod",
                 "PIP_CACHE_DIR": fresh + "/pip",
             })

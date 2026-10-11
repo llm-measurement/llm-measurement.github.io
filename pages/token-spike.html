@@ -1,26 +1,31 @@
 <p class="lead">Usage jumped? Compare two periods and see which users and sessions account for the increase.</p>
-<p>In this synthetic example, one user adds 3,000 reported tokens while the application's total rises from 400 to 3,300.</p>
-<p>fleetdiff shows both the contributors and the split between more model attempts and more tokens per attempt.</p>
+<aside class="own-data" aria-labelledby="own-data-title">
+<h2 id="own-data-title">Run it on your data</h2>
+<p>A request-level LiteLLM export such as <code>spend.csv</code>, or read-only access to the proxy’s Postgres database to create one. Use the <a href="litellm-spend.html#export">read-only export recipe</a>; the Usage dashboard’s daily aggregate is a different format.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). GitHub CLI (<code>gh</code>) must be installed, but no sign-in is needed. The installer downloads and verifies fleetdiff v0.7.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="token-spike" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.7.0/scripts/install.sh
+sh install-fleetdiff.sh v0.7.0 ./bin
+./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user</code></pre><p>The default compares the two most recent complete seven-day UTC periods inside the file; export 16 days. For shorter files, pass <code>--before-period</code> and <code>--after-period</code>. <code>user</code> is the key owner; use <code>--group-by end-user</code> for application users.</p>
+<p>For continuous measurement, enable token-weighted <code>user_key</code> and <code>session_key</code> rankings in the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/TOPK_KEYS.md">released collector</a> and retain two complete <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/SUMMARY_EXPORT_HELM.md">summary windows</a>. Keep the hashing key consistent across the comparison and set <code>--expected</code> to your actual producer inventory. With your producer named <code>app</code>:</p><pre data-own="token-spike-summaries" data-exit="0"><code>./bin/fleetdiff investigate --before ./before --after ./after --expected app</code></pre>
+<p>For a gateway setup, start with the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.2/examples/integrations/litellm">LiteLLM recipe</a>. To keep watching, <a href="anomalies.html">scan retained history</a>.</p>
+</aside>
+<h2>What you'll see</h2>
+<p>Example output from the synthetic sample below; your values will reflect your input.</p>
+<p>fleetdiff shows the split between more model attempts and more tokens per attempt. In this example, the application's reported total rises from 400 to 3,300 tokens.</p>
+<pre class="output" data-output="token-spike"><code>1 of 8 tracked sessions flagged for review: 90.91% of attributed tokens.
+Reported tokens: 400 -&gt; 3300; model attempts: 4 -&gt; 13.
+  +1592 tokens from attempt count; +1308 tokens from tokens per attempt.
+  Tokens per attempt: 100.00 -&gt; 253.85.</code></pre>
+<p>One user adds 3,000 reported tokens, accounting for 90.91% of the after-period's attributed tokens.</p>
+<pre class="output" data-output="token-spike"><code>Which tracked users contribute tokens or model attempts?
+  key / measurement   before -&gt; after  after share  review
+  user-1 / top_users  0 -&gt; 3000        90.91%</code></pre>
 <p>To see who uses the most overall, rather than who changed, see <a href="tokenmaxxing.html">Who is tokenmaxxing?</a></p>
-<h2>Run the comparison</h2>
+<h2>No data handy? Try the sample</h2>
 <p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. No collector, Docker or model API key is needed for the sample.</p>
 <pre data-run="token-spike" data-exit="0"><code>git clone --depth 1 --branch v0.7.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-token-spike
 cd fleetdiff-token-spike
 sh scripts/install.sh v0.7.0 ./release
 ./release/fleetdiff investigate --before examples/sessions/data/before \
   --after examples/sessions/data/after --expected app</code></pre>
-<p>The report opens with:</p>
-<pre class="output" data-output="token-spike"><code>1 of 8 tracked sessions flagged for review: 90.91% of attributed tokens.
-Reported tokens: 400 -&gt; 3300; model attempts: 4 -&gt; 13.
-  +1592 tokens from attempt count; +1308 tokens from tokens per attempt.
-  Tokens per attempt: 100.00 -&gt; 253.85.</code></pre>
-<p>The user section identifies the leading contributor:</p>
-<pre class="output" data-output="token-spike"><code>Which tracked users contribute tokens or model attempts?
-  key / measurement   before -&gt; after  after share  review
-  user-1 / top_users  0 -&gt; 3000        90.91%</code></pre>
-<h2>Use your own application</h2>
-<p>Enable token-weighted <code>user_key</code> and <code>session_key</code> rankings in the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/TOPK_KEYS.md">released collector</a>, retain two complete summary windows, and pass their directories as <code>--before</code> and <code>--after</code>. Set <code>--expected</code> to your actual producer inventory and keep the hashing key consistent across the comparison.</p>
-<p>For a gateway setup, start with the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.2/examples/integrations/litellm">LiteLLM recipe</a>. To keep watching, <a href="anomalies.html">scan retained history</a>.</p>
 <p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.7.0/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>

@@ -30,7 +30,7 @@ FRAME = Template('''<!doctype html>
 </script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html">$header_mark LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
-<div class="layout"><nav aria-label="Guides">$nav</nav><main id="main"><h1>$title</h1>$body</main></div>
+<div class="layout"><div class="desktop-guides"><nav aria-label="Guides">$nav</nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides">$nav</nav></details><main id="main"><h1>$title</h1>$body</main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 $measurement_link<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>
 ''')
@@ -53,7 +53,7 @@ def build():
     shutil.copytree(ROOT / "assets", out / "assets", ignore=excluded)
     for name in STATIC_ROOT_FILES:
         shutil.copyfile(ROOT / name, out / name)
-    names = ["All guides", "A token spike", "Tokenmaxxing", "LiteLLM spend", "Cache check", "Per-user metrics", "Unusual windows", "Trace check", "Distinct users", "Why summaries"]
+    names = ["All guides", "A token spike", "Tokenmaxxing", "LiteLLM spend", "Cache check", "Per-user metrics", "Unusual windows", "Trace check", "Distinct users", "Why summaries", "Security review"]
     for page in PAGES:
         nav = "".join(
             f'<a href="{p["slug"]}.html"' + (' aria-current="page"' if p == page else '') + f'>{label}</a>'
@@ -61,7 +61,7 @@ def build():
         )
         rendered = FRAME.substitute(
             measurement_link=('<a href="summaries.html#measurement-notes">Measurement notes</a> · '
-                              if page["slug"] == "index" or page.get("kind") == "evidence" else ""),
+                              if page["slug"] == "index" or page.get("kind") in {"evidence", "reference"} else ""),
             header_mark=ET.tostring(header_mark, encoding="unicode"),
             document_title=html.escape(page.get("document_title", page["title"] + " | LLM Measurement")),
             title=html.escape(page["title"]), description=html.escape(page["description"], quote=True),

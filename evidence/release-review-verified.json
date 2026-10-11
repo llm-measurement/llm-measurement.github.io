@@ -1,0 +1,21 @@
+{
+  "system": "Darwin",
+  "machine": "arm64",
+  "method": "Exact published commands; anonymous access; fresh directories and credential configuration; trusted verification tools supplied on PATH.",
+  "results": [
+    {
+      "block": "fleetdiff",
+      "pass": true,
+      "exit": 0,
+      "command_sha256": "52bb8f6b5f519e74083e68ea5a97da36bb3543077d170405121cf0a80af4916c",
+      "stdout_sha256": "0d47c1e75cf46be161237108c844c8b087644465ccafd5e21bbb05a8bb4f5429"
+    },
+    {
+      "block": "collector",
+      "pass": true,
+      "exit": 0,
+      "command_sha256": "4a774847509597cd087798483de4873a06395443f23cc069e1d9a5f61e7d2b6c",
+      "stdout_sha256": "5520fe7910fbfa37c4d37625371f8694f668f3b7fc38d2c55d16e16d9959aabb"
+    }
+  ]
+}
