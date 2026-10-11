@@ -8,7 +8,7 @@ An evidence page explains what can be shared and retained with summaries.
 | Which user is driving my LLM token spike? | [Token spike](docs/token-spike.html) |
 | Who is tokenmaxxing? Find your heaviest AI token users | [Tokenmaxxing](docs/tokenmaxxing.html) |
 | Why did our LiteLLM usage jump, and are the spend logs complete? | [LiteLLM spend](docs/litellm-spend.html) |
-| Did cache reuse fall, and whose uncached input grew? | [Cache check](docs/cache-check.html) |
+| Prompt cache hit rate dropped after an update? Find whose uncached input grew | [Cache check](docs/cache-check.html) |
 | How do I see LLM usage per user without a metric label for every user? | [Per-user metrics](docs/cardinality.html) |
 | How do I detect anomalies in LLM token consumption? | [Anomalies](docs/anomalies.html) |
 | Do my LLM traces record token usage and user IDs? | [Trace check](docs/traces-usage.html) |

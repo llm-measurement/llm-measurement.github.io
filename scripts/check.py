@@ -69,6 +69,11 @@ def main():
         assert f"<title>{html.escape(title)}</title>" in path.read_text(), path.name
         assert f'<h1>{html.escape(entry["title"])}</h1>' in path.read_text(), path.name
         assert f'<meta name="description" content="{html.escape(entry["description"])}">' in path.read_text(), path.name
+        if entry.get("kind") != "evidence":
+            source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
+            assert "v0.5.0" not in source and "v0.3.1" not in source and "0.2.2" not in source
+        if entry["slug"] == "anomalies":
+            assert '>chart 0.3.4</a>' in path.read_text()
         if entry["slug"] == "cardinality":
             assert entry["title"] == "How do I see LLM usage per user without a metric label for every user?"
             assert '<p class="lead">Keep user IDs out of your metric labels.' in path.read_text()
@@ -77,10 +82,10 @@ def main():
                 "https://grafana.com/docs/grafana-cloud/platform/pricing-and-usage/metrics/",
                 "https://docs.datadoghq.com/account_management/billing/custom_metrics/",
                 "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html",
-                "https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/builder.yaml",
+                "https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/builder.yaml",
             ):
                 assert source in page.links, source
-        if entry["slug"] in {"litellm-spend", "traces-usage", "cache-check"}:
+        if entry["slug"] in {"token-spike", "cardinality", "anomalies", "litellm-spend", "traces-usage", "cache-check"}:
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
             assert "--branch v0.7.0" in source and "sh scripts/install.sh v0.7.0 ./release" in source
             assert "v0.6.0" not in source
@@ -88,10 +93,17 @@ def main():
                 assert "./release/fleetdiff inspect examples/inspect/synthetic-traces.json" in source
                 assert "go run" not in source and "Go 1.26" not in source
             if entry["slug"] == "cache-check":
+                assert entry["title"] == "Prompt cache hit rate dropped after an update? Find whose uncached input grew"
+                assert entry["document_title"] == entry["title"]
+                assert entry["description"].startswith("Prompt cache hit rate dropped after an update?")
+                assert len(entry["description"]) <= 155
                 assert "--litellm-spend examples/litellm-spend/cache-drop.csv" in source
                 assert "--group-by key" in source and "go run" not in source
                 assert source.index('data-output="cache-check"') < source.index('data-run="cache-check"')
                 assert "key-1: 80 -&gt; 700 uncached input tokens; change +620." in source
+        if entry["slug"] in {"distinct-users", "tokenmaxxing"}:
+            source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
+            assert "llm-sketchkit==0.3.0" in source and "v0.2.2" not in source
         if entry.get("kind") == "evidence":
             assert page.commands == 0, path.name
             assert 'id="reproduce"' in path.read_text(), path.name
@@ -137,7 +149,7 @@ def main():
     assert ('To see who caused a jump between two periods, see '
             '<a href="token-spike.html">Which user is driving my token spike?</a>') in (ROOT / "docs/tokenmaxxing.html").read_text()
     litellm_home = (ROOT / "docs/index.html").read_text().split('<h2>Using LiteLLM?</h2>', 1)[1].split('<h2>', 1)[0]
-    assert litellm_home.index('fleetdiff/blob/v0.7.0/README.md#using-litellm') < litellm_home.index('otelcol-genai-sketches/tree/v0.3.1')
+    assert litellm_home.index('fleetdiff/blob/v0.7.0/README.md#using-litellm') < litellm_home.index('otelcol-genai-sketches/tree/v0.3.2')
     urls = ET.parse(ROOT / "docs/sitemap.xml").findall("{*}url")
     assert len(urls) == len(pages)
     text_index = (ROOT / "docs/llms.txt").read_text()

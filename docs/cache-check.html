@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Did cache reuse fall, and whose uncached input grew? | LLM Measurement</title><meta name="description" content="Compare cache-read and cache-write shares across two periods, and see which keys or sessions added uncached input.">
+<title>Prompt cache hit rate dropped after an update? Find whose uncached input grew</title><meta name="description" content="Prompt cache hit rate dropped after an update? Compare recorded cache shares and find which keys or sessions added uncached input with fleetdiff.">
 <link rel="canonical" href="https://llm-measurement.github.io/cache-check.html"><link rel="stylesheet" href="assets/site.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta property="og:title" content="Did cache reuse fall, and whose uncached input grew?"><meta property="og:description" content="Compare cache-read and cache-write shares across two periods, and see which keys or sessions added uncached input.">
+<meta property="og:title" content="Prompt cache hit rate dropped after an update? Find whose uncached input grew"><meta property="og:description" content="Prompt cache hit rate dropped after an update? Compare recorded cache shares and find which keys or sessions added uncached input with fleetdiff.">
 <meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/cache-check.html">
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"></script>
@@ -15,7 +15,7 @@
 </script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
-<div class="layout"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="cache-check.html" aria-current="page">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a></nav><main id="main"><h1>Did cache reuse fall, and whose uncached input grew?</h1><p class="lead">In this synthetic export, recorded tokens stay flat, but cache-read share falls from 92% to 61%. One key accounts for all 620 additional uncached input tokens.</p>
+<div class="layout"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="cache-check.html" aria-current="page">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a></nav><main id="main"><h1>Prompt cache hit rate dropped after an update? Find whose uncached input grew</h1><p class="lead">In this synthetic export, recorded tokens stay flat, but cache-read share falls from 92% to 61%. One key accounts for all 620 additional uncached input tokens.</p>
 <pre class="output" data-output="cache-check"><code>But cache reuse fell: cache-read share 92% -&gt; 61% (uncached input +620).</code></pre>
 <pre class="output" data-output="cache-check"><code>  key-1: 80 -&gt; 700 uncached input tokens; change +620.</code></pre>
 <h2>Run one cache comparison</h2>

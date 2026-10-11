@@ -3,7 +3,7 @@
 <h2>Rank one synthetic week</h2>
 <p class="meta">Requires Python 3.11 or later. Installation downloads the pinned release from PyPI; ranking runs locally.</p>
 <pre data-run="tokenmaxxing" data-exit="0"><code>python3 -m venv .venv
-.venv/bin/python -m pip install --no-cache-dir llm-sketchkit==0.2.2
+.venv/bin/python -m pip install --no-cache-dir llm-sketchkit==0.3.0
 .venv/bin/python - &lt;&lt;'PY'
 import random
 import secrets
@@ -52,7 +52,7 @@ The top 5 of 60 people account for 43% of all tokens.</code></pre>
 <h2>Teams and budgets</h2>
 <p>Teams are few, so count them exactly; a few dozen budget lines don't need a sketch. Use the keyed ranking for people, where the list is long and names are sensitive.</p>
 <h2>From your gateway or collector</h2>
-<p>If your usage flows through an OpenTelemetry Collector, the released connector keeps the same keyed, token-weighted ranking continuously, in snapshot logs and summary files, without user labels on your metrics. See <a href="cardinality.html">per-user metrics</a> and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/TOPK_KEYS.md">ranking configuration</a>.</p>
-<p class="meta">Source: <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.2.2">llm-sketchkit v0.2.2</a>. The checked command above defines the complete synthetic input. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p>If your usage flows through an OpenTelemetry Collector, the released connector keeps the same keyed, token-weighted ranking continuously, in snapshot logs and summary files, without user labels on your metrics. See <a href="cardinality.html">per-user metrics</a> and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/TOPK_KEYS.md">ranking configuration</a>.</p>
+<p class="meta">Source: <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.3.0">llm-sketchkit v0.3.0</a>. The checked command above defines the complete synthetic input. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
