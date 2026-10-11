@@ -17,6 +17,7 @@ GUIDE_CONTEXT = {
     "token-spike": "A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.",
     "tokenmaxxing": "Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.",
     "litellm-spend": "This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.",
+    "cache-check": "Uncached-input growth can reflect input volume or workload mix, not necessarily a per-key cache-share loss. These recorded shares do not diagnose causes or costs; the synthetic example checks arithmetic, not provider cache behavior. Collector summaries support aggregate shares with sufficient coverage, but lack per-model cache counters and cache-weighted key/session rankings.",
     "anomalies": "This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.",
     "traces-usage": "Readiness describes fields in the captured model attempts; zeros without declared usage origin remain unknown.",
     "distinct-users": "Distinct counts are statistical estimates. Your application hashes raw IDs before they reach the sketch.",
@@ -55,6 +56,8 @@ def main():
         assert nav.index('href="token-spike.html"') < nav.index('href="tokenmaxxing.html"') < nav.index('href="cardinality.html"'), path.name
         assert '>A token spike</a>' in nav and '>Tokenmaxxing</a>' in nav and '>Per-user metrics</a>' in nav, path.name
         assert '>LiteLLM spend</a>' in nav, path.name
+        assert '>Cache check</a>' in nav, path.name
+        assert nav.index('href="litellm-spend.html"') < nav.index('href="cache-check.html"') < nav.index('href="cardinality.html"'), path.name
         assert '>All guides</a>' in nav and '>All questions</a>' not in nav, path.name
         assert '>Trace check</a>' in nav, path.name
         assert nav.index('href="anomalies.html"') < nav.index('href="traces-usage.html"') < nav.index('href="distinct-users.html"'), path.name
@@ -77,21 +80,29 @@ def main():
                 "https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/builder.yaml",
             ):
                 assert source in page.links, source
-        if entry["slug"] in {"litellm-spend", "traces-usage"}:
+        if entry["slug"] in {"litellm-spend", "traces-usage", "cache-check"}:
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
             assert "--branch v0.7.0" in source and "sh scripts/install.sh v0.7.0 ./release" in source
             assert "v0.6.0" not in source
             if entry["slug"] == "traces-usage":
                 assert "./release/fleetdiff inspect examples/inspect/synthetic-traces.json" in source
                 assert "go run" not in source and "Go 1.26" not in source
+            if entry["slug"] == "cache-check":
+                assert "--litellm-spend examples/litellm-spend/cache-drop.csv" in source
+                assert "--group-by key" in source and "go run" not in source
+                assert source.index('data-output="cache-check"') < source.index('data-run="cache-check"')
+                assert "key-1: 80 -&gt; 700 uncached input tokens; change +620." in source
         if entry.get("kind") == "evidence":
             assert page.commands == 0, path.name
             assert 'id="reproduce"' in path.read_text(), path.name
         elif entry["slug"] != "index":
             assert "?" in entry["title"] and page.commands == 1, path.name
             context = html.escape(GUIDE_CONTEXT[entry["slug"]])
+            notes_link = '<a href="summaries.html#measurement-notes">Measurement notes</a>'
+            if entry["slug"] == "cache-check":
+                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/docs/CACHE.md">Cache measurements and limits</a>.'
             expected = (f'<p class="measurement-context">{context}<br>\n'
-                        '<a href="summaries.html#measurement-notes">Measurement notes</a></p>')
+                        f'{notes_link}</p>')
             assert expected in path.read_text(), (path.name, "guide context must precede its notes link")
             assert path.read_text().count('class="measurement-context"') == 1, path.name
         for link in page.links:
@@ -107,10 +118,11 @@ def main():
     home = (ROOT / "docs/index.html").read_text().split('<ul class="questions">', 1)[1].split('</ul>', 1)[0]
     assert home.index('href="token-spike.html"') < home.index('href="tokenmaxxing.html"') < home.index('href="cardinality.html"')
     assert 'href="litellm-spend.html"' in home
+    assert home.index('href="litellm-spend.html"') < home.index('href="cache-check.html"') < home.index('href="cardinality.html"')
     assert home.index('href="anomalies.html"') < home.index('href="traces-usage.html"') < home.index('href="distinct-users.html"')
     assert '<h2>Guides</h2>' in (ROOT / "docs/index.html").read_text()
     for entry in pages:
-        if entry["slug"] in {"token-spike", "tokenmaxxing", "litellm-spend", "cardinality", "traces-usage"}:
+        if entry["slug"] in {"token-spike", "tokenmaxxing", "litellm-spend", "cache-check", "cardinality", "traces-usage"}:
             assert entry["description"] in html.unescape(home), entry["slug"]
         if entry["slug"] in {"token-spike", "tokenmaxxing"}:
             guide = (ROOT / "docs" / (entry["slug"] + ".html")).read_text()

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Did cache reuse fall, and whose uncached input grew? | LLM Measurement</title><meta name="description" content="Compare cache-read and cache-write shares across two periods, and see which keys or sessions added uncached input.">
+<link rel="canonical" href="https://llm-measurement.github.io/cache-check.html"><link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="Did cache reuse fall, and whose uncached input grew?"><meta property="og:description" content="Compare cache-read and cache-write shares across two periods, and see which keys or sessions added uncached input.">
+<meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/cache-check.html">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head><body><a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
+<div class="layout"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="cache-check.html" aria-current="page">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a></nav><main id="main"><h1>Did cache reuse fall, and whose uncached input grew?</h1><p class="lead">In this synthetic export, recorded tokens stay flat, but cache-read share falls from 92% to 61%. One key accounts for all 620 additional uncached input tokens.</p>
+<pre class="output" data-output="cache-check"><code>But cache reuse fell: cache-read share 92% -&gt; 61% (uncached input +620).</code></pre>
+<pre class="output" data-output="cache-check"><code>  key-1: 80 -&gt; 700 uncached input tokens; change +620.</code></pre>
+<h2>Run one cache comparison</h2>
+<p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The sample uses the released fleetdiff v0.7.0 binary and a four-request synthetic CSV. No Go, collector, model key or paid call is needed.</p>
+<pre data-run="cache-check" data-exit="0"><code>git clone --depth 1 --branch v0.7.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-cache-check
+cd fleetdiff-cache-check
+sh scripts/install.sh v0.7.0 ./release
+./release/fleetdiff investigate --litellm-spend examples/litellm-spend/cache-drop.csv \
+  --before-period 2026-10-07 --after-period 2026-10-08 --group-by key</code></pre>
+<h2>How much input was reused?</h2>
+<p>Both periods record 2,000 input tokens and 200 output tokens. Every request reports cache-read and cache-write detail, so the denominators cover all input in this example:</p>
+<pre class="output" data-output="cache-check"><code>    Cache-read share of recorded input: 92% -&gt; 61%.
+      Cache reads: 1,840 of 2,000 input tokens -&gt; 1,220 of 2,000 (all requests report cache detail).
+    Cache-write share of recorded input: 5% -&gt; 7.5%.
+      Cache writes: 100 of 2,000 input tokens -&gt; 150 of 2,000 (all requests report cache detail).</code></pre>
+<p>Uncached input is input minus cache reads; it includes cache writes. Cache reads and writes are subsets of recorded input. Shares measure input tokens.</p>
+<h2>Which key's uncached input grew?</h2>
+<p>The keyed uncached-growth ranking uses requests with usable cache-read detail and a group identity. In this fixture, <code>key-1</code> rises from 80 to 700 uncached input tokens while the other key stays flat. The report's local aliases refer to the same identities in its total-token and cache rankings.</p>
+<p>For another view, choose <code>--group-by team</code>, <code>user</code>, <code>end-user</code> or <code>session</code>. Rankings carry bounds when the sketches cannot identify an exact change.</p>
+<h2>Check coverage before interpreting a change</h2>
+<p>Each cache field has its own covered-input denominator and request count. Missing, invalid and subset-violating details are excluded and counted separately; requests without group identities stay outside the ranking. Explicit zero detail is recorded zero, not proof of provider origin. A missing detail or zero denominator leaves the share unavailable.</p>
+<p>For your own data, use the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/README.md#using-litellm">released request-level export path</a>. The SQL includes cache fields by default, but the <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.7.0/examples/litellm-spend">pinned writer and export mappings</a> determine which details survive. Keep raw exports private. The <a href="litellm-spend.html">LiteLLM spend guide</a> checks total usage and log completeness; the <a href="traces-usage.html">trace check</a> checks usage and identity fields in an OTLP capture.</p>
+<h2>What to check next</h2>
+<p>If the recorded share falls, review the provider's cache diagnostics and whether the gateway route preserves cache markers.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/examples/litellm-spend/cache-drop.csv">released synthetic cache-drop CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="measurement-context">Uncached-input growth can reflect input volume or workload mix, not necessarily a per-key cache-share loss. These recorded shares do not diagnose causes or costs; the synthetic example checks arithmetic, not provider cache behavior. Collector summaries support aggregate shares with sufficient coverage, but lack per-model cache counters and cache-weighted key/session rankings.<br>
+<a href="summaries.html#measurement-notes">Measurement notes</a>. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/docs/CACHE.md">Cache measurements and limits</a>.</p>
+</main></div>
+<footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
+<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>
