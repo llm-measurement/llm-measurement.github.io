@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Who is tokenmaxxing? Find your heaviest AI token users | LLM Measurement</title><meta name="description" content="Rank your heaviest AI token users from keyed IDs and see how concentrated usage is, with an open-source Python library and OpenTelemetry collector.">
+<title>Who is tokenmaxxing? Find your heaviest AI token users | LLM Measurement</title><meta name="description" content="No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.">
 <link rel="canonical" href="https://llm-measurement.github.io/tokenmaxxing.html"><link rel="stylesheet" href="assets/site.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta property="og:title" content="Who is tokenmaxxing? Find your heaviest AI token users"><meta property="og:description" content="Rank your heaviest AI token users from keyed IDs and see how concentrated usage is, with an open-source Python library and OpenTelemetry collector.">
+<meta property="og:title" content="Who is tokenmaxxing? Find your heaviest AI token users"><meta property="og:description" content="No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.">
 <meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/tokenmaxxing.html">
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
-<div class="layout"><nav aria-label="Guides"><a href="index.html">All questions</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html" aria-current="page">Tokenmaxxing</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a></nav><main id="main"><h1>Who is tokenmaxxing? Find your heaviest AI token users</h1><p class="lead">Rank people by reported token volume from keyed IDs, and see how much of your usage a few people account for. A short, bounded ranking answers "who are our heaviest AI users?" without keeping a raw table of every employee's usage.</p>
+<div class="layout"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html" aria-current="page">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a></nav><main id="main"><h1>Who is tokenmaxxing? Find your heaviest AI token users</h1><p class="lead">No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.</p>
+<p>To see who caused a jump between two periods, see <a href="token-spike.html">Which user is driving my token spike?</a></p>
 <h2>Rank one synthetic week</h2>
 <p class="meta">Requires Python 3.11 or later. Installation downloads the pinned release from PyPI; ranking runs locally.</p>
 <pre data-run="tokenmaxxing" data-exit="0"><code>python3 -m venv .venv
@@ -60,7 +61,7 @@ Heaviest users (keyed; only the key holder can look them up):
 The top 5 of 60 people account for 43% of all tokens.</code></pre>
 <p>In this synthetic week, 5 of 60 people account for 43% of reported tokens. The ranking holds keyed values, not names, so it can be shared with a manager or a finance team as it is. Whoever holds the key can look up a person by hashing a known ID.</p>
 <h2>Teams and budgets</h2>
-<p>Teams are few, so count them exactly; a few dozen budget lines don't need a sketch. Use the keyed ranking for people, where the list is long and names are sensitive. To see whether a jump came from more people or from a few heavier ones, compare two weeks: <a href="token-spike.html">Which user is driving my LLM token spike?</a></p>
+<p>Teams are few, so count them exactly; a few dozen budget lines don't need a sketch. Use the keyed ranking for people, where the list is long and names are sensitive.</p>
 <h2>From your gateway or collector</h2>
 <p>If your usage flows through an OpenTelemetry Collector, the released connector keeps the same keyed, token-weighted ranking continuously, in snapshot logs and summary files, without user labels on your metrics. See <a href="cardinality.html">per-user metrics</a> and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/TOPK_KEYS.md">ranking configuration</a>.</p>
 <p class="meta">Source: <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.2.2">llm-sketchkit v0.2.2</a>. The checked command above defines the complete synthetic input. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>

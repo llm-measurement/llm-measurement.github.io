@@ -1,4 +1,5 @@
-<p class="lead">Rank people by reported token volume from keyed IDs, and see how much of your usage a few people account for. A short, bounded ranking answers "who are our heaviest AI users?" without keeping a raw table of every employee's usage.</p>
+<p class="lead">No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.</p>
+<p>To see who caused a jump between two periods, see <a href="token-spike.html">Which user is driving my token spike?</a></p>
 <h2>Rank one synthetic week</h2>
 <p class="meta">Requires Python 3.11 or later. Installation downloads the pinned release from PyPI; ranking runs locally.</p>
 <pre data-run="tokenmaxxing" data-exit="0"><code>python3 -m venv .venv
@@ -49,7 +50,7 @@ Heaviest users (keyed; only the key holder can look them up):
 The top 5 of 60 people account for 43% of all tokens.</code></pre>
 <p>In this synthetic week, 5 of 60 people account for 43% of reported tokens. The ranking holds keyed values, not names, so it can be shared with a manager or a finance team as it is. Whoever holds the key can look up a person by hashing a known ID.</p>
 <h2>Teams and budgets</h2>
-<p>Teams are few, so count them exactly; a few dozen budget lines don't need a sketch. Use the keyed ranking for people, where the list is long and names are sensitive. To see whether a jump came from more people or from a few heavier ones, compare two weeks: <a href="token-spike.html">Which user is driving my LLM token spike?</a></p>
+<p>Teams are few, so count them exactly; a few dozen budget lines don't need a sketch. Use the keyed ranking for people, where the list is long and names are sensitive.</p>
 <h2>From your gateway or collector</h2>
 <p>If your usage flows through an OpenTelemetry Collector, the released connector keeps the same keyed, token-weighted ranking continuously, in snapshot logs and summary files, without user labels on your metrics. See <a href="cardinality.html">per-user metrics</a> and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.1/docs/TOPK_KEYS.md">ranking configuration</a>.</p>
 <p class="meta">Source: <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.2.2">llm-sketchkit v0.2.2</a>. The checked command above defines the complete synthetic input. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>

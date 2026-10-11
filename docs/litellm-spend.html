@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why did our LiteLLM usage jump, and are the spend logs complete? | LLM Measurement</title><meta name="description" content="The same comparison straight from LiteLLM&#x27;s spend logs, plus a check on whether the records are complete.">
+<link rel="canonical" href="https://llm-measurement.github.io/litellm-spend.html"><link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="Why did our LiteLLM usage jump, and are the spend logs complete?"><meta property="og:description" content="The same comparison straight from LiteLLM&#x27;s spend logs, plus a check on whether the records are complete.">
+<meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/litellm-spend.html">
+</head><body><a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
+<div class="layout"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html" aria-current="page">LiteLLM spend</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a></nav><main id="main"><h1>Why did our LiteLLM usage jump, and are the spend logs complete?</h1><p class="lead">Compare two periods of LiteLLM spend logs to see which models and keys drove a change, and which records have incomplete usage.</p>
+<p>In this synthetic example, recorded tokens double from 8,000 to 16,000, two keys account for the increase, and the report identifies zero-only and failed records to review.</p>
+<p>fleetdiff v0.6.0 reads request-level CSV, JSON or JSONL locally and separates model-by-model usage changes from contributor rankings and completeness.</p>
+<h2>Run one spend comparison</h2>
+<p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The sample uses the released binary and a synthetic CSV.</p>
+<pre data-run="litellm-spend" data-exit="0"><code>git clone --depth 1 --branch v0.6.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-litellm-spend
+cd fleetdiff-litellm-spend
+sh scripts/install.sh v0.6.0 ./release
+./release/fleetdiff investigate --litellm-spend examples/litellm-spend/synthetic.csv \
+  --before-period 2026-10-07 --after-period 2026-10-08</code></pre>
+<p>The headline identifies the model behind the increase:</p>
+<pre class="output" data-output="litellm-spend"><code>Recorded tokens doubled (8,000 -&gt; 16,000).
+model-1 accounts for 100% of the net recorded increase (+8,000 tokens).
+Logged model requests: 8 -&gt; 12.</code></pre>
+<h2>Who drove it?</h2>
+<p>The contributor section uses local aliases for the keys:</p>
+<pre class="output" data-output="litellm-spend"><code>Who drove the increase?
+  key-1: 5,000 -&gt; 10,000 tokens; change +5,000.
+  key-2: 1,000 -&gt; 4,000 tokens; change +3,000.
+  key-3: 2,000 -&gt; 2,000 tokens; change +0.
+  2 leading tracked keys account for 100% of the net recorded increase.
+  Attributed tokens: 8,000 -&gt; 16,000.</code></pre>
+<h2>Are the logs complete?</h2>
+<p>The completeness section points to records worth checking in LiteLLM:</p>
+<pre class="output" data-output="litellm-spend"><code>How complete is the export?
+  Records needing usage review (categories may overlap): 2 -&gt; 4.
+  Zero-only records, origin unknown: 2 -&gt; 4.
+  Failed records (overlap usage categories): 1 -&gt; 2.</code></pre>
+<p>To check usage and identity fields in your telemetry, see <a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a></p>
+<h2>Use your own spend logs</h2>
+<p>Follow the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/README.md#using-litellm">export, install and investigate path</a> to export request-level rows with the read-only SQL projection. Export 16 UTC days for the default comparison of two complete seven-day periods, or choose explicit periods as above.</p>
+<p>Choose <code>--group-by team</code>, <code>user</code>, <code>end-user</code> or <code>session</code> for another contributor view. The <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.6.0/examples/litellm-spend">spend export guide</a> covers the fields and period choices. For continuous metrics and summary windows, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.1/examples/integrations/litellm">collector's LiteLLM recipe</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/examples/litellm-spend/synthetic.csv">released synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.6.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="measurement-context">This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.<br>
+<a href="summaries.html#measurement-notes">Measurement notes</a></p>
+</main></div>
+<footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
+<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>
