@@ -18,7 +18,7 @@ import uuid
 
 from outsider import Blocks, ROOT
 
-PAGES = ("index", "token-spike", "litellm-spend", "cache-check", "cardinality",
+PAGES = ("index", "token-spike", "litellm-spend", "session-budget", "cache-check", "cardinality",
          "traces-usage", "anomalies", "distinct-users", "tokenmaxxing")
 EXPECTED = {
     "home-spend": ("Logged model requests:", "Who drove", "user-1:"),
@@ -28,6 +28,9 @@ EXPECTED = {
     "token-spike": ("Logged model requests:", "user-1:"),
     "token-spike-summaries": ("Reported tokens: 400 -> 3300", "user-1"),
     "litellm-spend": ("Logged model requests:", "key-1:"),
+    "session-budget": ("3 of 4 sessions with complete recorded spend exceed the supplied USD 1.00 cap.",
+                       "Recorded USD: p50 1.10; p95 1.60; max 1.60 (n=4, exact nearest-rank).",
+                       "Above-cap sessions with no recorded session-budget rejection: 2."),
     "spend-export": ("Exported request-level rows to ./litellm-export/spend.csv",),
     "litellm-install": ("Verified", "installation in ././bin"),
     "cache-check": ("Cache-read share of recorded input:", "session-1:"),
@@ -68,6 +71,8 @@ def prepare(fresh, source, env, slug):
     for name in ("before", "after"):
         shutil.copytree(source / "examples/sessions/data" / name, fresh / name)
     (fresh / "usage.csv").write_text("user_id,tokens\nprivate-ana,1200\nprivate-ben,300\nprivate-ana,2400\nprivate-cy,900\n")
+    if slug == "session-budget":
+        shutil.copyfile(source / "examples/litellm-spend/session-budget.csv", fresh / "spend.csv")
     if slug == "cache-check":
         with (source / "examples/litellm-spend/cache-drop.csv").open() as handle:
             originals = list(csv.DictReader(handle))
@@ -192,6 +197,8 @@ def check(output, page=None):
                         assert len(rows) == 160 and "messages" not in rows[0] and "response" not in rows[0]
                         assert "cache_read_input_tokens" in rows[0] and rows[0]["cache_read_input_tokens"] == ""
                     assert all(raw not in result.stdout for raw in ("private-ana", "private-ben", "private-cy"))
+                    if slug == "session-budget":
+                        assert "SENTINEL_" not in result.stdout + result.stderr
                     records.append({"page": slug, "block": block["id"], "pass": True,
                         "exit": result.returncode, "seconds": round(time.monotonic() - begin, 2),
                         "command_sha256": hashlib.sha256(block["text"].encode()).hexdigest(),

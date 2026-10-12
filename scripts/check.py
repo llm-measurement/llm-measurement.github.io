@@ -18,6 +18,7 @@ GUIDE_CONTEXT = {
     "token-spike": "A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.",
     "tokenmaxxing": "Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.",
     "litellm-spend": "This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.",
+    "session-budget": "Recorded session totals are review evidence, not an enforcement verdict or completed-task costs. Missing identities stay unattributed; absent recorded rejections do not prove that no rejection occurred.",
     "cache-check": "Uncached-input growth can reflect input volume or workload mix, not necessarily a per-key cache-share loss. These recorded shares do not diagnose causes or costs; the synthetic example checks arithmetic, not provider cache behavior. Collector summaries support aggregate shares with sufficient coverage, but lack per-model cache counters and cache-weighted key/session rankings.",
     "anomalies": "This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.",
     "traces-usage": "Readiness describes fields in the captured model attempts; zeros without declared usage origin remain unknown.",
@@ -90,6 +91,8 @@ def main():
         assert nav.index('href="token-spike.html"') < nav.index('href="tokenmaxxing.html"') < nav.index('href="cardinality.html"'), path.name
         assert '>A token spike</a>' in nav and '>Tokenmaxxing</a>' in nav and '>Per-user metrics</a>' in nav, path.name
         assert '>LiteLLM spend</a>' in nav, path.name
+        assert '>Session budget</a>' in nav, path.name
+        assert nav.index('href="litellm-spend.html"') < nav.index('href="session-budget.html"') < nav.index('href="cache-check.html"'), path.name
         assert '>Cache check</a>' in nav, path.name
         assert nav.index('href="litellm-spend.html"') < nav.index('href="cache-check.html"') < nav.index('href="cardinality.html"'), path.name
         assert '>All guides</a>' in nav and '>All questions</a>' not in nav, path.name
@@ -135,6 +138,14 @@ def main():
                 assert "--group-by key" in source and "go run" not in source
                 assert source.index('data-output="cache-check"') < source.index('data-run="cache-check"')
                 assert "key-1: 80 -&gt; 700 uncached input tokens; change +620." in source
+        if entry["slug"] == "session-budget":
+            source = (ROOT / "pages/session-budget.html").read_text()
+            assert "--branch v0.8.0" in source and "sh scripts/install.sh v0.8.0 ./release" in source
+            assert "--session-budget-usd 1.00" in source and "Redis" not in source
+            for url in ("https://docs.litellm.ai/docs/a2a_iteration_budgets",
+                        "https://github.com/BerriAI/litellm/issues/34732",
+                        "https://github.com/BerriAI/litellm/issues/43190"):
+                assert url in page.links, url
         if entry["slug"] in {"distinct-users", "tokenmaxxing"}:
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
             assert "llm-sketchkit==0.3.0" in source and "v0.2.2" not in source
@@ -171,6 +182,7 @@ def main():
     home = (ROOT / "docs/index.html").read_text().split('<ul class="questions">', 1)[1].split('</ul>', 1)[0]
     assert home.index('href="token-spike.html"') < home.index('href="tokenmaxxing.html"') < home.index('href="cardinality.html"')
     assert 'href="litellm-spend.html"' in home
+    assert home.index('href="litellm-spend.html"') < home.index('href="session-budget.html"') < home.index('href="cache-check.html"')
     assert home.index('href="litellm-spend.html"') < home.index('href="cache-check.html"') < home.index('href="cardinality.html"')
     assert home.index('href="anomalies.html"') < home.index('href="traces-usage.html"') < home.index('href="distinct-users.html"')
     assert '<h2>Guides</h2>' in (ROOT / "docs/index.html").read_text()

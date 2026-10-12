@@ -10,7 +10,7 @@
       "block": "home-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 1.44,
+      "seconds": 1.12,
       "command_sha256": "3320a26f00cc84a676bd6950a9e167026c6c7a83c90844b22ea414d676caff8e",
       "stdout_sha256": "d700b19bb6addcc05983b9674914768e20807e8eb2e64f777786cc1386f925f8"
     },
@@ -21,14 +21,14 @@
       "exit": 0,
       "seconds": 0.01,
       "command_sha256": "2190e825811c6d577db6d53f5dbfd40e0be43083f6c459a1955f634881f74779",
-      "stdout_sha256": "ef53ac1a9465859b95c8d27b5c3c9669673eb06f2fb109f657c909443bcd95ec"
+      "stdout_sha256": "fb319028be11cfd3745c1d4fbb64c4a24d5fa2aaddc6fb380c253b3797c5d4e8"
     },
     {
       "page": "index",
       "block": "home-python",
       "pass": true,
       "exit": 0,
-      "seconds": 2.28,
+      "seconds": 1.88,
       "command_sha256": "4b822934edf59ddf878c94f30887a3f7f69e131deee51b38c32d6ac0f88f7784",
       "stdout_sha256": "6af8892aa0092ceeb425a7998a5df4653a421fe53e6d7f6dc4f770d898d85a18"
     },
@@ -37,7 +37,7 @@
       "block": "home-go",
       "pass": true,
       "exit": 0,
-      "seconds": 6.35,
+      "seconds": 5.24,
       "command_sha256": "a7623d1e9e0d816cf8f1b0165fa28864168ab8abea07b21fc730b827632ceeca",
       "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -46,7 +46,7 @@
       "block": "token-spike",
       "pass": true,
       "exit": 0,
-      "seconds": 1.43,
+      "seconds": 1.46,
       "command_sha256": "3320a26f00cc84a676bd6950a9e167026c6c7a83c90844b22ea414d676caff8e",
       "stdout_sha256": "d700b19bb6addcc05983b9674914768e20807e8eb2e64f777786cc1386f925f8"
     },
@@ -64,7 +64,7 @@
       "block": "spend-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.74,
+      "seconds": 3.2,
       "command_sha256": "86c68c82c22c558c5547ea0de2e48081958e4a3faf5ffb0ef45e9240d79f3b94",
       "stdout_sha256": "7cf3bd24f6b2be47126b6dd13f8145174ba5c4f8bcb09e6aa1946994d1998dcb"
     },
@@ -73,7 +73,7 @@
       "block": "litellm-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.25,
+      "seconds": 1.05,
       "command_sha256": "ba3aacc6e966c1201ea9b83ee263a56b07b34754cb0e2fefe2b8ad1a5f607184",
       "stdout_sha256": "ef8f5bc610ee76bbf0b9aa10b840d8bb6150df9bc2ed0f349f31466fb721a222"
     },
@@ -82,16 +82,25 @@
       "block": "litellm-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 0.15,
+      "seconds": 0.1,
       "command_sha256": "da730162bcad82d2540240d33bb5f68468ab2db245989ba04e2d18a5d81cc848",
       "stdout_sha256": "102c72d6940e30ee9d68dc6c864bb44da53ce41cf204095f2b8a6e9ff3ce86ec"
+    },
+    {
+      "page": "session-budget",
+      "block": "session-budget",
+      "pass": true,
+      "exit": 0,
+      "seconds": 1.2,
+      "command_sha256": "a27026a198345364d05a3a96298006358d95c635833ddd1e009c3e67f5c2d979",
+      "stdout_sha256": "66d838c40d1257d1fbcd364a64f6a1aa41bf0d8a86e4470d552aeec5f3bfc233"
     },
     {
       "page": "cache-check",
       "block": "cache-check",
       "pass": true,
       "exit": 0,
-      "seconds": 1.54,
+      "seconds": 1.41,
       "command_sha256": "75a6a614ac25d92232a676c61a435d7f5778a70ae514c4091698db792a6f8813",
       "stdout_sha256": "85af7af2cfeb82a54b69adaa8727c69e2d66adcc03aa5b1c09877ff114cb7d2d"
     },
@@ -100,7 +109,7 @@
       "block": "cardinality",
       "pass": true,
       "exit": 3,
-      "seconds": 1.41,
+      "seconds": 1.19,
       "command_sha256": "a2f2da4358bc3e144e1c95a6431215b1f4d1aa6369eb88501468f9b86087655e",
       "stdout_sha256": "d156e9c661702c3188d23a31b9dd9d6fdb5a4a96da148a92a84e604b33fbf168"
     },
@@ -109,16 +118,16 @@
       "block": "traces-usage",
       "pass": true,
       "exit": 0,
-      "seconds": 1.49,
+      "seconds": 1.13,
       "command_sha256": "0121d3e4efb872e16f252fec1ba669d22a8c46e4d4af7bb1be9a9547b50b3262",
-      "stdout_sha256": "e0dbcd54664a75a510de6de1d04a596e2fd3e7e59d0c2a3eafd19224509b0ca7"
+      "stdout_sha256": "7c405b51521db148d1733203c792f76a6e8c443ceb626c8285e6c3395bbdc6a3"
     },
     {
       "page": "anomalies",
       "block": "anomalies-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.09,
+      "seconds": 1.25,
       "command_sha256": "ba3aacc6e966c1201ea9b83ee263a56b07b34754cb0e2fefe2b8ad1a5f607184",
       "stdout_sha256": "ef8f5bc610ee76bbf0b9aa10b840d8bb6150df9bc2ed0f349f31466fb721a222"
     },
@@ -127,16 +136,16 @@
       "block": "anomalies",
       "pass": true,
       "exit": 3,
-      "seconds": 0.14,
+      "seconds": 0.11,
       "command_sha256": "8310e32c846f582977b24b3ac1c1db1ac629403bf0867fc27330dbfb74e44c5f",
-      "stdout_sha256": "ad27b18a19345385cfd6644381ae638ed847883d85f4ea05832a50c1f39515c5"
+      "stdout_sha256": "554fb243b6f95f504d0e3626c3948027f2251093db078d925729e32ec93d7856"
     },
     {
       "page": "distinct-users",
       "block": "distinct-users",
       "pass": true,
       "exit": 0,
-      "seconds": 1.81,
+      "seconds": 1.93,
       "command_sha256": "81671cb47bbb144557140e20bbd2ab73a2887df85f0fb48092d1f0a19f421c29",
       "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475"
     },
@@ -145,7 +154,7 @@
       "block": "tokenmaxxing",
       "pass": true,
       "exit": 0,
-      "seconds": 1.8,
+      "seconds": 1.87,
       "command_sha256": "5e889bcd47ea4221fe9470bdb92d29a042e1de835e4449545f49885ca94bbc69",
       "stdout_sha256": "3602de85e92ba5bcb4a2fa5330baa39d07c5f77ac32acefd46092618dd511635"
     }
