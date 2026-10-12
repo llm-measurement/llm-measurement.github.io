@@ -7,8 +7,8 @@
       "block": "fleetdiff",
       "pass": true,
       "exit": 0,
-      "command_sha256": "52bb8f6b5f519e74083e68ea5a97da36bb3543077d170405121cf0a80af4916c",
-      "stdout_sha256": "0d47c1e75cf46be161237108c844c8b087644465ccafd5e21bbb05a8bb4f5429"
+      "command_sha256": "4cf341cde755a1d46057cb4167baff6aabc1a2ae128863a2e8de97f5a8ad183d",
+      "stdout_sha256": "f132cc6680977e462a5d6a1b5fa8afcbc8ebe58264898aaebc1730b2f1596d0e"
     },
     {
       "block": "collector",

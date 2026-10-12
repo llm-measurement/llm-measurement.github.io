@@ -3,6 +3,10 @@
 Eight guides to LLM usage, with commands and output from released tools.
 An evidence page explains what can be shared and retained with summaries.
 
+Current command examples pin fleetdiff v0.8.0. Collector configuration remains
+at v0.3.2, Helm chart at 0.3.4, and llm-sketchkit at v0.3.0. Historical evidence
+retains the versions and source revisions used for those measurements.
+
 | Question | Page |
 | --- | --- |
 | Which user is driving my LLM token spike? | [Token spike](docs/token-spike.html) |

@@ -149,7 +149,7 @@ def check(output, page=None):
         fixture_root = Path(directory)
         env = environment(fixture_root)
         source = fixture_root / "fleetdiff"
-        run(["git", "clone", "--depth", "1", "--branch", "v0.7.0",
+        run(["git", "clone", "--depth", "1", "--branch", "v0.8.0",
              "https://github.com/llm-measurement/fleetdiff.git", str(source)], cwd=fixture_root, env=env)
         source_sha = run(["git", "rev-parse", "HEAD"], cwd=source, env=env).strip()
         for slug in PAGES:

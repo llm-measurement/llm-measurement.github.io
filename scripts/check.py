@@ -121,7 +121,7 @@ def main():
                 assert source in page.links, source
         if entry["slug"] in {"token-spike", "cardinality", "anomalies", "litellm-spend", "traces-usage", "cache-check"}:
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
-            assert "--branch v0.7.0" in source and "sh scripts/install.sh v0.7.0 ./release" in source
+            assert "--branch v0.8.0" in source and "sh scripts/install.sh v0.8.0 ./release" in source
             assert "v0.6.0" not in source
             if entry["slug"] == "traces-usage":
                 assert "./release/fleetdiff inspect examples/inspect/synthetic-traces.json" in source
@@ -146,7 +146,7 @@ def main():
             context = html.escape(GUIDE_CONTEXT[entry["slug"]])
             notes_link = '<a href="summaries.html#measurement-notes">Measurement notes</a>'
             if entry["slug"] == "cache-check":
-                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/docs/CACHE.md">Cache measurements and limits</a>.'
+                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/docs/CACHE.md">Cache measurements and limits</a>.'
             expected = (f'<p class="measurement-context">{context}<br>\n'
                         f'{notes_link}</p>')
             assert expected in path.read_text(), (path.name, "guide context must precede its notes link")
