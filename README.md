@@ -1,6 +1,6 @@
 # LLM Measurement Guides
 
-Eight guides to LLM usage, with commands and output from released tools.
+Nine guides to LLM usage, with commands and output from released tools.
 An evidence page explains what can be shared and retained with summaries.
 
 Current command examples pin fleetdiff v0.8.0. Collector configuration remains
@@ -12,6 +12,7 @@ retains the versions and source revisions used for those measurements.
 | Which user is driving my LLM token spike? | [Token spike](docs/token-spike.html) |
 | Who is tokenmaxxing? Find your heaviest AI token users | [Tokenmaxxing](docs/tokenmaxxing.html) |
 | Why did our LiteLLM usage jump, and are the spend logs complete? | [LiteLLM spend](docs/litellm-spend.html) |
+| LiteLLM session over its budget? Check what the budget counts | [Session budget](docs/session-budget.html) |
 | Prompt cache hit rate dropped after an update? Find whose uncached input grew | [Cache check](docs/cache-check.html) |
 | How do I see LLM usage per user without a metric label for every user? | [Per-user metrics](docs/cardinality.html) |
 | How do I detect anomalies in LLM token consumption? | [Anomalies](docs/anomalies.html) |

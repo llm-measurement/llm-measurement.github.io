@@ -12,6 +12,20 @@ from own_data import EXPECTED, PAGES, refresh_history
 
 
 class OwnDataTests(unittest.TestCase):
+    def test_session_review_uses_the_released_binary_without_a_required_period(self):
+        source = (ROOT / "pages/session-budget.html").read_text()
+        blocks = Blocks()
+        blocks.feed(source)
+        self.assertEqual([block["id"] for block in blocks.own], ["session-budget"])
+        self.assertEqual(len(blocks.commands), 1)
+        for command in (blocks.own[0]["text"], blocks.commands[0]["text"]):
+            self.assertIn("--session-budget-usd 1.00", command)
+            self.assertIn("v0.8.0", command)
+            self.assertNotIn("--period", command)
+            self.assertNotIn("go run", command)
+        self.assertGreaterEqual(len(blocks.expected), 5)
+        self.assertNotIn("Redis", source)
+
     def test_litellm_exports_before_installing_and_analyzing(self):
         blocks = Blocks()
         blocks.feed((ROOT / "pages/litellm-spend.html").read_text())
