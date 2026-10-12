@@ -5,7 +5,7 @@
 <h3 id="export">1. Export from LiteLLM Postgres</h3>
 <p>Requires psql and approved read-only access configured as the PostgreSQL service <code>litellm_readonly</code>. Choose 16 days of UTC bounds in <code>START_UTC</code> and <code>END_UTC</code> (RFC3339, for example <code>2026-09-23T00:00:00Z</code> and <code>2026-10-09T00:00:00Z</code>). These paths are verified against LiteLLM v1.104.0. Review the projection before using a different writer version. Run the following in a directory without an existing <code>litellm-export</code> folder.</p>
 <pre data-own="spend-export" data-exit="0"><code>umask 077
-curl -fsSLo export.sql https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.7.0/examples/litellm-spend/export.sql
+curl -fsSLo export.sql https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.8.0/examples/litellm-spend/export.sql
 mkdir ./litellm-export
 psql 'service=litellm_readonly' -Xq -v ON_ERROR_STOP=1 \
   -v start_utc="${START_UTC:?set the export start in UTC}" \
@@ -15,14 +15,14 @@ psql 'service=litellm_readonly' -Xq -v ON_ERROR_STOP=1 \
 printf 'Exported request-level rows to ./litellm-export/spend.csv\n'</code></pre>
 <p>The transaction is read-only and excludes prompts, responses and whole metadata objects. It includes identities needed for local grouping, so keep the export and database diagnostics private.</p>
 <h3>2. Install fleetdiff</h3>
-<p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.7.0. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p>
-<pre data-own="litellm-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.7.0/scripts/install.sh
-sh install-fleetdiff.sh v0.7.0 ./bin</code></pre>
+<p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.8.0. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p>
+<pre data-own="litellm-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.8.0/scripts/install.sh
+sh install-fleetdiff.sh v0.8.0 ./bin</code></pre>
 <h3>3. Investigate the export</h3>
 <p>Analysis reads your local file. Use the export from step 1, or replace its path with your existing request-level export.</p>
 <pre data-own="litellm-spend" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./litellm-export/spend.csv --group-by key</code></pre>
 <p>The default compares two complete seven-day periods. For sparse or shorter exports, select explicit <code>--before-period</code> and <code>--after-period</code> dates. Choose <code>--group-by team</code>, <code>user</code>, <code>end-user</code> or <code>session</code> for another view.</p>
-<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/README.md#using-litellm">export, install and investigate path</a> and <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.7.0/examples/litellm-spend">spend export guide</a> cover fields and period choices. For continuous metrics and summary windows, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.2/examples/integrations/litellm">collector's LiteLLM recipe</a>.</p>
+<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/README.md#using-litellm">export, install and investigate path</a> and <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.8.0/examples/litellm-spend">spend export guide</a> cover fields and period choices. For continuous metrics and summary windows, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.2/examples/integrations/litellm">collector's LiteLLM recipe</a>.</p>
 </aside>
 <h2>What you'll see</h2>
 <p>Example output from the synthetic sample below; your values will reflect your input.</p>
@@ -44,11 +44,11 @@ Logged model requests: 8 -&gt; 12.</code></pre>
 <p>The completeness section points to zero-only and failed records worth checking in LiteLLM. To check usage and identity fields in your telemetry, see <a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a></p>
 <h2>No data handy? Try the sample</h2>
 <p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The sample uses the released binary and a synthetic CSV.</p>
-<pre data-run="litellm-spend" data-exit="0"><code>git clone --depth 1 --branch v0.7.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-litellm-spend
+<pre data-run="litellm-spend" data-exit="0"><code>git clone --depth 1 --branch v0.8.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-litellm-spend
 cd fleetdiff-litellm-spend
-sh scripts/install.sh v0.7.0 ./release
+sh scripts/install.sh v0.8.0 ./release
 ./release/fleetdiff investigate --litellm-spend examples/litellm-spend/synthetic.csv \
   --before-period 2026-10-07 --after-period 2026-10-08</code></pre>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/examples/litellm-spend/synthetic.csv">released synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.7.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/examples/litellm-spend/synthetic.csv">released synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>

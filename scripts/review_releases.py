@@ -3,6 +3,7 @@
 """Run the security page's manual download-and-verify commands verbatim."""
 import hashlib
 import json
+from pathlib import Path
 import platform
 import subprocess
 import tempfile
@@ -31,7 +32,7 @@ def check(output):
             (output / (block["id"] + ".stderr.txt")).write_text(result.stderr)
             assert result.returncode == 0, (block["id"], result.stderr)
             if block["id"] == "fleetdiff":
-                assert "fleetdiff v0.7.0" in result.stdout
+                assert "fleetdiff v0.8.0" in result.stdout
             records.append({"block": block["id"], "pass": True, "exit": 0,
                 "command_sha256": hashlib.sha256(block["text"].encode()).hexdigest(),
                 "stdout_sha256": hashlib.sha256(result.stdout.encode()).hexdigest()})
