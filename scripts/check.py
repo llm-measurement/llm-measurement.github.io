@@ -86,6 +86,8 @@ def main():
         path = ROOT / "docs" / (entry["slug"] + ".html")
         page = Page()
         page.feed(path.read_text())
+        footer = path.read_text().split('<footer>', 1)[1].split('</footer>', 1)[0]
+        assert footer.count('Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>: no cookies, no personal data') == 1, path.name
         check_reading_flow((ROOT / "pages" / (entry["slug"] + ".html")).read_text())
         nav = path.read_text().split('<nav aria-label="Guides">', 1)[1].split('</nav>', 1)[0]
         assert nav.index('href="token-spike.html"') < nav.index('href="tokenmaxxing.html"') < nav.index('href="cardinality.html"'), path.name

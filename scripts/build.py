@@ -32,7 +32,8 @@ FRAME = Template('''<!doctype html>
 <header><a class="brand" href="index.html">$header_mark LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
 <div class="layout"><div class="desktop-guides"><nav aria-label="Guides">$nav</nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides">$nav</nav></details><main id="main"><h1>$title</h1>$body</main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
-$measurement_link<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a></footer></body></html>
+$measurement_link<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a><br>
+Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>: no cookies, no personal data</footer></body></html>
 ''')
 
 
