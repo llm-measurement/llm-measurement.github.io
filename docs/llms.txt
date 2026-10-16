@@ -20,6 +20,6 @@
 
 - fleetdiff v0.8.0
 - llm-sketchkit v0.3.0
-- Collector configuration guidance: v0.3.2; Helm chart 0.3.4
+- Collector configuration guidance: v0.3.3; Helm chart 0.3.5
 
 Command guides use synthetic inputs. The summaries evidence page separates released coding-agent records from synthetic scale workloads and pins its experimental source. See each page for its methods and limits.

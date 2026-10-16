@@ -19,7 +19,7 @@
 <h2>Data paths</h2>
 <ul>
 <li><a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/docs/OPERATIONS.md">fleetdiff v0.8.0</a> runs on your machine and reads local spend exports, summary files, collector configurations or OTLP captures (including stdin). fleetdiff makes no network connections during analysis, checked by the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/internal/cli/network_test.go">production-code guard</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/.github/workflows/ci.yml#L29-L36">network-isolated Linux CI step</a>. The released v0.8.0 archives also passed the <a href="https://github.com/llm-measurement/fleetdiff/actions/runs/38200307889">packaged offline smoke test</a>. Installation downloads release files; analysis uses the inputs you supply.</li>
-<li><a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/SHADOW_MODE.md">The collector</a> runs inside your pipeline. Its configured exporters send metrics and original spans to your selected destinations; optional summary files stay on the configured volume.</li>
+<li><a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/docs/SHADOW_MODE.md">The collector</a> runs inside your pipeline. Its configured exporters send metrics and original spans to your selected destinations; optional summary files stay on the configured volume.</li>
 <li><a href="https://github.com/llm-measurement/llm-sketchkit/blob/v0.3.0/SECURITY.md">llm-sketchkit</a> runs inside your Go or Python process. Your application chooses the identities to hash and where to store or share the summaries.</li>
 </ul>
 <p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/examples/litellm-spend/export.sql">read-only LiteLLM SQL projection</a> selects request metadata and usage fields, excluding prompts and responses. The request-level export still contains raw identity columns; keep it private and give the export role SELECT access only. The <a href="litellm-spend.html#export">export recipe</a> writes to a restricted local directory.</p>
@@ -52,19 +52,38 @@ tar -xzf "$archive" -C verified
 ./verified/fleetdiff --version</code></pre>
 <p><a href="https://github.com/llm-measurement/fleetdiff/releases/tag/v0.8.0">Release assets</a> include SHA256SUMS, public Sigstore build provenance and an SPDX SBOM. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/.github/workflows/release.yml">pinned release workflow</a> records how they are produced. Provenance binds artifact bytes to a workflow and source ref; review the source and dependencies for your own deployment.</p>
 <h2>Verify the collector image and Helm chart</h2>
-<p>Use trusted Cosign tooling. Both the v0.3.2 image and chart 0.3.4 were signed by the collector release workflow below. Verify their immutable OCI digests before pulling or deploying; these commands perform signature and build-provenance checks without starting a container or changing a cluster.</p>
+<p>Use trusted curl, gh, shasum and Cosign tooling, with GitHub CLI signed in for the OCI provenance API checks. Downloads and Cosign registry checks use public artifacts. The v0.3.3 image and chart 0.3.5 share the collector release workflow and tag. Verify the release metadata and immutable OCI digests before pulling or deploying; these commands perform signature and build-provenance checks without starting a container or changing a cluster.</p>
 <pre data-review="collector"><code>set -eu
-identity=https://github.com/llm-measurement/otelcol-genai-sketches/.github/workflows/release.yml@refs/tags/v0.3.2
-image=ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:f30001c845e4da7c14f97357eb0dcfa615e267cf84cbc18794808ac7c98ad933
-chart=ghcr.io/llm-measurement/charts/otelcol-genai-sketches@sha256:5be83ca0ce24e5509d0bcdbf45008f16ca5bc09d0422a5c3d4526368a831b735
+umask 077
+review=$(mktemp -d ./collector-review.XXXXXX)
+cd "$review"
+release=v0.3.3
+base=https://github.com/llm-measurement/otelcol-genai-sketches/releases/download/$release
+for file in image-digest.txt chart-digest.txt SHA256SUMS provenance.jsonl sbom-index.json; do
+  curl --proto '=https' --tlsv1.2 -fL "$base/$file" -o "$file"
+done
+for subject in SHA256SUMS sbom-index.json; do
+  gh attestation verify "$subject" --bundle provenance.jsonl \
+    --repo llm-measurement/otelcol-genai-sketches \
+    --signer-workflow llm-measurement/otelcol-genai-sketches/.github/workflows/release.yml \
+    --source-ref "refs/tags/$release" --deny-self-hosted-runners
+done
+shasum -a 256 --ignore-missing -c SHA256SUMS
+identity=https://github.com/llm-measurement/otelcol-genai-sketches/.github/workflows/release.yml@refs/tags/$release
+image="$(cat image-digest.txt)"
+chart="$(cat chart-digest.txt)"
 for artifact in "$image" "$chart"; do
   cosign verify --certificate-identity "$identity" \
     --certificate-oidc-issuer https://token.actions.githubusercontent.com "$artifact"
   cosign verify-attestation --type slsaprovenance1 \
     --certificate-identity "$identity" \
     --certificate-oidc-issuer https://token.actions.githubusercontent.com "$artifact"
+  gh attestation verify "oci://$artifact" \
+    --repo llm-measurement/otelcol-genai-sketches \
+    --cert-identity "$identity" --source-ref "refs/tags/$release" \
+    --deny-self-hosted-runners
 done</code></pre>
-<p>The <a href="https://github.com/llm-measurement/otelcol-genai-sketches/releases/tag/v0.3.2">collector release</a> publishes image and chart digests, SHA256SUMS and an SPDX SBOM index for both image platforms. The signed image index binds the platform SBOM content through OCI digests; the downloaded checksum file alone is an integrity check, not the authentication step. See <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/DEPLOYMENT.md">Deployment</a> for anonymous pulls, provenance verification and Helm installation, and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/.github/workflows/release.yml">release workflow</a> for the build.</p>
+<p>The <a href="https://github.com/llm-measurement/otelcol-genai-sketches/releases/tag/v0.3.3">collector release</a> publishes image and chart digests, SHA256SUMS and an SPDX SBOM index for both image platforms. The signed image index binds the platform SBOM content through OCI digests; the downloaded checksum file alone is an integrity check, not the authentication step. See <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/3fb11abf108d36e64f87bc969e74ed6903043e8a/docs/DEPLOYMENT.md">Deployment</a> for anonymous pulls, provenance verification and Helm installation, and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/.github/workflows/release.yml">release workflow</a> for the build.</p>
 <h2>Repository controls</h2>
 <p>Checked October 11, 2026 for the three tool repositories: active main-branch rules require signed commits, the commit-signature check and DCO sign-off. Release-tag rules block updates and deletion. Secret scanning, push protection and private vulnerability reporting are enabled.</p>
 <ul>
@@ -74,8 +93,8 @@ done</code></pre>
 </ul>
 <p>The <a href="assets/security-controls.json">dated settings record</a> retains the checked values. Repository administrators can recheck secret-scanning and push-protection settings using GitHub's <a href="https://docs.github.com/en/rest/repos/repos#get-a-repository">repository API</a> (<code>security_and_analysis</code>), and reporting status through the <a href="https://docs.github.com/en/rest/repos/repos#check-if-private-vulnerability-reporting-is-enabled-for-a-repository">private-reporting API</a>. Settings can change; the linked rules show the current state.</p>
 <h2>License and stability</h2>
-<p>All three tools are pre-1.0; the collector's traces-to-metrics component is alpha. Pin exact tool versions and image digests and test upgrades on representative inputs. Read the collector's <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/SUPPORT.md">Support policy</a> and <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/main/SECURITY.md">Security policy</a>, plus <a href="https://github.com/llm-measurement/fleetdiff/blob/main/SECURITY.md">fleetdiff</a> and <a href="https://github.com/llm-measurement/llm-sketchkit/blob/main/SECURITY.md">sketchkit</a> security policies.</p>
-<p>The tools use Apache-2.0: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/LICENSE">fleetdiff license</a>, <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/LICENSE">collector license</a>, <a href="https://github.com/llm-measurement/llm-sketchkit/blob/v0.3.0/LICENSE">sketchkit license</a>.</p>
+<p>All three tools are pre-1.0; the collector's traces-to-metrics component is alpha. Pin exact tool versions and image digests and test upgrades on representative inputs. Read the collector's <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/SUPPORT.md">Support policy</a> and <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/main/SECURITY.md">Security policy</a>, plus <a href="https://github.com/llm-measurement/fleetdiff/blob/main/SECURITY.md">fleetdiff</a> and <a href="https://github.com/llm-measurement/llm-sketchkit/blob/main/SECURITY.md">sketchkit</a> security policies.</p>
+<p>The tools use Apache-2.0: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/LICENSE">fleetdiff license</a>, <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/LICENSE">collector license</a>, <a href="https://github.com/llm-measurement/llm-sketchkit/blob/v0.3.0/LICENSE">sketchkit license</a>.</p>
 </main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 <a href="summaries.html#measurement-notes">Measurement notes</a> · <a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a><br>

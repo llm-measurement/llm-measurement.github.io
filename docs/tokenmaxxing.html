@@ -52,7 +52,7 @@ if total:
     low = sum(item.lower_bound for item in items) / total
     high = min(1, sum(item.upper_bound for item in items) / total)
     print(f"Displayed users account for {low:.1%} to {high:.1%} of tokens.")
-PY</code></pre><p>For continuous rankings from GenAI spans, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/TOPK_KEYS.md">collector’s user-key configuration</a>. The released connector keeps the same keyed, token-weighted ranking in snapshot logs and summary files, without user labels on your metrics. See <a href="cardinality.html">per-user metrics</a>.</p>
+PY</code></pre><p>For continuous rankings from GenAI spans, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/docs/TOPK_KEYS.md">collector’s user-key configuration</a>. The released connector keeps the same keyed, token-weighted ranking in snapshot logs and summary files, without user labels on your metrics. See <a href="cardinality.html">per-user metrics</a>.</p>
 <p>Teams are few, so count them exactly; a few dozen budget lines don't need a sketch. Use the keyed ranking for people, where the list is long and names are sensitive.</p>
 </aside>
 <h2>What you'll see</h2>
