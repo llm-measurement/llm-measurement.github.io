@@ -7,10 +7,10 @@
     format: json
     rotation:
       max_megabytes: 4
-      max_backups: 1</code></pre><p>Create a private directory writable by the collector, add <code>file/inspect</code> to its trace pipeline’s exporter list, and keep its existing exporters. Keep content capture off and the raw file private. The genaisketch image does not include this exporter; use an existing Contrib collector or the <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.8.0/examples/inspect#route-1-a-collector-file-exporter">short capture recipe</a>. Put the resulting file at <code>./traces.jsonl</code>.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.8.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="traces-usage" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.8.0/scripts/install.sh
-sh install-fleetdiff.sh v0.8.0 ./bin
+      max_backups: 1</code></pre><p>Create a private directory writable by the collector, add <code>file/inspect</code> to its trace pipeline’s exporter list, and keep its existing exporters. Keep content capture off and the raw file private. The genaisketch image does not include this exporter; use an existing Contrib collector or the <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.10.0/examples/inspect#route-1-a-collector-file-exporter">short capture recipe</a>. Put the resulting file at <code>./traces.jsonl</code>.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.10.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="traces-usage" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.10.0/scripts/install.sh
+sh install-fleetdiff.sh v0.10.0 ./bin
 ./bin/fleetdiff inspect ./traces.jsonl</code></pre>
-<p>The <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.8.0/examples/inspect">capture recipes</a> also cover a Python SDK or LiteLLM. Keep the capture local and share the default report instead of the raw file. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/docs/INSPECT.md">inspect guide</a> covers accepted formats and field mappings.</p>
+<p>The <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.10.0/examples/inspect">capture recipes</a> also cover a Python SDK or LiteLLM. Keep the capture local and share the default report instead of the raw file. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/docs/INSPECT.md">inspect guide</a> covers accepted formats and field mappings.</p>
 </aside>
 <h2>What you'll see</h2>
 <p>Example output from the synthetic sample below; your values will reflect your input.</p>
@@ -30,11 +30,12 @@ Origin unknown: input 4, output 4 attempts.</code></pre>
 <pre class="output" data-output="traces-usage"><code>session: ~2 distinct; identity present on 2/4 attempts</code></pre>
 <p>The report also lists standard attribute names and uses local aliases for individual users and sessions.</p>
 <h2>No data handy? Try the sample</h2>
-<p class="meta">Requires Git, curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The sample uses the shipped synthetic capture and the verified v0.8.0 binary; no Go installation is needed.</p>
-<pre data-run="traces-usage" data-exit="0"><code>git clone --depth 1 --branch v0.8.0 https://github.com/llm-measurement/fleetdiff.git fleetdiff-traces-usage
-cd fleetdiff-traces-usage
-sh scripts/install.sh v0.8.0 ./release
+<p class="meta">Requires curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The sample uses the shipped synthetic capture and the verified v0.10.0 binary; no Go installation is needed.</p>
+<pre data-run="traces-usage" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.10.0.tar.gz
+tar -xzf fleetdiff-source.tar.gz
+cd fleetdiff-0.10.0
+sh scripts/install.sh v0.10.0 ./release
 ./release/fleetdiff inspect examples/inspect/synthetic-traces.json</code></pre>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/examples/inspect/synthetic-traces.json">released synthetic OTLP capture</a> and <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.8.0/examples/inspect">capture recipes</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/examples/inspect/synthetic-traces.json">released synthetic OTLP capture</a> and <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.10.0/examples/inspect">capture recipes</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">Readiness describes fields in the captured model attempts; zeros without declared usage origin remain unknown.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>

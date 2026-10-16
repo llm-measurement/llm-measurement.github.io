@@ -4,22 +4,31 @@
 from contextlib import contextmanager
 import csv
 from datetime import datetime, timezone
+from decimal import Decimal
 import hashlib
+import io
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import platform
 import shlex
 import shutil
 import subprocess
+import tarfile
 import tempfile
 import time
 import uuid
+import urllib.request
 
 from outsider import Blocks, ROOT
 
 PAGES = ("index", "token-spike", "litellm-spend", "session-budget", "cache-check", "cardinality",
-         "traces-usage", "anomalies", "distinct-users", "tokenmaxxing")
+         "traces-usage", "anomalies", "distinct-users", "tokenmaxxing", "row-coverage", "what-if")
+FIXTURE_VERSION = "v0.10.0"
+FIXTURE_COMMIT = "4b209b57895f4e4e51be4aa164d4a583a81e5d7c"
+FIXTURE_URL = "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/" + FIXTURE_COMMIT
+EXPORT_START = "2026-09-23T00:00:00Z"
+EXPORT_END = "2026-10-09T00:00:00Z"
 EXPECTED = {
     "home-spend": ("Logged model requests:", "Who drove", "user-1:"),
     "home-traces": ("Your traces can fully answer 2 of 7 questions.",),
@@ -41,6 +50,14 @@ EXPECTED = {
     "distinct-users": ("Estimated distinct users: 3",),
     "tokenmaxxing": ("Estimated distinct users: 3", "Recorded tokens: 4,800",
                      "user-1: [3,600, 3,600] tokens", "100.0% to 100.0%"),
+    "row-coverage-export": ("Exported spend.csv and daily.csv in the new private output directory.",),
+    "row-coverage-install": ("Verified", "fleetdiff v0.10.0 (" + FIXTURE_COMMIT + ")"),
+    "row-coverage": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
+                     "2026-10-07 UTC: 8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
+    "what-if-install": ("Verified",),
+    "what-if-reprice": ("$0.154400 -> $0.109398 to $0.147974", "Level 1, same work and output verbosity: $0.148703",
+                        "Coverage: 3 observations priced; missing splits are excluded, never zero.", "missing split: 1"),
+    "what-if-workload-map": (),
 }
 
 
@@ -53,14 +70,59 @@ def run(command, *, cwd, env, data=None, timeout=1800):
 
 
 def environment(fresh):
-    env = dict(os.environ)
-    for key in ("GH_TOKEN", "GITHUB_TOKEN", "PYTHONPATH", "PYTHONHOME", "PGPASSWORD", "PGSERVICEFILE"):
-        env.pop(key, None)
-    env.update({"GH_CONFIG_DIR": str(fresh / "gh"), "GIT_TERMINAL_PROMPT": "0",
-        "GIT_CONFIG_COUNT": "1", "GIT_CONFIG_KEY_0": "credential.helper", "GIT_CONFIG_VALUE_0": "",
+    env = {key: value for key, value in os.environ.items()
+           if key in {"PATH", "LANG", "LC_ALL", "LC_CTYPE", "TZ", "SYSTEMROOT", "DOCKER_HOST"}}
+    env.update({"HOME": str(fresh), "XDG_CONFIG_HOME": str(fresh / "config"),
+        "XDG_CACHE_HOME": str(fresh / "cache"), "GH_CONFIG_DIR": str(fresh / "gh"),
+        "DOCKER_CONFIG": str(fresh / "docker"), "TMPDIR": str(fresh),
+        "GIT_TERMINAL_PROMPT": "0", "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
         "GOWORK": "off", "GOTOOLCHAIN": "go1.26.9", "PYTHONNOUSERSITE": "1", "GOCACHE": str(fresh / "go-build"),
-        "GOMODCACHE": str(fresh / "go-mod"), "PIP_CACHE_DIR": str(fresh / "pip")})
+        "GOMODCACHE": str(fresh / "go-mod"), "GOPROXY": "https://proxy.golang.org", "GOSUMDB": "sum.golang.org",
+        "GOENV": "off", "GOTELEMETRY": "off", "PIP_CONFIG_FILE": os.devnull,
+        "PIP_INDEX_URL": "https://pypi.org/simple", "PIP_CACHE_DIR": str(fresh / "pip")})
     return env
+
+
+def extract_fixture(archive, root):
+    if not callable(getattr(tarfile, "data_filter", None)):
+        raise RuntimeError("Python tarfile data filter support is required (use an updated Python 3.11+).")
+    expected_root = "fleetdiff-" + FIXTURE_COMMIT
+    with tarfile.open(archive, "r:gz") as bundle:
+        members = bundle.getmembers()
+        assert len(members) <= 10000 and sum(m.size for m in members) <= 128 * 1024 * 1024
+        names = set()
+        for member in members:
+            path = PurePosixPath(member.name)
+            assert path.parts and not path.is_absolute() and ".." not in path.parts and path.parts[0] == expected_root
+            assert ".git" not in path.parts and (member.isdir() or member.isfile())
+            assert path.as_posix() not in names and not member.mode & 0o6000
+            names.add(path.as_posix())
+        source = root / expected_root
+        assert not source.exists()
+        bundle.extractall(root, members=members, filter="data")
+    assert (source / "go.mod").is_file() and (source / "examples/litellm-spend/export.sql").is_file()
+    return source
+
+
+def fixture_source(root):
+    if not callable(getattr(tarfile, "data_filter", None)):
+        raise RuntimeError("Python tarfile data filter support is required before downloading fixtures.")
+    request = urllib.request.Request(FIXTURE_URL, headers={"User-Agent": "site-own-data-verifier"})
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    with opener.open(request, timeout=120) as response:
+        data = response.read(32 * 1024 * 1024 + 1)
+    assert len(data) <= 32 * 1024 * 1024, "fixture archive exceeds size bound"
+    archive = root / "fleetdiff-source.tar.gz"
+    archive.write_bytes(data)
+    source = extract_fixture(archive, root)
+    files = {str(path.relative_to(source)): hashlib.sha256(path.read_bytes()).hexdigest()
+             for path in sorted(source.rglob("*")) if path.is_file()}
+    inventory = "".join(f"{checksum}  {name}\n" for name, checksum in files.items())
+    provenance = {"version": FIXTURE_VERSION, "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
+        "archive_sha256": hashlib.sha256(data).hexdigest(), "archive_bytes": len(data),
+        "archive_root": source.name, "source_sha256": hashlib.sha256(inventory.encode()).hexdigest(),
+        "files": files, "git_operations": False}
+    return source, provenance
 
 
 def prepare(fresh, source, env, slug):
@@ -73,6 +135,31 @@ def prepare(fresh, source, env, slug):
     (fresh / "usage.csv").write_text("user_id,tokens\nprivate-ana,1200\nprivate-ben,300\nprivate-ana,2400\nprivate-cy,900\n")
     if slug == "session-budget":
         shutil.copyfile(source / "examples/litellm-spend/session-budget.csv", fresh / "spend.csv")
+    if slug == "what-if":
+        for name in ("spend.csv", "workload-map.json"):
+            shutil.copyfile(source / "examples/what-if" / name, fresh / name)
+        env["PERIOD_UTC"] = "2026-10-07"
+    if slug == "row-coverage":
+        with (fresh / "spend.csv").open() as handle:
+            earlier = [row for row in csv.DictReader(handle) if row["startTime"] < "2026-10-07"]
+        with (source / "examples/litellm-spend/coverage_runtime_spend.csv").open() as handle:
+            reader = csv.DictReader(handle)
+            columns, coverage = reader.fieldnames, list(reader)
+        with (fresh / "spend.csv").open("w") as handle:
+            writer = csv.DictWriter(handle, fieldnames=columns)
+            writer.writeheader()
+            writer.writerows(earlier + coverage)
+        with (source / "examples/litellm-spend/coverage_runtime_daily.csv").open() as handle:
+            daily = list(csv.DictReader(handle))
+        for day in sorted({row["startTime"][:10] for row in earlier}):
+            selected = [row for row in earlier if row["startTime"].startswith(day)]
+            failed = sum(row["status"] == "failure" for row in selected)
+            daily.append(dict(date=day, api_requests=len(selected), successful_requests=len(selected) - failed,
+                              failed_requests=failed))
+        with (fresh / "daily.csv").open("w") as handle:
+            writer = csv.DictWriter(handle, fieldnames=["date", "api_requests", "successful_requests", "failed_requests"])
+            writer.writeheader()
+            writer.writerows(daily)
     if slug == "cache-check":
         with (source / "examples/litellm-spend/cache-drop.csv").open() as handle:
             originals = list(csv.DictReader(handle))
@@ -103,11 +190,70 @@ def refresh_history(directory, now):
         path.write_text(json.dumps(window, sort_keys=True, separators=(",", ":")))
 
 
+def database_sql(fresh, source, coverage=False):
+    sql = (source / "examples/litellm-spend/test-schema.sql").read_text()
+    columns = ["request_id", "call_type", "api_key", "user", "team_id", "organization_id", "end_user",
+               "model", "model_id", "model_group", "custom_llm_provider", "prompt_tokens", "completion_tokens",
+               "total_tokens", "spend", "status", "session_id", "startTime", "endTime"]
+    with (fresh / "spend.csv").open() as handle:
+        reader = csv.DictReader(handle)
+        rows = list(reader)
+        if not coverage:
+            assert reader.fieldnames == columns
+    if coverage:
+        columns += ["agent_id", "metadata"]
+    payload = io.StringIO()
+    writer = csv.DictWriter(payload, fieldnames=columns, extrasaction="ignore", lineterminator="\n")
+    writer.writeheader()
+    for original in rows:
+        row = dict(original)
+        if coverage:
+            details = {}
+            for field, target in (("cache_read_input_tokens", "cache_read_input_tokens"),
+                                  ("cache_write_input_tokens", "cache_creation_input_tokens")):
+                if row.get(field, "") != "":
+                    details[target] = int(row[field])
+            if row.get("reasoning_output_tokens", "") != "":
+                details["completion_tokens_details"] = {"reasoning_tokens": int(row["reasoning_output_tokens"])}
+            assert not row.get("rejection_kind"), "coverage stand-in has an unsupported rejection projection"
+            row["metadata"] = json.dumps({"additional_usage_values": details})
+        writer.writerow(row)
+    sql += '\nCOPY public."LiteLLM_SpendLogs" (' + ','.join('"' + name + '"' for name in columns)
+    sql += ") FROM STDIN WITH CSV HEADER;\n" + payload.getvalue() + "\\.\n"
+    if coverage:
+        sql += '''CREATE TABLE public."LiteLLM_DailyUserSpend" (
+            date text NOT NULL, api_requests bigint NOT NULL,
+            successful_requests bigint NOT NULL, failed_requests bigint NOT NULL);
+            GRANT SELECT ON public."LiteLLM_DailyUserSpend" TO fixture_reader;
+            ALTER ROLE fixture_reader SET default_transaction_read_only = on;
+            COPY public."LiteLLM_DailyUserSpend" (date,api_requests,successful_requests,failed_requests)
+            FROM STDIN WITH CSV HEADER;
+'''
+        sql += (fresh / "daily.csv").read_text() + "\\.\n"
+    return sql
+
+
+def comparable_rows(rows):
+    normalized = []
+    for original in rows:
+        row = dict(original)
+        for name in ("startTime", "endTime"):
+            row[name] = datetime.fromisoformat(row[name])
+        row["spend"] = Decimal(row["spend"])
+        normalized.append(row)
+    return sorted(normalized, key=lambda row: row["request_id"])
+
+
 @contextmanager
-def database(fresh, source, env):
+def database(fresh, source, env, coverage=False):
     """Actual read-only Postgres; Docker transports psql, it does not stub it."""
     name = "site-export-" + uuid.uuid4().hex[:12]
     image = json.loads((source / "examples/litellm-spend/images.json").read_text())["postgres"]
+    env = dict(env)
+    if "DOCKER_HOST" not in env:
+        env["DOCKER_HOST"] = subprocess.run(
+            ["docker", "context", "inspect", "--format", "{{.Endpoints.docker.Host}}"],
+            capture_output=True, text=True, check=True).stdout.strip()
     started = False
     try:
         run(["docker", "run", "-d", "--name", name, "--network", "none", "--rm",
@@ -115,18 +261,14 @@ def database(fresh, source, env):
              "-v", f"{fresh}:{fresh}", image], cwd=fresh, env=env)
         started = True
         for _ in range(60):
-            process = subprocess.run(["docker", "exec", name, "cat", "/proc/1/comm"], capture_output=True, text=True)
-            ready = subprocess.run(["docker", "exec", name, "pg_isready", "-U", "postgres", "-d", "fixture"], capture_output=True)
+            process = subprocess.run(["docker", "exec", name, "cat", "/proc/1/comm"], env=env, capture_output=True, text=True)
+            ready = subprocess.run(["docker", "exec", name, "pg_isready", "-U", "postgres", "-d", "fixture"], env=env, capture_output=True)
             if process.stdout.strip() == "postgres" and ready.returncode == 0:
                 break
             time.sleep(1)
         else:
             raise RuntimeError("Test database did not become ready")
-        sql = (source / "examples/litellm-spend/test-schema.sql").read_text()
-        with (fresh / "spend.csv").open() as handle:
-            assert next(csv.reader(handle)) == ["request_id", "call_type", "api_key", "user", "team_id", "organization_id", "end_user", "model", "model_id", "model_group", "custom_llm_provider", "prompt_tokens", "completion_tokens", "total_tokens", "spend", "status", "session_id", "startTime", "endTime"]
-        sql += '\nCOPY public."LiteLLM_SpendLogs" (request_id,call_type,api_key,"user",team_id,organization_id,end_user,model,model_id,model_group,custom_llm_provider,prompt_tokens,completion_tokens,total_tokens,spend,status,session_id,"startTime","endTime") FROM STDIN WITH CSV HEADER;\n'
-        sql += (fresh / "spend.csv").read_text() + "\\.\n"
+        sql = database_sql(fresh, source, coverage)
         run(["docker", "exec", "-i", name, "psql", "-U", "postgres", "-d", "fixture", "-v", "ON_ERROR_STOP=1"], cwd=fresh, env=env, data=sql)
         service = fresh / "pg_service.conf"
         service.write_text("[litellm_readonly]\nhost=/var/run/postgresql\nuser=fixture_reader\ndbname=fixture\n")
@@ -137,12 +279,33 @@ def database(fresh, source, env):
             " -e PGSERVICEFILE=" + shlex.quote(str(service)) + " -w " + shlex.quote(str(fresh)) + " " +
             shlex.quote(name) + ' psql "$@"\n')
         wrapper.chmod(0o700)
+        if coverage:
+            # Run the real helper inside Docker so both inherited descriptors stay intact.
+            shell = wrappers / "sh"
+            shell.write_text("#!/bin/sh\ncase ${1-} in\n./coverage-helper/export-coverage.sh)\nexec docker exec --user " +
+                str(os.getuid()) + ":" + str(os.getgid()) + " -e PGSERVICEFILE=" + shlex.quote(str(service)) +
+                " -w " + shlex.quote(str(fresh)) + " " + shlex.quote(name) + ' sh "$@";;\n' +
+                '*) exec /bin/sh "$@";;\nesac\n')
+            shell.chmod(0o700)
+            identity = run(["docker", "exec", name, "psql", "-U", "fixture_reader", "-d", "fixture", "-At", "-c",
+                '''SELECT current_user, current_setting('default_transaction_read_only'),
+                has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'SELECT'),
+                has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'INSERT'),
+                has_table_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'SELECT'),
+                has_table_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'INSERT');'''], cwd=fresh, env=env).strip()
+            assert identity == "fixture_reader|on|t|f|t|f", identity
+            network = run(["docker", "inspect", "--format", "{{.HostConfig.NetworkMode}}", name], cwd=fresh, env=env).strip()
+            assert network == "none"
+            (fresh / "database-evidence.json").write_text(json.dumps({"postgres": image, "network": network,
+                "readonly_identity": identity, "start_utc": EXPORT_START, "end_exclusive": EXPORT_END,
+                "fixture_sha256": {name: hashlib.sha256((fresh / name).read_bytes()).hexdigest()
+                                   for name in ("spend.csv", "daily.csv")}}, indent=2) + "\n")
         db_env = dict(env, PATH=str(wrappers) + os.pathsep + env["PATH"],
-                      START_UTC="2026-09-23T00:00:00Z", END_UTC="2026-10-09T00:00:00Z")
+                      START_UTC=EXPORT_START, END_UTC=EXPORT_END)
         yield db_env
     finally:
         if started:
-            cleanup = subprocess.run(["docker", "rm", "-f", name], capture_output=True)
+            cleanup = subprocess.run(["docker", "rm", "-f", name], env=env, capture_output=True)
             if cleanup.returncode:
                 print(f"Cleanup needed: docker rm -f {name}")
 
@@ -150,13 +313,17 @@ def database(fresh, source, env):
 def check(output, page=None):
     output.mkdir(parents=True, exist_ok=True)
     records = []
+    manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
+                "fixture_source": FIXTURE_COMMIT,
+                "method": "Exact published commands; fresh HOME/directories/caches; anonymous fixed-commit source archive; real released installer, CLI and library; SQL uses real read-only Postgres over network-none Docker. The paired helper executes unmodified inside the container to retain its inherited descriptors.",
+                "results": records}
     with tempfile.TemporaryDirectory(prefix="site-own-source-") as directory:
         fixture_root = Path(directory)
-        env = environment(fixture_root)
-        source = fixture_root / "fleetdiff"
-        run(["git", "clone", "--depth", "1", "--branch", "v0.8.0",
-             "https://github.com/llm-measurement/fleetdiff.git", str(source)], cwd=fixture_root, env=env)
-        source_sha = run(["git", "rev-parse", "HEAD"], cwd=source, env=env).strip()
+        source, provenance = fixture_source(fixture_root)
+        (output / "fixture-provenance.json").write_text(json.dumps(provenance, indent=2) + "\n")
+        manifest["fixture_archive"] = {key: value for key, value in provenance.items() if key != "files"}
+        manifest["fixture_archive"]["file_count"] = len(provenance["files"])
+        (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
         for slug in PAGES:
             if page and slug != page:
                 continue
@@ -174,36 +341,70 @@ def check(output, page=None):
                     def execute(selected_env):
                         return subprocess.run(["bash", "-e", "-c", block["text"]], cwd=fresh,
                             env=selected_env, text=True, capture_output=True, timeout=1800)
-                    if block["id"] == "spend-export":
-                        with database(fresh, source, env) as db_env:
+                    if block["id"] in {"spend-export", "row-coverage-export"}:
+                        coverage = block["id"] == "row-coverage-export"
+                        with database(fresh, source, env, coverage=coverage) as db_env:
                             try:
                                 result = execute(db_env)
                             finally:
-                                for diagnostics in fresh.glob("litellm-export/private-psql.*"):
-                                    shutil.copyfile(diagnostics, output / diagnostics.name)
+                                export_dir = "litellm-coverage-export" if coverage else "litellm-export"
+                                for diagnostics in fresh.glob(export_dir + "/private-psql.*"):
+                                    shutil.copyfile(diagnostics, output / (block["id"] + "-" + diagnostics.name))
+                                if coverage and (fresh / "database-evidence.json").exists():
+                                    shutil.copyfile(fresh / "database-evidence.json", output / "row-coverage-database.json")
                     else:
                         result = execute(env)
                     (output / (block["id"] + ".stdout.txt")).write_text(result.stdout)
                     (output / (block["id"] + ".stderr.txt")).write_text(result.stderr)
+                    record = {"page": slug, "block": block["id"], "pass": False,
+                        "exit": result.returncode, "seconds": round(time.monotonic() - begin, 2),
+                        "command_sha256": hashlib.sha256(block["text"].encode()).hexdigest(),
+                        "stdout_sha256": hashlib.sha256(result.stdout.encode()).hexdigest()}
+                    records.append(record)
+                    (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
                     assert result.returncode == block["exit"], (slug, block["id"], result.returncode, result.stderr)
                     for excerpt in EXPECTED[block["id"]]:
                         assert excerpt in result.stdout, (block["id"], excerpt, result.stdout)
                     if block["id"] == "home-go":
-                        assert "github.com/llm-measurement/llm-sketchkit v0.3.0" in (fresh / "measurement-go/go.mod").read_text()
+                        assert "github.com/llm-measurement/llm-sketchkit v0.4.0" in (fresh / "measurement-go/go.mod").read_text()
                     if block["id"] == "spend-export":
                         exported = fresh / "litellm-export/spend.csv"
                         with exported.open() as handle:
                             rows = list(csv.DictReader(handle))
                         assert len(rows) == 160 and "messages" not in rows[0] and "response" not in rows[0]
                         assert "cache_read_input_tokens" in rows[0] and rows[0]["cache_read_input_tokens"] == ""
+                    if block["id"] == "row-coverage-export":
+                        for name in ("export-coverage.sh", "export.sql", "daily-projection.sql"):
+                            assert (fresh / "coverage-helper" / name).read_bytes() == (source / "examples/litellm-spend" / name).read_bytes()
+                        with (fresh / "litellm-coverage-export/spend.csv").open() as handle:
+                            exported = list(csv.DictReader(handle))
+                        with (fresh / "spend.csv").open() as handle:
+                            expected = list(csv.DictReader(handle))
+                        assert comparable_rows(exported) == comparable_rows(expected)
+                        with (fresh / "litellm-coverage-export/daily.csv").open() as handle:
+                            daily = list(csv.DictReader(handle))
+                        with (fresh / "daily.csv").open() as handle:
+                            expected_daily = list(csv.DictReader(handle))
+                        assert sorted(daily, key=lambda row: row["date"]) == sorted(expected_daily, key=lambda row: row["date"])
+                        assert sum(row["startTime"].startswith("2026-10-07") for row in exported) == 8
+                        assert sum(row["startTime"].startswith("2026-10-08") for row in exported) == 1
+                        assert next(row for row in daily if row["date"] == "2026-10-07")["api_requests"] == "9"
+                        record["paired_export"] = {"start_utc": EXPORT_START, "end_exclusive": EXPORT_END,
+                            "fixture_oct07_spend_rows": 8, "fixture_oct07_daily_requests": 9,
+                            "fixture_oct08_spend_rows": 1, "readonly": True, "network": "none"}
+                    if block["id"] == "what-if-reprice":
+                        assert result.stdout == (source / "examples/what-if/expected.text").read_text()
+                    if block["id"] == "what-if-workload-map":
+                        mapped = json.loads(result.stdout)
+                        assert mapped["covered_source_cost_usd"] == "0.154400000"
+                        assert mapped["covered_level1_cost_usd"] == "0.148703445"
+                        assert mapped["covered_observations"] == 3 and mapped["excluded_observations"] == {"missing_split": 1}
+                        assert mapped["unmapped_moved_observations"] == 0
+                        assert len(mapped["level2"]) == 1 and mapped["level2"][0]["workload"] == "mapped"
                     assert all(raw not in result.stdout for raw in ("private-ana", "private-ben", "private-cy"))
-                    if slug == "session-budget":
+                    if slug in {"session-budget", "what-if"}:
                         assert "SENTINEL_" not in result.stdout + result.stderr
-                    records.append({"page": slug, "block": block["id"], "pass": True,
-                        "exit": result.returncode, "seconds": round(time.monotonic() - begin, 2),
-                        "command_sha256": hashlib.sha256(block["text"].encode()).hexdigest(),
-                        "stdout_sha256": hashlib.sha256(result.stdout.encode()).hexdigest()})
+                    record["pass"] = True
+                    (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
                     print(f"PASS own data: {slug}/{block['id']}; exit {result.returncode}", flush=True)
-    manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
-                "fixture_source": source_sha, "method": "Exact published commands; fresh directories/caches; anonymous fixture clone; real released installer, CLI and library; SQL uses real read-only Postgres via Docker psql.", "results": records}
     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

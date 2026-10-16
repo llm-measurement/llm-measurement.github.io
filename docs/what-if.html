@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What would switching models have cost? | LLM Measurement</title><meta name="description" content="Re-price recorded usage under a proposed model mix, with measured workload factors and explicit assumptions.">
+<link rel="canonical" href="https://llm-measurement.github.io/what-if.html"><link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="What would switching models have cost?"><meta property="og:description" content="Re-price recorded usage under a proposed model mix, with measured workload factors and explicit assumptions.">
+<meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/what-if.html">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head><body><a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
+<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="what-if.html" aria-current="page">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="what-if.html" aria-current="page">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>What would switching models have cost?</h1><p class="lead">Checked synthetic example: moving half of the covered <code>claude-sonnet-5-5</code> usage to <code>gpt-6.1-sol</code> reprices the period from <strong>$0.154400</strong> to <strong>$0.109398 to $0.147974</strong>, depending on workload assumptions.</p>
+<aside class="own-data" aria-labelledby="own-data-title">
+<h2 id="own-data-title">Run it on your data</h2>
+<p>Start with a request-level LiteLLM CSV, JSON or JSONL export containing the model, timestamp, input tokens, output tokens, cache-read input tokens and cache-write input tokens. Use the <a href="litellm-spend.html#export">read-only export recipe</a> if needed; the Usage dashboard's daily aggregate is a different format. Keep exports and identity mapping files private.</p>
+<h3>1. Install fleetdiff v0.10.0</h3>
+<p>Requires curl, GitHub CLI (<code>gh</code>), shasum and tar on Linux or macOS, amd64 or arm64. No Go compiler or model API credentials are needed. GitHub CLI need not be signed in. Use a working directory without an existing <code>bin</code> folder. The installer verifies the released archive and checksum manifest before extraction; see <a href="security.html#verify-fleetdiff">manual release verification</a> to review those steps.</p>
+<pre data-own="what-if-install" data-exit="0"><code>umask 077
+curl --proto '=https' --tlsv1.2 -fsSLo install-fleetdiff.sh \
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.10.0/scripts/install.sh
+sh install-fleetdiff.sh v0.10.0 ./bin</code></pre>
+<h3>2. Re-price a completed period</h3>
+<p>Use <code>spend.csv</code> for your export, or change the path below. Set <code>PERIOD_UTC</code> to a completed UTC date such as <code>2026-10-07</code>, or a half-open interval such as <code>2026-10-01T00:00:00Z/2026-10-08T00:00:00Z</code>. Choose source and target model IDs supported by the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/internal/reprice/data/prices.json">dated price table</a>.</p>
+<pre data-own="what-if-reprice" data-exit="0"><code>./bin/fleetdiff what-if --litellm-spend ./spend.csv \
+  --period "${PERIOD_UTC:?set a completed UTC date or interval}" \
+  --from claude-sonnet-5-5 --to gpt-6.1-sol --fraction 0.5</code></pre>
+<p><code>0.5</code> moves half the covered token volume, retaining its observed input, output and cache composition. It does not select particular requests. Analysis reads local files only and makes no model calls. For several moves or your applicable price overrides, see the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/docs/WHAT_IF.md">released what-if guide</a>.</p>
+</aside>
+<h2>What you'll see</h2>
+<p>This is exact output from the released binary and synthetic sample below. The amounts cover the whole priced period, including traffic that does not move.</p>
+<pre class="output" data-output="what-if"><code>Moving 50% of claude-sonnet-5-5 traffic to gpt-6.1-sol (covered usage): $0.154400 -&gt; $0.109398 to $0.147974, depending on workload assumptions.
+Period: Wed 2026-10-07 00:00:00 UTC -&gt; Thu 2026-10-08 00:00:00 UTC (end exclusive). Prices: 2026-10-14 (bundled); measured factors: 2026-10-14.
+
+Level 1, same work and output verbosity: $0.148703
+Level 2, qa: $0.112531 (propagated mean-interval endpoints $0.109398 to $0.116140)
+Level 2, extraction: $0.122062 (propagated mean-interval endpoints $0.117196 to $0.127759)
+Level 2, coding: $0.140323 (propagated mean-interval endpoints $0.133659 to $0.147974)</code></pre>
+<p><strong>Level 1</strong> keeps output tokens unchanged, applies the measured input tokenizer factor and preserves cache shares. <strong>Level 2</strong> also applies the measured output-verbosity factor for QA, extraction or coding. Without a workload map, the report shows all three assumptions rather than choosing one for you.</p>
+<pre class="output" data-output="what-if"><code>move-1: 50% of claude-sonnet-5-5 -&gt; gpt-6.1-sol
+  Moved traffic, level 1: $0.077200 -&gt; $0.071503; input tokenizer factor 0.668804955
+  Output share of moved target cost at level 1: 83.91%</code></pre>
+<p>The move detail separates the moved portion from the whole period. Here, output is 83.91% of that portion's target cost at level 1, so the output-verbosity assumption affects most of its cost.</p>
+<pre class="output" data-output="what-if"><code>Coverage: 3 observations priced; missing splits are excluded, never zero.
+  missing split: 1
+  3 moved observations have no workload mapping; all three workload assumptions are shown where measured.</code></pre>
+<p>Three sample records have complete component splits. The fourth lacks cache details and is excluded, not priced as zero. Source and proposed costs both use the dated price table, not the export's recorded spend.</p>
+<h3>Use your workload mix</h3>
+<p>A workload map assigns recorded keys or teams to <code>qa</code>, <code>extraction</code> or <code>coding</code>. It does not infer the task from token counts. Put the following shape in a protected <code>workload-map.json</code>, replacing the example selector values with IDs recorded in your export; avoid putting private IDs in shell history.</p>
+<pre><code>{
+  "version": 1,
+  "mappings": [
+    {"selector": {"kind": "key", "value": "your-coding-key-id"}, "workload": "coding"},
+    {"selector": {"kind": "team", "value": "your-extraction-team-id"}, "workload": "extraction"}
+  ]
+}</code></pre>
+<pre data-own="what-if-workload-map" data-exit="0"><code>./bin/fleetdiff what-if --litellm-spend ./spend.csv \
+  --period "${PERIOD_UTC:?set a completed UTC date or interval}" \
+  --from claude-sonnet-5-5 --to gpt-6.1-sol --fraction 0.5 \
+  --workload-map ./workload-map.json --format json</code></pre>
+<p>Mapped records use their assigned workload; unmapped records remain under all three measured assumptions. Conflicting key/team mappings are rejected. A model pair without a measured output factor stays at level 1; no reverse or transitive factor is invented.</p>
+<h2>No data handy? Try the sample</h2>
+<p class="meta">Requires curl, gh, shasum and tar on Linux or macOS, amd64 or arm64. Run in a directory without an existing <code>fleetdiff-what-if-sample</code> folder. These anonymous downloads use released v0.10.0 files; no Git checkout is needed.</p>
+<pre data-run="what-if" data-exit="0"><code>set -eu
+umask 077
+mkdir fleetdiff-what-if-sample
+cd fleetdiff-what-if-sample
+curl --proto '=https' --tlsv1.2 -fsSLo install-fleetdiff.sh \
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.10.0/scripts/install.sh
+sh install-fleetdiff.sh v0.10.0 ./release
+curl --proto '=https' --tlsv1.2 -fsSLo spend.csv \
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.10.0/examples/what-if/spend.csv
+./release/fleetdiff what-if --litellm-spend spend.csv \
+  --period 2026-10-07 --from claude-sonnet-5-5 --to gpt-6.1-sol --fraction 0.5</code></pre>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/examples/what-if/spend.csv">released synthetic CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/examples/what-if/expected.text">full checked text output</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/examples/what-if/expected.json">JSON output</a>.</p>
+<h2>Limits</h2>
+<ul>
+<li>This re-prices recorded usage under explicit model, cache and workload assumptions. It is not a forecast or an invoice.</li>
+<li>The factors are geometric mean paired ratios from public benchmark tasks; your traffic may differ. Individual requests vary widely, and the per-request range test failed.</li>
+<li>The displayed ranges propagate mean-factor intervals. They are not validated prediction intervals for your requests or workload, and the combined range is not a joint 95% confidence interval.</li>
+<li>No quality equivalence is claimed. Lower modeled cost does not establish that a target model performs the same work equally well.</li>
+</ul>
+<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/evidence/model-mix/README.md">released benchmark evidence</a> records model IDs, fit counts, dates, dataset and license pins, estimator and price sources; the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/internal/reprice/data/factors.json">factor table</a> links each measured pair to that provenance.</p>
+<p class="measurement-context">This synthetic example checks repricing arithmetic for recorded model attempts with complete token splits, not completed-task costs.<br>
+<a href="summaries.html#measurement-notes">Measurement notes</a></p>
+</main></div>
+<footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
+<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a><br>
+Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>: no cookies, no personal data</footer></body></html>

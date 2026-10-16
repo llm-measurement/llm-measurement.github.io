@@ -1,18 +1,18 @@
 {
   "system": "Darwin",
   "machine": "arm64",
-  "python": "3.14.2",
-  "fixture_source": "44967bd743a6fa26588742f67c54df6e323e90e0",
-  "method": "Exact published commands; fresh directories/caches; anonymous fixture clone; real released installer, CLI and library; SQL uses real read-only Postgres via Docker psql.",
+  "python": "3.11.14",
+  "fixture_source": "4b209b57895f4e4e51be4aa164d4a583a81e5d7c",
+  "method": "Exact published commands; fresh HOME/directories/caches; anonymous fixed-commit source archive; real released installer, CLI and library; SQL uses real read-only Postgres over network-none Docker. The paired helper executes unmodified inside the container to retain its inherited descriptors.",
   "results": [
     {
       "page": "index",
       "block": "home-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 1.37,
-      "command_sha256": "3320a26f00cc84a676bd6950a9e167026c6c7a83c90844b22ea414d676caff8e",
-      "stdout_sha256": "d700b19bb6addcc05983b9674914768e20807e8eb2e64f777786cc1386f925f8"
+      "seconds": 1.7,
+      "command_sha256": "2050ff4512bc74bcb2d7d91487009d930f355d4141f986f49170d4f508fb606b",
+      "stdout_sha256": "041677ba84e0eeed393846419281ebb6e3aab726fd1be1460e23262a08e9a475"
     },
     {
       "page": "index",
@@ -21,24 +21,24 @@
       "exit": 0,
       "seconds": 0.01,
       "command_sha256": "2190e825811c6d577db6d53f5dbfd40e0be43083f6c459a1955f634881f74779",
-      "stdout_sha256": "e86d135c82de0ab2694ef7a3c07fac0e817d270b9c9b2c4a648ea5c756b788f0"
+      "stdout_sha256": "0538705667b357fe6cf3df79e186709d36de98b4a5974e3d04c88cd6f113dc91"
     },
     {
       "page": "index",
       "block": "home-python",
       "pass": true,
       "exit": 0,
-      "seconds": 2.35,
-      "command_sha256": "4b822934edf59ddf878c94f30887a3f7f69e131deee51b38c32d6ac0f88f7784",
-      "stdout_sha256": "6af8892aa0092ceeb425a7998a5df4653a421fe53e6d7f6dc4f770d898d85a18"
+      "seconds": 1.61,
+      "command_sha256": "dcc5c54a5057f2ae2be3240de7cf9108022db503fc8ff771d85887a8712b2e01",
+      "stdout_sha256": "1ecfa391576f8309c30dd84b4dea95388fb81f674d4af5bac0e918441ff24ef3"
     },
     {
       "page": "index",
       "block": "home-go",
       "pass": true,
       "exit": 0,
-      "seconds": 13.54,
-      "command_sha256": "a7623d1e9e0d816cf8f1b0165fa28864168ab8abea07b21fc730b827632ceeca",
+      "seconds": 4.77,
+      "command_sha256": "53256d1728c9cfcab706edc92ec0a2a512f7df4e3a7a365f9d8b28a6ee5e5f9e",
       "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
@@ -46,9 +46,9 @@
       "block": "token-spike",
       "pass": true,
       "exit": 0,
-      "seconds": 1.5,
-      "command_sha256": "3320a26f00cc84a676bd6950a9e167026c6c7a83c90844b22ea414d676caff8e",
-      "stdout_sha256": "d700b19bb6addcc05983b9674914768e20807e8eb2e64f777786cc1386f925f8"
+      "seconds": 1.31,
+      "command_sha256": "2050ff4512bc74bcb2d7d91487009d930f355d4141f986f49170d4f508fb606b",
+      "stdout_sha256": "041677ba84e0eeed393846419281ebb6e3aab726fd1be1460e23262a08e9a475"
     },
     {
       "page": "token-spike",
@@ -64,8 +64,8 @@
       "block": "spend-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.73,
-      "command_sha256": "86c68c82c22c558c5547ea0de2e48081958e4a3faf5ffb0ef45e9240d79f3b94",
+      "seconds": 1.56,
+      "command_sha256": "bd0a610c98e530dc16cdd870dd7b27b2c0c365583550beab75ac6ebceddd53c3",
       "stdout_sha256": "7cf3bd24f6b2be47126b6dd13f8145174ba5c4f8bcb09e6aa1946994d1998dcb"
     },
     {
@@ -73,16 +73,16 @@
       "block": "litellm-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.22,
-      "command_sha256": "ba3aacc6e966c1201ea9b83ee263a56b07b34754cb0e2fefe2b8ad1a5f607184",
-      "stdout_sha256": "ef8f5bc610ee76bbf0b9aa10b840d8bb6150df9bc2ed0f349f31466fb721a222"
+      "seconds": 1.12,
+      "command_sha256": "13762bafa8c0ef6fb37486292f7471ebf7ee26481898569041638cefcf36ffa3",
+      "stdout_sha256": "54f4a2892089723ec090f97cf67d97eaec555968711e4fbbf926ccc6c6009cf9"
     },
     {
       "page": "litellm-spend",
       "block": "litellm-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 0.13,
+      "seconds": 0.14,
       "command_sha256": "da730162bcad82d2540240d33bb5f68468ab2db245989ba04e2d18a5d81cc848",
       "stdout_sha256": "102c72d6940e30ee9d68dc6c864bb44da53ce41cf204095f2b8a6e9ff3ce86ec"
     },
@@ -91,61 +91,61 @@
       "block": "session-budget",
       "pass": true,
       "exit": 0,
-      "seconds": 1.24,
-      "command_sha256": "a27026a198345364d05a3a96298006358d95c635833ddd1e009c3e67f5c2d979",
-      "stdout_sha256": "66d838c40d1257d1fbcd364a64f6a1aa41bf0d8a86e4470d552aeec5f3bfc233"
+      "seconds": 1.3,
+      "command_sha256": "39abbb489f40103814c6ccdb44631c0c3f737f170df995f76cca21ff6dd1da56",
+      "stdout_sha256": "549f7345c1a11442cc0d8e7dfc6ac5b159af04bc1aacd7ed1edb25140307b01c"
     },
     {
       "page": "cache-check",
       "block": "cache-check",
       "pass": true,
       "exit": 0,
-      "seconds": 1.18,
-      "command_sha256": "75a6a614ac25d92232a676c61a435d7f5778a70ae514c4091698db792a6f8813",
-      "stdout_sha256": "85af7af2cfeb82a54b69adaa8727c69e2d66adcc03aa5b1c09877ff114cb7d2d"
+      "seconds": 1.36,
+      "command_sha256": "7d3b61ad83ed9181d871ad943613c150f745b81edfc27585bfe92dd09820bc7b",
+      "stdout_sha256": "8beb5845e78e2a35eccedc6099745443f0498e3d7597e778c7ae3ef39530e22a"
     },
     {
       "page": "cardinality",
       "block": "cardinality",
       "pass": true,
       "exit": 3,
-      "seconds": 1.21,
-      "command_sha256": "a2f2da4358bc3e144e1c95a6431215b1f4d1aa6369eb88501468f9b86087655e",
-      "stdout_sha256": "d156e9c661702c3188d23a31b9dd9d6fdb5a4a96da148a92a84e604b33fbf168"
+      "seconds": 1.27,
+      "command_sha256": "546216d832373d51910b2d930974056409a18b3963a74fefffc7826bcd60db03",
+      "stdout_sha256": "b2e26c5fb6999dcd019b712e4c5586f9386a8a115b0f67cae08e2cab7e9af2a1"
     },
     {
       "page": "traces-usage",
       "block": "traces-usage",
       "pass": true,
       "exit": 0,
-      "seconds": 1.25,
-      "command_sha256": "0121d3e4efb872e16f252fec1ba669d22a8c46e4d4af7bb1be9a9547b50b3262",
-      "stdout_sha256": "bf053f918fc5e2f428f1b363a9bc5b9e82d690ce2ac955f77e88930cc11ff686"
+      "seconds": 1.29,
+      "command_sha256": "e55a8af27c9234900a59850d304d3bd2cf71c76980d06e01b509b76f3188fa1b",
+      "stdout_sha256": "d436bf4e8189d163f3fc1c24b7365a7b84c260f026ddca7a3fa4a0701f066bbe"
     },
     {
       "page": "anomalies",
       "block": "anomalies-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.09,
-      "command_sha256": "ba3aacc6e966c1201ea9b83ee263a56b07b34754cb0e2fefe2b8ad1a5f607184",
-      "stdout_sha256": "ef8f5bc610ee76bbf0b9aa10b840d8bb6150df9bc2ed0f349f31466fb721a222"
+      "seconds": 1.12,
+      "command_sha256": "13762bafa8c0ef6fb37486292f7471ebf7ee26481898569041638cefcf36ffa3",
+      "stdout_sha256": "54f4a2892089723ec090f97cf67d97eaec555968711e4fbbf926ccc6c6009cf9"
     },
     {
       "page": "anomalies",
       "block": "anomalies",
       "pass": true,
       "exit": 3,
-      "seconds": 0.15,
+      "seconds": 0.14,
       "command_sha256": "8310e32c846f582977b24b3ac1c1db1ac629403bf0867fc27330dbfb74e44c5f",
-      "stdout_sha256": "8cdd05070962a811e042c1059e1fa964e8265d48f93a17613787cc235e6c900a"
+      "stdout_sha256": "90422e00b37fe1493be7410a5608644bf3d81028e311bee48917c4cedb25f86e"
     },
     {
       "page": "distinct-users",
       "block": "distinct-users",
       "pass": true,
       "exit": 0,
-      "seconds": 2.55,
+      "seconds": 1.75,
       "command_sha256": "81671cb47bbb144557140e20bbd2ab73a2887df85f0fb48092d1f0a19f421c29",
       "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475"
     },
@@ -154,9 +154,83 @@
       "block": "tokenmaxxing",
       "pass": true,
       "exit": 0,
-      "seconds": 2.7,
+      "seconds": 1.81,
       "command_sha256": "5e889bcd47ea4221fe9470bdb92d29a042e1de835e4449545f49885ca94bbc69",
       "stdout_sha256": "3602de85e92ba5bcb4a2fa5330baa39d07c5f77ac32acefd46092618dd511635"
+    },
+    {
+      "page": "row-coverage",
+      "block": "row-coverage-export",
+      "pass": true,
+      "exit": 0,
+      "seconds": 1.73,
+      "command_sha256": "d72dd461b3270947b28cab1fc561aa7e4bcb22c0156939723d4a99f0a467bf51",
+      "stdout_sha256": "04bd25e4f2506bddfa650bbefb7c1c3c2babf131c000d5d36956c7b17d69dbcb",
+      "paired_export": {
+        "start_utc": "2026-09-23T00:00:00Z",
+        "end_exclusive": "2026-10-09T00:00:00Z",
+        "fixture_oct07_spend_rows": 8,
+        "fixture_oct07_daily_requests": 9,
+        "fixture_oct08_spend_rows": 1,
+        "readonly": true,
+        "network": "none"
+      }
+    },
+    {
+      "page": "row-coverage",
+      "block": "row-coverage-install",
+      "pass": true,
+      "exit": 0,
+      "seconds": 1.22,
+      "command_sha256": "b8ba661fab5fa4af20e76f5e087a52f34148d9ad874a3d082b69e75d14577095",
+      "stdout_sha256": "60dfb4952881be9a712dc3678ac8ef6e43f482548a164fb7459d9d430cb3a50c"
+    },
+    {
+      "page": "row-coverage",
+      "block": "row-coverage",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.02,
+      "command_sha256": "4e630e765f4dc0da3c81018b72528a593cf76bfd48ba9be800901567c9470acb",
+      "stdout_sha256": "b171e5a11c82038c19d538c4e1b9a1cccb7343c419ad87b07f173dff0057dda0"
+    },
+    {
+      "page": "what-if",
+      "block": "what-if-install",
+      "pass": true,
+      "exit": 0,
+      "seconds": 1.14,
+      "command_sha256": "430d75589c826a6de776ea7adc2056c501a58eade217f425f67eb158213d9496",
+      "stdout_sha256": "54f4a2892089723ec090f97cf67d97eaec555968711e4fbbf926ccc6c6009cf9"
+    },
+    {
+      "page": "what-if",
+      "block": "what-if-reprice",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.13,
+      "command_sha256": "a7802a98c58d069ddca2efd2f1ba8b273471040a3baa23cd84266202c1143f80",
+      "stdout_sha256": "dd1bac25024ce2759b1efac7d38e5098f7769ac2b225ae036edff7dea1de30f3"
+    },
+    {
+      "page": "what-if",
+      "block": "what-if-workload-map",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.01,
+      "command_sha256": "1e20569ec230a55276454264fb1527d3f8796fa3c315faddfde0dda247d25848",
+      "stdout_sha256": "7b86931eb58002da481af3ba8ea3aee87d53e54fc29c5b55ba03a099fffb7bc3"
     }
-  ]
+  ],
+  "fixture_archive": {
+    "version": "v0.10.0",
+    "expected_commit": "4b209b57895f4e4e51be4aa164d4a583a81e5d7c",
+    "url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/4b209b57895f4e4e51be4aa164d4a583a81e5d7c",
+    "archive_sha256": "7b5f7d183d742a892710cf740d9a869458917f76860b848dc21decbb9fb2b293",
+    "archive_bytes": 920030,
+    "archive_root": "fleetdiff-4b209b57895f4e4e51be4aa164d4a583a81e5d7c",
+    "source_sha256": "a2002074f5343c10a03f473a72960e7f553b8fda95646735d9a5310c3352d6af",
+    "git_operations": false,
+    "file_count": 385
+  }
 }
