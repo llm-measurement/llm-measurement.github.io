@@ -1,12 +1,13 @@
 {
   "system": "Darwin",
   "machine": "arm64",
-  "method": "Exact published commands; anonymous access; fresh directories and credential configuration; trusted verification tools supplied on PATH.",
+  "method": "Exact published commands; fresh working directories, caches and Docker credential configuration; anonymous downloads and Cosign checks; collector GitHub API verification uses existing gh credentials; trusted verification tools supplied on PATH.",
   "results": [
     {
       "block": "fleetdiff",
       "pass": true,
       "exit": 0,
+      "authentication": "anonymous",
       "command_sha256": "4cf341cde755a1d46057cb4167baff6aabc1a2ae128863a2e8de97f5a8ad183d",
       "stdout_sha256": "f132cc6680977e462a5d6a1b5fa8afcbc8ebe58264898aaebc1730b2f1596d0e"
     },
@@ -14,8 +15,9 @@
       "block": "collector",
       "pass": true,
       "exit": 0,
-      "command_sha256": "4a774847509597cd087798483de4873a06395443f23cc069e1d9a5f61e7d2b6c",
-      "stdout_sha256": "5520fe7910fbfa37c4d37625371f8694f668f3b7fc38d2c55d16e16d9959aabb"
+      "authentication": "credentialed GitHub API",
+      "command_sha256": "fc9119ff2d40a8b1ccb072cb0f63071c68e0a3163fe78fd1f03c18ad898d9edc",
+      "stdout_sha256": "a29aaa85b58181450be69801e64f7cc630aae3a619e03f9e7fd5581e2717de43"
     }
   ]
 }

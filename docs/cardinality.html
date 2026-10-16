@@ -22,7 +22,7 @@
 sh install-fleetdiff.sh v0.8.0 ./bin
 ./bin/fleetdiff diagnose ./collector.yaml</code></pre><p>Exit 0 means no blocking findings, 3 identifies settings to fix, and 4 means the configuration includes unsupported settings. Follow the reported YAML paths.</p>
 <h3>Configure keyed rankings</h3>
-<p>The released <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/builder.yaml">v0.3.2 collector distribution</a> exports counters and distinct-user metrics through Prometheus or OTLP (gRPC or HTTP), so you can use any backend accepting OTLP metrics while keeping keyed rankings in snapshot logs and summary files.</p>
+<p>The released <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/builder.yaml">v0.3.3 collector distribution</a> exports counters and distinct-user metrics through Prometheus or OTLP (gRPC or HTTP), so you can use any backend accepting OTLP metrics while keeping keyed rankings in snapshot logs and summary files.</p>
 <p>With the released genaisketch connector, map your span's user attribute and enable token-weighted user rankings:</p>
 <pre><code>connectors:
   genaisketch:
@@ -36,7 +36,7 @@ sh install-fleetdiff.sh v0.8.0 ./bin
       - field: user_key
         weight: tokens</code></pre>
 <p>This fragment goes into a complete collector configuration with the hashing secret and trace pipeline set up. The distinct-user estimate is a metric value; keyed top-user rankings go to snapshot logs and optional summary files. Keep user identity attributes out of <code>slices</code>. <code>topk</code> limits displayed candidates; the configured sketch profile sets the ranking's fixed capacity.</p>
-<p>See the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/TOPK_KEYS.md">v0.3.2 ranking guide</a> and <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/CONFIGURATION.md">complete configuration reference</a>. Then use <a href="token-spike.html">fleetdiff to compare users across windows</a>.</p>
+<p>See the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/docs/TOPK_KEYS.md">v0.3.3 ranking guide</a> and <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/docs/CONFIGURATION.md">complete configuration reference</a>. Then use <a href="token-spike.html">fleetdiff to compare users across windows</a>.</p>
 </aside>
 <h2>What you'll see</h2>
 <p>Example output from the synthetic sample below; your values will reflect your input.</p>

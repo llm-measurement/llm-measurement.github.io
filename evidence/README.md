@@ -1,11 +1,12 @@
 # Guide Verification
 
 The guides use synthetic inputs and released software. Each command is checked
-from a new directory with fresh caches. No real prompts, user records or API
-credentials are needed.
+from a new directory with fresh caches. No real prompts, user records or
+model-provider credentials are needed. The manual collector provenance check
+uses GitHub authentication as described below.
 
-The current command manifests were refreshed for fleetdiff v0.8.0 on
-October 11, 2026. The historical offline-analysis evidence below retains its
+The current command manifests were refreshed on October 15, 2026 (US Eastern),
+using fleetdiff v0.8.0, collector v0.3.3 and chart 0.3.5. The historical offline-analysis evidence below retains its
 v0.7.0 scope. The v0.8.0 release also passed the
 [packaged offline smoke](https://github.com/llm-measurement/fleetdiff/actions/runs/38200307889)
 on Linux amd64 and arm64. An anonymous local check verified the released Linux
@@ -26,8 +27,11 @@ command checks passing.
 
 The fleetdiff v0.8.0 tag resolves to `44967bd743a6fa26588742f67c54df6e323e90e0`.
 The installer checks the binary and checksum-file attestations before extraction.
-Collector links describe v0.3.2 configuration and chart 0.3.4; these guide commands do not start
+Collector links describe v0.3.3 configuration and chart 0.3.5; these guide commands do not start
 a collector or claim a live Prometheus series measurement.
+Install-guide links pin the post-release documentation revision
+[`3fb11ab`](https://github.com/llm-measurement/otelcol-genai-sketches/commit/3fb11abf108d36e64f87bc969e74ed6903043e8a);
+configuration and source links retain the immutable v0.3.3 runtime tag.
 
 The reproduction command is:
 
@@ -71,18 +75,26 @@ hashes and records the released fixture commit. CI reruns these checks.
 
 ## Manual release checks
 
-With trusted gh and Cosign installations, execute the security page's exact
-manual verification blocks:
+With trusted gh and Cosign installations, and gh signed in for the collector's
+OCI provenance API checks, execute the security page's exact manual verification blocks:
 
 ```sh
 python3 scripts/check.py --release-review --output evidence/local/release-review
 ```
 
 The recorded check used gh 2.69.0 and Cosign 3.1.3. It downloads and verifies
-fleetdiff v0.8.0, the collector v0.3.2 image and chart 0.3.4 with fresh credential
-configuration. No container is started or cluster changed by these blocks.
+fleetdiff v0.8.0, the collector v0.3.3 image and chart 0.3.5. Downloads, fleetdiff
+bundle verification and Cosign checks use anonymous access; collector OCI
+provenance verification uses existing GitHub CLI credentials. Working directories,
+caches and Docker credential configuration are fresh. No container is started or
+cluster changed by these blocks.
 `release-review-verified.json` binds the commands to the successful check. The
 default site check rejects stale own-data or manual-verification command records.
+
+The same run passed all nine sample guides and 17 own-data blocks. Browser checks
+covered all 12 pages at 1280- and 390-pixel widths in light and dark modes: 48
+views with decoded images, no page errors or horizontal overflow, and working
+mobile navigation. These checks cover the guide site, not a Kubernetes rollout.
 
 ## Offline analysis evidence
 

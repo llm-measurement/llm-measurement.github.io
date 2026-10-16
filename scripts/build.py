@@ -73,7 +73,7 @@ def build():
         (out / (page["slug"] + ".html")).write_text(rendered)
     urls = [BASE + ("" if p["slug"] == "index" else p["slug"] + ".html") for p in PAGES]
     (out / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{u}</loc></url>\n' for u in urls) + '</urlset>\n')
-    (out / "llms.txt").write_text("# LLM Measurement\n\n> Local open-source tools for LLM usage investigations and measurement.\n\n## Guides\n\n" + ''.join(f'- [{p["title"]}]({u}): {p["description"]}\n' for p, u in zip(PAGES[1:], urls[1:])) + "\n## Released tools used in these examples\n\n- fleetdiff v0.8.0\n- llm-sketchkit v0.3.0\n- Collector configuration guidance: v0.3.2; Helm chart 0.3.4\n\nCommand guides use synthetic inputs. The summaries evidence page separates released coding-agent records from synthetic scale workloads and pins its experimental source. See each page for its methods and limits.\n")
+    (out / "llms.txt").write_text("# LLM Measurement\n\n> Local open-source tools for LLM usage investigations and measurement.\n\n## Guides\n\n" + ''.join(f'- [{p["title"]}]({u}): {p["description"]}\n' for p, u in zip(PAGES[1:], urls[1:])) + "\n## Released tools used in these examples\n\n- fleetdiff v0.8.0\n- llm-sketchkit v0.3.0\n- Collector configuration guidance: v0.3.3; Helm chart 0.3.5\n\nCommand guides use synthetic inputs. The summaries evidence page separates released coding-agent records from synthetic scale workloads and pins its experimental source. See each page for its methods and limits.\n")
     (out / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n")
     (out / ".nojekyll").write_text("")
 

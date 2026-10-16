@@ -44,7 +44,7 @@ with open("usage.csv", newline="") as source:
         total += tokens
 print(f"Estimated distinct users: {users.estimate():.0f}")
 PY</code></pre><p>For multiple workers, use the same protected key, profile, domain and canonicalization. Merge the sketch states, then estimate once; adding workers' distinct-count estimates would count overlapping users more than once. The <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.3.0/examples/go-to-python">Go-to-Python example</a> shows how measurements move into a notebook.</p>
-<p>If your application already emits GenAI spans, the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/CONFIGURATION.md">collector's user_key mapping</a> provides the collection path. To rank token-heavy users instead, <a href="token-spike.html">compare user rankings</a>.</p>
+<p>If your application already emits GenAI spans, the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/docs/CONFIGURATION.md">collector's user_key mapping</a> provides the collection path. To rank token-heavy users instead, <a href="token-spike.html">compare user rankings</a>.</p>
 </aside>
 <h2>What you'll see</h2>
 <p>Example output from the synthetic sample below; your values will reflect your input.</p>

@@ -39,7 +39,7 @@ sh install-fleetdiff.sh v0.8.0 ./bin</code></pre>
 <p>Analysis reads your local file. Use the export from step 1, or replace its path with your existing request-level export.</p>
 <pre data-own="litellm-spend" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./litellm-export/spend.csv --group-by key</code></pre>
 <p>The default compares two complete seven-day periods. For sparse or shorter exports, select explicit <code>--before-period</code> and <code>--after-period</code> dates. Choose <code>--group-by team</code>, <code>user</code>, <code>end-user</code> or <code>session</code> for another view.</p>
-<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/README.md#using-litellm">export, install and investigate path</a> and <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.8.0/examples/litellm-spend">spend export guide</a> cover fields and period choices. For continuous metrics and summary windows, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.2/examples/integrations/litellm">collector's LiteLLM recipe</a>.</p>
+<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.8.0/README.md#using-litellm">export, install and investigate path</a> and <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.8.0/examples/litellm-spend">spend export guide</a> cover fields and period choices. For continuous metrics and summary windows, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.3.3/examples/integrations/litellm">collector's LiteLLM recipe</a>.</p>
 </aside>
 <h2>What you'll see</h2>
 <p>Example output from the synthetic sample below; your values will reflect your input.</p>

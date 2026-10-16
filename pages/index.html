@@ -12,7 +12,7 @@ sh install-fleetdiff.sh v0.8.0 ./bin
 <h3>Have OpenTelemetry traces?</h3>
 <p>Make a short local <a href="traces-usage.html">OTLP capture</a>, save it as <code>traces.jsonl</code>, then use the same installed binary:</p>
 <pre data-own="home-traces" data-exit="0"><code>./bin/fleetdiff inspect ./traces.jsonl</code></pre>
-<p>For continuous measurement, deploy the collector in your own pipeline with <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.2/docs/SUMMARY_EXPORT_HELM.md">Helm chart 0.3.4 and collector v0.3.2</a>; keep your existing trace backend.</p>
+<p>For continuous measurement, deploy the collector in your own pipeline with <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/3fb11abf108d36e64f87bc969e74ed6903043e8a/docs/SUMMARY_EXPORT_HELM.md">Helm chart 0.3.5 and collector v0.3.3</a>; keep your existing trace backend.</p>
 <h3>Use Python or Go?</h3>
 <p>Install llm-sketchkit v0.3.0 and supply your application's user IDs and token counts. The <a href="distinct-users.html">distinct-user</a> and <a href="tokenmaxxing.html">heaviest-user</a> guides read a local CSV. Python requires 3.11+; Go requires 1.26+.</p>
 <pre data-own="home-python" data-exit="0"><code>python3 -m venv .venv
