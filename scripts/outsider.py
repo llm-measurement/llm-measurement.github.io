@@ -53,7 +53,7 @@ def normalize(text):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--page", choices=["cardinality", "token-spike", "tokenmaxxing", "litellm-spend", "session-budget", "cache-check", "anomalies", "traces-usage", "distinct-users"])
+    parser.add_argument("--page", choices=["cardinality", "token-spike", "tokenmaxxing", "litellm-spend", "row-coverage", "what-if", "session-budget", "cache-check", "anomalies", "traces-usage", "distinct-users"])
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     records = []
@@ -71,6 +71,7 @@ def main():
             for key in ("GH_TOKEN", "GITHUB_TOKEN", "PYTHONPATH", "PYTHONHOME"):
                 env.pop(key, None)
             env.update({
+                "HOME": fresh, "XDG_CACHE_HOME": fresh + "/cache",
                 "GH_CONFIG_DIR": fresh + "/gh", "GIT_TERMINAL_PROMPT": "0",
                 "GIT_CONFIG_COUNT": "1", "GIT_CONFIG_KEY_0": "credential.helper",
                 "GIT_CONFIG_VALUE_0": "", "GOWORK": "off", "GOTOOLCHAIN": "go1.26.9", "PYTHONNOUSERSITE": "1",

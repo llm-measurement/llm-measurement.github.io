@@ -8,8 +8,8 @@
       "pass": true,
       "exit": 0,
       "authentication": "anonymous",
-      "command_sha256": "4cf341cde755a1d46057cb4167baff6aabc1a2ae128863a2e8de97f5a8ad183d",
-      "stdout_sha256": "f132cc6680977e462a5d6a1b5fa8afcbc8ebe58264898aaebc1730b2f1596d0e"
+      "command_sha256": "69b4874d6e969caca61bf34d223a64168be0123111bceeaefdbc82f531b9d9b9",
+      "stdout_sha256": "95f5251130682559de2b0291ab4e948db0b1a684844bb2cb6de6f2986d9c984e"
     },
     {
       "block": "collector",
