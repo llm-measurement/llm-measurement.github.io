@@ -32,7 +32,12 @@ Requires Python 3.11 or later. The static-site builder uses only the standard li
 python3 scripts/build.py
 python3 -m unittest discover -s scripts -p 'test_*.py'
 python3 scripts/check.py
+python3 scripts/check.py --release-pins
 ```
+
+The release-pin check resolves the cited fleetdiff tag anonymously and rejects
+any active installer or source commit pin that differs. CI runs it on every PR.
+The other static checks remain offline.
 
 Open `docs/index.html` in a browser. The site uses Plausible for visitor analytics.
 The guides are static HTML and require no account or external fonts to read.

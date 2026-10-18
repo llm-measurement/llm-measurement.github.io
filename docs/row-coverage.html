@@ -36,7 +36,7 @@ sh ./coverage-helper/export-coverage.sh ./litellm-coverage-export \
 <h3>2. Install fleetdiff</h3>
 <p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer verifies the v0.12.0 release archive, checksums and attestations. For manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p>
 <pre data-own="row-coverage-install" data-exit="0"><code>set -eu
-curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
 sh install-fleetdiff.sh v0.12.0 ./bin
 ./bin/fleetdiff --version</code></pre>
 <h3>3. Compare the paired exports</h3>

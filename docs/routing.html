@@ -21,7 +21,7 @@
 <p>Connect to your existing LiteLLM Postgres database with approved read-only access. fleetdiff exports routing details automatically, audits the private snapshot locally and removes the temporary export. No psql or model calls are needed. An existing request-level CSV, JSON or JSONL export also works through the <a href="#export">manual path below</a>.</p>
 <h3>1. Install fleetdiff v0.12.0</h3>
 <p>Requires curl, gh, shasum and tar on Linux or macOS, amd64 or arm64. GitHub CLI need not be signed in. Start without an existing <code>bin</code> folder. The pinned installer verifies the release archive, checksums and attestations; see <a href="security.html#verify-fleetdiff">manual release verification</a>.</p>
-<pre data-own="routing-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+<pre data-own="routing-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
 sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
 <h3>2. Audit your database</h3>
 <p>Have your administrator provision the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/NATIVE_EXPORT.md#administrator-setup">read-only role and column grants</a>. Set <code>DATABASE_URL_FILE</code> to an approved regular credential file owned by your effective user, mode exactly <code>0600</code>, with no symlink path components. Keep it outside your checkout and leave <code>FLEETDIFF_LITELLM_DATABASE_URL</code> unset when using the file option.</p>
@@ -84,7 +84,7 @@ umask 077
 mkdir fleetdiff-routing-sample
 cd fleetdiff-routing-sample
 curl --proto '=https' --tlsv1.2 -fsSLo install-fleetdiff.sh \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
 sh install-fleetdiff.sh v0.12.0 ./release
 curl --proto '=https' --tlsv1.2 -fsSLo spend.csv \
   https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.0/examples/routing/synthetic.csv

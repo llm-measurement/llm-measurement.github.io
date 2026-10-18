@@ -83,6 +83,8 @@ def check_reading_flow(source):
 
 
 def main():
+    import release_pins
+    release_pins.check()
     pages = json.loads((ROOT / "pages.json").read_text())
     measurement_sections = 0
     for entry in pages:
@@ -261,10 +263,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--own-data", action="store_true", help="execute published own-data commands with synthetic inputs and real PostgreSQL")
     parser.add_argument("--release-review", action="store_true", help="execute manual verification commands (requires trusted gh and cosign)")
+    parser.add_argument("--release-pins", action="store_true", help="resolve the cited fleetdiff tag anonymously and check every active source pin")
     parser.add_argument("--output", type=Path, default=ROOT / "evidence/local/own-data")
     parser.add_argument("--page", help="limit runtime verification to one page")
     args = parser.parse_args()
-    if args.release_review:
+    if args.release_pins:
+        import release_pins
+        release_pins.check(live=True)
+    elif args.release_review:
         import review_releases
         review_releases.check(args.output, args.page)
     elif args.own_data:
