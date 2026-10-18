@@ -23,13 +23,13 @@ class ReleasePairTests(unittest.TestCase):
                 self.assertNotIn("chart 0.3.4", source)
                 self.assertNotIn("chart-v0.3.5", source)
         home = (ROOT / "pages/index.html").read_text()
-        self.assertIn("Helm chart 0.3.5 and collector v0.3.3", home)
+        self.assertIn("Helm chart 0.6.0 and collector v0.6.0", home)
 
     def test_collector_review_uses_combined_release_metadata(self):
         blocks = Blocks()
         blocks.feed((ROOT / "pages/security.html").read_text())
         command = next(block["text"] for block in blocks.review if block["id"] == "collector")
-        self.assertIn("\nrelease=v0.3.3\n", command)
+        self.assertIn("\nrelease=v0.6.0\n", command)
         self.assertIn(".github/workflows/release.yml@refs/tags/$release", command)
         self.assertNotIn("chart-release.yml", command)
         self.assertIn('image="$(cat image-digest.txt)"', command)
@@ -65,8 +65,8 @@ class ReleasePairTests(unittest.TestCase):
         self.assertIn("GitHub CLI signed in for the OCI provenance API checks",
                       (ROOT / "pages/security.html").read_text())
 
-    def test_install_guides_pin_the_postrelease_documentation(self):
-        revision = "3fb11abf108d36e64f87bc969e74ed6903043e8a"
+    def test_install_guides_pin_the_matching_release_documentation(self):
+        revision = "v0.6.0"
         for name in ("anomalies", "token-spike", "index", "security"):
             source = (ROOT / "pages" / (name + ".html")).read_text()
             self.assertIn("otelcol-genai-sketches/blob/" + revision + "/docs/", source)

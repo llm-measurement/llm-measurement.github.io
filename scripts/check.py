@@ -19,9 +19,10 @@ GUIDE_CONTEXT = {
     "tokenmaxxing": "Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.",
     "litellm-spend": "This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.",
     "row-coverage": "This example compares exported rows with recorded daily counts; it leaves token and spend totals unchanged.",
+    "routing": "This synthetic example checks recorded routing distributions and attribution coverage, not a performance or savings measurement.",
     "what-if": "This synthetic example checks repricing arithmetic for recorded model attempts with complete token splits, not completed-task costs.",
     "session-budget": "Recorded session totals are review evidence, not an enforcement verdict or completed-task costs. Missing identities stay unattributed; absent recorded rejections do not prove that no rejection occurred.",
-    "cache-check": "Uncached-input growth can reflect input volume or workload mix, not necessarily a per-key cache-share loss. These recorded shares do not diagnose causes or costs; the synthetic example checks arithmetic, not provider cache behavior. Collector summaries support aggregate shares with sufficient coverage, but lack per-model cache counters and cache-weighted key/session rankings.",
+    "cache-check": "Uncached-input growth can reflect input volume or workload mix, not necessarily a per-key cache-share loss. These recorded shares do not diagnose causes or costs; the synthetic example checks arithmetic, not provider cache behavior. Summary-based investigate reports support aggregate shares with sufficient coverage, but do not show per-model cache breakdowns or cache-weighted key/session rankings.",
     "anomalies": "This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.",
     "traces-usage": "Readiness describes fields in the captured model attempts; zeros without declared usage origin remain unknown.",
     "distinct-users": "Distinct counts are statistical estimates. Your application hashes raw IDs before they reach the sketch.",
@@ -96,6 +97,7 @@ def main():
         assert '>A token spike</a>' in nav and '>Tokenmaxxing</a>' in nav and '>Per-user metrics</a>' in nav, path.name
         assert '>LiteLLM spend</a>' in nav, path.name
         assert '>Row coverage</a>' in nav and '>Model what-if</a>' in nav, path.name
+        assert nav.index('href="row-coverage.html"') < nav.index('href="routing.html"') < nav.index('href="what-if.html"'), path.name
         assert nav.index('href="litellm-spend.html"') < nav.index('href="row-coverage.html"') < nav.index('href="what-if.html"') < nav.index('href="session-budget.html"'), path.name
         assert '>Session budget</a>' in nav, path.name
         assert nav.index('href="litellm-spend.html"') < nav.index('href="session-budget.html"') < nav.index('href="cache-check.html"'), path.name
@@ -116,7 +118,7 @@ def main():
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
             assert "v0.5.0" not in source and "v0.3.1" not in source and "0.2.2" not in source
         if entry["slug"] == "anomalies":
-            assert '>chart 0.3.5</a>' in path.read_text()
+            assert '>chart 0.6.0</a>' in path.read_text()
         if entry["slug"] == "cardinality":
             assert entry["title"] == "How do I see LLM usage per user without a metric label for every user?"
             assert '<p class="lead">Keep user IDs out of your metric labels.' in path.read_text()
@@ -125,13 +127,13 @@ def main():
                 "https://grafana.com/docs/grafana-cloud/platform/pricing-and-usage/metrics/",
                 "https://docs.datadoghq.com/account_management/billing/custom_metrics/",
                 "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html",
-                "https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/builder.yaml",
+                "https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/builder.yaml",
             ):
                 assert source in page.links, source
         if entry["slug"] in {"token-spike", "cardinality", "anomalies", "litellm-spend", "traces-usage", "cache-check"}:
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
-            assert "/archive/refs/tags/v0.10.0.tar.gz" in source and "sh scripts/install.sh v0.10.0 ./release" in source
-            assert "v0.6.0" not in source
+            assert "/archive/refs/tags/v0.11.0.tar.gz" in source and "sh scripts/install.sh v0.11.0 ./release" in source
+            assert "fleetdiff/v0.6.0" not in source
             if entry["slug"] == "traces-usage":
                 assert "./release/fleetdiff inspect examples/inspect/synthetic-traces.json" in source
                 assert "go run" not in source and "Go 1.26" not in source
@@ -146,7 +148,7 @@ def main():
                 assert "key-1: 80 -&gt; 700 uncached input tokens; change +620." in source
         if entry["slug"] == "session-budget":
             source = (ROOT / "pages/session-budget.html").read_text()
-            assert "/archive/refs/tags/v0.10.0.tar.gz" in source and "sh scripts/install.sh v0.10.0 ./release" in source
+            assert "/archive/refs/tags/v0.11.0.tar.gz" in source and "sh scripts/install.sh v0.11.0 ./release" in source
             assert "--session-budget-usd 1.00" in source and "Redis" not in source
             for url in ("https://docs.litellm.ai/docs/a2a_iteration_budgets",
                         "https://github.com/BerriAI/litellm/issues/34732",
@@ -163,7 +165,7 @@ def main():
             context = html.escape(GUIDE_CONTEXT[entry["slug"]])
             notes_link = '<a href="summaries.html#measurement-notes">Measurement notes</a>'
             if entry["slug"] == "cache-check":
-                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/docs/CACHE.md">Cache measurements and limits</a>.'
+                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/docs/CACHE.md">Cache measurements and limits</a>.'
             expected = (f'<p class="measurement-context">{context}<br>\n'
                         f'{notes_link}</p>')
             assert expected in path.read_text(), (path.name, "guide context must precede its notes link")
@@ -189,6 +191,7 @@ def main():
     assert home.index('href="token-spike.html"') < home.index('href="tokenmaxxing.html"') < home.index('href="cardinality.html"')
     assert 'href="litellm-spend.html"' in home
     assert home.index('href="litellm-spend.html"') < home.index('href="row-coverage.html"') < home.index('href="what-if.html"') < home.index('href="session-budget.html"')
+    assert home.index('href="row-coverage.html"') < home.index('href="routing.html"') < home.index('href="what-if.html"')
     assert home.index('href="litellm-spend.html"') < home.index('href="session-budget.html"') < home.index('href="cache-check.html"')
     assert home.index('href="litellm-spend.html"') < home.index('href="cache-check.html"') < home.index('href="cardinality.html"')
     assert home.index('href="anomalies.html"') < home.index('href="traces-usage.html"') < home.index('href="distinct-users.html"')
@@ -250,7 +253,7 @@ def main():
     for record in release_verified:
         block = next(b for b in reviewer.review if b["id"] == record["block"])
         assert record["pass"] and record["exit"] == 0
-        assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest()
+        assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest(), record["block"]
     print(f"PASS: {len(pages)} pages, {guides} runnable guides, local links, sitemap, llms.txt and static root files")
 
 
@@ -263,7 +266,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.release_review:
         import review_releases
-        review_releases.check(args.output)
+        review_releases.check(args.output, args.page)
     elif args.own_data:
         import own_data
         own_data.check(args.output, args.page)

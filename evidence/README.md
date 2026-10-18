@@ -5,35 +5,34 @@ from a new directory with fresh caches. No real prompts, user records or
 model-provider credentials are needed. The manual collector provenance check
 uses GitHub authentication as described below.
 
-The current command manifests were refreshed on October 16, 2026 (US Eastern),
-using fleetdiff v0.10.0, collector v0.3.3 and chart 0.3.5. The homepage installs
+The sample and own-data command manifests were refreshed on October 18, 2026 (UTC),
+using fleetdiff v0.11.0. The homepage installs
 sketchkit v0.4.0 in Python and Go; the existing Python guides retain their checked
-v0.3.0 examples. The v0.10.0 release passed the
-[packaged offline smoke](https://github.com/llm-measurement/fleetdiff/actions/runs/38851612792)
+v0.3.0 examples. The v0.11.0 release passed the
+[packaged offline smoke](https://github.com/llm-measurement/fleetdiff/actions/runs/39088663392)
 on Linux amd64 and arm64. The historical offline-analysis evidence below retains
 its v0.7.0 scope; it is not relabeled as a check of later production code.
 
 | Guide | Released program | Input and reference |
 | --- | --- | --- |
-| Cardinality | fleetdiff v0.10.0 | `examples/diagnose/unsafe.yaml` from the v0.10.0 tag; expected exit 3 |
-| Token spike | fleetdiff v0.10.0 | Checked-in `examples/sessions/data` from the v0.10.0 tag; expected exit 0 |
+| Cardinality | fleetdiff v0.11.0 | `examples/diagnose/unsafe.yaml` from the v0.11.0 tag; expected exit 3 |
+| Token spike | fleetdiff v0.11.0 | Checked-in `examples/sessions/data` from the v0.11.0 tag; expected exit 0 |
 | Tokenmaxxing | PyPI llm-sketchkit 0.3.0 | One synthetic week of reported tokens for 60 people, defined in the page's command; expected exit 0 |
-| LiteLLM spend | fleetdiff v0.10.0 | `examples/litellm-spend/synthetic.csv` from the v0.10.0 tag; headline, keyed contributors and completeness; expected exit 0 |
-| Row coverage | fleetdiff v0.10.0 | Released paired runtime CSVs: 8 spend rows versus 9 daily requests on October 7, then 1 versus 1; expected exit 0 |
-| Model what-if | fleetdiff v0.10.0 | `examples/what-if/spend.csv`; complete text matches `expected.text`, with the displayed whole-period range and excluded missing split; expected exit 0 |
-| Session budget | fleetdiff v0.10.0 | `examples/litellm-spend/session-budget.csv` from the v0.10.0 tag; observed session totals, cap review, counter sharing and duration; expected exit 0 |
-| Cache check | fleetdiff v0.10.0 | `examples/litellm-spend/cache-drop.csv` from the v0.10.0 tag; cache-read/write shares and keyed uncached-input growth; expected exit 0 |
-| Anomalies | fleetdiff v0.10.0 | `examples/scan` generator from the v0.10.0 tag; fixed reference time; expected exit 3 |
-| Trace check | fleetdiff v0.10.0 | Shipped `examples/inspect/synthetic-traces.json` from the v0.10.0 tag; synthetic OTLP usage and identity fields, no Go generator; expected exit 0 |
+| LiteLLM spend | fleetdiff v0.11.0 | `examples/litellm-spend/synthetic.csv` from the v0.11.0 tag; headline, keyed contributors and completeness; expected exit 0 |
+| Row coverage | fleetdiff v0.11.0 | Released paired runtime CSVs: 8 spend rows versus 9 daily requests on October 7, then 1 versus 1; expected exit 0 |
+| Routing audit | fleetdiff v0.11.0 | `examples/routing/synthetic.csv`; model shares, classifier overhead and missing Responses agents; expected exit 0 |
+| Model what-if | fleetdiff v0.11.0 | `examples/what-if/spend.csv`; complete text matches `expected.text`, with the displayed whole-period range and excluded missing split; expected exit 0 |
+| Session budget | fleetdiff v0.11.0 | `examples/litellm-spend/session-budget.csv` from the v0.11.0 tag; observed session totals, cap review, counter sharing and duration; expected exit 0 |
+| Cache check | fleetdiff v0.11.0 | `examples/litellm-spend/cache-drop.csv` from the v0.11.0 tag; cache-read/write shares and keyed uncached-input growth; expected exit 0 |
+| Anomalies | fleetdiff v0.11.0 | `examples/scan` generator from the v0.11.0 tag; fixed reference time; expected exit 3 |
+| Trace check | fleetdiff v0.11.0 | Shipped `examples/inspect/synthetic-traces.json` from the v0.11.0 tag; synthetic OTLP usage and identity fields, no Go generator; expected exit 0 |
 | Distinct users | PyPI llm-sketchkit 0.3.0 | Four synthetic events, three distinct IDs, defined in the page's command |
 
-The fleetdiff v0.10.0 tag resolves to `4b209b57895f4e4e51be4aa164d4a583a81e5d7c`.
+The fleetdiff v0.11.0 tag resolves to `c00546fd6f40217c985a29936c383ab63d704499`.
 The installer checks the binary and checksum-file attestations before extraction.
-Collector links describe v0.3.3 configuration and chart 0.3.5; these guide commands do not start
+Collector links pin v0.6.0 configuration and chart 0.6.0; these guide commands do not start
 a collector or claim a live Prometheus series measurement.
-Install-guide links pin the post-release documentation revision
-[`3fb11ab`](https://github.com/llm-measurement/otelcol-genai-sketches/commit/3fb11abf108d36e64f87bc969e74ed6903043e8a);
-configuration and source links retain the immutable v0.3.3 runtime tag.
+Install-guide, configuration and source links use the same runtime tag.
 
 The reproduction command is:
 
@@ -47,7 +46,7 @@ Trailing whitespace is ignored; numbers and wording must match. It saves output,
 machine details, command digests and results under the ignored output directory.
 
 The recorded local check uses macOS arm64 and Go 1.26.9 for the anomaly fixture generator.
-The LiteLLM spend, row-coverage, what-if, session-budget, cache-check and trace-check commands use the released binary without Go.
+The LiteLLM spend, row-coverage, routing, what-if, session-budget, cache-check and trace-check commands use the released binary without Go.
 The cache example checks recorded arithmetic and coverage, not provider cache behavior,
 cause diagnosis or billing impact.
 This is a functional example check, not a throughput or anomaly-accuracy study.
@@ -77,7 +76,10 @@ summary serialization. Private sentinel identities must stay out of output.
 The installer checks run with `GH_TOKEN` and `GITHUB_TOKEN` removed and a fresh
 `GH_CONFIG_DIR`: gh must be installed but need not be signed in. The LiteLLM path
 exports first, installs next, and investigates that same exported file.
-`own-data-verified.json` binds the 23 successful command blocks to their source
+The routing path also checks the opt-in SQL projection against all eight seeded rows,
+then runs the audit, route-agent JSON and route scope on that exported file. Missing
+agent and cache fields stay missing, and private sentinel labels stay out of reports.
+`own-data-verified.json` binds the 28 successful command blocks to their source
 hashes and records the released fixture commit. CI reruns these checks.
 
 ## Manual release checks
@@ -89,8 +91,9 @@ OCI provenance API checks, execute the security page's exact manual verification
 python3 scripts/check.py --release-review --output evidence/local/release-review
 ```
 
-The recorded check used gh 2.69.0 and Cosign 3.1.3. It downloads and verifies
-fleetdiff v0.10.0, the collector v0.3.3 image and chart 0.3.5. Downloads, fleetdiff
+The fleetdiff v0.11.0 and collector v0.6.0 / chart 0.6.0 manual checks passed.
+The collector check ran on October 18, 2026 (UTC) with gh 2.69.0 and Cosign 3.1.3.
+Downloads, fleetdiff
 bundle verification and Cosign checks use anonymous access; collector OCI
 provenance verification uses existing GitHub CLI credentials. Working directories,
 caches and Docker credential configuration are fresh. No container is started or
@@ -98,10 +101,11 @@ cluster changed by these blocks.
 `release-review-verified.json` binds the commands to the successful check. The
 default site check rejects stale own-data or manual-verification command records.
 
-The refreshed checks passed all eleven sample guides and 23 own-data blocks. Browser checks
-covered all 14 pages at 1280- and 390-pixel widths in light and dark modes: 56
-views with decoded images, no page errors or horizontal overflow, and working
-mobile navigation. These checks cover the guide site, not a Kubernetes rollout.
+The refreshed checks passed all twelve sample guides and 28 own-data blocks.
+Browser checks covered all 15 pages at 1280- and 390-pixel widths in light and dark
+modes, plus the homepage, routing, what-if and security pages at 320 pixels: 68 views
+with decoded images, no page errors, content overlap or horizontal overflow, and
+working mobile routing navigation. These checks cover the guide site, not a Kubernetes rollout.
 
 ## Offline analysis evidence
 

@@ -29,13 +29,17 @@ def review_environment(fresh, block):
     return env
 
 
-def check(output):
+def check(output, page=None):
     output.mkdir(parents=True, exist_ok=True)
     blocks = Blocks()
     blocks.feed((ROOT / "pages/security.html").read_text())
     assert {b["id"] for b in blocks.review} == {"fleetdiff", "collector"}
+    if page is not None and page not in {b["id"] for b in blocks.review}:
+        raise ValueError("release review page must be fleetdiff or collector")
     records = []
     for block in blocks.review:
+        if page and block["id"] != page:
+            continue
         with tempfile.TemporaryDirectory(prefix="site-release-review-") as directory:
             fresh = Path(directory)
             env = review_environment(fresh, block["id"])
@@ -45,7 +49,7 @@ def check(output):
             (output / (block["id"] + ".stderr.txt")).write_text(result.stderr)
             assert result.returncode == 0, (block["id"], result.stderr)
             if block["id"] == "fleetdiff":
-                assert "fleetdiff v0.10.0" in result.stdout
+                assert "fleetdiff v0.11.0" in result.stdout
             records.append({"block": block["id"], "pass": True, "exit": 0,
                 "authentication": "credentialed GitHub API" if block["id"] == "collector" else "anonymous",
                 "command_sha256": hashlib.sha256(block["text"].encode()).hexdigest(),

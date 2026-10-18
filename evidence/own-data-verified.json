@@ -1,8 +1,8 @@
 {
   "system": "Darwin",
   "machine": "arm64",
-  "python": "3.11.14",
-  "fixture_source": "4b209b57895f4e4e51be4aa164d4a583a81e5d7c",
+  "python": "3.14.2",
+  "fixture_source": "c00546fd6f40217c985a29936c383ab63d704499",
   "method": "Exact published commands; fresh HOME/directories/caches; anonymous fixed-commit source archive; real released installer, CLI and library; SQL uses real read-only Postgres over network-none Docker. The paired helper executes unmodified inside the container to retain its inherited descriptors.",
   "results": [
     {
@@ -10,9 +10,9 @@
       "block": "home-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 1.7,
-      "command_sha256": "2050ff4512bc74bcb2d7d91487009d930f355d4141f986f49170d4f508fb606b",
-      "stdout_sha256": "041677ba84e0eeed393846419281ebb6e3aab726fd1be1460e23262a08e9a475"
+      "seconds": 1.39,
+      "command_sha256": "8dfd4fb3f4cfabb6ffd966288817fa8f0a9771bfb2afaadf16b2e2c3e57d7c4f",
+      "stdout_sha256": "4a678bef5b3613fab9b61a526f314b3e799976a7e9f98ef020f24ac1d1b6dde9"
     },
     {
       "page": "index",
@@ -28,7 +28,7 @@
       "block": "home-python",
       "pass": true,
       "exit": 0,
-      "seconds": 1.61,
+      "seconds": 2.07,
       "command_sha256": "dcc5c54a5057f2ae2be3240de7cf9108022db503fc8ff771d85887a8712b2e01",
       "stdout_sha256": "1ecfa391576f8309c30dd84b4dea95388fb81f674d4af5bac0e918441ff24ef3"
     },
@@ -37,7 +37,7 @@
       "block": "home-go",
       "pass": true,
       "exit": 0,
-      "seconds": 4.77,
+      "seconds": 6.59,
       "command_sha256": "53256d1728c9cfcab706edc92ec0a2a512f7df4e3a7a365f9d8b28a6ee5e5f9e",
       "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -46,9 +46,9 @@
       "block": "token-spike",
       "pass": true,
       "exit": 0,
-      "seconds": 1.31,
-      "command_sha256": "2050ff4512bc74bcb2d7d91487009d930f355d4141f986f49170d4f508fb606b",
-      "stdout_sha256": "041677ba84e0eeed393846419281ebb6e3aab726fd1be1460e23262a08e9a475"
+      "seconds": 1.25,
+      "command_sha256": "8dfd4fb3f4cfabb6ffd966288817fa8f0a9771bfb2afaadf16b2e2c3e57d7c4f",
+      "stdout_sha256": "4a678bef5b3613fab9b61a526f314b3e799976a7e9f98ef020f24ac1d1b6dde9"
     },
     {
       "page": "token-spike",
@@ -64,8 +64,8 @@
       "block": "spend-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.56,
-      "command_sha256": "bd0a610c98e530dc16cdd870dd7b27b2c0c365583550beab75ac6ebceddd53c3",
+      "seconds": 1.53,
+      "command_sha256": "e63dfac805c356fd3d7891b5571d28a7ad3f7da529ce97c53a15f6c9a5a875be",
       "stdout_sha256": "7cf3bd24f6b2be47126b6dd13f8145174ba5c4f8bcb09e6aa1946994d1998dcb"
     },
     {
@@ -73,16 +73,16 @@
       "block": "litellm-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.12,
-      "command_sha256": "13762bafa8c0ef6fb37486292f7471ebf7ee26481898569041638cefcf36ffa3",
-      "stdout_sha256": "54f4a2892089723ec090f97cf67d97eaec555968711e4fbbf926ccc6c6009cf9"
+      "seconds": 1.04,
+      "command_sha256": "3cf5da7334952e25332f89ac4340f514e5706921db818e6c46a66229a7153785",
+      "stdout_sha256": "692694b93348b8fd2a7301b5fe78c61b608eb5005104828bf9e02d21a040693d"
     },
     {
       "page": "litellm-spend",
       "block": "litellm-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 0.14,
+      "seconds": 0.09,
       "command_sha256": "da730162bcad82d2540240d33bb5f68468ab2db245989ba04e2d18a5d81cc848",
       "stdout_sha256": "102c72d6940e30ee9d68dc6c864bb44da53ce41cf204095f2b8a6e9ff3ce86ec"
     },
@@ -91,61 +91,61 @@
       "block": "session-budget",
       "pass": true,
       "exit": 0,
-      "seconds": 1.3,
-      "command_sha256": "39abbb489f40103814c6ccdb44631c0c3f737f170df995f76cca21ff6dd1da56",
-      "stdout_sha256": "549f7345c1a11442cc0d8e7dfc6ac5b159af04bc1aacd7ed1edb25140307b01c"
+      "seconds": 1.13,
+      "command_sha256": "5b482ac6c7dd8054b74906f4ca0cbf6106a53e79bea04b42bff111dadd70c231",
+      "stdout_sha256": "22e0bdfa21284d21c90f0f5f6ea01552a9e020bfc9c302e98a23999091443211"
     },
     {
       "page": "cache-check",
       "block": "cache-check",
       "pass": true,
       "exit": 0,
-      "seconds": 1.36,
-      "command_sha256": "7d3b61ad83ed9181d871ad943613c150f745b81edfc27585bfe92dd09820bc7b",
-      "stdout_sha256": "8beb5845e78e2a35eccedc6099745443f0498e3d7597e778c7ae3ef39530e22a"
+      "seconds": 1.14,
+      "command_sha256": "e2da6c7851b05ba32182c8d8324f3f3ab37c5fe9ed7ef62c439a281fe3b5cba8",
+      "stdout_sha256": "a9e706d287bbc6f98cdd2bc7db7710d55fe12c2d35557fdd3060273a5c74dd27"
     },
     {
       "page": "cardinality",
       "block": "cardinality",
       "pass": true,
       "exit": 3,
-      "seconds": 1.27,
-      "command_sha256": "546216d832373d51910b2d930974056409a18b3963a74fefffc7826bcd60db03",
-      "stdout_sha256": "b2e26c5fb6999dcd019b712e4c5586f9386a8a115b0f67cae08e2cab7e9af2a1"
+      "seconds": 1.1,
+      "command_sha256": "45af6095cb5927472db6dc084da560e1c7217a86a73095d8b2f02154fc0649b5",
+      "stdout_sha256": "6b85e4799c4b9cfda06b20262f35df75f9dc5ae8760e3ca8e67b712c8f6dd43a"
     },
     {
       "page": "traces-usage",
       "block": "traces-usage",
       "pass": true,
       "exit": 0,
-      "seconds": 1.29,
-      "command_sha256": "e55a8af27c9234900a59850d304d3bd2cf71c76980d06e01b509b76f3188fa1b",
-      "stdout_sha256": "d436bf4e8189d163f3fc1c24b7365a7b84c260f026ddca7a3fa4a0701f066bbe"
+      "seconds": 1.1,
+      "command_sha256": "fc5c3648ad50eba44a492688737a1cecdca51332397fd7d8385e1c0b512ceaa3",
+      "stdout_sha256": "d669974eed8f75f26b160e5da0f4470b121be81719fb7450c12b4e752c42ec1c"
     },
     {
       "page": "anomalies",
       "block": "anomalies-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.12,
-      "command_sha256": "13762bafa8c0ef6fb37486292f7471ebf7ee26481898569041638cefcf36ffa3",
-      "stdout_sha256": "54f4a2892089723ec090f97cf67d97eaec555968711e4fbbf926ccc6c6009cf9"
+      "seconds": 1.06,
+      "command_sha256": "3cf5da7334952e25332f89ac4340f514e5706921db818e6c46a66229a7153785",
+      "stdout_sha256": "692694b93348b8fd2a7301b5fe78c61b608eb5005104828bf9e02d21a040693d"
     },
     {
       "page": "anomalies",
       "block": "anomalies",
       "pass": true,
       "exit": 3,
-      "seconds": 0.14,
+      "seconds": 0.1,
       "command_sha256": "8310e32c846f582977b24b3ac1c1db1ac629403bf0867fc27330dbfb74e44c5f",
-      "stdout_sha256": "90422e00b37fe1493be7410a5608644bf3d81028e311bee48917c4cedb25f86e"
+      "stdout_sha256": "b46ea87e52ff3dafbe4afd6895f9f10549ab1f5a0c8f91118bdc63ddd18d3358"
     },
     {
       "page": "distinct-users",
       "block": "distinct-users",
       "pass": true,
       "exit": 0,
-      "seconds": 1.75,
+      "seconds": 2.4,
       "command_sha256": "81671cb47bbb144557140e20bbd2ab73a2887df85f0fb48092d1f0a19f421c29",
       "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475"
     },
@@ -154,7 +154,7 @@
       "block": "tokenmaxxing",
       "pass": true,
       "exit": 0,
-      "seconds": 1.81,
+      "seconds": 1.98,
       "command_sha256": "5e889bcd47ea4221fe9470bdb92d29a042e1de835e4449545f49885ca94bbc69",
       "stdout_sha256": "3602de85e92ba5bcb4a2fa5330baa39d07c5f77ac32acefd46092618dd511635"
     },
@@ -163,8 +163,8 @@
       "block": "row-coverage-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.73,
-      "command_sha256": "d72dd461b3270947b28cab1fc561aa7e4bcb22c0156939723d4a99f0a467bf51",
+      "seconds": 1.85,
+      "command_sha256": "f7aa7ef100e3a3f1451d86949bfe764804bbe41131a6ce246c83bd3004861fa5",
       "stdout_sha256": "04bd25e4f2506bddfa650bbefb7c1c3c2babf131c000d5d36956c7b17d69dbcb",
       "paired_export": {
         "start_utc": "2026-09-23T00:00:00Z",
@@ -181,34 +181,79 @@
       "block": "row-coverage-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.22,
-      "command_sha256": "b8ba661fab5fa4af20e76f5e087a52f34148d9ad874a3d082b69e75d14577095",
-      "stdout_sha256": "60dfb4952881be9a712dc3678ac8ef6e43f482548a164fb7459d9d430cb3a50c"
+      "seconds": 1.68,
+      "command_sha256": "3888bddb3999db1369141131d07e412a42cfc360dfea7d0edc36ed67dd11ac50",
+      "stdout_sha256": "76deb8448a76b94886c48326c5ae7081165d36414e26736ce12aa69c5c25fd55"
     },
     {
       "page": "row-coverage",
       "block": "row-coverage",
       "pass": true,
       "exit": 0,
-      "seconds": 0.02,
+      "seconds": 0.01,
       "command_sha256": "4e630e765f4dc0da3c81018b72528a593cf76bfd48ba9be800901567c9470acb",
-      "stdout_sha256": "b171e5a11c82038c19d538c4e1b9a1cccb7343c419ad87b07f173dff0057dda0"
+      "stdout_sha256": "c8d539ebab9acb25195435c035fd2cef060ef0d9d7303bc78335ff5f96d1e934"
+    },
+    {
+      "page": "routing",
+      "block": "routing-export",
+      "pass": true,
+      "exit": 0,
+      "seconds": 4.04,
+      "command_sha256": "dde72e02cd8aed7b5e79372d2d093b830a79d68618e7fa23d1655740f9d31aab",
+      "stdout_sha256": "9c321e601742d0e138165dc7c9e36285a934db0a6e10400813c1d9c4c3d82f27"
+    },
+    {
+      "page": "routing",
+      "block": "routing-install",
+      "pass": true,
+      "exit": 0,
+      "seconds": 1.06,
+      "command_sha256": "3cf5da7334952e25332f89ac4340f514e5706921db818e6c46a66229a7153785",
+      "stdout_sha256": "692694b93348b8fd2a7301b5fe78c61b608eb5005104828bf9e02d21a040693d"
+    },
+    {
+      "page": "routing",
+      "block": "routing-audit",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.09,
+      "command_sha256": "17b9dfb4365d801934131fbc3d5349b91267c0dfb033a62ece1281bc111e5c7e",
+      "stdout_sha256": "da5234c00e0f20d26d7266500f72056f3e67e8f103511a84368f6037985f937e"
+    },
+    {
+      "page": "routing",
+      "block": "routing-agents",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.01,
+      "command_sha256": "80cb22a657aa9bc218c93b087ec8c227b080dc1a481a6ea274e2ef36cc3e4a66",
+      "stdout_sha256": "6883067f10f886e0533cd63b795d76cde59f619adedd544ff23ec319cae004c9"
+    },
+    {
+      "page": "routing",
+      "block": "routing-scope",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.01,
+      "command_sha256": "365a1ea502b3b54f56e623db98b49b9d730820077abd62f0a2825eb511d45e0f",
+      "stdout_sha256": "0109aafb81baa128234825e0a0c2d196dd3984d7d430e1b66e5a2a7054fb8ae2"
     },
     {
       "page": "what-if",
       "block": "what-if-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.14,
-      "command_sha256": "430d75589c826a6de776ea7adc2056c501a58eade217f425f67eb158213d9496",
-      "stdout_sha256": "54f4a2892089723ec090f97cf67d97eaec555968711e4fbbf926ccc6c6009cf9"
+      "seconds": 1.03,
+      "command_sha256": "4e5ed652aa05b67ad93d624ae4d592324630b15133694dccd5b990b50626e501",
+      "stdout_sha256": "692694b93348b8fd2a7301b5fe78c61b608eb5005104828bf9e02d21a040693d"
     },
     {
       "page": "what-if",
       "block": "what-if-reprice",
       "pass": true,
       "exit": 0,
-      "seconds": 0.13,
+      "seconds": 0.09,
       "command_sha256": "a7802a98c58d069ddca2efd2f1ba8b273471040a3baa23cd84266202c1143f80",
       "stdout_sha256": "dd1bac25024ce2759b1efac7d38e5098f7769ac2b225ae036edff7dea1de30f3"
     },
@@ -223,14 +268,14 @@
     }
   ],
   "fixture_archive": {
-    "version": "v0.10.0",
-    "expected_commit": "4b209b57895f4e4e51be4aa164d4a583a81e5d7c",
-    "url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/4b209b57895f4e4e51be4aa164d4a583a81e5d7c",
-    "archive_sha256": "7b5f7d183d742a892710cf740d9a869458917f76860b848dc21decbb9fb2b293",
-    "archive_bytes": 920030,
-    "archive_root": "fleetdiff-4b209b57895f4e4e51be4aa164d4a583a81e5d7c",
-    "source_sha256": "a2002074f5343c10a03f473a72960e7f553b8fda95646735d9a5310c3352d6af",
+    "version": "v0.11.0",
+    "expected_commit": "c00546fd6f40217c985a29936c383ab63d704499",
+    "url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/c00546fd6f40217c985a29936c383ab63d704499",
+    "archive_sha256": "1ae1f2f1d45eadfca7aad4200086dea3f0928d509e0ac1f478e4c41b979f2f1e",
+    "archive_bytes": 978981,
+    "archive_root": "fleetdiff-c00546fd6f40217c985a29936c383ab63d704499",
+    "source_sha256": "297625d8c4c626a063737ea3d93ea0dbd5e9306b16dfa177a0d1fa418d6a50a3",
     "git_operations": false,
-    "file_count": 385
+    "file_count": 414
   }
 }

@@ -23,9 +23,9 @@ import urllib.request
 from outsider import Blocks, ROOT
 
 PAGES = ("index", "token-spike", "litellm-spend", "session-budget", "cache-check", "cardinality",
-         "traces-usage", "anomalies", "distinct-users", "tokenmaxxing", "row-coverage", "what-if")
-FIXTURE_VERSION = "v0.10.0"
-FIXTURE_COMMIT = "4b209b57895f4e4e51be4aa164d4a583a81e5d7c"
+         "traces-usage", "anomalies", "distinct-users", "tokenmaxxing", "row-coverage", "routing", "what-if")
+FIXTURE_VERSION = "v0.11.0"
+FIXTURE_COMMIT = "c00546fd6f40217c985a29936c383ab63d704499"
 FIXTURE_URL = "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/" + FIXTURE_COMMIT
 EXPORT_START = "2026-09-23T00:00:00Z"
 EXPORT_END = "2026-10-09T00:00:00Z"
@@ -51,13 +51,19 @@ EXPECTED = {
     "tokenmaxxing": ("Estimated distinct users: 3", "Recorded tokens: 4,800",
                      "user-1: [3,600, 3,600] tokens", "100.0% to 100.0%"),
     "row-coverage-export": ("Exported spend.csv and daily.csv in the new private output directory.",),
-    "row-coverage-install": ("Verified", "fleetdiff v0.10.0 (" + FIXTURE_COMMIT + ")"),
+    "row-coverage-install": ("Verified", "fleetdiff v0.11.0 (" + FIXTURE_COMMIT + ")"),
     "row-coverage": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
                      "2026-10-07 UTC: 8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
     "what-if-install": ("Verified",),
     "what-if-reprice": ("$0.154400 -> $0.109398 to $0.147974", "Level 1, same work and output verbosity: $0.148703",
                         "Coverage: 3 observations priced; missing splits are excluded, never zero.", "missing split: 1"),
     "what-if-workload-map": (),
+    "routing-export": ("Exported routing details to ./routing-export/spend.csv",),
+    "routing-install": ("Verified",),
+    "routing-audit": ("Model-request rows: 3 -> 3 requests; 360 -> 360 recorded tokens;",
+                      "Classifier routing overhead: 1 -> 1 rows;", "agent known: 0 -> 0; unknown: 1 -> 1"),
+    "routing-agents": (),
+    "routing-scope": ("Model-request rows: 2 -> 2 requests; 240 -> 240 recorded tokens;",),
 }
 
 
@@ -139,6 +145,23 @@ def prepare(fresh, source, env, slug):
         for name in ("spend.csv", "workload-map.json"):
             shutil.copyfile(source / "examples/what-if" / name, fresh / name)
         env["PERIOD_UTC"] = "2026-10-07"
+    if slug == "routing":
+        with (source / "examples/routing/synthetic.csv").open() as handle:
+            reader = csv.DictReader(handle)
+            columns, rows = reader.fieldnames, list(reader)
+        columns += ["team_id", "organization_id", "end_user", "custom_llm_provider",
+                    "rejection_kind", "reasoning_output_tokens"]
+        with (fresh / "spend.csv").open("w") as handle:
+            writer = csv.DictWriter(handle, fieldnames=columns)
+            writer.writeheader()
+            for row in rows:
+                for name in ("api_key", "user", "session_id", "agent_id", "model_id",
+                             "model_group", "original_model_group"):
+                    if row[name]:
+                        row[name] = "SENTINEL_" + row[name]
+                writer.writerow(row)
+        env.update(BEFORE_PERIOD_UTC="2026-10-01", AFTER_PERIOD_UTC="2026-10-02",
+                   ORIGINAL_ROUTE="SENTINEL_coding-default")
     if slug == "row-coverage":
         with (fresh / "spend.csv").open() as handle:
             earlier = [row for row in csv.DictReader(handle) if row["startTime"] < "2026-10-07"]
@@ -190,7 +213,7 @@ def refresh_history(directory, now):
         path.write_text(json.dumps(window, sort_keys=True, separators=(",", ":")))
 
 
-def database_sql(fresh, source, coverage=False):
+def database_sql(fresh, source, coverage=False, routing=False):
     sql = (source / "examples/litellm-spend/test-schema.sql").read_text()
     columns = ["request_id", "call_type", "api_key", "user", "team_id", "organization_id", "end_user",
                "model", "model_id", "model_group", "custom_llm_provider", "prompt_tokens", "completion_tokens",
@@ -198,16 +221,16 @@ def database_sql(fresh, source, coverage=False):
     with (fresh / "spend.csv").open() as handle:
         reader = csv.DictReader(handle)
         rows = list(reader)
-        if not coverage:
+        if not coverage and not routing:
             assert reader.fieldnames == columns
-    if coverage:
+    if coverage or routing:
         columns += ["agent_id", "metadata"]
     payload = io.StringIO()
     writer = csv.DictWriter(payload, fieldnames=columns, extrasaction="ignore", lineterminator="\n")
     writer.writeheader()
     for original in rows:
         row = dict(original)
-        if coverage:
+        if coverage or routing:
             details = {}
             for field, target in (("cache_read_input_tokens", "cache_read_input_tokens"),
                                   ("cache_write_input_tokens", "cache_creation_input_tokens")):
@@ -215,11 +238,17 @@ def database_sql(fresh, source, coverage=False):
                     details[target] = int(row[field])
             if row.get("reasoning_output_tokens", "") != "":
                 details["completion_tokens_details"] = {"reasoning_tokens": int(row["reasoning_output_tokens"])}
-            assert not row.get("rejection_kind"), "coverage stand-in has an unsupported rejection projection"
-            row["metadata"] = json.dumps({"additional_usage_values": details})
+            assert not row.get("rejection_kind"), "stand-in has an unsupported rejection projection"
+            metadata = {"additional_usage_values": details}
+            if routing:
+                metadata.update({field: row[field] for field in
+                    ("original_model_group", "attempted_fallbacks", "internal_call_origin") if row.get(field)})
+            row["metadata"] = json.dumps(metadata)
         writer.writerow(row)
     sql += '\nCOPY public."LiteLLM_SpendLogs" (' + ','.join('"' + name + '"' for name in columns)
     sql += ") FROM STDIN WITH CSV HEADER;\n" + payload.getvalue() + "\\.\n"
+    if routing:
+        sql += "ALTER ROLE fixture_reader SET default_transaction_read_only = on;\n"
     if coverage:
         sql += '''CREATE TABLE public."LiteLLM_DailyUserSpend" (
             date text NOT NULL, api_requests bigint NOT NULL,
@@ -245,7 +274,7 @@ def comparable_rows(rows):
 
 
 @contextmanager
-def database(fresh, source, env, coverage=False):
+def database(fresh, source, env, coverage=False, routing=False):
     """Actual read-only Postgres; Docker transports psql, it does not stub it."""
     name = "site-export-" + uuid.uuid4().hex[:12]
     image = json.loads((source / "examples/litellm-spend/images.json").read_text())["postgres"]
@@ -268,7 +297,7 @@ def database(fresh, source, env, coverage=False):
             time.sleep(1)
         else:
             raise RuntimeError("Test database did not become ready")
-        sql = database_sql(fresh, source, coverage)
+        sql = database_sql(fresh, source, coverage, routing)
         run(["docker", "exec", "-i", name, "psql", "-U", "postgres", "-d", "fixture", "-v", "ON_ERROR_STOP=1"], cwd=fresh, env=env, data=sql)
         service = fresh / "pg_service.conf"
         service.write_text("[litellm_readonly]\nhost=/var/run/postgresql\nuser=fixture_reader\ndbname=fixture\n")
@@ -302,6 +331,8 @@ def database(fresh, source, env, coverage=False):
                                    for name in ("spend.csv", "daily.csv")}}, indent=2) + "\n")
         db_env = dict(env, PATH=str(wrappers) + os.pathsep + env["PATH"],
                       START_UTC=EXPORT_START, END_UTC=EXPORT_END)
+        if routing:
+            db_env.update(START_UTC="2026-10-01T00:00:00Z", END_UTC="2026-10-03T00:00:00Z")
         yield db_env
     finally:
         if started:
@@ -341,13 +372,16 @@ def check(output, page=None):
                     def execute(selected_env):
                         return subprocess.run(["bash", "-e", "-c", block["text"]], cwd=fresh,
                             env=selected_env, text=True, capture_output=True, timeout=1800)
-                    if block["id"] in {"spend-export", "row-coverage-export"}:
+                    if block["id"] in {"spend-export", "row-coverage-export", "routing-export"}:
                         coverage = block["id"] == "row-coverage-export"
-                        with database(fresh, source, env, coverage=coverage) as db_env:
+                        routing = block["id"] == "routing-export"
+                        with database(fresh, source, env, coverage=coverage, routing=routing) as db_env:
                             try:
                                 result = execute(db_env)
                             finally:
                                 export_dir = "litellm-coverage-export" if coverage else "litellm-export"
+                                if routing:
+                                    export_dir = "routing-export"
                                 for diagnostics in fresh.glob(export_dir + "/private-psql.*"):
                                     shutil.copyfile(diagnostics, output / (block["id"] + "-" + diagnostics.name))
                                 if coverage and (fresh / "database-evidence.json").exists():
@@ -401,8 +435,30 @@ def check(output, page=None):
                         assert mapped["covered_observations"] == 3 and mapped["excluded_observations"] == {"missing_split": 1}
                         assert mapped["unmapped_moved_observations"] == 0
                         assert len(mapped["level2"]) == 1 and mapped["level2"][0]["workload"] == "mapped"
+                    if block["id"] == "routing-export":
+                        assert (fresh / "export.sql").read_bytes() == (source / "examples/litellm-spend/export.sql").read_bytes()
+                        with (fresh / "routing-export/spend.csv").open() as handle:
+                            exported = list(csv.DictReader(handle))
+                        with (fresh / "spend.csv").open() as handle:
+                            expected = list(csv.DictReader(handle))
+                        assert len(exported) == 8
+                        assert comparable_rows(exported) == comparable_rows(expected)
+                        assert all(not {"messages", "response", "metadata"} & row.keys() for row in exported)
+                    if block["id"] == "routing-agents":
+                        audit = json.loads(result.stdout)["routing_audit"]
+                        assert audit["group_by"] == "route-agent"
+                        assert audit["provider_snapshot_confirmed"] is False
+                        assert not audit.get("configuration_labels_included", False)
+                        for side in ("before", "after"):
+                            assert audit["model_rows"][side]["requests"] == 3
+                            assert audit["model_rows"][side]["recorded_tokens"] == 360
+                            assert audit["classifier_overhead"][side]["recorded_spend_usd"] == "0.00005"
+                            responses = next(c for c in audit["coverage"]["by_call_type"] if c["call_type"] == "aresponses")
+                            assert responses[side]["agent"]["known_rows"] == 0
+                            assert responses[side]["agent"]["missing_rows"] == 1
+                        assert len(audit["cohorts"]) == 2
                     assert all(raw not in result.stdout for raw in ("private-ana", "private-ben", "private-cy"))
-                    if slug in {"session-budget", "what-if"}:
+                    if slug in {"session-budget", "what-if", "routing"}:
                         assert "SENTINEL_" not in result.stdout + result.stderr
                     record["pass"] = True
                     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
