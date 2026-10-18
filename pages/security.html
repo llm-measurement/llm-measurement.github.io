@@ -1,13 +1,13 @@
 <p class="lead">Review what each tool reads, where it runs, and how to verify the exact release before using your data.</p>
 <h2>Data paths</h2>
 <ul>
-<li><a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/docs/OPERATIONS.md">fleetdiff v0.10.0</a> runs on your machine and reads local spend exports, summary files, collector configurations or OTLP captures (including stdin). fleetdiff makes no network connections during analysis, checked by the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/internal/cli/network_test.go">production-code guard</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/.github/workflows/ci.yml#L33-L40">network-isolated Linux CI step</a>. The released v0.10.0 archives also passed the <a href="https://github.com/llm-measurement/fleetdiff/actions/runs/38851612792">packaged offline smoke test</a>. Installation downloads release files; analysis uses the inputs you supply.</li>
-<li><a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/docs/SHADOW_MODE.md">The collector</a> runs inside your pipeline. Its configured exporters send metrics and original spans to your selected destinations; optional summary files stay on the configured volume.</li>
+<li><a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/docs/OPERATIONS.md">fleetdiff v0.11.0</a> runs on your machine and reads local spend exports, summary files, collector configurations or OTLP captures (including stdin). fleetdiff makes no network connections during analysis, checked by the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/internal/cli/network_test.go">production-code guard</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/.github/workflows/ci.yml#L33-L40">network-isolated Linux CI step</a>. The released v0.11.0 archives also passed the <a href="https://github.com/llm-measurement/fleetdiff/actions/runs/39088663392">packaged offline smoke test</a>. Installation downloads release files; analysis uses the inputs you supply.</li>
+<li><a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/docs/SHADOW_MODE.md">The collector</a> runs inside your pipeline. Its configured exporters send metrics and original spans to your selected destinations; optional summary files stay on the configured volume.</li>
 <li><a href="https://github.com/llm-measurement/llm-sketchkit/blob/v0.3.0/SECURITY.md">llm-sketchkit</a> runs inside your Go or Python process. Your application chooses the identities to hash and where to store or share the summaries.</li>
 </ul>
-<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/examples/litellm-spend/export.sql">read-only LiteLLM SQL projection</a> selects request metadata and usage fields, excluding prompts and responses. The request-level export still contains raw identity columns; keep it private and give the export role SELECT access only. The <a href="litellm-spend.html#export">export recipe</a> writes to a restricted local directory.</p>
+<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/examples/litellm-spend/export.sql">read-only LiteLLM SQL projection</a> selects request metadata and usage fields, excluding prompts and responses. The request-level export still contains raw identity columns; keep it private and give the export role SELECT access only. The <a href="litellm-spend.html#export">export recipe</a> writes to a restricted local directory.</p>
 <h2>Identity handling</h2>
-<p>Canonicalized identities are keyed with HMAC-SHA256 before entering sketches. Supported user, session and prompt values appear as keyed hashes in summaries and as aliases in fleetdiff's default reports, rather than raw IDs. These identifiers are <strong>pseudonymous</strong>: protect the key and access to linkable outputs. Use compatible identity fields, domains and keys when combining summaries. See the <a href="https://github.com/llm-measurement/llm-sketchkit/blob/v0.3.0/spec/hash.md">hashing contract</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/SECURITY.md">report-sharing guidance</a>.</p>
+<p>Canonicalized identities are keyed with HMAC-SHA256 before entering sketches. Supported user, session and prompt values appear as keyed hashes in summaries and as aliases in fleetdiff's default reports, rather than raw IDs. These identifiers are <strong>pseudonymous</strong>: protect the key and access to linkable outputs. Use compatible identity fields, domains and keys when combining summaries. See the <a href="https://github.com/llm-measurement/llm-sketchkit/blob/v0.3.0/spec/hash.md">hashing contract</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/SECURITY.md">report-sharing guidance</a>.</p>
 <p>The collector's original trace stream and local captures retain their source data. Configure content capture and backend access separately; hashing the selected ranking fields does not redact the original spans. Summary metadata such as producer and scope names is cleartext.</p>
 <h2 id="verify-fleetdiff">Verify fleetdiff without piping a script to a shell</h2>
 <p>Use trusted installations of curl, GitHub CLI (<code>gh</code>), shasum and tar. These commands download files into a new directory, verify build provenance for the archive, checksum manifest and SPDX SBOM, check the archive's checksum, then extract. Choose your platform using the two variables below. The release has Linux and macOS archives for amd64 and arm64.</p>
@@ -18,8 +18,8 @@ cd "$review"
 os=$(uname -s | tr '[:upper:]' '[:lower:]')
 case $(uname -m) in arm64|aarch64) arch=arm64 ;; x86_64|amd64) arch=amd64 ;; *) exit 1 ;; esac
 case "$os" in linux|darwin) ;; *) exit 1 ;; esac
-archive="fleetdiff_v0.10.0_${os}_${arch}.tar.gz"
-base=https://github.com/llm-measurement/fleetdiff/releases/download/v0.10.0
+archive="fleetdiff_v0.11.0_${os}_${arch}.tar.gz"
+base=https://github.com/llm-measurement/fleetdiff/releases/download/v0.11.0
 for file in "$archive" SHA256SUMS provenance.jsonl sbom.spdx.json; do
   curl --proto '=https' --tlsv1.2 -fL "$base/$file" -o "$file"
 done
@@ -27,20 +27,20 @@ for file in "$archive" SHA256SUMS sbom.spdx.json; do
   gh attestation verify "$file" --bundle provenance.jsonl \
     --repo llm-measurement/fleetdiff \
     --signer-workflow llm-measurement/fleetdiff/.github/workflows/release.yml \
-    --source-ref refs/tags/v0.10.0 --deny-self-hosted-runners
+    --source-ref refs/tags/v0.11.0 --deny-self-hosted-runners
 done
 shasum -a 256 --ignore-missing -c SHA256SUMS
 mkdir verified
 tar -xzf "$archive" -C verified
 ./verified/fleetdiff --version</code></pre>
-<p><a href="https://github.com/llm-measurement/fleetdiff/releases/tag/v0.10.0">Release assets</a> include SHA256SUMS, public Sigstore build provenance and an SPDX SBOM. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/.github/workflows/release.yml">pinned release workflow</a> records how they are produced. Provenance binds artifact bytes to a workflow and source ref; review the source and dependencies for your own deployment.</p>
+<p><a href="https://github.com/llm-measurement/fleetdiff/releases/tag/v0.11.0">Release assets</a> include SHA256SUMS, public Sigstore build provenance and an SPDX SBOM. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/.github/workflows/release.yml">pinned release workflow</a> records how they are produced. Provenance binds artifact bytes to a workflow and source ref; review the source and dependencies for your own deployment.</p>
 <h2>Verify the collector image and Helm chart</h2>
-<p>Use trusted curl, gh, shasum and Cosign tooling, with GitHub CLI signed in for the OCI provenance API checks. Downloads and Cosign registry checks use public artifacts. The v0.3.3 image and chart 0.3.5 share the collector release workflow and tag. Verify the release metadata and immutable OCI digests before pulling or deploying; these commands perform signature and build-provenance checks without starting a container or changing a cluster.</p>
+<p>Use trusted curl, gh, shasum and Cosign tooling, with GitHub CLI signed in for the OCI provenance API checks. Downloads and Cosign registry checks use public artifacts. The v0.6.0 image and chart 0.6.0 share the collector release workflow and tag. Verify the release metadata and immutable OCI digests before pulling or deploying; these commands perform signature and build-provenance checks without starting a container or changing a cluster.</p>
 <pre data-review="collector"><code>set -eu
 umask 077
 review=$(mktemp -d ./collector-review.XXXXXX)
 cd "$review"
-release=v0.3.3
+release=v0.6.0
 base=https://github.com/llm-measurement/otelcol-genai-sketches/releases/download/$release
 for file in image-digest.txt chart-digest.txt SHA256SUMS provenance.jsonl sbom-index.json; do
   curl --proto '=https' --tlsv1.2 -fL "$base/$file" -o "$file"
@@ -66,7 +66,7 @@ for artifact in "$image" "$chart"; do
     --cert-identity "$identity" --source-ref "refs/tags/$release" \
     --deny-self-hosted-runners
 done</code></pre>
-<p>The <a href="https://github.com/llm-measurement/otelcol-genai-sketches/releases/tag/v0.3.3">collector release</a> publishes image and chart digests, SHA256SUMS and an SPDX SBOM index for both image platforms. The signed image index binds the platform SBOM content through OCI digests; the downloaded checksum file alone is an integrity check, not the authentication step. See <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/3fb11abf108d36e64f87bc969e74ed6903043e8a/docs/DEPLOYMENT.md">Deployment</a> for anonymous pulls, provenance verification and Helm installation, and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/.github/workflows/release.yml">release workflow</a> for the build.</p>
+<p>The <a href="https://github.com/llm-measurement/otelcol-genai-sketches/releases/tag/v0.6.0">collector release</a> publishes image and chart digests, SHA256SUMS and an SPDX SBOM index for both image platforms. The signed image index binds the platform SBOM content through OCI digests; the downloaded checksum file alone is an integrity check, not the authentication step. See <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/docs/DEPLOYMENT.md">Deployment</a> for anonymous pulls, provenance verification and Helm installation, and the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/.github/workflows/release.yml">release workflow</a> for the build.</p>
 <h2>Repository controls</h2>
 <p>Checked October 11, 2026 for the three tool repositories: active main-branch rules require signed commits, the commit-signature check and DCO sign-off. Release-tag rules block updates and deletion. Secret scanning, push protection and private vulnerability reporting are enabled.</p>
 <ul>
@@ -76,5 +76,5 @@ done</code></pre>
 </ul>
 <p>The <a href="assets/security-controls.json">dated settings record</a> retains the checked values. Repository administrators can recheck secret-scanning and push-protection settings using GitHub's <a href="https://docs.github.com/en/rest/repos/repos#get-a-repository">repository API</a> (<code>security_and_analysis</code>), and reporting status through the <a href="https://docs.github.com/en/rest/repos/repos#check-if-private-vulnerability-reporting-is-enabled-for-a-repository">private-reporting API</a>. Settings can change; the linked rules show the current state.</p>
 <h2>License and stability</h2>
-<p>All three tools are pre-1.0; the collector's traces-to-metrics component is alpha. Pin exact tool versions and image digests and test upgrades on representative inputs. Read the collector's <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/SUPPORT.md">Support policy</a> and <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/main/SECURITY.md">Security policy</a>, plus <a href="https://github.com/llm-measurement/fleetdiff/blob/main/SECURITY.md">fleetdiff</a> and <a href="https://github.com/llm-measurement/llm-sketchkit/blob/main/SECURITY.md">sketchkit</a> security policies.</p>
-<p>The tools use Apache-2.0: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/LICENSE">fleetdiff license</a>, <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/LICENSE">collector license</a>, <a href="https://github.com/llm-measurement/llm-sketchkit/blob/v0.3.0/LICENSE">sketchkit license</a>.</p>
+<p>All three tools are pre-1.0; the collector's traces-to-metrics component is alpha. Pin exact tool versions and image digests and test upgrades on representative inputs. Read the collector's <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/SUPPORT.md">Support policy</a> and <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/main/SECURITY.md">Security policy</a>, plus <a href="https://github.com/llm-measurement/fleetdiff/blob/main/SECURITY.md">fleetdiff</a> and <a href="https://github.com/llm-measurement/llm-sketchkit/blob/main/SECURITY.md">sketchkit</a> security policies.</p>
+<p>The tools use Apache-2.0: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/LICENSE">fleetdiff license</a>, <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/LICENSE">collector license</a>, <a href="https://github.com/llm-measurement/llm-sketchkit/blob/v0.3.0/LICENSE">sketchkit license</a>.</p>

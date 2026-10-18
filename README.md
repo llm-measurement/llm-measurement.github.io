@@ -1,11 +1,11 @@
 # LLM Measurement Guides
 
-Eleven guides to LLM usage, with commands and output from released tools.
+Twelve guides to LLM usage, with commands and output from released tools.
 An evidence page explains what can be shared and retained with summaries.
 
-Current command examples pin fleetdiff v0.10.0. The home-page library installs
+Current command examples pin fleetdiff v0.11.0. The home-page library installs
 pin llm-sketchkit v0.4.0; the existing Python guides retain v0.3.0. Collector
-configuration remains at v0.3.3 and Helm chart at 0.3.5. Historical evidence
+configuration pins v0.6.0 and Helm chart 0.6.0. Historical evidence
 retains the versions and source revisions used for those measurements.
 
 | Question | Page |
@@ -14,6 +14,7 @@ retains the versions and source revisions used for those measurements.
 | Who is tokenmaxxing? Find your heaviest AI token users | [Tokenmaxxing](docs/tokenmaxxing.html) |
 | Why did our LiteLLM usage jump, and are the spend logs complete? | [LiteLLM spend](docs/litellm-spend.html) |
 | Are all our requests actually in the spend log? | [Row coverage](docs/row-coverage.html) |
+| Which models served each LiteLLM route? | [Routing audit](docs/routing.html) |
 | What would switching models have cost? | [Model what-if](docs/what-if.html) |
 | LiteLLM session over its budget? Check what the budget counts | [Session budget](docs/session-budget.html) |
 | Prompt cache hit rate dropped after an update? Find whose uncached input grew | [Cache check](docs/cache-check.html) |

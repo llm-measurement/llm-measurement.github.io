@@ -1,10 +1,10 @@
 <p class="lead">Scan retained summary windows to find unusual token use, concentrated users or sessions, tool errors and gaps in usage reporting.</p>
 <aside class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
-<p>You need retained, complete summary windows from your collector, with enough earlier windows for a baseline (24 by default). Put them in <code>./summary-history</code>. Keep the hash key and accounting configuration consistent, and replace <code>app</code> with your expected producer inventory.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.10.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="anomalies-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.10.0/scripts/install.sh
-sh install-fleetdiff.sh v0.10.0 ./bin</code></pre>
-<pre data-own="anomalies" data-exit="3"><code>./bin/fleetdiff scan ./summary-history --expected app --recent 2</code></pre><p>Exit 3 means findings; 0 means none. No retained history yet? Configure <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/3fb11abf108d36e64f87bc969e74ed6903043e8a/docs/SUMMARY_EXPORT_HELM.md">summary export and retention</a> with collector v0.3.3 / <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.3.3/deploy/helm/otelcol-genai-sketches/Chart.yaml">chart 0.3.5</a> first. The guide covers durable storage and readback. This route needs history, not raw traces.</p>
-<p>To keep watching, run the command on retained windows from a scheduled job. For current traffic, omit <code>--as-of</code>; the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.10.0/docs/SCAN.md">scan guide</a> explains thresholds, minimum history and persistence.</p>
+<p>You need retained, complete summary windows from your collector, with enough earlier windows for a baseline (24 by default). Put them in <code>./summary-history</code>. Keep the hash key and accounting configuration consistent, and replace <code>app</code> with your expected producer inventory.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.11.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="anomalies-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/scripts/install.sh
+sh install-fleetdiff.sh v0.11.0 ./bin</code></pre>
+<pre data-own="anomalies" data-exit="3"><code>./bin/fleetdiff scan ./summary-history --expected app --recent 2</code></pre><p>Exit 3 means findings; 0 means none. No retained history yet? Configure <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/docs/SUMMARY_EXPORT_HELM.md">summary export and retention</a> with collector v0.6.0 / <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/deploy/helm/otelcol-genai-sketches/Chart.yaml">chart 0.6.0</a> first. The guide covers durable storage and readback. This route needs history, not raw traces.</p>
+<p>To keep watching, run the command on retained windows from a scheduled job. For current traffic, omit <code>--as-of</code>; the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/docs/SCAN.md">scan guide</a> explains thresholds, minimum history and persistence.</p>
 </aside>
 <h2>What you'll see</h2>
 <p>Example output from the synthetic sample below; your values will reflect your input.</p>
@@ -20,15 +20,15 @@ sh install-fleetdiff.sh v0.10.0 ./bin</code></pre>
 <p>When a window reports missing usage, check the fields in a local capture: <a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a></p>
 <p>Exit code <code>3</code> means findings were detected; <code>0</code> means none were found.</p>
 <h2>No data handy? Try the sample</h2>
-<p class="meta">Requires curl, gh, shasum, tar, and Go 1.26.9 or later. Go generates synthetic inputs from the released tag; the scan runs with the verified v0.10.0 binary. No model API key or Docker is needed.</p>
-<pre data-run="anomalies" data-exit="3"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.10.0.tar.gz
+<p class="meta">Requires curl, gh, shasum, tar, and Go 1.26.9 or later. Go generates synthetic inputs from the released tag; the scan runs with the verified v0.11.0 binary. No model API key or Docker is needed.</p>
+<pre data-run="anomalies" data-exit="3"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.11.0.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.10.0
-sh scripts/install.sh v0.10.0 ./release
+cd fleetdiff-0.11.0
+sh scripts/install.sh v0.11.0 ./release
 GOWORK=off go run ./examples/scan --out ./synthetic-windows
 ./release/fleetdiff scan ./synthetic-windows --expected app --recent 2 \
   --as-of 2026-10-04T00:30:00Z</code></pre>
 <p>The fixed <code>--as-of</code> date reproduces this sample.</p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.10.0/examples/scan">released history generator and tests</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.11.0/examples/scan">released history generator and tests</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>

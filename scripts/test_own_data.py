@@ -6,6 +6,7 @@ import io
 import json
 import os
 from pathlib import Path
+import subprocess
 import tempfile
 import tarfile
 import unittest
@@ -25,7 +26,7 @@ class OwnDataTests(unittest.TestCase):
         self.assertEqual(len(blocks.commands), 1)
         for command in (blocks.own[0]["text"], blocks.commands[0]["text"]):
             self.assertIn("--session-budget-usd 1.00", command)
-            self.assertIn("v0.10.0", command)
+            self.assertIn("v0.11.0", command)
             self.assertNotIn("--period", command)
             self.assertNotIn("go run", command)
         self.assertGreaterEqual(len(blocks.expected), 5)
@@ -123,7 +124,7 @@ class OwnDataTests(unittest.TestCase):
             self.assertIn(FIXTURE_COMMIT, request.full_url)
             self.assertNotIn("Authorization", request.headers)
             self.assertEqual(provenance["expected_commit"], FIXTURE_COMMIT)
-            self.assertEqual(provenance["version"], "v0.10.0")
+            self.assertEqual(provenance["version"], "v0.11.0")
             self.assertEqual(provenance["archive_sha256"], hashlib.sha256(data).hexdigest())
             self.assertEqual(set(provenance["files"]), {"go.mod", "examples/litellm-spend/export.sql"})
             self.assertFalse(provenance["git_operations"])
@@ -152,7 +153,7 @@ class OwnDataTests(unittest.TestCase):
                 own_data.fixture_source(Path("/not-created"))
 
     def test_public_manifest_keeps_full_source_inventory_private(self):
-        provenance = {"version": "v0.10.0", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
+        provenance = {"version": "v0.11.0", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
                       "archive_sha256": "a" * 64, "source_sha256": "b" * 64, "files": {"test": "c" * 64}}
         with tempfile.TemporaryDirectory() as directory, patch.object(own_data, "PAGES", ()), \
                 patch.object(own_data, "fixture_source", return_value=(Path(directory), provenance)):
@@ -183,6 +184,57 @@ class OwnDataTests(unittest.TestCase):
         whatif.feed((ROOT / "pages/what-if.html").read_text())
         self.assertEqual([b["id"] for b in whatif.own], ["what-if-install", "what-if-reprice", "what-if-workload-map"])
         self.assertIn("--workload-map ./workload-map.json --format json", whatif.own[2]["text"])
+
+    def test_routing_uses_opt_in_export_and_explicit_scopes(self):
+        blocks = Blocks()
+        source = (ROOT / "pages/routing.html").read_text()
+        blocks.feed(source)
+        self.assertEqual([b["id"] for b in blocks.own],
+                         ["routing-export", "routing-install", "routing-audit", "routing-agents", "routing-scope"])
+        self.assertIn("-v routing_details=true", blocks.own[0]["text"])
+        self.assertIn("'service=litellm_readonly'", blocks.own[0]["text"])
+        for block in blocks.own[2:]:
+            self.assertIn("./routing-export/spend.csv", block["text"])
+            self.assertIn('"${BEFORE_PERIOD_UTC:', block["text"])
+            self.assertIn('"${AFTER_PERIOD_UTC:', block["text"])
+            self.assertNotIn("--show-labels", block["text"])
+        self.assertIn("--routing-by route-agent --format json", blocks.own[3]["text"])
+        self.assertIn('--scope-route "${ORIGINAL_ROUTE:', blocks.own[4]["text"])
+        self.assertEqual(source.count("<h2>Limits</h2>"), 1)
+        self.assertEqual(len(blocks.expected), 4)
+
+    def test_routing_export_propagates_failure_without_shell_flags(self):
+        blocks = Blocks()
+        blocks.feed((ROOT / "pages/routing.html").read_text())
+        command = next(b["text"] for b in blocks.own if b["id"] == "routing-export")
+        for shell in ("sh", "bash"):
+            for curl_status, psql_status in ((0, 0), (22, 0), (0, 42)):
+                with self.subTest(shell=shell, curl=curl_status, psql=psql_status), tempfile.TemporaryDirectory() as directory:
+                    stubs = f"curl() {{ return {curl_status}; }}\npsql() {{ return {psql_status}; }}\n"
+                    result = subprocess.run([shell, "-c", stubs + command], cwd=directory,
+                        env={"PATH": os.defpath, "START_UTC": "2026-10-01T00:00:00Z",
+                             "END_UTC": "2026-10-03T00:00:00Z"},
+                        capture_output=True, text=True, timeout=10)
+                    self.assertEqual(result.returncode, curl_status or psql_status)
+                    self.assertEqual("Exported routing details" in result.stdout,
+                                     curl_status == psql_status == 0)
+
+    def test_routing_database_preserves_zero_and_missing_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "examples/litellm-spend").mkdir(parents=True)
+            (root / "examples/litellm-spend/test-schema.sql").write_text("-- schema\n")
+            (root / "spend.csv").write_text(
+                "request_id,agent_id,original_model_group,attempted_fallbacks,internal_call_origin,cache_read_input_tokens,cache_write_input_tokens\n"
+                "test,,SENTINEL_route,0,autorouter_classifier,0,\n")
+            sql = own_data.database_sql(root, root, routing=True)
+            self.assertIn('""original_model_group"": ""SENTINEL_route""', sql)
+            self.assertIn('""attempted_fallbacks"": ""0""', sql)
+            self.assertIn('""internal_call_origin"": ""autorouter_classifier""', sql)
+            self.assertIn('""cache_read_input_tokens"": 0', sql)
+            self.assertNotIn('""cache_creation_input_tokens"": 0', sql)
+            self.assertIn("ALTER ROLE fixture_reader SET default_transaction_read_only = on", sql)
+            self.assertNotIn("LiteLLM_DailyUserSpend", sql)
 
     def test_whatif_standin_preserves_cache_columns_and_workload_map(self):
         with tempfile.TemporaryDirectory() as directory:
