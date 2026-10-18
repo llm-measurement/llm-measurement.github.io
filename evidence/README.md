@@ -29,9 +29,12 @@ retains its v0.7.0 scope; it is not relabeled as a check of later production cod
 
 The fleetdiff v0.12.0 tag resolves to `6089061c931fa19fac876e40b3809fdea4792ab8`.
 The installer checks the binary and checksum-file attestations before extraction.
-Installer URLs pin `65990e302913fb960db3ba3a53cb4633bef63117` and explicitly
+Installer URLs pin `6089061c931fa19fac876e40b3809fdea4792ab8` and explicitly
 request v0.12.0. Own-data checks require the installed version and source commit
 to match the released fixture commit exactly.
+`python3 scripts/check.py --release-pins` also resolves the tag anonymously and
+checks every active fleetdiff commit URL in source and generated pages. The
+build job runs this check; unavailable or mismatched tag resolution fails it.
 Collector links pin v0.6.0 configuration and chart 0.6.0; these guide commands do not start
 a collector or claim a live Prometheus series measurement.
 Install-guide, configuration and source links use the same runtime tag.

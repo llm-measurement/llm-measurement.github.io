@@ -23,7 +23,7 @@
 <h3>Have LiteLLM spend logs?</h3>
 <p><a href="litellm-spend.html">Investigate directly from your LiteLLM database</a> using approved read-only access, or use an existing <code>spend.csv</code> below. The database path exports and cleans up a private snapshot automatically. For a file, include 16 days for the default comparison.</p>
 <p class="meta">Requires curl, gh, shasum and tar; Linux or macOS, amd64 or arm64. Install gh; it need not be signed in. <a href="security.html#verify-fleetdiff">Manual verification steps</a> are available.</p>
-<pre data-own="home-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+<pre data-own="home-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
 sh install-fleetdiff.sh v0.12.0 ./bin
 ./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user</code></pre>
 <h3>Have OpenTelemetry traces?</h3>

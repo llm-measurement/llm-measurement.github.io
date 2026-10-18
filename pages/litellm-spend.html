@@ -4,7 +4,7 @@
 <p>Connect to your existing LiteLLM Postgres database with approved read-only access. fleetdiff takes a private snapshot, investigates it locally and removes the temporary export. No psql or model API key is needed. Already have a request-level CSV, JSON or JSONL file? Use the <a href="#export">manual export and file path</a> below; the Usage dashboard's daily aggregate is a different format.</p>
 <h3>1. Install fleetdiff v0.12.0</h3>
 <p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). GitHub CLI need not be signed in. This pinned installer verifies the release archive, checksums and build attestations before extraction. Start without an existing <code>bin</code> folder; see <a href="security.html#verify-fleetdiff">manual release verification</a> for the checks.</p>
-<pre data-own="litellm-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+<pre data-own="litellm-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
 sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
 <h3>2. Investigate your database</h3>
 <p>Have your administrator provision the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/NATIVE_EXPORT.md#administrator-setup">reviewed read-only role and column grants</a>. Role creation is an administrator action, never a write by fleetdiff. Set <code>DATABASE_URL_FILE</code> to the path of an approved credential file using the requirements below, leaving <code>FLEETDIFF_LITELLM_DATABASE_URL</code> unset.</p>
