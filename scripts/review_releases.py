@@ -49,7 +49,7 @@ def check(output, page=None):
             (output / (block["id"] + ".stderr.txt")).write_text(result.stderr)
             assert result.returncode == 0, (block["id"], result.stderr)
             if block["id"] == "fleetdiff":
-                assert "fleetdiff v0.11.0" in result.stdout
+                assert "fleetdiff v0.12.0" in result.stdout
             records.append({"block": block["id"], "pass": True, "exit": 0,
                 "authentication": "credentialed GitHub API" if block["id"] == "collector" else "anonymous",
                 "command_sha256": hashlib.sha256(block["text"].encode()).hexdigest(),

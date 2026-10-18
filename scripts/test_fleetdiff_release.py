@@ -9,7 +9,7 @@ from outsider import Blocks, ROOT
 
 
 class FleetdiffReleaseTests(unittest.TestCase):
-    def test_fleetdiff_commands_use_published_v0110(self):
+    def test_fleetdiff_commands_pin_v0120(self):
         for path in (ROOT / "pages").glob("*.html"):
             if path.stem == "summaries":
                 continue
@@ -21,8 +21,11 @@ class FleetdiffReleaseTests(unittest.TestCase):
                 blocks.feed(source)
                 for block in blocks.commands + blocks.own:
                     if "install.sh" in block["text"] or "install-fleetdiff.sh" in block["text"]:
-                        self.assertIn("v0.11.0", block["text"])
+                        self.assertIn("v0.12.0", block["text"])
+                    if "curl" in block["text"] and "install-fleetdiff.sh" in block["text"]:
+                        self.assertIn("fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh", block["text"])
                     self.assertNotIn("git clone", block["text"])
+                self.assertNotIn("v0.11.0", source)
 
     def test_home_library_installs_use_v040(self):
         source = (ROOT / "pages/index.html").read_text()

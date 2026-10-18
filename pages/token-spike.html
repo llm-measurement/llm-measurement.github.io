@@ -1,8 +1,8 @@
 <p class="lead">Usage jumped? Compare two periods and see which users and sessions account for the increase.</p>
 <aside class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
-<p>A request-level LiteLLM export such as <code>spend.csv</code>, or read-only access to the proxy’s Postgres database to create one. Use the <a href="litellm-spend.html#export">read-only export recipe</a>; the Usage dashboard’s daily aggregate is a different format.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.11.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="token-spike" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/scripts/install.sh
-sh install-fleetdiff.sh v0.11.0 ./bin
+<p>A request-level LiteLLM export such as <code>spend.csv</code>, or read-only access to the proxy’s Postgres database to create one. Use the <a href="litellm-spend.html#export">read-only export recipe</a>; the Usage dashboard’s daily aggregate is a different format.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.12.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="token-spike" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./bin
 ./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user</code></pre><p>The default compares the two most recent complete seven-day UTC periods inside the file; export 16 days. For shorter files, pass <code>--before-period</code> and <code>--after-period</code>. <code>user</code> is the key owner; use <code>--group-by end-user</code> for application users.</p>
 <p>For continuous measurement, enable token-weighted <code>user_key</code> and <code>session_key</code> rankings in the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/docs/TOPK_KEYS.md">released collector</a> and retain two complete <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.0/docs/SUMMARY_EXPORT_HELM.md">summary windows</a>. Keep the hashing key consistent across the comparison and set <code>--expected</code> to your actual producer inventory. With your producer named <code>app</code>:</p><pre data-own="token-spike-summaries" data-exit="0"><code>./bin/fleetdiff investigate --before ./before --after ./after --expected app</code></pre>
 <p>For a gateway setup, start with the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.6.0/examples/integrations/litellm">LiteLLM recipe</a>. To keep watching, <a href="anomalies.html">scan retained history</a>.</p>
@@ -21,12 +21,12 @@ Reported tokens: 400 -&gt; 3300; model attempts: 4 -&gt; 13.
 <p>To see who uses the most overall, rather than who changed, see <a href="tokenmaxxing.html">Who is tokenmaxxing?</a></p>
 <h2>No data handy? Try the sample</h2>
 <p class="meta">Requires curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. No collector, Docker or model API key is needed for the sample.</p>
-<pre data-run="token-spike" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.11.0.tar.gz
+<pre data-run="token-spike" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.11.0
-sh scripts/install.sh v0.11.0 ./release
+cd fleetdiff-0.12.0
+sh scripts/install.sh v0.12.0 ./release
 ./release/fleetdiff investigate --before examples/sessions/data/before \
   --after examples/sessions/data/after --expected app</code></pre>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.11.0/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.0/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <p class="measurement-context">A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>

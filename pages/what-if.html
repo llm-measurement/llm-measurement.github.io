@@ -2,18 +2,18 @@
 <aside class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
 <p>Start with a request-level LiteLLM CSV, JSON or JSONL export containing the model, timestamp, input tokens, output tokens, cache-read input tokens and cache-write input tokens. Use the <a href="litellm-spend.html#export">read-only export recipe</a> if needed; the Usage dashboard's daily aggregate is a different format. Keep exports and identity mapping files private.</p>
-<h3>1. Install fleetdiff v0.11.0</h3>
+<h3>1. Install fleetdiff v0.12.0</h3>
 <p>Requires curl, GitHub CLI (<code>gh</code>), shasum and tar on Linux or macOS, amd64 or arm64. No Go compiler or model API credentials are needed. GitHub CLI need not be signed in. Use a working directory without an existing <code>bin</code> folder. The installer verifies the released archive and checksum manifest before extraction; see <a href="security.html#verify-fleetdiff">manual release verification</a> to review those steps.</p>
 <pre data-own="what-if-install" data-exit="0"><code>umask 077
 curl --proto '=https' --tlsv1.2 -fsSLo install-fleetdiff.sh \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/scripts/install.sh
-sh install-fleetdiff.sh v0.11.0 ./bin</code></pre>
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
 <h3>2. Re-price a completed period</h3>
-<p>Use <code>spend.csv</code> for your export, or change the path below. Set <code>PERIOD_UTC</code> to a completed UTC date such as <code>2026-10-07</code>, or a half-open interval such as <code>2026-10-01T00:00:00Z/2026-10-08T00:00:00Z</code>. Choose source and target model IDs supported by the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/internal/reprice/data/prices.json">dated price table</a>.</p>
+<p>Use <code>spend.csv</code> for your export, or change the path below. Set <code>PERIOD_UTC</code> to a completed UTC date such as <code>2026-10-07</code>, or a half-open interval such as <code>2026-10-01T00:00:00Z/2026-10-08T00:00:00Z</code>. Choose source and target model IDs supported by the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/internal/reprice/data/prices.json">dated price table</a>.</p>
 <pre data-own="what-if-reprice" data-exit="0"><code>./bin/fleetdiff what-if --litellm-spend ./spend.csv \
   --period "${PERIOD_UTC:?set a completed UTC date or interval}" \
   --from claude-sonnet-5-5 --to gpt-6.1-sol --fraction 0.5</code></pre>
-<p><code>0.5</code> moves half the covered token volume, retaining its observed input, output and cache composition. It does not select particular requests. Analysis reads local files only and makes no model calls. For several moves or your applicable price overrides, see the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/docs/WHAT_IF.md">released what-if guide</a>.</p>
+<p><code>0.5</code> moves half the covered token volume, retaining its observed input, output and cache composition. It does not select particular requests. Analysis reads local files only and makes no model calls. For several moves or your applicable price overrides, see the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/WHAT_IF.md">released what-if guide</a>.</p>
 </aside>
 <h2>What you'll see</h2>
 <p>This is exact output from the released binary and synthetic sample below. The amounts cover the whole priced period, including traffic that does not move.</p>
@@ -48,19 +48,19 @@ Level 2, coding: $0.140323 (propagated mean-interval endpoints $0.133659 to $0.1
   --workload-map ./workload-map.json --format json</code></pre>
 <p>Mapped records use their assigned workload; unmapped records remain under all three measured assumptions. Conflicting key/team mappings are rejected. A model pair without a measured output factor stays at level 1; no reverse or transitive factor is invented.</p>
 <h2>No data handy? Try the sample</h2>
-<p class="meta">Requires curl, gh, shasum and tar on Linux or macOS, amd64 or arm64. Run in a directory without an existing <code>fleetdiff-what-if-sample</code> folder. These anonymous downloads use released v0.11.0 files; no Git checkout is needed.</p>
+<p class="meta">Requires curl, gh, shasum and tar on Linux or macOS, amd64 or arm64. Run in a directory without an existing <code>fleetdiff-what-if-sample</code> folder. These anonymous downloads use released v0.12.0 files; no Git checkout is needed.</p>
 <pre data-run="what-if" data-exit="0"><code>set -eu
 umask 077
 mkdir fleetdiff-what-if-sample
 cd fleetdiff-what-if-sample
 curl --proto '=https' --tlsv1.2 -fsSLo install-fleetdiff.sh \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/scripts/install.sh
-sh install-fleetdiff.sh v0.11.0 ./release
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./release
 curl --proto '=https' --tlsv1.2 -fsSLo spend.csv \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/examples/what-if/spend.csv
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.0/examples/what-if/spend.csv
 ./release/fleetdiff what-if --litellm-spend spend.csv \
   --period 2026-10-07 --from claude-sonnet-5-5 --to gpt-6.1-sol --fraction 0.5</code></pre>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/examples/what-if/spend.csv">released synthetic CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/examples/what-if/expected.text">full checked text output</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/examples/what-if/expected.json">JSON output</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/what-if/spend.csv">released synthetic CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/what-if/expected.text">full checked text output</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/what-if/expected.json">JSON output</a>.</p>
 <h2>Limits</h2>
 <ul>
 <li>This re-prices recorded usage under explicit model, cache and workload assumptions. It is not a forecast or an invoice.</li>
@@ -68,6 +68,6 @@ curl --proto '=https' --tlsv1.2 -fsSLo spend.csv \
 <li>Level 2 endpoints show the uncertainty of the measured <em>average</em> output-verbosity factor, not a range for your traffic. In a fresh calibration on 20 batches of 30 tasks, they contained the measured cost of the moved traffic in 19 of 20 batches for Sol to Luna QA and 17 of 20 for Sol to Luna extraction, but in only 2 to 14 of 20 for the other six completed cases. Coding factors fit on HumanEval did not transfer to MBPP, and an earlier per-request test also failed. <a href="https://github.com/llm-measurement/fleetdiff/blob/main/docs/WHAT_IF_CALIBRATION.md">See the calibration.</a></li>
 <li>No quality equivalence is claimed. Lower modeled cost does not establish that a target model performs the same work equally well.</li>
 </ul>
-<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/evidence/model-mix/README.md">released benchmark evidence</a> records model IDs, fit counts, dates, dataset and license pins, estimator and price sources; the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/internal/reprice/data/factors.json">factor table</a> links each measured pair to that provenance.</p>
+<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/evidence/model-mix/README.md">released benchmark evidence</a> records model IDs, fit counts, dates, dataset and license pins, estimator and price sources; the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/internal/reprice/data/factors.json">factor table</a> links each measured pair to that provenance.</p>
 <p class="measurement-context">This synthetic example checks repricing arithmetic for recorded model attempts with complete token splits, not completed-task costs.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>

@@ -8,8 +8,8 @@
       "pass": true,
       "exit": 0,
       "authentication": "anonymous",
-      "command_sha256": "b0cbfcbf4204cc69e28d61846b79e32f4e98c4f2e15928f2bc93171145caa73e",
-      "stdout_sha256": "185525c0599b9d8bd5188ff4ad273e8e0babfc4ab74d1f36846b29abc39dfce6"
+      "command_sha256": "35f244c1b18b7ab27d9b10836ccf5d0e0eca046147f423e4b8d45e36dc980124",
+      "stdout_sha256": "164ea22cc56e3df8a4850af2710f2e3fd01b49f56862073a3764e613cc73879b"
     },
     {
       "block": "collector",
@@ -19,5 +19,6 @@
       "command_sha256": "59ec04aeee84ea82029dae63a686ca38d37767d40c2b974e4f45ef33ea191333",
       "stdout_sha256": "28de5df64614731e6022ee683c424c773b7db2084909e751492a4936e5da958a"
     }
-  ]
+  ],
+  "verified_at_utc": "2026-10-18T19:21:36.596550+00:00"
 }
