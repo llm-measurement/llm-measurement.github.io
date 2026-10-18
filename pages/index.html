@@ -4,10 +4,10 @@
 <h2 id="own-data-title">Run it on your data</h2>
 <p>Choose the path for the data or application you already have.</p>
 <h3>Have LiteLLM spend logs?</h3>
-<p><a href="litellm-spend.html#export">Export request-level rows</a> using read-only Postgres access, or use an existing <code>spend.csv</code>. Include 16 days for the default comparison. Install the released binary, then investigate.</p>
+<p><a href="litellm-spend.html">Investigate directly from your LiteLLM database</a> using approved read-only access, or use an existing <code>spend.csv</code> below. The database path exports and cleans up a private snapshot automatically. For a file, include 16 days for the default comparison.</p>
 <p class="meta">Requires curl, gh, shasum and tar; Linux or macOS, amd64 or arm64. Install gh; it need not be signed in. <a href="security.html#verify-fleetdiff">Manual verification steps</a> are available.</p>
-<pre data-own="home-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/scripts/install.sh
-sh install-fleetdiff.sh v0.11.0 ./bin
+<pre data-own="home-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./bin
 ./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user</code></pre>
 <h3>Have OpenTelemetry traces?</h3>
 <p>Make a short local <a href="traces-usage.html">OTLP capture</a>, save it as <code>traces.jsonl</code>, then use the same installed binary:</p>
@@ -48,4 +48,4 @@ go get github.com/llm-measurement/llm-sketchkit/go/sketchkit/...@v0.4.0</code></
 <figure><img src="assets/sessions.gif" alt="fleetdiff terminal report showing a flagged session in a synthetic token-usage comparison"><figcaption>Example output: a synthetic session comparison. <a href="token-spike.html">Run it with the released binary.</a></figcaption></figure>
 
 <h2>Choose a tool</h2>
-<p><a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> reads local spend exports, trace captures or summary files. <a href="https://github.com/llm-measurement/otelcol-genai-sketches">The Collector connector</a> creates metrics and summaries continuously. <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a> supplies the measurement library for Go services and Python analysis.</p>
+<p><a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> investigates LiteLLM databases with explicit read-only access, or reads local spend exports, trace captures and summary files offline. <a href="https://github.com/llm-measurement/otelcol-genai-sketches">The Collector connector</a> creates metrics and summaries continuously. <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a> supplies the measurement library for Go services and Python analysis.</p>

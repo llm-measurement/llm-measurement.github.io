@@ -1,0 +1,1185 @@
+{
+  "method": "Unmodified generated HTML over ephemeral IPv4 loopback HTTP; cached Chromium via Playwright; external requests blocked",
+  "records": [
+    {
+      "page": "index",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "scheme": "light",
+      "result": {
+        "viewportWidth": 1440,
+        "pageWidth": 1440,
+        "pageHeight": 4035,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "home-spend",
+            "reachable": true
+          }
+        ],
+        "images": [
+          {
+            "src": "assets/sessions.gif",
+            "loaded": true
+          }
+        ],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": false
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "pass": true
+    },
+    {
+      "page": "litellm-spend",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "scheme": "light",
+      "result": {
+        "viewportWidth": 1440,
+        "pageWidth": 1440,
+        "pageHeight": 4253,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "litellm-install",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native",
+            "reachable": true
+          },
+          {
+            "block": "spend-export",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": false
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "pass": true
+    },
+    {
+      "page": "routing",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "scheme": "light",
+      "result": {
+        "viewportWidth": 1440,
+        "pageWidth": 1440,
+        "pageHeight": 4786,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "routing-install",
+            "reachable": true
+          },
+          {
+            "block": "routing-native",
+            "reachable": true
+          },
+          {
+            "block": "routing-export",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": false
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "pass": true
+    },
+    {
+      "page": "security",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "scheme": "light",
+      "result": {
+        "viewportWidth": 1440,
+        "pageWidth": 1440,
+        "pageHeight": 3851,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "fleetdiff",
+            "reachable": true
+          },
+          {
+            "block": "collector",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": false
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "pass": true
+    },
+    {
+      "page": "index",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "scheme": "dark",
+      "result": {
+        "viewportWidth": 1440,
+        "pageWidth": 1440,
+        "pageHeight": 4035,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "home-spend",
+            "reachable": true
+          }
+        ],
+        "images": [
+          {
+            "src": "assets/sessions.gif",
+            "loaded": true
+          }
+        ],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": false
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "pass": true
+    },
+    {
+      "page": "litellm-spend",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "scheme": "dark",
+      "result": {
+        "viewportWidth": 1440,
+        "pageWidth": 1440,
+        "pageHeight": 4253,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "litellm-install",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native",
+            "reachable": true
+          },
+          {
+            "block": "spend-export",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": false
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "pass": true
+    },
+    {
+      "page": "routing",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "scheme": "dark",
+      "result": {
+        "viewportWidth": 1440,
+        "pageWidth": 1440,
+        "pageHeight": 4786,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "routing-install",
+            "reachable": true
+          },
+          {
+            "block": "routing-native",
+            "reachable": true
+          },
+          {
+            "block": "routing-export",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": false
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "pass": true
+    },
+    {
+      "page": "security",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "scheme": "dark",
+      "result": {
+        "viewportWidth": 1440,
+        "pageWidth": 1440,
+        "pageHeight": 3851,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "fleetdiff",
+            "reachable": true
+          },
+          {
+            "block": "collector",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": false
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "pass": true
+    },
+    {
+      "page": "index",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "scheme": "light",
+      "result": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 5442,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "home-spend",
+            "reachable": true
+          },
+          {
+            "block": "home-traces",
+            "reachable": true
+          },
+          {
+            "block": "home-python",
+            "reachable": true
+          },
+          {
+            "block": "home-go",
+            "reachable": true
+          }
+        ],
+        "images": [
+          {
+            "src": "assets/sessions.gif",
+            "loaded": true
+          }
+        ],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": true
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "openNavigation": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 5682,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "home-spend",
+            "reachable": true
+          },
+          {
+            "block": "home-traces",
+            "reachable": true
+          },
+          {
+            "block": "home-python",
+            "reachable": true
+          },
+          {
+            "block": "home-go",
+            "reachable": true
+          }
+        ],
+        "images": [
+          {
+            "src": "assets/sessions.gif",
+            "loaded": true
+          }
+        ],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": true
+      },
+      "navigationWorked": true,
+      "pass": true
+    },
+    {
+      "page": "litellm-spend",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "scheme": "light",
+      "result": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 6572,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "litellm-install",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native-env",
+            "reachable": true
+          },
+          {
+            "block": "spend-export",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": true
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "openNavigation": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 6811,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "litellm-install",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native-env",
+            "reachable": true
+          },
+          {
+            "block": "spend-export",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": true
+      },
+      "navigationWorked": true,
+      "pass": true
+    },
+    {
+      "page": "routing",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "scheme": "light",
+      "result": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 7187,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "routing-install",
+            "reachable": true
+          },
+          {
+            "block": "routing-native",
+            "reachable": true
+          },
+          {
+            "block": "routing-export",
+            "reachable": true
+          },
+          {
+            "block": "routing-audit",
+            "reachable": true
+          },
+          {
+            "block": "routing-agents",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing-scope",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": true
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "openNavigation": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 7426,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "routing-install",
+            "reachable": true
+          },
+          {
+            "block": "routing-native",
+            "reachable": true
+          },
+          {
+            "block": "routing-export",
+            "reachable": true
+          },
+          {
+            "block": "routing-audit",
+            "reachable": true
+          },
+          {
+            "block": "routing-agents",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing-scope",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": true
+      },
+      "navigationWorked": true,
+      "pass": true
+    },
+    {
+      "page": "security",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "scheme": "light",
+      "result": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 5725,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "fleetdiff",
+            "reachable": true
+          },
+          {
+            "block": "collector",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": true
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "openNavigation": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 5965,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "fleetdiff",
+            "reachable": true
+          },
+          {
+            "block": "collector",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "light",
+        "background": "rgb(255, 255, 255)",
+        "mobileNavigation": true
+      },
+      "navigationWorked": true,
+      "pass": true
+    },
+    {
+      "page": "index",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "scheme": "dark",
+      "result": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 5442,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "home-spend",
+            "reachable": true
+          },
+          {
+            "block": "home-traces",
+            "reachable": true
+          },
+          {
+            "block": "home-python",
+            "reachable": true
+          },
+          {
+            "block": "home-go",
+            "reachable": true
+          }
+        ],
+        "images": [
+          {
+            "src": "assets/sessions.gif",
+            "loaded": true
+          }
+        ],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": true
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "openNavigation": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 5682,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "home-spend",
+            "reachable": true
+          },
+          {
+            "block": "home-traces",
+            "reachable": true
+          },
+          {
+            "block": "home-python",
+            "reachable": true
+          },
+          {
+            "block": "home-go",
+            "reachable": true
+          }
+        ],
+        "images": [
+          {
+            "src": "assets/sessions.gif",
+            "loaded": true
+          }
+        ],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": true
+      },
+      "navigationWorked": true,
+      "pass": true
+    },
+    {
+      "page": "litellm-spend",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "scheme": "dark",
+      "result": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 6572,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "litellm-install",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native-env",
+            "reachable": true
+          },
+          {
+            "block": "spend-export",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": true
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "openNavigation": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 6811,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "litellm-install",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native",
+            "reachable": true
+          },
+          {
+            "block": "litellm-native-env",
+            "reachable": true
+          },
+          {
+            "block": "spend-export",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          },
+          {
+            "block": "litellm-spend",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": true
+      },
+      "navigationWorked": true,
+      "pass": true
+    },
+    {
+      "page": "routing",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "scheme": "dark",
+      "result": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 7187,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "routing-install",
+            "reachable": true
+          },
+          {
+            "block": "routing-native",
+            "reachable": true
+          },
+          {
+            "block": "routing-export",
+            "reachable": true
+          },
+          {
+            "block": "routing-audit",
+            "reachable": true
+          },
+          {
+            "block": "routing-agents",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing-scope",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": true
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "openNavigation": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 7426,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "routing-install",
+            "reachable": true
+          },
+          {
+            "block": "routing-native",
+            "reachable": true
+          },
+          {
+            "block": "routing-export",
+            "reachable": true
+          },
+          {
+            "block": "routing-audit",
+            "reachable": true
+          },
+          {
+            "block": "routing-agents",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          },
+          {
+            "block": "routing-scope",
+            "reachable": true
+          },
+          {
+            "block": "routing",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": true
+      },
+      "navigationWorked": true,
+      "pass": true
+    },
+    {
+      "page": "security",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "scheme": "dark",
+      "result": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 5725,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "fleetdiff",
+            "reachable": true
+          },
+          {
+            "block": "collector",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": true
+      },
+      "errors": [],
+      "failedLocalRequests": [],
+      "blockedExternal": [
+        "https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"
+      ],
+      "openNavigation": {
+        "viewportWidth": 390,
+        "pageWidth": 390,
+        "pageHeight": 5965,
+        "overflow": [],
+        "overlaps": [],
+        "internalCodeScrollers": [
+          {
+            "block": "fleetdiff",
+            "reachable": true
+          },
+          {
+            "block": "collector",
+            "reachable": true
+          }
+        ],
+        "images": [],
+        "colorScheme": "dark",
+        "background": "rgb(23, 27, 25)",
+        "mobileNavigation": true
+      },
+      "navigationWorked": true,
+      "pass": true
+    }
+  ],
+  "browser": "147.0.7727.15",
+  "serverStopped": true,
+  "portClosed": true,
+  "pass": true,
+  "scope": "Four v0.12.0 update pages only; not the historical 68-view run",
+  "source_sha256": {
+    "docs/index.html": "873e6f5057f34b2397b5c9427b886b54893aa384a79a63e8dd93ce31744ee043",
+    "docs/litellm-spend.html": "94857bdc38a4cd195865fd5ba78cabdd8ac25501bbc63a3877936bc7eba21a3d",
+    "docs/routing.html": "add8b2f7cf7df42f45c42e588b84cd000c9f50f6b2a5a7d3d90b2799bc775bda",
+    "docs/security.html": "c3d8e27a8137107c6d16954a8f45825a12069b41b5b16fc1868ff6b51154f964",
+    "docs/assets/site.css": "ce58823cc2b2584f87c0d6ad47322645079ca93af37490ddb8e45d6ce262b5ad"
+  },
+  "screenshot_sha256": {
+    "index-desktop-dark-full.png": "3c45d1ac38d5737c93f472efc0c54ce74b62312261be7e5b95ab0cdcd5c7051c",
+    "index-desktop-dark-viewport.png": "fe173a2c43103a65942bbbbb7d89b202793c1698d7bc31b2e7d8a938aa2f3d60",
+    "index-desktop-light-full.png": "ae6c1a1f01bd3aa4d72558e4b57fe0032650e688ab0233185ab7da1007d9e1ca",
+    "index-desktop-light-viewport.png": "22d0e61aa3fcb3d8d8c04ea618ef9ab1bb1fe6579778f51758a54292a0938eb4",
+    "index-mobile-dark-full.png": "d6e42d0795ca4c064d7a81e124d698e398e1744a0aeb1d680bb1c3fcaf4d9732",
+    "index-mobile-dark-navigation.png": "6270f7d4fdef3486280f7cdf359f2c93ca057c9f1047a45387866223ae17920e",
+    "index-mobile-dark-viewport.png": "eaba115c8130f0b8b740d07532706d8466c534e2b6d3375d2a73b2111e54fdcf",
+    "index-mobile-light-full.png": "4e194819ccf7bd7c77547e3c170a7a25a3948553a4363f2ac0d69e075fceff30",
+    "index-mobile-light-navigation.png": "fd5d6b7ff39fefb41147870006a9504d21b7a6e21af50412ddaf362313099184",
+    "index-mobile-light-viewport.png": "fb6b1f2517a23fd6e9d6240063514a559f83773ca165dfe3076658d99935ea03",
+    "litellm-spend-desktop-dark-full.png": "607ef333c97f1d00d6dee6cba2b1a9de452b541a84158587a2248bdec61bc328",
+    "litellm-spend-desktop-dark-viewport.png": "ece83c81a43393fd979cbe2852674d2c8e024f5b9bf7ef3a60ef153db79a6e17",
+    "litellm-spend-desktop-light-full.png": "0bf714c3562c43042dad7c85d4125b19c8d4445d5f132927c7a6ba8be3168677",
+    "litellm-spend-desktop-light-viewport.png": "504ecfb5e3cb3417d961a13ec27ab1a5200bafbb93e8c84b693dd11e49794293",
+    "litellm-spend-mobile-dark-full.png": "8ca68e773a021d164ab10c04e97aca6310d75d671b2ba85855edd9ac15472b45",
+    "litellm-spend-mobile-dark-navigation.png": "736153da5f4e02e09a3e4b8e3a3beadaca238f9a833b0be080723d53df01c7db",
+    "litellm-spend-mobile-dark-viewport.png": "f44c2da02567530aa8f80e19f9765685d1c88b7badc8d9a04204f6e834c898fc",
+    "litellm-spend-mobile-light-full.png": "4cdb2e436bb903bba435381e19bc18ad850a61273cd92dfe5006571056e7d67b",
+    "litellm-spend-mobile-light-navigation.png": "fe78b5c09b093e3183430e17049ec9f2e9ce10a66efd4d1246a6fc26d7cd6749",
+    "litellm-spend-mobile-light-viewport.png": "555333018f244cd59bd7c51f1a9645c4156f69be52eecbab2ef115e95af22768",
+    "routing-desktop-dark-full.png": "c5c2c4c45c1c68e7f8e5f657b940c253e194c757905ecd66e668b56931bc3a8b",
+    "routing-desktop-dark-viewport.png": "3b5dd287455c6d5850b682cc2a251e3e710c198a998aebd3dbed745d7e2b6102",
+    "routing-desktop-light-full.png": "1f23f200a851606cec49e1d24630f87edb9e9aebac58d5659ae4bc6e2a9bdd30",
+    "routing-desktop-light-viewport.png": "5d200be18d76c64dbde326fca3b1a169f3767a7f7419804b09e70d8a0c58b27d",
+    "routing-mobile-dark-full.png": "de2f9cae91258eb447061f0d226e20f4f9623e6920c3a8cb504c4568b63bf9cc",
+    "routing-mobile-dark-navigation.png": "8d5d910e8025034510aaedaed6bc4b3d75071a20d102c6e31e84ae8a69f8bbfd",
+    "routing-mobile-dark-viewport.png": "668de169ed4a570ee31980a250a787c6cf760284abc16a44f2c4a25ae10ed223",
+    "routing-mobile-light-full.png": "d0b4deb7a50231dca20f76ebe87f825c386ea7f9c0c2e9cd71bdde5fb43d279d",
+    "routing-mobile-light-navigation.png": "1621f2d56bcfc4f144587480b5372cd7eaa8f1b0244338f625628808d0e8e835",
+    "routing-mobile-light-viewport.png": "1785673be9eb1d38c790933e4b7db907023f5fc365e65b3cb2c1a6564c84aa51",
+    "security-desktop-dark-full.png": "1f0f73648ff2f35767ad692d55ff1490be30119608968d862ac18ba87c63f0b7",
+    "security-desktop-dark-viewport.png": "23c0ac8c51152ce2cbad26f8546d331af508f963c5386fb50a2221d012ec0835",
+    "security-desktop-light-full.png": "5c5b8f8df0163987e201009018509223e85199118c83567cf9cba5d76014caa7",
+    "security-desktop-light-viewport.png": "86b7d4cb14510f4f1f681aa2416a968304dae02e528c9e6d6ae7809046652dc4",
+    "security-mobile-dark-full.png": "adef4ed07100a8755d0cf13ea3b058ad1bf26e56a546e80e8cb0e523b53333ac",
+    "security-mobile-dark-navigation.png": "d6a0b16273d8b19a4fbadd7593394ea64b9220a94bfc00950beeee7b907c6367",
+    "security-mobile-dark-viewport.png": "c82ef5ca3892bd4c9e6f0d1df94db457ab29e518dfb7aad85b9c1ab16929812e",
+    "security-mobile-light-full.png": "748a8c4807efbac8b8451320856f135b7f8827ea65fc0de5fdc9339ec2a5e6a6",
+    "security-mobile-light-navigation.png": "a08dbfa6b1f5aab7ea7f3657eb309d2e3cb59b09ad21fe8bb32f3ba81d98c057",
+    "security-mobile-light-viewport.png": "d8b307717e2f05cd185ed94e342b6092ed4e5b1abfc8765233e4d9220b866928"
+  }
+}

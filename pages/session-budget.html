@@ -1,10 +1,10 @@
 <p class="lead">Review recorded session spend against a supplied cap, see which session IDs span keys or agents, and check whether the export records budget rejections.</p>
 <aside class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
-<p>Start with request-level spend logs from one LiteLLM application and one LiteLLM deployment sharing one cache. Use the <a href="litellm-spend.html#export">read-only SQL export</a> from fleetdiff v0.11.0, including <code>session_id</code>, <code>agent_id</code> and the content-free <code>rejection_kind</code> column. The projection is pinned to LiteLLM v1.104.0. Keep the export private and use its path below.</p>
+<p>Start with request-level spend logs from one LiteLLM application and one LiteLLM deployment sharing one cache. Use the <a href="litellm-spend.html#export">read-only SQL export</a> from fleetdiff v0.12.0, including <code>session_id</code>, <code>agent_id</code> and the content-free <code>rejection_kind</code> column. The projection is pinned to LiteLLM v1.104.0. Keep the export private and use its path below.</p>
 <p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer verifies the released binary. Reviewers can use the <a href="security.html#verify-fleetdiff">manual verification steps</a>.</p>
-<pre data-own="session-budget" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/scripts/install.sh
-sh install-fleetdiff.sh v0.11.0 ./bin
+<pre data-own="session-budget" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./bin
 ./bin/fleetdiff investigate --litellm-spend ./spend.csv --session-budget-usd 1.00</code></pre>
 <p>Replace <code>1.00</code> with the USD cap you want to review. This mode groups by session ID alone, matching the pinned limiter's counter unit, across keys, teams and agents. It reads local files; it does not configure or enforce a budget.</p>
 <p>The default includes complete UTC days in the file, or its labeled observed span when no complete day is present. Add <code>--period YYYY-MM-DD</code> or a UTC interval to choose a period. If you changed <code>LITELLM_MAX_BUDGET_PER_SESSION_TTL</code>, match <code>--session-counter-window</code> to that duration (default <code>1h</code>). Older exports work too; missing rejection classification is shown as unknown.</p>
@@ -34,12 +34,12 @@ Above-cap sessions with no recorded session-budget rejection: 2.</code></pre>
 </ul>
 <h2>No data handy? Try the sample</h2>
 <p class="meta">Requires curl, gh, shasum and tar. Install gh; it need not be signed in. The example uses a released binary and synthetic request-level records.</p>
-<pre data-run="session-budget" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.11.0.tar.gz
+<pre data-run="session-budget" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.11.0
-sh scripts/install.sh v0.11.0 ./release
+cd fleetdiff-0.12.0
+sh scripts/install.sh v0.12.0 ./release
 ./release/fleetdiff investigate --litellm-spend examples/litellm-spend/session-budget.csv \
   --session-budget-usd 1.00</code></pre>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/examples/litellm-spend/session-budget.csv">released synthetic CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/docs/SESSION_BUDGET.md">session-budget guide</a>, and the <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/session-budget.csv">released synthetic CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/SESSION_BUDGET.md">session-budget guide</a>, and the <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">verification record</a>.</p>
 <p class="measurement-context">Recorded session totals are review evidence, not an enforcement verdict or completed-task costs. Missing identities stay unattributed; absent recorded rejections do not prove that no rejection occurred.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>

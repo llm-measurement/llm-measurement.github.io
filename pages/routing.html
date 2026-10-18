@@ -1,12 +1,22 @@
 <p class="lead">See which models served each original LiteLLM route, how their request, token and recorded-spend shares changed, and where attribution is missing.</p>
 <aside class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
-<p>Use a request-level LiteLLM CSV, JSON or JSONL export with routing details. If you already have one, skip the export and use its path below. The Usage dashboard's daily aggregate is a different format. Analysis reads local files and makes no model calls.</p>
-<h3 id="export">1. Export routing details</h3>
-<p>Requires curl, psql and approved read-only access configured as the PostgreSQL service <code>litellm_readonly</code>. Set <code>START_UTC</code> and <code>END_UTC</code> to UTC RFC3339 bounds covering both comparison periods, such as <code>2026-10-01T00:00:00Z</code> and <code>2026-10-03T00:00:00Z</code>; the end is exclusive. Start in a private directory without an existing <code>routing-export</code> or <code>bin</code> folder.</p>
+<p>Connect to your existing LiteLLM Postgres database with approved read-only access. fleetdiff exports routing details automatically, audits the private snapshot locally and removes the temporary export. No psql or model calls are needed. An existing request-level CSV, JSON or JSONL export also works through the <a href="#export">manual path below</a>.</p>
+<h3>1. Install fleetdiff v0.12.0</h3>
+<p>Requires curl, gh, shasum and tar on Linux or macOS, amd64 or arm64. GitHub CLI need not be signed in. Start without an existing <code>bin</code> folder. The pinned installer verifies the release archive, checksums and attestations; see <a href="security.html#verify-fleetdiff">manual release verification</a>.</p>
+<pre data-own="routing-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
+<h3>2. Audit your database</h3>
+<p>Have your administrator provision the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/NATIVE_EXPORT.md#administrator-setup">read-only role and column grants</a>. Set <code>DATABASE_URL_FILE</code> to an approved regular credential file owned by your effective user, mode exactly <code>0600</code>, with no symlink path components. Keep it outside your checkout and leave <code>FLEETDIFF_LITELLM_DATABASE_URL</code> unset when using the file option.</p>
+<pre data-own="routing-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db \
+  --database-url-file "${DATABASE_URL_FILE:?set the approved credential file path}" --routing-audit</code></pre>
+<p>This compares the last 14 complete UTC days as two adjacent seven-day periods, ending at today's UTC midnight. Empty or sparse logs do not establish coverage. Routing fields are included automatically; missing source attribution stays unknown. Add <code>--keep-export NEWDIR</code> only when you need to retain the private export; the destination must not exist.</p>
+<p>Alternatively, let your approved secret mechanism supply <code>FLEETDIFF_LITELLM_DATABASE_URL</code> and omit <code>--database-url-file</code>. Never pass a literal URL argument or type a password into shell history. Remote TLS requires <code>sslmode=verify-full</code>, with optional <code>sslrootcert</code>; only numeric loopback or Unix sockets allow explicit plaintext. Native mode ignores inherited <code>PG*</code> settings, pgpass and service files. See <a href="litellm-spend.html#credentials">credential sources, URL options and private-export handling</a>. Use psql for administrator-approved services or client certificates.</p>
+<h3 id="export">Manual psql alternative or an existing export</h3>
+<p>Requires curl, psql and approved read-only access configured as the PostgreSQL service <code>litellm_readonly</code>. Set <code>START_UTC</code> and <code>END_UTC</code> to UTC RFC3339 bounds covering both comparison periods, such as <code>2026-10-01T00:00:00Z</code> and <code>2026-10-03T00:00:00Z</code>; the end is exclusive. Start in a private directory without an existing <code>routing-export</code> folder.</p>
 <pre data-own="routing-export" data-exit="0"><code>set -eu
 umask 077
-curl -fsSLo export.sql https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/examples/litellm-spend/export.sql
+curl -fsSLo export.sql https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.0/examples/litellm-spend/export.sql
 mkdir ./routing-export
 psql 'service=litellm_readonly' -Xq -v ON_ERROR_STOP=1 \
   -v start_utc="${START_UTC:?set the export start in UTC}" \
@@ -14,19 +24,16 @@ psql 'service=litellm_readonly' -Xq -v ON_ERROR_STOP=1 \
   -v routing_details=true -v csv_file='./routing-export/spend.csv' -f export.sql \
   &gt;./routing-export/private-psql.out 2&gt;./routing-export/private-psql.err
 printf 'Exported routing details to ./routing-export/spend.csv\n'</code></pre>
-<p>The opt-in flag adds <code>original_model_group</code>, <code>attempted_fallbacks</code> and <code>internal_call_origin</code> from the tested LiteLLM v1.104.0 metadata paths. The read-only projection also includes agent, selected-model and deployment fields; it excludes prompts, responses and whole metadata objects. Keep the export and database diagnostics private. Review the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/examples/litellm-spend/README.md">pinned export contract</a> before using another writer version.</p>
-<h3>2. Install fleetdiff v0.11.0</h3>
-<p>Requires curl, gh, shasum and tar on Linux or macOS, amd64 or arm64. GitHub CLI need not be signed in. The installer verifies the release archive, checksums and attestations; see <a href="security.html#verify-fleetdiff">manual release verification</a> for the steps.</p>
-<pre data-own="routing-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/scripts/install.sh
-sh install-fleetdiff.sh v0.11.0 ./bin</code></pre>
-<h3>3. Compare two completed periods</h3>
-<p>Set <code>BEFORE_PERIOD_UTC</code> and <code>AFTER_PERIOD_UTC</code> to completed UTC dates, such as <code>2026-10-01</code> and <code>2026-10-02</code>, or explicit half-open UTC intervals. Use the export from step 1 or replace its path with your file.</p>
+<p>The opt-in flag adds <code>original_model_group</code>, <code>attempted_fallbacks</code> and <code>internal_call_origin</code> from the tested LiteLLM v1.104.0 metadata paths. The read-only projection also includes agent, selected-model and deployment fields; it excludes prompts, responses and whole metadata objects. Keep the export and database diagnostics private. Review the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/README.md">pinned export contract</a> before using another writer version.</p>
+<h3>Compare two chosen periods from a file</h3>
+<p>Set <code>BEFORE_PERIOD_UTC</code> and <code>AFTER_PERIOD_UTC</code> to completed UTC dates, such as <code>2026-10-01</code> and <code>2026-10-02</code>, or equal-duration, ordered, nonoverlapping half-open UTC intervals. Use the export above or replace its path with your file. File-based analysis stays offline.</p>
 <pre data-own="routing-audit" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./routing-export/spend.csv \
   --before-period "${BEFORE_PERIOD_UTC:?set the before UTC date or interval}" \
   --after-period "${AFTER_PERIOD_UTC:?set the after UTC date or interval}" \
   --routing-audit</code></pre>
-<p>The audit groups by original route. <code>--group-by</code> still controls contributor rankings, not this table. To separate known agents within each route and read the same evidence as JSON, run:</p>
-<pre data-own="routing-agents" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./routing-export/spend.csv \
+<p>The audit groups by original route. <code>--group-by</code> still controls contributor rankings, not this table. To separate known agents within each route, read a fresh database snapshot as JSON using the same chosen periods:</p>
+<pre data-own="routing-agents" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db \
+  --database-url-file "${DATABASE_URL_FILE:?set the approved credential file path}" \
   --before-period "${BEFORE_PERIOD_UTC:?set the before UTC date or interval}" \
   --after-period "${AFTER_PERIOD_UTC:?set the after UTC date or interval}" \
   --routing-audit --routing-by route-agent --format json</code></pre>
@@ -47,25 +54,26 @@ sh install-fleetdiff.sh v0.11.0 ./bin</code></pre>
       agent known: 0 -&gt; 0; unknown: 1 -&gt; 1 (column absent 0 -&gt; 0; null/empty 1 -&gt; 1; invalid 0 -&gt; 0).</code></pre>
 <h3>Select a route or agent</h3>
 <p>Set <code>ORIGINAL_ROUTE</code> privately to the recorded original route, not its report alias. A scope filters the investigation and counts nonmatching known rows separately from rows whose identity is unknown.</p>
-<pre data-own="routing-scope" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./routing-export/spend.csv \
+<pre data-own="routing-scope" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db \
+  --database-url-file "${DATABASE_URL_FILE:?set the approved credential file path}" \
   --before-period "${BEFORE_PERIOD_UTC:?set the before UTC date or interval}" \
   --after-period "${AFTER_PERIOD_UTC:?set the after UTC date or interval}" \
   --scope-route "${ORIGINAL_ROUTE:?set the recorded original route}" --routing-audit</code></pre>
 <p>Use <code>--scope-agent</code> instead for one agent. Use one scope at a time with both explicit periods; scopes cannot be combined with daily row coverage or session grouping. In <a href="what-if.html">model what-if</a>, the same scope restricts the traffic moved while keeping the covered baseline for other traffic. An explicit workload map supplies the task class; route or agent names do not.</p>
 <h2>No data handy? Try the sample</h2>
-<p class="meta">Requires curl, gh, shasum and tar on the supported platforms above. Run in a directory without an existing <code>fleetdiff-routing-sample</code> folder. These anonymous downloads use released v0.11.0 files; no Git checkout, database, Go compiler or model credentials are needed.</p>
+<p class="meta">Requires curl, gh, shasum and tar on the supported platforms above. Run in a directory without an existing <code>fleetdiff-routing-sample</code> folder. These anonymous downloads use released v0.12.0 files; no Git checkout, database, Go compiler or model credentials are needed.</p>
 <pre data-run="routing" data-exit="0"><code>set -eu
 umask 077
 mkdir fleetdiff-routing-sample
 cd fleetdiff-routing-sample
 curl --proto '=https' --tlsv1.2 -fsSLo install-fleetdiff.sh \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/scripts/install.sh
-sh install-fleetdiff.sh v0.11.0 ./release
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/65990e302913fb960db3ba3a53cb4633bef63117/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./release
 curl --proto '=https' --tlsv1.2 -fsSLo spend.csv \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.11.0/examples/routing/synthetic.csv
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.0/examples/routing/synthetic.csv
 ./release/fleetdiff investigate --litellm-spend spend.csv \
   --before-period 2026-10-01 --after-period 2026-10-02 --routing-audit</code></pre>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/examples/routing/synthetic.csv">eight-row synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.11.0/docs/ROUTING.md">released routing guide</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/routing/synthetic.csv">eight-row synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/ROUTING.md">released routing guide</a>.</p>
 <h2>Limits</h2>
 <ul>
 <li>Model identity is the gateway-selected model with a recorded deployment ID, not independent confirmation of the provider's model or final bill. Failure-row usage has unknown finality.</li>

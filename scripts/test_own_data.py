@@ -2,6 +2,7 @@
 # Code authors: Vijay and Codex
 """Keep runnable own-data instructions separate from sample output."""
 import hashlib
+from datetime import datetime
 import io
 import json
 import os
@@ -26,19 +27,39 @@ class OwnDataTests(unittest.TestCase):
         self.assertEqual(len(blocks.commands), 1)
         for command in (blocks.own[0]["text"], blocks.commands[0]["text"]):
             self.assertIn("--session-budget-usd 1.00", command)
-            self.assertIn("v0.11.0", command)
+            self.assertIn("v0.12.0", command)
             self.assertNotIn("--period", command)
             self.assertNotIn("go run", command)
         self.assertGreaterEqual(len(blocks.expected), 5)
         self.assertNotIn("Redis", source)
 
-    def test_litellm_exports_before_installing_and_analyzing(self):
+    def test_litellm_native_path_precedes_manual_export(self):
         blocks = Blocks()
         blocks.feed((ROOT / "pages/litellm-spend.html").read_text())
         self.assertEqual([b["id"] for b in blocks.own],
-                         ["spend-export", "litellm-install", "litellm-spend"])
-        self.assertIn("./litellm-export/spend.csv", blocks.own[0]["text"])
-        self.assertIn("./litellm-export/spend.csv", blocks.own[2]["text"])
+                         ["litellm-install", "litellm-native", "litellm-native-env", "spend-export", "litellm-spend"])
+        self.assertIn("--litellm-db", blocks.own[1]["text"])
+        self.assertIn('--database-url-file "${DATABASE_URL_FILE:', blocks.own[1]["text"])
+        self.assertNotIn("--database-url-file", blocks.own[2]["text"])
+        self.assertIn("./litellm-export/spend.csv", blocks.own[3]["text"])
+        self.assertIn("./litellm-export/spend.csv", blocks.own[4]["text"])
+
+    def test_manual_spend_example_uses_its_visible_sixteen_day_bounds(self):
+        blocks = Blocks()
+        source = (ROOT / "pages/litellm-spend.html").read_text()
+        blocks.feed(source)
+        command = next(b["text"] for b in blocks.own if b["id"] == "spend-export")
+        assignments = dict(line.split("=", 1) for line in command.splitlines()
+                           if line.startswith(("START_UTC=", "END_UTC=")))
+        self.assertEqual(assignments, {"START_UTC": own_data.EXPORT_START, "END_UTC": own_data.EXPORT_END})
+        start, end = (datetime.fromisoformat(assignments[name].replace("Z", "+00:00"))
+                      for name in ("START_UTC", "END_UTC"))
+        self.assertEqual((end - start).days, 16)
+        self.assertIn("excludes potentially partial first and last days", source)
+        self.assertIn("last 14 complete UTC days", source)
+        native = next(b["text"] for b in blocks.own if b["id"] == "litellm-native")
+        self.assertNotIn("--before-period", native)
+        self.assertNotIn("--after-period", native)
 
     def test_slow_install_does_not_expire_the_scan_standin(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -124,7 +145,7 @@ class OwnDataTests(unittest.TestCase):
             self.assertIn(FIXTURE_COMMIT, request.full_url)
             self.assertNotIn("Authorization", request.headers)
             self.assertEqual(provenance["expected_commit"], FIXTURE_COMMIT)
-            self.assertEqual(provenance["version"], "v0.11.0")
+            self.assertEqual(provenance["version"], "v0.12.0")
             self.assertEqual(provenance["archive_sha256"], hashlib.sha256(data).hexdigest())
             self.assertEqual(set(provenance["files"]), {"go.mod", "examples/litellm-spend/export.sql"})
             self.assertFalse(provenance["git_operations"])
@@ -153,7 +174,7 @@ class OwnDataTests(unittest.TestCase):
                 own_data.fixture_source(Path("/not-created"))
 
     def test_public_manifest_keeps_full_source_inventory_private(self):
-        provenance = {"version": "v0.11.0", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
+        provenance = {"version": "v0.12.0", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
                       "archive_sha256": "a" * 64, "source_sha256": "b" * 64, "files": {"test": "c" * 64}}
         with tempfile.TemporaryDirectory() as directory, patch.object(own_data, "PAGES", ()), \
                 patch.object(own_data, "fixture_source", return_value=(Path(directory), provenance)):
@@ -164,6 +185,33 @@ class OwnDataTests(unittest.TestCase):
             self.assertNotIn("files", manifest["fixture_archive"])
             self.assertEqual(manifest["fixture_archive"]["file_count"], 1)
             self.assertEqual(json.loads((output / "fixture-provenance.json").read_text())["files"], provenance["files"])
+
+    def test_installed_binary_requires_exact_release_and_commit_with_build_metadata(self):
+        for version, accepted in (
+            ("fleetdiff v0.12.0 (" + FIXTURE_COMMIT + ") go1.26.9 darwin/arm64", True),
+            ("fleetdiff v0.12.0 (" + "0" * 40 + ") go1.26.9 darwin/arm64", False),
+            ("fleetdiff v0.11.0 (" + FIXTURE_COMMIT + ") go1.26.9 darwin/arm64", False),
+            ("fleetdiff dev (unknown) go1.26.9 darwin/arm64", False),
+        ):
+            with self.subTest(version=version), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                (root / "pages").mkdir()
+                (root / "pages/test.html").write_text(
+                    '<pre data-own="test-install" data-exit="0">sh install-fleetdiff.sh v0.12.0 ./bin</pre>')
+                provenance = {"files": {}}
+                result = subprocess.CompletedProcess([], 0, stdout="Verified", stderr="")
+                with patch.object(own_data, "ROOT", root), patch.object(own_data, "PAGES", ("test",)), \
+                        patch.object(own_data, "EXPECTED", {"test-install": ("Verified",)}), \
+                        patch.object(own_data, "fixture_source", return_value=(root, provenance)), \
+                        patch.object(own_data, "prepare"), patch.object(own_data.subprocess, "run", return_value=result), \
+                        patch.object(own_data, "run", return_value=version):
+                    if accepted:
+                        own_data.check(root / "evidence")
+                        recorded = json.loads((root / "evidence/manifest.json").read_text())["results"][0]
+                        self.assertEqual(recorded["installed_version"], version)
+                    else:
+                        with self.assertRaises(AssertionError):
+                            own_data.check(root / "evidence")
 
     def test_sql_export_comparison_normalizes_only_numeric_and_time_rendering(self):
         before = {"request_id": "test", "startTime": "2026-10-07T12:00:00Z",
@@ -190,16 +238,21 @@ class OwnDataTests(unittest.TestCase):
         source = (ROOT / "pages/routing.html").read_text()
         blocks.feed(source)
         self.assertEqual([b["id"] for b in blocks.own],
-                         ["routing-export", "routing-install", "routing-audit", "routing-agents", "routing-scope"])
-        self.assertIn("-v routing_details=true", blocks.own[0]["text"])
-        self.assertIn("'service=litellm_readonly'", blocks.own[0]["text"])
-        for block in blocks.own[2:]:
-            self.assertIn("./routing-export/spend.csv", block["text"])
+                         ["routing-install", "routing-native", "routing-export", "routing-audit", "routing-agents", "routing-scope"])
+        self.assertIn("--litellm-db", blocks.own[1]["text"])
+        self.assertIn("--routing-audit", blocks.own[1]["text"])
+        self.assertIn("-v routing_details=true", blocks.own[2]["text"])
+        self.assertIn("'service=litellm_readonly'", blocks.own[2]["text"])
+        self.assertIn("./routing-export/spend.csv", blocks.own[3]["text"])
+        for block in blocks.own[3:]:
             self.assertIn('"${BEFORE_PERIOD_UTC:', block["text"])
             self.assertIn('"${AFTER_PERIOD_UTC:', block["text"])
             self.assertNotIn("--show-labels", block["text"])
-        self.assertIn("--routing-by route-agent --format json", blocks.own[3]["text"])
-        self.assertIn('--scope-route "${ORIGINAL_ROUTE:', blocks.own[4]["text"])
+        self.assertIn("--routing-by route-agent --format json", blocks.own[4]["text"])
+        self.assertIn('--scope-route "${ORIGINAL_ROUTE:', blocks.own[5]["text"])
+        for block in blocks.own[4:]:
+            self.assertIn("--litellm-db", block["text"])
+            self.assertIn("--database-url-file", block["text"])
         self.assertEqual(source.count("<h2>Limits</h2>"), 1)
         self.assertEqual(len(blocks.expected), 4)
 

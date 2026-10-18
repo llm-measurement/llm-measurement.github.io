@@ -3,7 +3,7 @@
 Twelve guides to LLM usage, with commands and output from released tools.
 An evidence page explains what can be shared and retained with summaries.
 
-Current command examples pin fleetdiff v0.11.0. The home-page library installs
+Current command examples pin fleetdiff v0.12.0. The home-page library installs
 pin llm-sketchkit v0.4.0; the existing Python guides retain v0.3.0. Collector
 configuration pins v0.6.0 and Helm chart 0.6.0. Historical evidence
 retains the versions and source revisions used for those measurements.
@@ -50,6 +50,39 @@ python3 scripts/outsider.py --output evidence/local
 
 Machine, versions, source tags, methods and commands for the checked examples
 are recorded in [evidence/README.md](evidence/README.md).
+
+The own-data check runs the exact guide blocks with synthetic inputs. Database
+blocks use real PostgreSQL from the fixture's cached digest-pinned image with
+`--pull=never` and `--network=none`; a loopback byte transport connects the
+unchanged installed host binary to that database. A missing image is a failure,
+not a mock fallback. The fixture provisions the documented read-only role and
+tests both credential sources. No model calls are made.
+
+On a fresh machine, first populate the Docker cache with the exact PostgreSQL
+digest from the [released fixture image manifest](https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/examples/litellm-spend/images.json).
+CI runs this explicit preparation before the own-data check; the database
+runtime itself never pulls an image:
+
+```sh
+docker pull postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
+```
+
+```sh
+python3 scripts/check.py --own-data --output evidence/local/own-data
+```
+
+To check only the database fixture and transport using an existing fleetdiff
+source directory, set `FLEETDIFF_SOURCE` to its path, then run:
+
+```sh
+SITE_POSTGRES_SOURCE="$FLEETDIFF_SOURCE" python3 -m unittest discover -s scripts -p 'test_native_database.py' -v
+```
+
+This fixture check does not validate a released binary. When changing release
+pins, bind `FIXTURE_COMMIT` in `scripts/own_data.py` to the verified release's
+source commit, rerun the own-data, outsider and release-review checks, and retain
+the actual command/output hashes. Historical verification records are not
+evidence for changed commands; the default checks reject stale hashes.
 
 ## Publishing
 
