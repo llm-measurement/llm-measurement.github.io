@@ -5,12 +5,27 @@ from a new directory with fresh caches. No real prompts, user records or
 model-provider credentials are needed. The manual collector provenance check
 uses GitHub authentication as described below.
 
-The sample and own-data command manifests were refreshed on October 19, 2026 (UTC),
-using published fleetdiff v0.12.0. The homepage installs
+The sample and own-data command manifests record a full rerun on
+October 19, 2026 (UTC), using published fleetdiff v0.12.0: all twelve sample
+guides and all 35 own-data blocks passed after the first three guides were
+rewritten. The earlier targeted checks are described below. The homepage installs
 sketchkit v0.4.0 in Python and Go; the existing Python guides retain their checked
 v0.3.0 examples. These site command checks ran on macOS arm64 against the released
 binary, not a local rebuild. The historical offline-analysis evidence below
 retains its v0.7.0 scope; it is not relabeled as a check of later production code.
+
+The later prose pass rechecked all twelve samples and all 35 own-data commands.
+The 93-test suite passed with real PostgreSQL checks enabled and no skips.
+The three rewritten guides have 214, 236 and 193 visible words before their
+sample sections, respectively (LiteLLM spend, routing, row coverage), within
+the 250-word limit. Counts include H1s, path links and visible commands; closed
+details contribute only their summaries. The prose checker also rejects the
+removed phrases anywhere in each revised guide, including folded/sample text.
+Manual release verification is linked from the shared footer.
+
+The final publication pass uses plain `BEFORE`, `AFTER` and `ROUTE` variables
+with setup text beside each command. All 35 own-data commands and 97 tests
+passed, including real PostgreSQL regressions, with no skips.
 
 | Guide | Released program | Input and reference |
 | --- | --- | --- |
@@ -117,9 +132,63 @@ released binary separately confirms 160 exported rows succeed, while a shortened
 14-day, 140-row export fails the same file-default investigation. This does not
 change native mode's clock-based 14-complete-day default.
 
-`own-data-verified.json` binds the 32 successful command blocks to their source
+`own-data-verified.json` binds the 35 successful command blocks to their source
 hashes and records the released fixture commit, native transport counts, role
 checks and installed binary versions. CI reruns these checks.
+
+### LiteLLM page rewrite check
+
+The targeted rewrite check reran the five LiteLLM own-data blocks, the environment
+credential block moved to security, and the LiteLLM sample with every displayed
+excerpt matched. Security executes the linked installer as a recorded dependency
+and compares the file and environment credential commands against the same
+synthetic database. The file path is exactly `~/.config/litellm-db-url`; no command
+text is rewritten. The existing-file command reads `./spend.csv`, while the
+separate export-file command reads the actual psql-produced CSV. Both explanatory
+comments in the manual export block were included in its executed hash.
+
+Both displayed administrator SQL blocks were decoded from the page, checked
+against the released statements, and executed unchanged in a real database named
+`litellm`. Checks verify all 21 permitted spend columns, denial of the three
+content columns, the four optional daily columns, and absence of table-wide
+SELECT, writes, privileged role flags, memberships and schema/database CREATE
+privileges. Their exact command hashes and results are nested under
+`litellm-native`'s `database.sql_blocks`. PostgreSQL reused the cached pinned image
+with `--pull=never --network=none`; no new image or Git checkout was used.
+
+At that stage, 27 other own-data records and 11 other sample records were retained.
+These were targeted checks; the later full rerun described above supersedes them.
+The 13 native/database regression tests also passed, including the shortened
+14-day export failure. The anonymous fleetdiff manual release block was rechecked;
+the unchanged collector OCI verification retains its earlier authenticated result.
+
+### Routing and row-coverage rewrite check
+
+The next targeted refresh executed all seven routing and five row-coverage
+own-data blocks, plus both samples with every displayed excerpt matched. Native
+commands use the exact home credential path. Routing scope retains explicit
+before/after periods and the private route environment variable. The fixture
+selects recent-date inputs for each native block and original historical inputs
+for each file or manual-export block, including a return to native route-agent
+analysis after the file commands. No published command bytes are rewritten.
+
+The existing-file commands read the stand-in `./spend.csv` and `./daily.csv`. Separate
+export-file commands read the actual SQL exports. Both exported datasets match
+the seeded rows, and both resulting reports match their stand-in-file reports
+exactly. The manual export comments are included in the executed command hashes.
+All eight routing rows and the 8-versus-9 daily discrepancy remain checked;
+missing metadata stays distinct from recorded zero, and private identities stay
+out of reports.
+
+The row page's daily SQL is checked against the released statement and executed
+unchanged, following the shared LiteLLM reader-role SQL. Both command hashes are
+recorded under `row-coverage-native.database.sql_blocks`. The same real database
+checks all permitted spend columns, the four daily columns, denied content
+columns, and absence of table-wide or write privileges. This refresh retains
+23 other own-data records and 10 other sample records unchanged. The later full
+rerun covers these paths and every other own-data and sample command again.
+All 36 focused adapter and native-database tests passed without skips, including
+the existing actual-export regression that rejects a shortened 14-day file.
 
 ## v0.12.0 network boundary
 
@@ -155,11 +224,21 @@ cluster changed by these blocks.
 `release-review-verified.json` binds the commands to the successful check. The
 default site check rejects stale own-data or manual-verification command records.
 
-The refreshed checks passed all twelve sample guides and 32 own-data blocks.
+The earlier full-suite check passed all twelve sample guides and 32 own-data
+blocks. The targeted rewrites add three export-file blocks, for 35 currently bound
+own-data blocks, without claiming a second full-suite execution.
 
 ## Visual checks
 
-The collector 0.6.1 and native row-coverage update has 22 checked combinations:
+The October 19 rewrite passed 24 views: LiteLLM spend, routing, row coverage and security at
+1366, 390 and 320 pixels, each in light and dark mode. The path indexes are
+visible without scrolling at laptop width. Each path link reached a visible
+section on mobile, with security folded initially and no page-wide overflow.
+The generated pages were checked in installed Chromium with external requests
+blocked. `rewrite-visual-verified.json` binds these results to the page and CSS
+hashes. The LiteLLM title, description and H1 are unchanged.
+
+The earlier collector 0.6.1 and native row-coverage update had 22 checked combinations:
 homepage, LiteLLM spend, row coverage, cardinality and security at 1440- and
 390-pixel widths, plus row coverage at 320 pixels, each in light and dark mode.
 An exact generated-HTML snapshot ran in cached Chromium via Playwright with

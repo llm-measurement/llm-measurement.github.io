@@ -1,0 +1,522 @@
+{
+  "method": "Installed Chromium; external requests blocked; laptop and mobile, light and dark; anchor navigation, folded security and page width assertions.",
+  "files": {
+    "assets/site.css": "10ebcd257b073bb6c38add109b93288e7dbb567f29708b66c14783759fadc773",
+    "docs/assets/site.css": "10ebcd257b073bb6c38add109b93288e7dbb567f29708b66c14783759fadc773",
+    "pages.json": "c786e590cf88f5f592e4bdf3b2fe701614db91434156e5f1c5a49506c29305a4",
+    "pages/litellm-spend.html": "12f73d4d744d537442fd10d26a22800a88bdfaed4b4aa15fadfd39430e51c3f5",
+    "docs/litellm-spend.html": "8892964ebc376b1b2dc6d0b881493f24c6ca905d9b3d1b4347d074d125d3e1a3",
+    "pages/routing.html": "d8fad28c63532fb6778d93f20a5df7571e6253c54338c6e8e4083fba93a6f1a9",
+    "docs/routing.html": "6a8e65402047bd5f70af08c494d65e7f6c10525199b82fcc1ed0bbb16b864f41",
+    "pages/row-coverage.html": "484377df83df028d7cdb9fe813fc0c069fcae44b65d3c0a8c58ae2499fe3febf",
+    "docs/row-coverage.html": "043bc5f5a0b83f5270aa25d7d6d9af65adcb76194188f16076d0be8c8b8d92ac",
+    "pages/security.html": "0c8d5aa3a543c3d19917fc26f5fdf3573ba568454e4ebc61fb2314604cd0a9ba",
+    "docs/security.html": "797f217e2e82526577276e65d9824ed18c25b44ca6737373f359e90109c3feb6"
+  },
+  "results": [
+    {
+      "slug": "litellm-spend",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 372.75,
+        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
+        "folded": true
+      },
+      "words": {
+        "visible": 214,
+        "prose": 190
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "routing",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 335.25,
+        "title": "Which model actually served your LiteLLM route?",
+        "folded": true
+      },
+      "words": {
+        "visible": 236,
+        "prose": 194
+      },
+      "anchors": [
+        "#run",
+        "#scope",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "row-coverage",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 372.75,
+        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 193,
+        "prose": 154
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "security",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "title": "For security reviewers",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "pass": true
+    },
+    {
+      "slug": "litellm-spend",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 515.40625,
+        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
+        "folded": true
+      },
+      "words": {
+        "visible": 214,
+        "prose": 190
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "routing",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 517.296875,
+        "title": "Which model actually served your LiteLLM route?",
+        "folded": true
+      },
+      "words": {
+        "visible": 236,
+        "prose": 194
+      },
+      "anchors": [
+        "#run",
+        "#scope",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "row-coverage",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 515.40625,
+        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 193,
+        "prose": 154
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "security",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "title": "For security reviewers",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "pass": true
+    },
+    {
+      "slug": "litellm-spend",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 643.578125,
+        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
+        "folded": true
+      },
+      "words": {
+        "visible": 214,
+        "prose": 190
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "routing",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 615.78125,
+        "title": "Which model actually served your LiteLLM route?",
+        "folded": true
+      },
+      "words": {
+        "visible": 236,
+        "prose": 194
+      },
+      "anchors": [
+        "#run",
+        "#scope",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "row-coverage",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 613.890625,
+        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 193,
+        "prose": 154
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "security",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "title": "For security reviewers",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "pass": true
+    },
+    {
+      "slug": "litellm-spend",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 372.75,
+        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
+        "folded": true
+      },
+      "words": {
+        "visible": 214,
+        "prose": 190
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "routing",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 335.25,
+        "title": "Which model actually served your LiteLLM route?",
+        "folded": true
+      },
+      "words": {
+        "visible": 236,
+        "prose": 194
+      },
+      "anchors": [
+        "#run",
+        "#scope",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "row-coverage",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 372.75,
+        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 193,
+        "prose": 154
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "security",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "title": "For security reviewers",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "pass": true
+    },
+    {
+      "slug": "litellm-spend",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 515.40625,
+        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
+        "folded": true
+      },
+      "words": {
+        "visible": 214,
+        "prose": 190
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "routing",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 517.296875,
+        "title": "Which model actually served your LiteLLM route?",
+        "folded": true
+      },
+      "words": {
+        "visible": 236,
+        "prose": 194
+      },
+      "anchors": [
+        "#run",
+        "#scope",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "row-coverage",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 515.40625,
+        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 193,
+        "prose": 154
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "security",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "title": "For security reviewers",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "pass": true
+    },
+    {
+      "slug": "litellm-spend",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 643.578125,
+        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
+        "folded": true
+      },
+      "words": {
+        "visible": 214,
+        "prose": 190
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "routing",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 615.78125,
+        "title": "Which model actually served your LiteLLM route?",
+        "folded": true
+      },
+      "words": {
+        "visible": 236,
+        "prose": 194
+      },
+      "anchors": [
+        "#run",
+        "#scope",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "row-coverage",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 613.890625,
+        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 193,
+        "prose": 154
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "security",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "title": "For security reviewers",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "pass": true
+    }
+  ]
+}

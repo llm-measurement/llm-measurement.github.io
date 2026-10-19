@@ -72,7 +72,8 @@ class FleetdiffReleaseTests(unittest.TestCase):
                 self.assertEqual(len(blocks.commands), 1)
                 self.assertTrue(blocks.expected)
                 self.assertTrue(blocks.own)
-                self.assertEqual(source.count("<h2>Limits</h2>"), 1)
+                limits_heading = "<h2>Limits</h2>" if slug == "what-if" else "<summary>What the numbers mean</summary>"
+                self.assertEqual(source.count(limits_heading), 1)
                 for block in blocks.commands + blocks.own:
                     result = subprocess.run(["bash", "-n"], input=block["text"],
                                             text=True, capture_output=True)

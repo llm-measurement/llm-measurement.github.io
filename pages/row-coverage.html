@@ -1,50 +1,56 @@
-<p class="lead">8 exported rows versus 9 daily requests: 1 missing row.</p>
-<aside class="own-data" aria-labelledby="own-data-title">
-<h2 id="own-data-title">Run it on your data</h2>
-<p>Connect fleetdiff v0.12.0 to your existing LiteLLM PostgreSQL database with <code>--litellm-db --daily</code>. It compares request-level spend rows with daily request counts from one read-only snapshot, then removes the temporary export. No psql or model API key is needed. The <a href="#export">paired psql export</a> remains an alternative; a Usage dashboard export is not a substitute for request-level rows.</p>
-<h3>1. Install fleetdiff v0.12.0</h3>
-<p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer verifies the v0.12.0 release archive, checksums and attestations. Start in a private working directory without an existing <code>bin</code> folder. For manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p>
+<p class="lead">fleetdiff checks, day by day, whether every request in LiteLLM's daily totals also reached the spend log, so you know which days' usage and spend reports are short before you rely on them.</p>
+<nav class="path-index" aria-label="Choose your starting point"><ul>
+<li><a href="#run">Your database</a></li><li><a href="#access">Getting access</a></li><li><a href="#file">Paired export files</a></li><li><a href="#sample">Sample data</a></li>
+</ul></nav>
+<aside id="run" class="own-data" aria-labelledby="own-data-title">
+<h2 id="own-data-title">Check your LiteLLM database</h2>
+<p><strong>1. Install.</strong> Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
 <pre data-own="row-coverage-install" data-exit="0"><code>set -eu
 curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
 sh install-fleetdiff.sh v0.12.0 ./bin
 ./bin/fleetdiff --version</code></pre>
-<h3>2. Compare your database's row counts</h3>
-<p>Have an administrator review the released <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/NATIVE_EXPORT.md#administrator-setup">read-only role setup</a>. In addition to the selected <code>LiteLLM_SpendLogs</code> columns, daily mode needs <code>SELECT (date, api_requests, successful_requests, failed_requests)</code> on <code>public."LiteLLM_DailyUserSpend"</code>. No write or whole-table grant is needed. The projection targets LiteLLM v1.104.0.</p>
-<p>Set <code>DATABASE_URL_FILE</code> to an approved credential file outside the checkout: mode exactly <code>0600</code>, owned by the effective user, with no symlink path components. Leave <code>FLEETDIFF_LITELLM_DATABASE_URL</code> unset so exactly one credential source is active. Keep the URL out of commands, shell history and reports. Remote connections require <code>sslmode=verify-full</code>, with <code>sslrootcert</code> when needed; explicit <code>sslmode=disable</code> is limited to numeric loopback or Unix sockets. Native mode does not use PostgreSQL service files or inherited <code>PG*</code> settings; see <a href="litellm-spend.html#credentials">credentials and connection settings</a>.</p>
-<pre data-own="row-coverage-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db --daily \
-  --database-url-file "${DATABASE_URL_FILE:?set the approved credential file path}" --group-by key</code></pre>
-<p>The default compares the last 14 complete UTC days as two seven-day periods, ending at today's UTC midnight. To choose other completed days, supply both <code>--before-period</code> and <code>--after-period</code> with equal-length, ordered, non-overlapping periods bounded at UTC midnight. Sparse logs do not prove full coverage.</p>
-<p>Temporary exports use private <code>0700</code> directories and <code>0600</code> files and are removed after analysis. To retain both CSVs, add <code>--keep-export NEWDIR</code> with a new destination under a trusted parent directory. Retained exports contain grouping identities and must stay private; reports use aliases.</p>
-<h3 id="export">Manual psql alternative or existing paired exports</h3>
-<p>Requires curl, psql and approved read-only access to <code>LiteLLM_SpendLogs</code> and <code>LiteLLM_DailyUserSpend</code>, configured as the PostgreSQL service <code>litellm_readonly</code>. Set <code>START_UTC</code> and <code>END_UTC</code> to 16 days of completed UTC dates, with both bounds at midnight (for example <code>2026-09-23T00:00:00Z</code> and <code>2026-10-09T00:00:00Z</code>). The end bound is exclusive. Use a private working directory without existing <code>coverage-helper</code> or <code>litellm-coverage-export</code> folders.</p>
+<p><strong>2. Run it</strong> with the connection file from the <a href="litellm-spend.html#run">LiteLLM spend guide</a>:</p>
+<pre data-own="row-coverage-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --daily --group-by key</code></pre>
+<p>For each UTC day of the last two weeks, you get the rows in the spend log, the requests in LiteLLM's daily totals, and how many are missing. The usual spend comparison follows.</p>
+</aside>
+<section id="access"><h2>Need database access?</h2>
+<p>The same read-only login as the <a href="litellm-spend.html#access">LiteLLM spend guide</a>, plus read access to four columns of the daily totals table:</p>
+<pre data-sql="row-coverage-daily-grants" data-exit="0"><code>GRANT SELECT (date, api_requests, successful_requests, failed_requests)
+  ON TABLE public."LiteLLM_DailyUserSpend" TO fleetdiff_reader;</code></pre>
+</section>
+<section id="file"><h2>Already have both exports?</h2>
+<pre data-own="row-coverage" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./spend.csv --litellm-daily-spend ./daily.csv --group-by key</code></pre>
+<details id="export"><summary>Export both with psql instead</summary>
+<p>Set <code>BEFORE</code> and <code>AFTER</code> to 16 days of RFC3339 UTC midnight bounds; the end is exclusive.</p>
 <pre data-own="row-coverage-export" data-exit="0"><code>set -eu
 umask 077
+# Set BEFORE and AFTER to cover 16 days, both at UTC midnight.
+# Use RFC3339 bounds, for example 2026-09-23T00:00:00Z to 2026-10-09T00:00:00Z.
+# AFTER is exclusive.
 mkdir ./coverage-helper
 for file in export-coverage.sh export.sql daily-projection.sql; do
   curl -fsSLo "./coverage-helper/$file" \
     "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.0/examples/litellm-spend/$file"
 done
 sh ./coverage-helper/export-coverage.sh ./litellm-coverage-export \
-  "${START_UTC:?set the export start at UTC midnight}" \
-  "${END_UTC:?set the export end at UTC midnight}"</code></pre>
-<p>The helper creates a new private directory and exports both CSVs in one read-only, repeatable-read transaction. It refuses an existing directory and writes through separate file descriptors. Keep the three helper files together. The daily CSV contains only dates and request counts; the spend CSV retains grouping identities but excludes prompts, responses and whole metadata objects. Keep both exports and <code>private-psql.out</code>/<code>private-psql.err</code> private.</p>
-<p>Compare the paired exports with the installed binary:</p>
-<pre data-own="row-coverage" data-exit="0"><code>./bin/fleetdiff investigate \
+  "$BEFORE" \
+  "$AFTER"</code></pre>
+<pre data-own="row-coverage-export-files" data-exit="0"><code>./bin/fleetdiff investigate \
   --litellm-spend ./litellm-coverage-export/spend.csv \
   --litellm-daily-spend ./litellm-coverage-export/daily.csv --group-by key</code></pre>
-<p>File mode's default compares two complete seven-day periods inferred from the export; the 16-day export leaves room for both. For shorter exports, add explicit <code>--before-period</code> and <code>--after-period</code> dates. Coverage appears before the usage comparison. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/ROW_COVERAGE.md">released row-coverage guide</a> defines the counts and export contract. To investigate which models and keys changed usage, see <a href="litellm-spend.html">LiteLLM spend</a>.</p>
-</aside>
-<h2>What you'll see</h2>
-<p>Exact opening output from the synthetic sample below; your counts will reflect your exports.</p>
-<pre class="output" data-output="row-coverage"><code>Spend-log row coverage (relative to LiteLLM daily request counts):
-  2026-10-07 UTC: 8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row.
-  2026-10-08 UTC: 1 exported row; 1 daily request (1 successful, 0 failed); counts match.
-Token and spend totals below use exported rows only.</code></pre>
-<p>The first day has one fewer spend row than daily requests; the next day matches. All selected request rows count, including failed records and call types excluded from token analysis. Days follow request <code>startTime</code> in UTC. fleetdiff does not fill in missing tokens, spend or contributor totals.</p>
-<p>Add <code>--format json</code> for per-day counts and status under <code>row_coverage.days</code>. A missing daily row is unknown, not zero; partial UTC days have no inferred missing-row count. Extra exported rows are a discrepancy to review, not a negative missing count.</p>
-<p>The motivating reports describe <a href="https://github.com/BerriAI/litellm/issues/46403">spend rows lost when provider response IDs collide</a> and <a href="https://github.com/BerriAI/litellm/issues/46435">reported spend-log row loss under sustained concurrency</a>. The released fixture records the response-ID collision case; it does not validate detection of the reported under-load failure.</p>
-<h2>No data handy? Try the sample</h2>
-<p class="meta">Requires curl, gh, shasum and tar, with the same supported platforms as above. No Git checkout, Go build, database or model calls are needed. Run in a fresh directory.</p>
+</details></section>
+<details class="security-note"><summary>Security and access</summary>
+<ul>
+<li>fleetdiff reads one read-only snapshot. It never writes to your database, and it doesn't read prompts or responses.</li>
+<li>Remote databases must use <code>sslmode=verify-full</code>. Only a local socket may skip TLS.</li>
+<li>The connection URL comes from an owner-only file or the <code>FLEETDIFF_LITELLM_DATABASE_URL</code> environment variable, never from the command line.</li>
+<li>Analysis happens on your machine. Nothing is sent anywhere else. Reports use aliases instead of raw keys.</li>
+</ul>
+<p>Full details: <a href="security.html">security review</a>.</p>
+</details>
+<section id="sample">
+<h2>Try the sample</h2>
+<p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
 <pre data-run="row-coverage" data-exit="0"><code>set -eu
 umask 077
 mkdir fleetdiff-row-coverage
@@ -57,8 +63,24 @@ sh scripts/install.sh v0.12.0 ./release
   --litellm-spend examples/litellm-spend/coverage_runtime_spend.csv \
   --litellm-daily-spend examples/litellm-spend/coverage_runtime_daily.csv \
   --before-period 2026-10-07 --after-period 2026-10-08</code></pre>
+<h3>What you'll see</h3>
+<p>8 exported rows versus 9 daily requests: 1 missing row.</p>
+<p>Exact opening output from this synthetic sample; your counts will reflect your exports.</p>
+<pre class="output" data-output="row-coverage"><code>Spend-log row coverage (relative to LiteLLM daily request counts):
+  2026-10-07 UTC: 8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row.
+  2026-10-08 UTC: 1 exported row; 1 daily request (1 successful, 0 failed); counts match.
+Token and spend totals below use exported rows only.</code></pre>
+<p>The first day has one fewer spend row than daily requests; the next day matches.</p>
+<p>Add <code>--format json</code> for per-day counts and status under <code>row_coverage.days</code>.</p>
+<p>The sample reproduces a real <a href="https://github.com/BerriAI/litellm/issues/46403">response-ID collision</a> through LiteLLM's own database writers.</p>
 <p class="meta">The released <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/coverage_runtime_spend.csv">spend CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/coverage_runtime_daily.csv">daily CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/TESTING.md">verification record</a> come from a synthetic workload through pinned LiteLLM v1.104.0's proxy and database writers.</p>
-<h2>Limits</h2>
-<p>Use the same database scope, date bounds, filters and retention for both inputs, and let asynchronous writers settle before exporting completed days. A shared snapshot aligns reads, not separate write completion times. Daily counts are a second accounting path, not an independent request oracle: matching counts cannot reveal requests omitted from both paths. In the pinned runtime, disabling failure logging omitted failed requests from both tables, while successful response-cache hits counted in both without a provider call. These are logged spend-transaction counts, not all incoming requests or provider sends. Recheck other LiteLLM versions and logging configurations; a shortfall identifies records to investigate, not its cause.</p>
-<p class="measurement-context">This example compares exported rows with recorded daily counts; it leaves token and spend totals unchanged.<br>
+<details class="measurement-details">
+<summary>What the numbers mean</summary>
+<p>All selected request rows count, including failed records and call types excluded from token analysis. Days follow request <code>startTime</code> in UTC. fleetdiff does not fill in missing tokens, spend or contributor totals.</p>
+<p>A missing daily row is unknown, not zero; partial UTC days have no inferred missing-row count. Extra exported rows are a discrepancy to review, not a negative missing count.</p>
+<p>A separate report describes <a href="https://github.com/BerriAI/litellm/issues/46435">spend-log row loss under sustained concurrency</a>; this fixture does not validate detection of that reported under-load failure.</p>
+<p class="measurement-context">The daily totals are LiteLLM's second record of the same traffic, not an independent count. A request missing from both records can't be seen.<br>
+Export completed days only, so both records have finished writing.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
+</details>
+</section>

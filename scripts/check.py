@@ -11,15 +11,22 @@ from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
 from build import STATIC_ROOT_FILES
 from outsider import Blocks
+from guide_flow import check_guide_flow
+from guide_prose import check as check_guide_prose
 
 ROOT = Path(__file__).resolve().parents[1]
+PROSE_GUIDES = {"litellm-spend", "routing", "row-coverage"}
 GUIDE_CONTEXT = {
     "cardinality": "diagnose reads your collector configuration; your metrics backend reports live series counts.",
     "token-spike": "A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.",
     "tokenmaxxing": "Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.",
-    "litellm-spend": "This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.",
-    "row-coverage": "This example compares exported rows with recorded daily counts; it leaves token and spend totals unchanged.",
-    "routing": "This synthetic example checks recorded routing distributions and attribution coverage, not a performance or savings measurement.",
+    "litellm-spend": "these are the tokens and spend LiteLLM recorded, not your provider invoice. A change between periods shows what moved, not why.",
+    "row-coverage": ["The daily totals are LiteLLM's second record of the same traffic, not an independent count. A request missing from both records can't be seen.",
+                     "Export completed days only, so both records have finished writing."],
+    "routing": ["The model shown is the one the gateway recorded, not a confirmation from the provider.",
+                "A change in the model mix shows what changed, not why.",
+                "Requests with an unknown model stay in the totals.",
+                "Only rows LiteLLM marks as classifier calls count as classifier cost."],
     "what-if": "This synthetic example checks repricing arithmetic for recorded model attempts with complete token splits, not completed-task costs.",
     "session-budget": "Recorded session totals are review evidence, not an enforcement verdict or completed-task costs. Missing identities stay unattributed; absent recorded rejections do not prove that no rejection occurred.",
     "cache-check": "Uncached-input growth can reflect input volume or workload mix, not necessarily a per-key cache-share loss. These recorded shares do not diagnose causes or costs; the synthetic example checks arithmetic, not provider cache behavior. Summary-based investigate reports support aggregate shares with sufficient coverage, but do not show per-model cache breakdowns or cache-weighted key/session rankings.",
@@ -93,6 +100,7 @@ def main():
         page.feed(path.read_text())
         footer = path.read_text().split('<footer>', 1)[1].split('</footer>', 1)[0]
         assert footer.count('Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>: no cookies, no personal data') == 1, path.name
+        assert footer.count('<a href="security.html#verify-fleetdiff">Manual release verification</a>') == 1, path.name
         check_reading_flow((ROOT / "pages" / (entry["slug"] + ".html")).read_text())
         nav = path.read_text().split('<nav aria-label="Guides">', 1)[1].split('</nav>', 1)[0]
         assert nav.index('href="token-spike.html"') < nav.index('href="tokenmaxxing.html"') < nav.index('href="cardinality.html"'), path.name
@@ -109,7 +117,10 @@ def main():
         assert '>Trace check</a>' in nav, path.name
         assert nav.index('href="anomalies.html"') < nav.index('href="traces-usage.html"') < nav.index('href="distinct-users.html"'), path.name
         measurement_sections += "measurement-notes" in page.ids
-        assert "What the numbers mean" not in path.read_text(), path.name
+        if entry["slug"] in {"litellm-spend", "routing", "row-coverage"}:
+            assert path.read_text().count('<summary>What the numbers mean</summary>') == 1, path.name
+        else:
+            assert "What the numbers mean" not in path.read_text(), path.name
         assert page.links.count("summaries.html#measurement-notes") == 1, path.name
         assert page.h1 == 1 and page.has_description, path.name
         title = entry.get("document_title", entry["title"] + " | LLM Measurement")
@@ -166,7 +177,9 @@ def main():
             assert page.commands == 1, path.name
             if entry["slug"] != "litellm-spend":
                 assert "?" in entry["title"], path.name
-            context = html.escape(GUIDE_CONTEXT[entry["slug"]])
+            context = GUIDE_CONTEXT[entry["slug"]]
+            context = "<br>\n".join(html.escape(line, quote=False) for line in
+                                    (context if isinstance(context, list) else [context]))
             notes_link = '<a href="summaries.html#measurement-notes">Measurement notes</a>'
             if entry["slug"] == "cache-check":
                 notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/CACHE.md">Cache measurements and limits</a>.'
@@ -175,9 +188,18 @@ def main():
             assert expected in path.read_text(), (path.name, "guide context must precede its notes link")
             assert path.read_text().count('class="measurement-context"') == 1, path.name
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
-            ordered = ['class="lead"', 'class="own-data"', "What you'll see", "No data handy? Try the sample", 'class="measurement-context"']
-            positions = [source.index(marker) for marker in ordered]
-            assert positions == sorted(positions), (path.name, "own-data-first order")
+            if entry["slug"] in PROSE_GUIDES:
+                result = check_guide_prose(source, entry["title"],
+                                          250 if entry["slug"] in {"litellm-spend", "routing", "row-coverage"} else 200)
+                print(f"PASS prose: {entry['slug']}: {result['visible_words']} visible words before sample")
+            if entry["slug"] in {"litellm-spend", "row-coverage"}:
+                check_guide_flow(source, ["#run", "#access", "#file", "#sample"])
+            elif entry["slug"] == "routing":
+                check_guide_flow(source, ["#run", "#scope", "litellm-spend.html#access", "#file", "#sample"])
+            else:
+                ordered = ['class="lead"', 'class="own-data"', "What you'll see", "No data handy? Try the sample", 'class="measurement-context"']
+                positions = [source.index(marker) for marker in ordered]
+                assert positions == sorted(positions), (path.name, "own-data-first order")
             parsed = Blocks()
             parsed.feed(source)
             assert parsed.own and all("git clone" not in b["text"] for b in parsed.own), path.name
@@ -212,8 +234,9 @@ def main():
         "Compare exported spend rows with LiteLLM's daily request counts and see any missing rows.",
     ):
         assert teaser in html.unescape(home), teaser
-    assert ('<p class="lead">Compare two periods of LiteLLM spend logs to see which models and keys '
-            'drove a change, and which records have incomplete usage.</p>') in (ROOT / "docs/litellm-spend.html").read_text()
+    assert ('<p class="lead">fleetdiff reads your LiteLLM spend logs and tells you what changed between the '
+            'last two weeks: which models and keys drove it, and which records look incomplete. '
+            'It runs on your machine and only reads.</p>') in (ROOT / "docs/litellm-spend.html").read_text()
     for slug in ("anomalies", "litellm-spend"):
         body = (ROOT / "pages" / (slug + ".html")).read_text()
         assert '<a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a>' in body, slug
@@ -245,16 +268,32 @@ def main():
         assert record["command_sha256"] == hashlib.sha256(command["text"].encode()).hexdigest(), record["page"]
     own_verified = json.loads((ROOT / "evidence/own-data-verified.json").read_text())["results"]
     actual = {}
-    for slug in guide_slugs | {"index"}:
+    for slug in guide_slugs | {"index", "security"}:
         blocks = Blocks()
         blocks.feed((ROOT / "pages" / (slug + ".html")).read_text())
         for block in blocks.own:
             assert block["id"] not in actual
             actual[block["id"]] = (slug, block)
+    assert len(actual) == len(own_verified)
     assert set(actual) == {r["block"] for r in own_verified}
     for record in own_verified:
         slug, block = actual[record["block"]]
         assert record["pass"] and record["page"] == slug and record["exit"] == block["exit"]
+        assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest(), block["id"]
+    sql_blocks = {}
+    for path in (ROOT / "pages").glob("*.html"):
+        grants = Blocks()
+        grants.feed(path.read_text())
+        for block in grants.sql:
+            assert block["id"] not in sql_blocks, "duplicate SQL block"
+            sql_blocks[block["id"]] = block
+    sql_records = [sql for record in own_verified
+                   for sql in record.get("database", {}).get("sql_blocks", [])
+                   if sql["block"] in sql_blocks]
+    assert {r["block"] for r in sql_records} == set(sql_blocks), "unchecked published SQL"
+    for record in sql_records:
+        block = sql_blocks[record["block"]]
+        assert record["pass"] and record["exit"] == 0
         assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest(), block["id"]
     reviewer = Blocks()
     reviewer.feed((ROOT / "pages/security.html").read_text())
@@ -264,6 +303,11 @@ def main():
         block = next(b for b in reviewer.review if b["id"] == record["block"])
         assert record["pass"] and record["exit"] == 0
         assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest(), record["block"]
+    visual = json.loads((ROOT / "evidence/rewrite-visual-verified.json").read_text())
+    for name, digest in visual["files"].items():
+        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, (name, "stale visual evidence")
+    assert all(r["pass"] and r["geometry"]["width"] == r["geometry"]["scroll"] for r in visual["results"])
+    assert any(r["slug"] == "litellm-spend" and r["width"] == 1366 and r["geometry"]["indexBottom"] < 768 for r in visual["results"])
     print(f"PASS: {len(pages)} pages, {guides} runnable guides, local links, sitemap, llms.txt and static root files")
 
 
