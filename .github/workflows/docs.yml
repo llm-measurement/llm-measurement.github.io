@@ -57,3 +57,21 @@ jobs:
       - run: docker pull ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:b17b3489b65c27a622402982e8e61ee44c7ada247ff3168efacc63a3867c7818
       - run: docker pull otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1
       - run: python3 scripts/check.py --own-data --output evidence/local/own-data
+  indexnow:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [build, examples, own-data]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: indexnow-main
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - name: Verify live pages and notify IndexNow
+        run: python3 scripts/indexnow.py --submit

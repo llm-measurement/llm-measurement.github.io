@@ -12,7 +12,7 @@ import summary_evidence
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://llm-measurement.github.io/"
 PAGES = json.loads((ROOT / "pages.json").read_text())
-STATIC_ROOT_FILES = ("googled831a5845f87080c.html",)
+STATIC_ROOT_FILES = ("googled831a5845f87080c.html", "1fcb3191597647daa6285898dc9171b1.txt")
 FRAME = Template('''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>$document_title</title><meta name="description" content="$description">
