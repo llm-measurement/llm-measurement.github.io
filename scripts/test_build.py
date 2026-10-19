@@ -46,8 +46,8 @@ class BuildTests(unittest.TestCase):
              "and which requests never reached the spend logs."),
             ("row-coverage", "Row coverage",
              "LiteLLM spend logs missing requests? Compare with daily counts",
-             "Compare LiteLLM spend-log rows with recorded daily counts; review missing-row discrepancies "
-             "and the released response-ID collision example."),
+             "Compare LiteLLM spend-log rows with daily request counts to find requests that never reached "
+             "the spend logs, with a real response-ID collision as the example."),
             ("routing", "Routing audit",
              "Which model actually served your LiteLLM route?",
              "Audit LiteLLM Auto Routing and fallbacks: compare model shares, missing attribution "
