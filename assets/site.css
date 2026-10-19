@@ -36,6 +36,13 @@ footer { border-top: 1px solid #dde4e0; max-width: 1180px; margin: auto; padding
 .own-data h2 { margin-top: 0; font-weight: 700; }
 .own-data > :last-child { margin-bottom: 0; }
 .own-data pre { background: var(--paper); }
+.path-index { padding: 0; margin: 20px 0 28px; border-bottom: 1px solid var(--line); }
+.path-index ul { display: flex; flex-wrap: wrap; gap: 8px 24px; list-style: none; margin: 0; padding: 0 0 16px; }
+.path-index li { margin: 0; }
+.path-index a { display: inline; padding: 0; border: 0; color: var(--link); text-decoration: underline; font-size: 16px; }
+section[id], aside[id], details[id], h2[id], h3[id] { scroll-margin-top: 20px; }
+details > summary { cursor: pointer; font-weight: 600; padding: 12px 0; }
+.security-note { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 24px 0; }
 @media (prefers-color-scheme: dark) {
   :root { --ink: #e6ebe8; --paper: #171b19; --link: #8ad6b6; --muted: #b3beb7; --line: #414b45; --surface: #222a25; --selected: #23382d; --accent: #7acba6; --output: #222b32; }
   .brand { color: var(--ink); }

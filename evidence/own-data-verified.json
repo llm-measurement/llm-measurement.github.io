@@ -4,13 +4,25 @@
   "python": "3.14.2",
   "fixture_source": "6089061c931fa19fac876e40b3809fdea4792ab8",
   "method": "Exact published commands; fresh HOME/directories/caches; anonymous fixed-commit source archive; real released installer, CLI and library. Synthetic data is seeded into real read-only Postgres using cached digest-pinned network-none Docker. Native commands use the unchanged installed host binary through a loopback byte transport, not a database mock. The paired psql helper executes unmodified inside the container to retain its inherited descriptors.",
+  "dependencies": [
+    {
+      "page": "security",
+      "source_page": "litellm-spend",
+      "block": "litellm-install",
+      "exit": 0,
+      "pass": true,
+      "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
+      "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
+      "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
+    }
+  ],
   "results": [
     {
       "page": "index",
       "block": "home-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 1.99,
+      "seconds": 2.01,
       "command_sha256": "d0b7e8b75aed9bda578e5cd76dc1466d31ca667e3b30b77fcd7d0bf3b1bcd5b3",
       "stdout_sha256": "bb5917f2cf529949ea4076162634b14b184c92cb59cf82a10bca182d46d72667",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -22,14 +34,14 @@
       "exit": 0,
       "seconds": 0.01,
       "command_sha256": "2190e825811c6d577db6d53f5dbfd40e0be43083f6c459a1955f634881f74779",
-      "stdout_sha256": "1fe6ac6e5c47706ea0fbb04792aee110e1566b6bca9be5c9d5cbf8cb113026f2"
+      "stdout_sha256": "204487dbd708054b316f3c9c05368e42f6ad0ab3eff58d8eb70bd4168a60426d"
     },
     {
       "page": "index",
       "block": "home-python",
       "pass": true,
       "exit": 0,
-      "seconds": 2.16,
+      "seconds": 2.07,
       "command_sha256": "dcc5c54a5057f2ae2be3240de7cf9108022db503fc8ff771d85887a8712b2e01",
       "stdout_sha256": "1ecfa391576f8309c30dd84b4dea95388fb81f674d4af5bac0e918441ff24ef3"
     },
@@ -38,7 +50,7 @@
       "block": "home-go",
       "pass": true,
       "exit": 0,
-      "seconds": 1.08,
+      "seconds": 5.93,
       "command_sha256": "53256d1728c9cfcab706edc92ec0a2a512f7df4e3a7a365f9d8b28a6ee5e5f9e",
       "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -47,7 +59,7 @@
       "block": "token-spike",
       "pass": true,
       "exit": 0,
-      "seconds": 2.72,
+      "seconds": 1.49,
       "command_sha256": "d0b7e8b75aed9bda578e5cd76dc1466d31ca667e3b30b77fcd7d0bf3b1bcd5b3",
       "stdout_sha256": "bb5917f2cf529949ea4076162634b14b184c92cb59cf82a10bca182d46d72667",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -66,7 +78,7 @@
       "block": "litellm-install",
       "pass": true,
       "exit": 0,
-      "seconds": 4.73,
+      "seconds": 1.3,
       "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
       "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -76,12 +88,58 @@
       "block": "litellm-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.09,
-      "command_sha256": "555b5ddddbb48a71058c6bceb21d2fbc51a68ac0bb0164b24482c3a0476839b0",
+      "seconds": 2.29,
+      "command_sha256": "574d1e9b1d5dc03e2db52f55ca2dd033d69140f1f1b4ef2df54c42c3277408b0",
       "stdout_sha256": "6606e65567f3e96c3da02b8e08ca013eaae5c6bc0a542ed113770db7e1992d86",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
+        "database": "litellm",
+        "sql_blocks": [
+          {
+            "block": "litellm-reader-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "436f346a5453ac23607d44ae376b8e192702bcbc8c260263f6b53666a4076af9",
+            "stdout_sha256": "793665d83a636c2cdeb75cb237c976b91115a9a089652f68415c3f1be85cd60a"
+          },
+          {
+            "block": "litellm-daily-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "0a9a4756b147febad3952854cd875de32fe54f371fe739707a29888677945036",
+            "stdout_sha256": "ac5edd8ccc256e797590beae03179d7b9951c07f5e759f67d15b2259b87c49ce"
+          }
+        ],
+        "column_select_privileges": {
+          "agent_id": "t",
+          "api_key": "t",
+          "call_type": "t",
+          "completion_tokens": "t",
+          "custom_llm_provider": "t",
+          "endTime": "t",
+          "end_user": "t",
+          "messages": "f",
+          "metadata": "t",
+          "model": "t",
+          "model_group": "t",
+          "model_id": "t",
+          "organization_id": "t",
+          "prompt_tokens": "t",
+          "proxy_server_request": "f",
+          "request_id": "t",
+          "response": "f",
+          "session_id": "t",
+          "spend": "t",
+          "startTime": "t",
+          "status": "t",
+          "team_id": "t",
+          "total_tokens": "t",
+          "user": "t"
+        },
+        "role_restrictions": "litellm|f|f|f|f|f|f|f|f|f|f|f|f",
+        "credential_relative_path": ".config/litellm-db-url",
+        "credential_mode": "0600",
         "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
         "transport": {
           "connections": 1,
@@ -89,40 +147,10 @@
           "server_bytes": 40956,
           "errors": []
         },
+        "daily_readonly_identity": "t|t|t|t|f|f",
         "fixture_sha256": "6f3d1264162bd46bdc5419db67e44263ffb867f894e31ee362b2b0cb87c28ce2"
       },
       "fixture_utc_midnight": "2026-10-19T00:00:00+00:00"
-    },
-    {
-      "page": "litellm-spend",
-      "block": "litellm-native-env",
-      "pass": true,
-      "exit": 0,
-      "seconds": 2.11,
-      "command_sha256": "fd9ac14b2de89171aa42627f5171cbb00ea80e652ba50698a15ca89e7cb1500f",
-      "stdout_sha256": "6606e65567f3e96c3da02b8e08ca013eaae5c6bc0a542ed113770db7e1992d86",
-      "database": {
-        "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
-        "network": "none",
-        "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
-        "transport": {
-          "connections": 1,
-          "client_bytes": 4485,
-          "server_bytes": 40956,
-          "errors": []
-        },
-        "fixture_sha256": "6f3d1264162bd46bdc5419db67e44263ffb867f894e31ee362b2b0cb87c28ce2"
-      },
-      "fixture_utc_midnight": "2026-10-19T00:00:00+00:00"
-    },
-    {
-      "page": "litellm-spend",
-      "block": "spend-export",
-      "pass": true,
-      "exit": 0,
-      "seconds": 1.64,
-      "command_sha256": "4450b873155e78cf89da674a0d6580ef2aa331fcf4b1c140b0920565314e3d8d",
-      "stdout_sha256": "7cf3bd24f6b2be47126b6dd13f8145174ba5c4f8bcb09e6aa1946994d1998dcb"
     },
     {
       "page": "litellm-spend",
@@ -130,15 +158,34 @@
       "pass": true,
       "exit": 0,
       "seconds": 0.02,
-      "command_sha256": "da730162bcad82d2540240d33bb5f68468ab2db245989ba04e2d18a5d81cc848",
+      "command_sha256": "d1b8a61d2aff170b55604823de3306b9a5a2a7b4509730fa80e0d9f0ea43994c",
       "stdout_sha256": "102c72d6940e30ee9d68dc6c864bb44da53ce41cf204095f2b8a6e9ff3ce86ec"
+    },
+    {
+      "page": "litellm-spend",
+      "block": "spend-export",
+      "pass": true,
+      "exit": 0,
+      "seconds": 1.68,
+      "command_sha256": "61e7ee3ec7d0aaa3013a45812a38ea35a70ec448350f6f401a7a99180cdb352d",
+      "stdout_sha256": "7cf3bd24f6b2be47126b6dd13f8145174ba5c4f8bcb09e6aa1946994d1998dcb"
+    },
+    {
+      "page": "litellm-spend",
+      "block": "litellm-export-file",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.02,
+      "command_sha256": "da730162bcad82d2540240d33bb5f68468ab2db245989ba04e2d18a5d81cc848",
+      "stdout_sha256": "102c72d6940e30ee9d68dc6c864bb44da53ce41cf204095f2b8a6e9ff3ce86ec",
+      "input_sha256": "b2af2f58c5696aadebb9c30d2f89931eac8764a632463e5b9cca1d95930c23e3"
     },
     {
       "page": "session-budget",
       "block": "session-budget",
       "pass": true,
       "exit": 0,
-      "seconds": 1.41,
+      "seconds": 1.45,
       "command_sha256": "23a45001705b88dda102cf4b5b7d1c6039ca8a0e67e01700c73dc8ac294095a6",
       "stdout_sha256": "1ff7b045b87214b8a0f4e1d24033f3a7e4f0d3cce5ad131e628279b6ef804ff2",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -148,7 +195,7 @@
       "block": "cache-check",
       "pass": true,
       "exit": 0,
-      "seconds": 1.24,
+      "seconds": 1.51,
       "command_sha256": "4ba457032bca1425a19f5ff32c6b8b4ea8cfef699aa698fa7182315631c96466",
       "stdout_sha256": "481c865369322b8cae0a88c6d08f540d0a3e0e087b82f85a810c0c8d4dea7cb3",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -158,7 +205,7 @@
       "block": "cardinality",
       "pass": true,
       "exit": 3,
-      "seconds": 1.4,
+      "seconds": 1.77,
       "command_sha256": "68f8fa76cfe48a455a1d08d6201565d1c825d0f52c0dbf9c4e9b743f626216b0",
       "stdout_sha256": "0cf2cc6539019856e1a1ec782edbcb0d9a30c2d0637d64dd71ebf38fe7a7e9fe",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -168,9 +215,9 @@
       "block": "traces-usage",
       "pass": true,
       "exit": 0,
-      "seconds": 1.47,
+      "seconds": 1.33,
       "command_sha256": "224a879db1862ea868d39b4fee0aeb946a127000b061f143b0830b64b4949a7e",
-      "stdout_sha256": "1ad8984efab18e7204f41dd8b7fc4906329c7e6d4f0e1461606e74cf98c41abb",
+      "stdout_sha256": "71f0216d19b878dddcf0f947ae661853df4345550315899551532cfe45c87a0e",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
     },
     {
@@ -178,7 +225,7 @@
       "block": "anomalies-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.2,
+      "seconds": 1.21,
       "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
       "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -190,14 +237,14 @@
       "exit": 3,
       "seconds": 0.02,
       "command_sha256": "8310e32c846f582977b24b3ac1c1db1ac629403bf0867fc27330dbfb74e44c5f",
-      "stdout_sha256": "79d7b90a65bb3179eca2137cceed030b4978de422d8d058ba5c6af391863402e"
+      "stdout_sha256": "ef1ffc0e0886b83b0620f5f1042ebd4b000293d0810de145e30256e21a263740"
     },
     {
       "page": "distinct-users",
       "block": "distinct-users",
       "pass": true,
       "exit": 0,
-      "seconds": 2.49,
+      "seconds": 1.85,
       "command_sha256": "81671cb47bbb144557140e20bbd2ab73a2887df85f0fb48092d1f0a19f421c29",
       "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475"
     },
@@ -206,7 +253,7 @@
       "block": "tokenmaxxing",
       "pass": true,
       "exit": 0,
-      "seconds": 2.31,
+      "seconds": 1.81,
       "command_sha256": "5e889bcd47ea4221fe9470bdb92d29a042e1de835e4449545f49885ca94bbc69",
       "stdout_sha256": "3602de85e92ba5bcb4a2fa5330baa39d07c5f77ac32acefd46092618dd511635"
     },
@@ -215,7 +262,7 @@
       "block": "row-coverage-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.25,
+      "seconds": 1.35,
       "command_sha256": "ad31ff8c5aa7c15ed474f6cad5063e00d554a1396fb594859c69406ca6b2d306",
       "stdout_sha256": "328c93ab051d5160b0f9fe024aad8b497e258cb32b9fd012f94a10c5aaf93f95",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -225,12 +272,58 @@
       "block": "row-coverage-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.11,
-      "command_sha256": "459608f501f18b32bf94b2aa50b51a4ffcd14821827ea7117d970d7e21f9516c",
+      "seconds": 2.3,
+      "command_sha256": "ceb09c621c04a2cdabffc293ef780cb6fcbae3085fa548c2eb32f2e20f12e189",
       "stdout_sha256": "d961422e84b1435ad95432b287963b660b775a2542d557378930871854d63269",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
+        "database": "litellm",
+        "sql_blocks": [
+          {
+            "block": "litellm-reader-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "436f346a5453ac23607d44ae376b8e192702bcbc8c260263f6b53666a4076af9",
+            "stdout_sha256": "793665d83a636c2cdeb75cb237c976b91115a9a089652f68415c3f1be85cd60a"
+          },
+          {
+            "block": "row-coverage-daily-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "0a9a4756b147febad3952854cd875de32fe54f371fe739707a29888677945036",
+            "stdout_sha256": "ac5edd8ccc256e797590beae03179d7b9951c07f5e759f67d15b2259b87c49ce"
+          }
+        ],
+        "column_select_privileges": {
+          "agent_id": "t",
+          "api_key": "t",
+          "call_type": "t",
+          "completion_tokens": "t",
+          "custom_llm_provider": "t",
+          "endTime": "t",
+          "end_user": "t",
+          "messages": "f",
+          "metadata": "t",
+          "model": "t",
+          "model_group": "t",
+          "model_id": "t",
+          "organization_id": "t",
+          "prompt_tokens": "t",
+          "proxy_server_request": "f",
+          "request_id": "t",
+          "response": "f",
+          "session_id": "t",
+          "spend": "t",
+          "startTime": "t",
+          "status": "t",
+          "team_id": "t",
+          "total_tokens": "t",
+          "user": "t"
+        },
+        "role_restrictions": "litellm|f|f|f|f|f|f|f|f|f|f|f|f",
+        "credential_relative_path": ".config/litellm-db-url",
+        "credential_mode": "0600",
         "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
         "transport": {
           "connections": 1,
@@ -246,11 +339,24 @@
     },
     {
       "page": "row-coverage",
+      "block": "row-coverage",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.02,
+      "command_sha256": "a5c0833bfc990f346c91fc13c33280615f879bd7d42329b10240acb96592e012",
+      "stdout_sha256": "c8d539ebab9acb25195435c035fd2cef060ef0d9d7303bc78335ff5f96d1e934",
+      "input_sha256": {
+        "spend.csv": "00b946ccc650388abb4f4541875cf3fe8950260e0865b18e74d87648ed0f94f8",
+        "daily.csv": "c2cdaa6624fa773a415f3659a7bbeb1b2eaa9e0de6647b0a5b0a3616fbc8f096"
+      }
+    },
+    {
+      "page": "row-coverage",
       "block": "row-coverage-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.96,
-      "command_sha256": "cec865f1dc74c1fc96b8b82ef581a3962c2583127fe614f7b01e2f728069c37a",
+      "seconds": 1.87,
+      "command_sha256": "e1ea13695e183a22f7c6e59b852e0b3c5deafead0006387d47c104ef9b510616",
       "stdout_sha256": "04bd25e4f2506bddfa650bbefb7c1c3c2babf131c000d5d36956c7b17d69dbcb",
       "paired_export": {
         "start_utc": "2026-09-23T00:00:00Z",
@@ -264,19 +370,28 @@
     },
     {
       "page": "row-coverage",
-      "block": "row-coverage",
+      "block": "row-coverage-export-files",
       "pass": true,
       "exit": 0,
       "seconds": 0.02,
       "command_sha256": "4e630e765f4dc0da3c81018b72528a593cf76bfd48ba9be800901567c9470acb",
-      "stdout_sha256": "c8d539ebab9acb25195435c035fd2cef060ef0d9d7303bc78335ff5f96d1e934"
+      "stdout_sha256": "c8d539ebab9acb25195435c035fd2cef060ef0d9d7303bc78335ff5f96d1e934",
+      "input_sha256": {
+        "litellm-coverage-export/spend.csv": "b563cd6be199e990146c75e1b793bf1f00768a9d3ca7ff633b2405f375e35bd3",
+        "litellm-coverage-export/daily.csv": "8701d921d982c23ad2a2cde1fb0bc3eb1307761b55100aedffff580a62e5bf98"
+      },
+      "standin_report_comparison": {
+        "block": "row-coverage",
+        "pass": true,
+        "stdout_sha256": "c8d539ebab9acb25195435c035fd2cef060ef0d9d7303bc78335ff5f96d1e934"
+      }
     },
     {
       "page": "routing",
       "block": "routing-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.13,
+      "seconds": 1.15,
       "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
       "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -286,52 +401,51 @@
       "block": "routing-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.05,
-      "command_sha256": "2d93755966bfa5f85e0e95413ca1a61343b2f8829b522c3eb34117701e13efb4",
+      "seconds": 2.15,
+      "command_sha256": "aa7ed681e3d23d371392b5fc673156ad218e183b2318461414d66549fac0f733",
       "stdout_sha256": "6edc2c1b6d2a9d1236b7292b0cba11294865180fdd7513ece41b9ea16f0188d9",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
-        "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
-        "transport": {
-          "connections": 1,
-          "client_bytes": 4485,
-          "server_bytes": 4372,
-          "errors": []
+        "database": "litellm",
+        "sql_blocks": [
+          {
+            "block": "released-native-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "1c2019cf20e284d1720e523ceb1b3ca775e89f6bb14652ae31fc4ef2ab140bf3",
+            "stdout_sha256": "793665d83a636c2cdeb75cb237c976b91115a9a089652f68415c3f1be85cd60a"
+          }
+        ],
+        "column_select_privileges": {
+          "agent_id": "t",
+          "api_key": "t",
+          "call_type": "t",
+          "completion_tokens": "t",
+          "custom_llm_provider": "t",
+          "endTime": "t",
+          "end_user": "t",
+          "messages": "f",
+          "metadata": "t",
+          "model": "t",
+          "model_group": "t",
+          "model_id": "t",
+          "organization_id": "t",
+          "prompt_tokens": "t",
+          "proxy_server_request": "f",
+          "request_id": "t",
+          "response": "f",
+          "session_id": "t",
+          "spend": "t",
+          "startTime": "t",
+          "status": "t",
+          "team_id": "t",
+          "total_tokens": "t",
+          "user": "t"
         },
-        "fixture_sha256": "4f5e6018dcd8b916dd84654423be8b757b833040142134dc8ba74fc67cd6da8a"
-      },
-      "fixture_utc_midnight": "2026-10-19T00:00:00+00:00"
-    },
-    {
-      "page": "routing",
-      "block": "routing-export",
-      "pass": true,
-      "exit": 0,
-      "seconds": 1.59,
-      "command_sha256": "5cadf646be077bfead63033b3616758df3a45c72209f69813d53ad01e233d35b",
-      "stdout_sha256": "9c321e601742d0e138165dc7c9e36285a934db0a6e10400813c1d9c4c3d82f27"
-    },
-    {
-      "page": "routing",
-      "block": "routing-audit",
-      "pass": true,
-      "exit": 0,
-      "seconds": 0.01,
-      "command_sha256": "17b9dfb4365d801934131fbc3d5349b91267c0dfb033a62ece1281bc111e5c7e",
-      "stdout_sha256": "9c34a5adef934648062ea2a32c1dc12d359a2db8f58f014fa0f7695f41dff5b5"
-    },
-    {
-      "page": "routing",
-      "block": "routing-agents",
-      "pass": true,
-      "exit": 0,
-      "seconds": 2.06,
-      "command_sha256": "e4b789afd17125111613b99a55e77a43ff373ee6c3bcdd9c45ffdfbe081d2a99",
-      "stdout_sha256": "c11035e068bcae96177dca7b66f8399704def2f8d912137d9f1547604aa1abc6",
-      "database": {
-        "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
-        "network": "none",
+        "role_restrictions": "litellm|f|f|f|f|f|f|f|f|f|f|f|f",
+        "credential_relative_path": ".config/litellm-db-url",
+        "credential_mode": "0600",
         "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
         "transport": {
           "connections": 1,
@@ -348,12 +462,51 @@
       "block": "routing-scope",
       "pass": true,
       "exit": 0,
-      "seconds": 2.07,
-      "command_sha256": "9dd1ace93d4262103a1ba3c4984d0bf74e24260f1a8e75776e71e087ffb4900f",
+      "seconds": 2.2,
+      "command_sha256": "72d0a94f8527c8f8efe50cffc1964061139f2033241c42db6d9c66d1a3cc3220",
       "stdout_sha256": "f127fa941d9d3d6c860ae4d575caef16408ff022732faffe653b57904db245a7",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
+        "database": "litellm",
+        "sql_blocks": [
+          {
+            "block": "released-native-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "1c2019cf20e284d1720e523ceb1b3ca775e89f6bb14652ae31fc4ef2ab140bf3",
+            "stdout_sha256": "793665d83a636c2cdeb75cb237c976b91115a9a089652f68415c3f1be85cd60a"
+          }
+        ],
+        "column_select_privileges": {
+          "agent_id": "t",
+          "api_key": "t",
+          "call_type": "t",
+          "completion_tokens": "t",
+          "custom_llm_provider": "t",
+          "endTime": "t",
+          "end_user": "t",
+          "messages": "f",
+          "metadata": "t",
+          "model": "t",
+          "model_group": "t",
+          "model_id": "t",
+          "organization_id": "t",
+          "prompt_tokens": "t",
+          "proxy_server_request": "f",
+          "request_id": "t",
+          "response": "f",
+          "session_id": "t",
+          "spend": "t",
+          "startTime": "t",
+          "status": "t",
+          "team_id": "t",
+          "total_tokens": "t",
+          "user": "t"
+        },
+        "role_restrictions": "litellm|f|f|f|f|f|f|f|f|f|f|f|f",
+        "credential_relative_path": ".config/litellm-db-url",
+        "credential_mode": "0600",
         "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
         "transport": {
           "connections": 1,
@@ -366,11 +519,110 @@
       "fixture_utc_midnight": "2026-10-19T00:00:00+00:00"
     },
     {
+      "page": "routing",
+      "block": "routing-agents",
+      "pass": true,
+      "exit": 0,
+      "seconds": 2.17,
+      "command_sha256": "4610fcbf5e1ed5bc069a991ff8ba607fd01f9e9bc2a1ae0e4c5d2b01f7cfe14d",
+      "stdout_sha256": "c11035e068bcae96177dca7b66f8399704def2f8d912137d9f1547604aa1abc6",
+      "database": {
+        "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
+        "network": "none",
+        "database": "litellm",
+        "sql_blocks": [
+          {
+            "block": "released-native-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "1c2019cf20e284d1720e523ceb1b3ca775e89f6bb14652ae31fc4ef2ab140bf3",
+            "stdout_sha256": "793665d83a636c2cdeb75cb237c976b91115a9a089652f68415c3f1be85cd60a"
+          }
+        ],
+        "column_select_privileges": {
+          "agent_id": "t",
+          "api_key": "t",
+          "call_type": "t",
+          "completion_tokens": "t",
+          "custom_llm_provider": "t",
+          "endTime": "t",
+          "end_user": "t",
+          "messages": "f",
+          "metadata": "t",
+          "model": "t",
+          "model_group": "t",
+          "model_id": "t",
+          "organization_id": "t",
+          "prompt_tokens": "t",
+          "proxy_server_request": "f",
+          "request_id": "t",
+          "response": "f",
+          "session_id": "t",
+          "spend": "t",
+          "startTime": "t",
+          "status": "t",
+          "team_id": "t",
+          "total_tokens": "t",
+          "user": "t"
+        },
+        "role_restrictions": "litellm|f|f|f|f|f|f|f|f|f|f|f|f",
+        "credential_relative_path": ".config/litellm-db-url",
+        "credential_mode": "0600",
+        "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
+        "transport": {
+          "connections": 1,
+          "client_bytes": 4485,
+          "server_bytes": 4372,
+          "errors": []
+        },
+        "fixture_sha256": "4f5e6018dcd8b916dd84654423be8b757b833040142134dc8ba74fc67cd6da8a"
+      },
+      "fixture_utc_midnight": "2026-10-19T00:00:00+00:00"
+    },
+    {
+      "page": "routing",
+      "block": "routing-audit",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.01,
+      "command_sha256": "aec431a133e972b538a586b4d1e5727caf182bacca4543889a708c9fa60d328f",
+      "stdout_sha256": "da5234c00e0f20d26d7266500f72056f3e67e8f103511a84368f6037985f937e",
+      "input_sha256": {
+        "spend.csv": "71725a897aec8088d5b92baab8ead27103e3144079b1323ebe055e2a436f6607"
+      }
+    },
+    {
+      "page": "routing",
+      "block": "routing-export",
+      "pass": true,
+      "exit": 0,
+      "seconds": 1.61,
+      "command_sha256": "2add2c81d17571afadacad3f8a2fce5b0f30b2dfcff07c734c80003b7cce2b21",
+      "stdout_sha256": "9c321e601742d0e138165dc7c9e36285a934db0a6e10400813c1d9c4c3d82f27"
+    },
+    {
+      "page": "routing",
+      "block": "routing-export-file",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.01,
+      "command_sha256": "6c78ec7a654b792adc1c48ca5e7d4e5e1e3b774b475cf794b27ca003dc64083f",
+      "stdout_sha256": "da5234c00e0f20d26d7266500f72056f3e67e8f103511a84368f6037985f937e",
+      "input_sha256": {
+        "routing-export/spend.csv": "5754b131e556a0587d705ed22217aa2ff341a8cd59a54214bcf03392933862d2"
+      },
+      "standin_report_comparison": {
+        "block": "routing-audit",
+        "pass": true,
+        "stdout_sha256": "da5234c00e0f20d26d7266500f72056f3e67e8f103511a84368f6037985f937e"
+      }
+    },
+    {
       "page": "what-if",
       "block": "what-if-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.94,
+      "seconds": 1.18,
       "command_sha256": "73d538bd2e546c40f50399c7bca4d30f135db7ec29bc4d6e692a81ddb51808f8",
       "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -392,6 +644,72 @@
       "seconds": 0.01,
       "command_sha256": "1e20569ec230a55276454264fb1527d3f8796fa3c315faddfde0dda247d25848",
       "stdout_sha256": "7b86931eb58002da481af3ba8ea3aee87d53e54fc29c5b55ba03a099fffb7bc3"
+    },
+    {
+      "page": "security",
+      "block": "litellm-native-env",
+      "pass": true,
+      "exit": 0,
+      "seconds": 2.2,
+      "command_sha256": "fd9ac14b2de89171aa42627f5171cbb00ea80e652ba50698a15ca89e7cb1500f",
+      "stdout_sha256": "6606e65567f3e96c3da02b8e08ca013eaae5c6bc0a542ed113770db7e1992d86",
+      "database": {
+        "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
+        "network": "none",
+        "database": "litellm",
+        "sql_blocks": [
+          {
+            "block": "released-native-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "1c2019cf20e284d1720e523ceb1b3ca775e89f6bb14652ae31fc4ef2ab140bf3",
+            "stdout_sha256": "793665d83a636c2cdeb75cb237c976b91115a9a089652f68415c3f1be85cd60a"
+          }
+        ],
+        "column_select_privileges": {
+          "agent_id": "t",
+          "api_key": "t",
+          "call_type": "t",
+          "completion_tokens": "t",
+          "custom_llm_provider": "t",
+          "endTime": "t",
+          "end_user": "t",
+          "messages": "f",
+          "metadata": "t",
+          "model": "t",
+          "model_group": "t",
+          "model_id": "t",
+          "organization_id": "t",
+          "prompt_tokens": "t",
+          "proxy_server_request": "f",
+          "request_id": "t",
+          "response": "f",
+          "session_id": "t",
+          "spend": "t",
+          "startTime": "t",
+          "status": "t",
+          "team_id": "t",
+          "total_tokens": "t",
+          "user": "t"
+        },
+        "role_restrictions": "litellm|f|f|f|f|f|f|f|f|f|f|f|f",
+        "credential_relative_path": ".config/litellm-db-url",
+        "credential_mode": "0600",
+        "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
+        "transport": {
+          "connections": 2,
+          "client_bytes": 8970,
+          "server_bytes": 81912,
+          "errors": []
+        },
+        "fixture_sha256": "6f3d1264162bd46bdc5419db67e44263ffb867f894e31ee362b2b0cb87c28ce2"
+      },
+      "fixture_utc_midnight": "2026-10-19T00:00:00+00:00",
+      "file_source_comparison": {
+        "pass": true,
+        "command_sha256": "574d1e9b1d5dc03e2db52f55ca2dd033d69140f1f1b4ef2df54c42c3277408b0",
+        "stdout_sha256": "6606e65567f3e96c3da02b8e08ca013eaae5c6bc0a542ed113770db7e1992d86"
+      }
     }
   ],
   "fixture_archive": {
@@ -404,6 +722,5 @@
     "source_sha256": "d9f9ccef5092ffa878e85383affc4225993194db3c466eed947161892e8a77a1",
     "git_operations": false,
     "file_count": 450
-  },
-  "verified_at_utc": "2026-10-19T01:00:36.216418+00:00"
+  }
 }

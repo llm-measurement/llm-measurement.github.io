@@ -25,7 +25,7 @@ from outsider import Blocks, ROOT
 from postgres_transport import postgres_transport
 
 PAGES = ("index", "token-spike", "litellm-spend", "session-budget", "cache-check", "cardinality",
-         "traces-usage", "anomalies", "distinct-users", "tokenmaxxing", "row-coverage", "routing", "what-if")
+         "traces-usage", "anomalies", "distinct-users", "tokenmaxxing", "row-coverage", "routing", "what-if", "security")
 FIXTURE_VERSION = "v0.12.0"
 # Must match the release source commit; installed binaries are checked against it.
 FIXTURE_COMMIT = "6089061c931fa19fac876e40b3809fdea4792ab8"
@@ -40,6 +40,7 @@ EXPECTED = {
     "token-spike": ("Logged model requests:", "user-1:"),
     "token-spike-summaries": ("Reported tokens: 400 -> 3300", "user-1"),
     "litellm-spend": ("Logged model requests:", "key-1:"),
+    "litellm-export-file": ("Logged model requests: 70 -> 70.", "key-1:"),
     "litellm-native": ("Logged model requests: 70 -> 70.", "key-1:"),
     "litellm-native-env": ("Logged model requests: 70 -> 70.", "key-1:"),
     "session-budget": ("3 of 4 sessions with complete recorded spend exceed the supplied USD 1.00 cap.",
@@ -61,6 +62,8 @@ EXPECTED = {
                             "8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
     "row-coverage": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
                      "2026-10-07 UTC: 8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
+    "row-coverage-export-files": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
+                     "2026-10-07 UTC: 8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
     "what-if-install": ("Verified",),
     "what-if-reprice": ("$0.154400 -> $0.109398 to $0.147974", "Level 1, same work and output verbosity: $0.148703",
                         "Coverage: 3 observations priced; missing splits are excluded, never zero.", "missing split: 1"),
@@ -71,11 +74,25 @@ EXPECTED = {
                        "Classifier routing overhead: 1 -> 1 rows;", "agent known: 0 -> 0; unknown: 1 -> 1"),
     "routing-audit": ("Model-request rows: 3 -> 3 requests; 360 -> 360 recorded tokens;",
                       "Classifier routing overhead: 1 -> 1 rows;", "agent known: 0 -> 0; unknown: 1 -> 1"),
+    "routing-export-file": ("Model-request rows: 3 -> 3 requests; 360 -> 360 recorded tokens;",
+                      "Classifier routing overhead: 1 -> 1 rows;", "agent known: 0 -> 0; unknown: 1 -> 1"),
     "routing-agents": (),
     "routing-scope": ("Model-request rows: 2 -> 2 requests; 240 -> 240 recorded tokens;",),
 }
 NATIVE_BLOCKS = {"litellm-native", "litellm-native-env", "routing-native", "routing-agents", "routing-scope",
                  "row-coverage-native"}
+
+
+def page_blocks(slug):
+    blocks = Blocks()
+    blocks.feed((ROOT / "pages" / (slug + ".html")).read_text())
+    return blocks
+
+
+def installed_version(fresh, env):
+    version = run([str(fresh / "bin/fleetdiff"), "--version"], cwd=fresh, env=env).strip()
+    assert version.split()[:3] == ["fleetdiff", FIXTURE_VERSION, "(" + FIXTURE_COMMIT + ")"], version
+    return version
 
 
 def run(command, *, cwd, env, data=None, timeout=1800):
@@ -171,8 +188,8 @@ def prepare(fresh, source, env, slug):
                     if row[name]:
                         row[name] = "SENTINEL_" + row[name]
                 writer.writerow(row)
-        env.update(BEFORE_PERIOD_UTC="2026-10-01", AFTER_PERIOD_UTC="2026-10-02",
-                   ORIGINAL_ROUTE="SENTINEL_coding-default")
+        env.update(BEFORE="2026-10-01", AFTER="2026-10-02",
+                   ROUTE="SENTINEL_coding-default")
     if slug == "row-coverage":
         with (fresh / "spend.csv").open() as handle:
             earlier = [row for row in csv.DictReader(handle) if row["startTime"] < "2026-10-07"]
@@ -255,10 +272,10 @@ def refresh_database_dates(fresh, env, slug, now):
             writer = csv.DictWriter(handle, fieldnames=columns)
             writer.writeheader()
             writer.writerows(rows)
-    env.update(START_UTC=(end - timedelta(days=14 if slug == "routing" else 16)).isoformat(),
-               END_UTC=end.isoformat(),
-               BEFORE_PERIOD_UTC=(end - timedelta(days=14)).date().isoformat(),
-               AFTER_PERIOD_UTC=(end - timedelta(days=7)).date().isoformat())
+    env.update(EXPORT_BEFORE=(end - timedelta(days=14 if slug == "routing" else 16)).isoformat(),
+               EXPORT_AFTER=end.isoformat(),
+               BEFORE=(end - timedelta(days=14)).date().isoformat(),
+               AFTER=(end - timedelta(days=7)).date().isoformat())
     return end
 
 
@@ -269,11 +286,53 @@ def native_grants(source, daily=False):
     assert 'ON TABLE public."LiteLLM_SpendLogs"' in blocks[0]
     assert 'ON TABLE public."LiteLLM_DailyUserSpend"' in blocks[1]
     grants = blocks[0] + (blocks[1] if daily else "")
-    return grants.replace("CONNECT ON DATABASE litellm", "CONNECT ON DATABASE fixture")
+    return grants
+
+
+def database_fixture_variants(fresh, env, slug, now):
+    """Keep historical file examples separate from clock-relative native inputs."""
+    names = ("spend.csv", "daily.csv") if slug == "row-coverage" else ("spend.csv",)
+    file_env = dict(env, EXPORT_BEFORE=EXPORT_START, EXPORT_AFTER=EXPORT_END)
+    if slug == "routing":
+        file_env.update(EXPORT_BEFORE="2026-10-01T00:00:00Z", EXPORT_AFTER="2026-10-03T00:00:00Z",
+                        BEFORE="2026-10-01", AFTER="2026-10-02")
+    historical = ({name: (fresh / name).read_bytes() for name in names}, file_env)
+    native_env = dict(env)
+    day = refresh_database_dates(fresh, native_env, slug, now)
+    native = ({name: (fresh / name).read_bytes() for name in names}, native_env)
+    return day, {"file": historical, "native": native}
+
+
+def page_native_grants(slug):
+    if slug == "litellm-spend":
+        return page_blocks(slug).sql
+    if slug == "row-coverage":
+        # The row page links the shared role definition and publishes its own daily grant.
+        shared = page_blocks("litellm-spend").sql
+        assert [b["id"] for b in shared] == ["litellm-reader-grants", "litellm-daily-grants"]
+        daily = page_blocks(slug).sql
+        assert [b["id"] for b in daily] == ["row-coverage-daily-grants"]
+        return [shared[0], daily[0]]
+    return None
+
+
+def published_grants(source, blocks):
+    """Match released SQL; execute the decoded page text, never a rewritten copy."""
+    released = re.findall(r"```sql\n(.*?)```", (source / "docs/NATIVE_EXPORT.md").read_text(), re.DOTALL)
+    assert len(released) == 2
+    assert [b["id"] for b in blocks] in (
+        ["litellm-reader-grants", "litellm-daily-grants"],
+        ["litellm-reader-grants", "row-coverage-daily-grants"])
+    for block, expected in zip(blocks, released):
+        # Markdown fences end with a newline; HTML may end directly at </code>.
+        assert block["text"].removesuffix("\n") == expected.removesuffix("\n"), block["id"]
+    return blocks
 
 
 def database_sql(fresh, source, coverage=False, routing=False):
     sql = (source / "examples/litellm-spend/test-schema.sql").read_text()
+    # Only the disposable fixture role changes database name, never page SQL.
+    sql = sql.replace("CONNECT ON DATABASE fixture", "CONNECT ON DATABASE litellm")
     columns = ["request_id", "call_type", "api_key", "user", "team_id", "organization_id", "end_user",
                "model", "model_id", "model_group", "custom_llm_provider", "prompt_tokens", "completion_tokens",
                "total_tokens", "spend", "status", "session_id", "startTime", "endTime"]
@@ -333,7 +392,7 @@ def comparable_rows(rows):
 
 
 @contextmanager
-def database(fresh, source, env, coverage=False, routing=False, native=False):
+def database(fresh, source, env, coverage=False, routing=False, native=False, sql_blocks=None):
     """Actual read-only Postgres; Docker transports psql, it does not stub it."""
     name = "site-export-" + uuid.uuid4().hex[:12]
     image = json.loads((source / "examples/litellm-spend/images.json").read_text())["postgres"]
@@ -348,34 +407,64 @@ def database(fresh, source, env, coverage=False, routing=False, native=False):
         inspected = json.loads(run(["docker", "image", "inspect", image], cwd=fresh, env=env))
         assert image in inspected[0]["RepoDigests"], "cached Postgres digest mismatch"
         run(["docker", "run", "--pull=never", "-d", "--name", name, "--network", "none", "--rm",
-             "-e", "POSTGRES_HOST_AUTH_METHOD=trust", "-e", "POSTGRES_DB=fixture",
+             "-e", "POSTGRES_HOST_AUTH_METHOD=trust", "-e", "POSTGRES_DB=litellm",
              "-v", f"{fresh}:{fresh}", image], cwd=fresh, env=env)
         started = True
         for _ in range(60):
             process = subprocess.run(["docker", "exec", name, "cat", "/proc/1/comm"], env=env, capture_output=True, text=True)
-            ready = subprocess.run(["docker", "exec", name, "pg_isready", "-U", "postgres", "-d", "fixture"], env=env, capture_output=True)
+            ready = subprocess.run(["docker", "exec", name, "pg_isready", "-U", "postgres", "-d", "litellm"], env=env, capture_output=True)
             if process.stdout.strip() == "postgres" and ready.returncode == 0:
                 break
             time.sleep(1)
         else:
             raise RuntimeError("Test database did not become ready")
         sql = database_sql(fresh, source, coverage, routing)
-        run(["docker", "exec", "-i", name, "psql", "-U", "postgres", "-d", "fixture", "-v", "ON_ERROR_STOP=1"], cwd=fresh, env=env, data=sql)
+        if native and not coverage:
+            sql += '''\nCREATE TABLE public."LiteLLM_DailyUserSpend" (
+                date text NOT NULL, api_requests bigint NOT NULL,
+                successful_requests bigint NOT NULL, failed_requests bigint NOT NULL);\n'''
+        admin = ["docker", "exec", "-i", name, "psql", "-U", "postgres", "-d", "litellm", "-v", "ON_ERROR_STOP=1"]
+        run(admin, cwd=fresh, env=env, data=sql)
         network = run(["docker", "inspect", "--format", "{{.HostConfig.NetworkMode}}", name], cwd=fresh, env=env).strip()
         assert network == "none"
         if native:
-            run(["docker", "exec", "-i", name, "psql", "-U", "postgres", "-d", "fixture", "-v", "ON_ERROR_STOP=1"],
-                cwd=fresh, env=env, data=native_grants(source, daily=coverage))
-            identity = run(["docker", "exec", name, "psql", "-U", "fleetdiff_reader", "-d", "fixture", "-At", "-c",
+            grants = published_grants(source, sql_blocks) if sql_blocks is not None else [
+                {"id": "released-native-grants", "text": native_grants(source, daily=coverage)}]
+            sql_evidence = []
+            for block in grants:
+                output = run(admin, cwd=fresh, env=env, data=block["text"])
+                sql_evidence.append({"block": block["id"], "exit": 0, "pass": True,
+                    "command_sha256": hashlib.sha256(block["text"].encode()).hexdigest(),
+                    "stdout_sha256": hashlib.sha256(output.encode()).hexdigest()})
+            reader = ["docker", "exec", name, "psql", "-U", "fleetdiff_reader", "-d", "litellm", "-At", "-v", "ON_ERROR_STOP=1", "-c"]
+            identity = run(reader + [
                 '''SELECT current_user, current_setting('default_transaction_read_only'),
                 has_column_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'metadata', 'SELECT'),
                 has_column_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'messages', 'SELECT'),
                 has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'INSERT'),
                 has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'SELECT');'''], cwd=fresh, env=env).strip()
             assert identity == "fleetdiff_reader|on|t|f|f|f", identity
+            privileges = run(reader + ['''SELECT a.attname,
+                has_column_privilege(current_user, a.attrelid, a.attnum, 'SELECT')
+                FROM pg_attribute a WHERE a.attrelid = 'public."LiteLLM_SpendLogs"'::regclass
+                AND a.attnum > 0 AND NOT a.attisdropped ORDER BY a.attname;'''], cwd=fresh, env=env).strip()
+            allowed = set("request_id call_type api_key user team_id organization_id end_user model model_id model_group custom_llm_provider prompt_tokens completion_tokens total_tokens spend status session_id agent_id startTime endTime metadata".split())
+            columns = dict(line.split("|") for line in privileges.splitlines())
+            assert {k for k, v in columns.items() if v == "t"} == allowed, columns
+            assert {k for k, v in columns.items() if v == "f"} == {"messages", "response", "proxy_server_request"}, columns
+            restrictions = run(reader + ['''SELECT current_database(), rolsuper, rolcreatedb,
+                rolcreaterole, rolinherit, rolreplication, rolbypassrls,
+                EXISTS(SELECT 1 FROM pg_auth_members WHERE member = r.oid),
+                has_database_privilege(current_user, current_database(), 'CREATE'),
+                has_schema_privilege(current_user, 'public', 'CREATE'),
+                has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'UPDATE'),
+                has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'DELETE'),
+                has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'TRUNCATE')
+                FROM pg_roles r WHERE rolname = current_user;'''], cwd=fresh, env=env).strip()
+            assert restrictions == "litellm|" + "|".join(["f"] * 12), restrictions
             daily_evidence = {}
-            if coverage:
-                daily_identity = run(["docker", "exec", name, "psql", "-U", "fleetdiff_reader", "-d", "fixture", "-At", "-c",
+            if coverage or sql_blocks is not None:
+                daily_identity = run(reader + [
                     '''SELECT has_column_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'date', 'SELECT'),
                     has_column_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'api_requests', 'SELECT'),
                     has_column_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'successful_requests', 'SELECT'),
@@ -383,11 +472,13 @@ def database(fresh, source, env, coverage=False, routing=False, native=False):
                     has_table_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'SELECT'),
                     has_table_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'INSERT');'''], cwd=fresh, env=env).strip()
                 assert daily_identity == "t|t|t|t|f|f", daily_identity
-                daily_evidence = {"daily_readonly_identity": daily_identity,
-                    "daily_fixture_sha256": hashlib.sha256((fresh / "daily.csv").read_bytes()).hexdigest()}
+                daily_evidence = {"daily_readonly_identity": daily_identity}
+                if coverage:
+                    daily_evidence["daily_fixture_sha256"] = hashlib.sha256((fresh / "daily.csv").read_bytes()).hexdigest()
             with postgres_transport(name, env) as (port, transport):
-                url = f"postgresql://fleetdiff_reader@127.0.0.1:{port}/fixture?sslmode=disable"
-                credential = fresh / "database-url"
+                url = f"postgresql://fleetdiff_reader@127.0.0.1:{port}/litellm?sslmode=disable"
+                (fresh / ".config").mkdir(mode=0o700, exist_ok=True)
+                credential = fresh / ".config/litellm-db-url"
                 with open(credential, "x", opener=lambda path, flags: os.open(path, flags, 0o600)) as handle:
                     handle.write(url + "\n")
                 assert credential.stat().st_uid == os.geteuid() and credential.stat().st_mode & 0o777 == 0o600
@@ -398,11 +489,14 @@ def database(fresh, source, env, coverage=False, routing=False, native=False):
             assert transport["connections"] > 0 and transport["client_bytes"] > 0 and transport["server_bytes"] > 0
             assert not transport["errors"], transport
             (fresh / "database-evidence.json").write_text(json.dumps({"postgres": image, "network": network,
+                "database": "litellm", "sql_blocks": sql_evidence,
+                "column_select_privileges": columns, "role_restrictions": restrictions,
+                "credential_relative_path": ".config/litellm-db-url", "credential_mode": "0600",
                 "readonly_identity": identity, "transport": transport, **daily_evidence,
                 "fixture_sha256": hashlib.sha256((fresh / "spend.csv").read_bytes()).hexdigest()}, indent=2) + "\n")
             return
         service = fresh / "pg_service.conf"
-        service.write_text("[litellm_readonly]\nhost=/var/run/postgresql\nuser=fixture_reader\ndbname=fixture\n")
+        service.write_text("[litellm_readonly]\nhost=/var/run/postgresql\nuser=fixture_reader\ndbname=litellm\n")
         wrappers = fresh / "test-tools"
         wrappers.mkdir()
         wrapper = wrappers / "psql"
@@ -418,7 +512,7 @@ def database(fresh, source, env, coverage=False, routing=False, native=False):
                 " -w " + shlex.quote(str(fresh)) + " " + shlex.quote(name) + ' sh "$@";;\n' +
                 '*) exec /bin/sh "$@";;\nesac\n')
             shell.chmod(0o700)
-            identity = run(["docker", "exec", name, "psql", "-U", "fixture_reader", "-d", "fixture", "-At", "-c",
+            identity = run(["docker", "exec", name, "psql", "-U", "fixture_reader", "-d", "litellm", "-At", "-c",
                 '''SELECT current_user, current_setting('default_transaction_read_only'),
                 has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'SELECT'),
                 has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'INSERT'),
@@ -431,10 +525,12 @@ def database(fresh, source, env, coverage=False, routing=False, native=False):
                 "readonly_identity": identity, "start_utc": EXPORT_START, "end_exclusive": EXPORT_END,
                 "fixture_sha256": {name: hashlib.sha256((fresh / name).read_bytes()).hexdigest()
                                    for name in ("spend.csv", "daily.csv")}}, indent=2) + "\n")
+        # Only manual export commands use bounds in BEFORE/AFTER. Keep the
+        # caller's comparison dates intact for the next investigate block.
         db_env = dict(env, PATH=str(wrappers) + os.pathsep + env["PATH"],
-                      START_UTC=env.get("START_UTC", EXPORT_START), END_UTC=env.get("END_UTC", EXPORT_END))
-        if routing and "START_UTC" not in env:
-            db_env.update(START_UTC="2026-10-01T00:00:00Z", END_UTC="2026-10-03T00:00:00Z")
+                      BEFORE=env.get("EXPORT_BEFORE", EXPORT_START), AFTER=env.get("EXPORT_AFTER", EXPORT_END))
+        if routing and "EXPORT_BEFORE" not in env:
+            db_env.update(BEFORE="2026-10-01T00:00:00Z", AFTER="2026-10-03T00:00:00Z")
         yield db_env
     finally:
         if started:
@@ -449,7 +545,7 @@ def check(output, page=None):
     manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
                 "fixture_source": FIXTURE_COMMIT,
                 "method": "Exact published commands; fresh HOME/directories/caches; anonymous fixed-commit source archive; real released installer, CLI and library. Synthetic data is seeded into real read-only Postgres using cached digest-pinned network-none Docker. Native commands use the unchanged installed host binary through a loopback byte transport, not a database mock. The paired psql helper executes unmodified inside the container to retain its inherited descriptors.",
-                "results": records}
+                "dependencies": [], "results": records}
     with tempfile.TemporaryDirectory(prefix="site-own-source-") as directory:
         fixture_root = Path(directory)
         source, provenance = fixture_source(fixture_root)
@@ -460,20 +556,38 @@ def check(output, page=None):
         for slug in PAGES:
             if page and slug != page:
                 continue
-            blocks = Blocks()
-            blocks.feed((ROOT / "pages" / (slug + ".html")).read_text())
+            blocks = page_blocks(slug)
             assert blocks.own, slug
             with tempfile.TemporaryDirectory(prefix="site-own-" + slug + "-") as directory:
                 fresh = Path(directory).resolve()
                 env = environment(fresh)
                 prepare(fresh, source, env, slug)
-                manual_spend = (fresh / "spend.csv").read_bytes() if slug in {"litellm-spend", "row-coverage"} else None
-                manual_daily = (fresh / "daily.csv").read_bytes() if slug == "row-coverage" else None
+                if slug == "security":
+                    dependency = next(b for b in page_blocks("litellm-spend").own if b["id"] == "litellm-install")
+                    result = subprocess.run(["bash", "-e", "-c", dependency["text"]], cwd=fresh,
+                        env=env, text=True, capture_output=True, timeout=1800)
+                    (output / "security-install.stdout.txt").write_text(result.stdout)
+                    (output / "security-install.stderr.txt").write_text(result.stderr)
+                    assert result.returncode == dependency["exit"], result.stderr
+                    for excerpt in EXPECTED[dependency["id"]]:
+                        assert excerpt in result.stdout
+                    manifest["dependencies"].append({"page": slug, "source_page": "litellm-spend",
+                        "block": dependency["id"], "exit": result.returncode, "pass": True,
+                        "command_sha256": hashlib.sha256(dependency["text"].encode()).hexdigest(),
+                        "stdout_sha256": hashlib.sha256(result.stdout.encode()).hexdigest(),
+                        "installed_version": installed_version(fresh, env)})
                 database_day = None
-                if slug in {"litellm-spend", "routing", "row-coverage"}:
-                    database_day = refresh_database_dates(fresh, env, slug, datetime.now(timezone.utc))
+                variants = None
+                file_reports = {}
+                if slug in {"litellm-spend", "routing", "row-coverage", "security"}:
+                    database_day, variants = database_fixture_variants(fresh, env, slug, datetime.now(timezone.utc))
                 for block in blocks.own:
                     begin = time.monotonic()
+                    if variants is not None:
+                        fixture_mode = "native" if block["id"] in NATIVE_BLOCKS else "file"
+                        files, env = variants[fixture_mode]
+                        for name, data in files.items():
+                            (fresh / name).write_bytes(data)
                     if block["id"] == "anomalies":
                         refresh_history(fresh / "summary-history", time.time())
                     def execute(selected_env):
@@ -481,26 +595,35 @@ def check(output, page=None):
                             env=selected_env, text=True, capture_output=True, timeout=1800)
                     if block["id"] in NATIVE_BLOCKS:
                         assert datetime.now(timezone.utc).date() == database_day.date(), "UTC day changed; rerun with fresh fixtures"
-                        with database(fresh, source, env, coverage=slug == "row-coverage", routing=slug == "routing", native=True) as db_env:
+                        with database(fresh, source, env, coverage=slug == "row-coverage", routing=slug == "routing",
+                                      native=True, sql_blocks=page_native_grants(slug)) as db_env:
                             if block["id"] == "litellm-native-env":
+                                # Compare both published credential paths against this same fixture,
+                                # including when checking security independently of the spend page.
+                                file_block = next(b for b in page_blocks("litellm-spend").own if b["id"] == "litellm-native")
+                                file_env = dict(db_env)
+                                file_env.pop("FLEETDIFF_LITELLM_DATABASE_URL")
+                                before_files = set(fresh.iterdir())
+                                file_result = subprocess.run(["bash", "-e", "-c", file_block["text"]], cwd=fresh,
+                                    env=file_env, text=True, capture_output=True, timeout=1800)
+                                assert file_result.returncode == file_block["exit"], file_result.stderr
+                                assert set(fresh.iterdir()) == before_files, "native temporary export was not cleaned up"
+                                for excerpt in EXPECTED[file_block["id"]]:
+                                    assert excerpt in file_result.stdout
                                 db_env.pop("DATABASE_URL_FILE")
                             else:
                                 db_env.pop("FLEETDIFF_LITELLM_DATABASE_URL")
                             before_files = set(fresh.iterdir())
                             result = execute(db_env)
                             assert set(fresh.iterdir()) == before_files, "native temporary export was not cleaned up"
+                            if block["id"] == "litellm-native-env":
+                                assert result.stdout == file_result.stdout, "credential sources changed the report"
+                                assert result.stderr == file_result.stderr
                         shutil.copyfile(fresh / "database-evidence.json", output / (block["id"] + "-database.json"))
                     elif block["id"] in {"spend-export", "row-coverage-export", "routing-export"}:
-                        if block["id"] in {"spend-export", "row-coverage-export"}:
-                            # The visible manual example has fixed bounds, unlike native mode.
-                            (fresh / "spend.csv").write_bytes(manual_spend)
                         coverage = block["id"] == "row-coverage-export"
                         routing = block["id"] == "routing-export"
-                        export_env = env
-                        if coverage:
-                            (fresh / "daily.csv").write_bytes(manual_daily)
-                            export_env = dict(env, START_UTC=EXPORT_START, END_UTC=EXPORT_END)
-                        with database(fresh, source, export_env, coverage=coverage, routing=routing) as db_env:
+                        with database(fresh, source, env, coverage=coverage, routing=routing) as db_env:
                             try:
                                 result = execute(db_env)
                             finally:
@@ -522,17 +645,17 @@ def check(output, page=None):
                     if block["id"] in NATIVE_BLOCKS:
                         record["database"] = json.loads((fresh / "database-evidence.json").read_text())
                         record["fixture_utc_midnight"] = database_day.isoformat()
+                        if block["id"] == "litellm-native-env":
+                            record["file_source_comparison"] = {"pass": True,
+                                "command_sha256": hashlib.sha256(file_block["text"].encode()).hexdigest(),
+                                "stdout_sha256": hashlib.sha256(file_result.stdout.encode()).hexdigest()}
                     records.append(record)
                     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
                     assert result.returncode == block["exit"], (slug, block["id"], result.returncode, result.stderr)
                     for excerpt in EXPECTED[block["id"]]:
                         assert excerpt in result.stdout, (block["id"], excerpt, result.stdout)
-                    if block["id"] == "litellm-native-env":
-                        assert result.stdout == (output / "litellm-native.stdout.txt").read_text(), "credential sources changed the report"
                     if "sh install-fleetdiff.sh v0.12.0" in block["text"]:
-                        version = run([str(fresh / "bin/fleetdiff"), "--version"], cwd=fresh, env=env).strip()
-                        assert version.split()[:3] == ["fleetdiff", FIXTURE_VERSION, "(" + FIXTURE_COMMIT + ")"], version
-                        record["installed_version"] = version
+                        record["installed_version"] = installed_version(fresh, env)
                     if block["id"] == "home-go":
                         assert "github.com/llm-measurement/llm-sketchkit v0.4.0" in (fresh / "measurement-go/go.mod").read_text()
                     if block["id"] == "spend-export":
@@ -541,6 +664,25 @@ def check(output, page=None):
                             rows = list(csv.DictReader(handle))
                         assert len(rows) == 160 and "messages" not in rows[0] and "response" not in rows[0]
                         assert "cache_read_input_tokens" in rows[0] and rows[0]["cache_read_input_tokens"] == ""
+                        assert (fresh / "export.sql").read_bytes() == (source / "examples/litellm-spend/export.sql").read_bytes()
+                    if block["id"] == "litellm-export-file":
+                        record["input_sha256"] = hashlib.sha256((fresh / "litellm-export/spend.csv").read_bytes()).hexdigest()
+                    file_inputs = {
+                        "routing-audit": ("spend.csv",),
+                        "routing-export-file": ("routing-export/spend.csv",),
+                        "row-coverage": ("spend.csv", "daily.csv"),
+                        "row-coverage-export-files": ("litellm-coverage-export/spend.csv", "litellm-coverage-export/daily.csv"),
+                    }
+                    if block["id"] in file_inputs:
+                        record["input_sha256"] = {name: hashlib.sha256((fresh / name).read_bytes()).hexdigest()
+                                                  for name in file_inputs[block["id"]]}
+                        file_reports[block["id"]] = result.stdout
+                        counterpart = {"routing-export-file": "routing-audit",
+                                       "row-coverage-export-files": "row-coverage"}.get(block["id"])
+                        if counterpart:
+                            assert result.stdout == file_reports[counterpart], "actual SQL export changed the report"
+                            record["standin_report_comparison"] = {"block": counterpart, "pass": True,
+                                "stdout_sha256": hashlib.sha256(file_reports[counterpart].encode()).hexdigest()}
                     if block["id"] == "row-coverage-export":
                         for name in ("export-coverage.sh", "export.sql", "daily-projection.sql"):
                             assert (fresh / "coverage-helper" / name).read_bytes() == (source / "examples/litellm-spend" / name).read_bytes()

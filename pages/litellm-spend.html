@@ -1,44 +1,79 @@
-<p class="lead">Compare two periods of LiteLLM spend logs to see which models and keys drove a change, and which records have incomplete usage.</p>
-<aside class="own-data" aria-labelledby="own-data-title">
-<h2 id="own-data-title">Run it on your data</h2>
-<p>Connect to your existing LiteLLM Postgres database with approved read-only access. fleetdiff takes a private snapshot, investigates it locally and removes the temporary export. No psql or model API key is needed. Already have a request-level CSV, JSON or JSONL file? Use the <a href="#export">manual export and file path</a> below; the Usage dashboard's daily aggregate is a different format.</p>
-<h3>1. Install fleetdiff v0.12.0</h3>
-<p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). GitHub CLI need not be signed in. This pinned installer verifies the release archive, checksums and build attestations before extraction. Start without an existing <code>bin</code> folder; see <a href="security.html#verify-fleetdiff">manual release verification</a> for the checks.</p>
+<p class="lead">fleetdiff reads your LiteLLM spend logs and tells you what changed between the last two weeks: which models and keys drove it, and which records look incomplete. It runs on your machine and only reads.</p>
+<nav class="path-index" aria-label="Choose your starting point"><ul>
+<li><a href="#run">Your database</a></li><li><a href="#access">Getting access</a></li><li><a href="#file">An existing export file</a></li><li><a href="#sample">Sample data</a></li>
+</ul></nav>
+<aside id="run" class="own-data" aria-labelledby="own-data-title">
+<h2 id="own-data-title">Run it on your LiteLLM database</h2>
+<p><strong>1. Install.</strong> Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
 <pre data-own="litellm-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
 sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
-<h3>2. Investigate your database</h3>
-<p>Have your administrator provision the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/NATIVE_EXPORT.md#administrator-setup">reviewed read-only role and column grants</a>. Role creation is an administrator action, never a write by fleetdiff. Set <code>DATABASE_URL_FILE</code> to the path of an approved credential file using the requirements below, leaving <code>FLEETDIFF_LITELLM_DATABASE_URL</code> unset.</p>
-<pre data-own="litellm-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db \
-  --database-url-file "${DATABASE_URL_FILE:?set the approved credential file path}" --group-by key</code></pre>
-<p>The default compares the last 14 complete UTC days as two adjacent seven-day periods, ending at today's UTC midnight. It is clock-based; sparse logs do not establish complete coverage. For other windows, supply both <code>--before-period</code> and <code>--after-period</code> as equal-duration, ordered, nonoverlapping UTC dates or RFC3339 intervals. Add <code>--daily</code> to check daily row coverage, or <code>--routing-audit</code> for the <a href="routing.html">model mix behind each route</a>.</p>
-<h3 id="credentials">Credentials and private exports</h3>
-<p>The URL file must be a regular file owned by your effective user, mode exactly <code>0600</code>, with no symlink path components. Have your approved secret-delivery process place it in a private directory outside your checkout. <code>DATABASE_URL_FILE</code> contains only that path. Never put a password or literal database URL in command arguments, shell history, scripts or reports.</p>
-<p>Alternatively, have your secret mechanism supply <code>FLEETDIFF_LITELLM_DATABASE_URL</code> and omit the file option. Use exactly one credential source:</p>
-<pre data-own="litellm-native-env" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db --group-by key</code></pre>
-<p>Remote connections require <code>sslmode=verify-full</code> to verify both the certificate chain and hostname; <code>sslrootcert</code> may select a local CA file. Only numeric loopback or Unix sockets may use explicit <code>sslmode=disable</code>. Native mode ignores inherited <code>PG*</code> settings and does not load pgpass, PostgreSQL services or client certificates. The only URL query keys are <code>sslmode</code>, optional <code>sslrootcert</code> and <code>host</code> for an absolute Unix socket directory. Use the manual psql path for service or client-certificate setups, not a TLS override.</p>
-<p>Only explicit database modes connect to your chosen Postgres server; file-based analysis stays offline. Reads use one read-only repeatable snapshot and exclude prompts, responses and whole metadata objects. Temporary exports are removed after analysis. <code>--keep-export NEWDIR</code> retains a completed private export: a mode-0700 directory and mode-0600 files, published atomically without replacing an existing path. Raw identities remain private in exports; reports use aliases. The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/NATIVE_EXPORT.md#limits-and-failures">export limits and failure rules</a> explain timeouts, bounds and staging cleanup.</p>
-<h3 id="export">Manual psql alternative or an existing export</h3>
-<p>Requires psql and approved read-only access configured as the PostgreSQL service <code>litellm_readonly</code>. Replace the example UTC RFC3339 bounds below with 16 days of your data; the end is exclusive. File-based investigation excludes potentially partial first and last days before choosing its two complete seven-day periods. This differs from the native database mode's clock-based 14-day window. The projection targets LiteLLM v1.104.0. Start without an existing <code>litellm-export</code> folder.</p>
+<p><strong>2. Run.</strong> Save your read-only connection URL in a file only you can read, then point fleetdiff at it:</p>
+<pre data-own="litellm-native" data-exit="0"><code>chmod 600 ~/.config/litellm-db-url
+./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --group-by key</code></pre>
+<p>That compares the last two complete weeks. Use <code>--group-by team</code>, <code>user</code> or <code>session</code> for other views. Add <code>--daily</code> to check that every request reached the spend log, or <code>--routing-audit</code> to see which models served each route.</p>
+<p>The report has three parts: what changed by model, who drove it, and which records need a look.</p>
+</aside>
+<section id="access"><h2>Need database access?</h2>
+<details><summary>Create a read-only login</summary>
+<p>LiteLLM keeps its spend logs in the Postgres database named in the proxy's <code>DATABASE_URL</code> setting. Ask whoever runs the proxy for a read-only login on that database. These statements create one that can read only the columns fleetdiff uses:</p>
+<pre data-sql="litellm-reader-grants" data-exit="0"><code>CREATE ROLE fleetdiff_reader LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE
+  NOINHERIT NOREPLICATION NOBYPASSRLS;
+GRANT CONNECT ON DATABASE litellm TO fleetdiff_reader;
+GRANT USAGE ON SCHEMA public TO fleetdiff_reader;
+GRANT SELECT (
+  request_id, call_type, api_key, "user", team_id, organization_id, end_user,
+  model, model_id, model_group, custom_llm_provider,
+  prompt_tokens, completion_tokens, total_tokens, spend, status,
+  session_id, agent_id, "startTime", "endTime", metadata
+) ON TABLE public."LiteLLM_SpendLogs" TO fleetdiff_reader;
+ALTER ROLE fleetdiff_reader SET default_transaction_read_only = on;</code></pre>
+<p>For <code>--daily</code>:</p>
+<pre data-sql="litellm-daily-grants" data-exit="0"><code>GRANT SELECT (date, api_requests, successful_requests, failed_requests)
+  ON TABLE public."LiteLLM_DailyUserSpend" TO fleetdiff_reader;</code></pre>
+<p>Remote databases need TLS with certificate checks (<code>sslmode=verify-full</code>).</p>
+</details></section>
+<section id="file"><h2>Already have an export file?</h2>
+<p>If you already export LiteLLM's spend logs as CSV, JSON or JSONL, point fleetdiff at the file:</p>
+<pre data-own="litellm-spend" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by key</code></pre>
+<details id="export"><summary>Export with psql instead</summary>
+<p>Set <code>BEFORE</code> and <code>AFTER</code> to 16 days of RFC3339 UTC bounds, as below.</p>
 <pre data-own="spend-export" data-exit="0"><code>set -eu
 umask 077
-START_UTC=2026-09-23T00:00:00Z
-END_UTC=2026-10-09T00:00:00Z
+# Replace these RFC3339 UTC bounds with 16 days of your data; end is exclusive.
+# File analysis leaves out the potentially partial first and last days.
+BEFORE=2026-09-23T00:00:00Z
+AFTER=2026-10-09T00:00:00Z
 curl -fsSLo export.sql https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.0/examples/litellm-spend/export.sql
 mkdir ./litellm-export
 psql 'service=litellm_readonly' -Xq -v ON_ERROR_STOP=1 \
-  -v start_utc="${START_UTC:?set the export start in UTC}" \
-  -v end_utc="${END_UTC:?set the export end in UTC}" \
+  -v start_utc="$BEFORE" \
+  -v end_utc="$AFTER" \
   -v csv_file='./litellm-export/spend.csv' -f export.sql \
   &gt;./litellm-export/private-psql.out 2&gt;./litellm-export/private-psql.err
 printf 'Exported request-level rows to ./litellm-export/spend.csv\n'</code></pre>
-<p>The transaction is read-only and excludes prompts, responses and whole metadata objects. It includes identities needed for local grouping, so keep the export and database diagnostics private.</p>
-<p>Using the installed binary, analyze the export above or replace its path with your existing request-level file:</p>
-<pre data-own="litellm-spend" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./litellm-export/spend.csv --group-by key</code></pre>
-<p>The default compares two complete seven-day periods. For sparse or shorter exports, select explicit <code>--before-period</code> and <code>--after-period</code> dates. Choose <code>--group-by team</code>, <code>user</code>, <code>end-user</code> or <code>session</code> for another view.</p>
-<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/README.md#using-litellm">export, install and investigate path</a> and <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.0/examples/litellm-spend">spend export guide</a> cover fields and period choices. For continuous metrics and summary windows, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.6.1/examples/integrations/litellm">collector's LiteLLM recipe</a>.</p>
-</aside>
-<h2>What you'll see</h2>
-<p>Example output from the synthetic sample below; your values will reflect your input.</p>
+<p>Or use its exported path:</p>
+<pre data-own="litellm-export-file" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./litellm-export/spend.csv --group-by key</code></pre>
+</details></section>
+<details class="security-note"><summary>Security and access</summary>
+<ul>
+<li>fleetdiff reads one read-only snapshot. It never writes to your database, and it doesn't read prompts or responses.</li>
+<li>Remote databases must use <code>sslmode=verify-full</code>. Only a local socket may skip TLS.</li>
+<li>The connection URL comes from an owner-only file or the <code>FLEETDIFF_LITELLM_DATABASE_URL</code> environment variable, never from the command line.</li>
+<li>Analysis happens on your machine. Nothing is sent anywhere else. Reports use aliases instead of raw keys.</li>
+</ul>
+<p>Full details: <a href="security.html">security review</a>.</p>
+</details>
+<section id="sample">
+<h2>Try the sample</h2>
+<p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-run="litellm-spend" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
+tar -xzf fleetdiff-source.tar.gz
+cd fleetdiff-0.12.0
+sh scripts/install.sh v0.12.0 ./release
+./release/fleetdiff investigate --litellm-spend examples/litellm-spend/synthetic.csv \
+  --before-period 2026-10-07 --after-period 2026-10-08</code></pre>
+<h3>What you'll see</h3>
+<p>Example output from this synthetic sample; your values will reflect your input.</p>
 <pre class="output" data-output="litellm-spend"><code>Recorded tokens doubled (8,000 -&gt; 16,000).
 model-1 accounts for 100% of the net recorded increase (+8,000 tokens).
 Logged model requests: 8 -&gt; 12.</code></pre>
@@ -56,14 +91,10 @@ Logged model requests: 8 -&gt; 12.</code></pre>
   Failed records (overlap usage categories): 1 -&gt; 2.</code></pre>
 <p>The completeness section points to zero-only and failed records worth checking in LiteLLM. To check usage and identity fields in your telemetry, see <a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a></p>
 <p>To compare the number of exported rows with LiteLLM's daily request counts, see <a href="row-coverage.html">Are all our requests actually in the spend log?</a>. To see the model mix behind an original route, use the <a href="routing.html">routing audit</a>. To re-price the recorded usage under another model mix, see <a href="what-if.html">What would switching models have cost?</a></p>
-<h2>No data handy? Try the sample</h2>
-<p class="meta">Requires curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The sample uses the released binary and a synthetic CSV.</p>
-<pre data-run="litellm-spend" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
-tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.0
-sh scripts/install.sh v0.12.0 ./release
-./release/fleetdiff investigate --litellm-spend examples/litellm-spend/synthetic.csv \
-  --before-period 2026-10-07 --after-period 2026-10-08</code></pre>
 <p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/synthetic.csv">released synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
-<p class="measurement-context">This synthetic example compares logged model requests; zero-only records retain unknown origin, and failed records can overlap usage categories.<br>
+<details class="measurement-details">
+<summary>What the numbers mean</summary>
+<p class="measurement-context">these are the tokens and spend LiteLLM recorded, not your provider invoice. A change between periods shows what moved, not why.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
+</details>
+</section>

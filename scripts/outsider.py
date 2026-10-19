@@ -5,7 +5,6 @@ import argparse
 import hashlib
 from html.parser import HTMLParser
 import json
-import os
 from pathlib import Path
 import platform
 import subprocess
@@ -22,12 +21,15 @@ class Blocks(HTMLParser):
         self.expected = []
         self.own = []
         self.review = []
+        self.sql = []
         self.current = None
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "pre":
-            if "data-review" in attrs:
+            if "data-sql" in attrs:
+                self.current = (self.sql, {"id": attrs["data-sql"], "text": "", "exit": 0})
+            elif "data-review" in attrs:
                 self.current = (self.review, {"id": attrs["data-review"], "text": "", "exit": 0})
             elif "data-own" in attrs:
                 self.current = (self.own, {"id": attrs["data-own"], "text": "", "exit": int(attrs["data-exit"])})
@@ -67,9 +69,10 @@ def main():
         blocks.feed(source)
         assert len(blocks.commands) == 1 and blocks.expected
         with tempfile.TemporaryDirectory(prefix="llm-guide-") as fresh:
-            env = dict(os.environ)
-            for key in ("GH_TOKEN", "GITHUB_TOKEN", "PYTHONPATH", "PYTHONHOME"):
-                env.pop(key, None)
+            # Share the own-data allowlist so ambient provider/DB credentials,
+            # proxy settings and user tool configuration cannot enter samples.
+            from own_data import environment
+            env = environment(Path(fresh))
             env.update({
                 "HOME": fresh, "XDG_CACHE_HOME": fresh + "/cache",
                 "GH_CONFIG_DIR": fresh + "/gh", "GIT_TERMINAL_PROMPT": "0",

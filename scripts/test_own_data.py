@@ -37,12 +37,17 @@ class OwnDataTests(unittest.TestCase):
         blocks = Blocks()
         blocks.feed((ROOT / "pages/litellm-spend.html").read_text())
         self.assertEqual([b["id"] for b in blocks.own],
-                         ["litellm-install", "litellm-native", "litellm-native-env", "spend-export", "litellm-spend"])
-        self.assertIn("--litellm-db", blocks.own[1]["text"])
-        self.assertIn('--database-url-file "${DATABASE_URL_FILE:', blocks.own[1]["text"])
-        self.assertNotIn("--database-url-file", blocks.own[2]["text"])
+                         ["litellm-install", "litellm-native", "litellm-spend", "spend-export", "litellm-export-file"])
+        self.assertEqual(blocks.own[1]["text"], "chmod 600 ~/.config/litellm-db-url\n"
+                         "./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --group-by key")
+        self.assertEqual(blocks.own[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by key")
         self.assertIn("./litellm-export/spend.csv", blocks.own[3]["text"])
-        self.assertIn("./litellm-export/spend.csv", blocks.own[4]["text"])
+        self.assertEqual(blocks.own[4]["text"], "./bin/fleetdiff investigate --litellm-spend ./litellm-export/spend.csv --group-by key")
+        security = own_data.page_blocks("security")
+        self.assertEqual([b["id"] for b in security.own], ["litellm-native-env"])
+        self.assertEqual(security.own[0]["text"], "./bin/fleetdiff investigate --litellm-db --group-by key")
+        self.assertEqual([b["id"] for b in security.review], ["fleetdiff", "collector"])
+        self.assertEqual([b["id"] for b in blocks.sql], ["litellm-reader-grants", "litellm-daily-grants"])
 
     def test_manual_spend_example_uses_its_visible_sixteen_day_bounds(self):
         blocks = Blocks()
@@ -50,13 +55,15 @@ class OwnDataTests(unittest.TestCase):
         blocks.feed(source)
         command = next(b["text"] for b in blocks.own if b["id"] == "spend-export")
         assignments = dict(line.split("=", 1) for line in command.splitlines()
-                           if line.startswith(("START_UTC=", "END_UTC=")))
-        self.assertEqual(assignments, {"START_UTC": own_data.EXPORT_START, "END_UTC": own_data.EXPORT_END})
+                           if line.startswith(("BEFORE=", "AFTER=")))
+        self.assertEqual(assignments, {"BEFORE": own_data.EXPORT_START, "AFTER": own_data.EXPORT_END})
         start, end = (datetime.fromisoformat(assignments[name].replace("Z", "+00:00"))
-                      for name in ("START_UTC", "END_UTC"))
+                      for name in ("BEFORE", "AFTER"))
         self.assertEqual((end - start).days, 16)
-        self.assertIn("excludes potentially partial first and last days", source)
-        self.assertIn("last 14 complete UTC days", source)
+        self.assertIn("potentially partial first and last days", source)
+        security = (ROOT / "pages/security.html").read_text()
+        self.assertIn("two adjacent seven-day periods", security)
+        self.assertIn("ending at today's UTC midnight", security)
         native = next(b["text"] for b in blocks.own if b["id"] == "litellm-native")
         self.assertNotIn("--before-period", native)
         self.assertNotIn("--after-period", native)
@@ -85,11 +92,36 @@ class OwnDataTests(unittest.TestCase):
         blocks.feed('<pre data-own="x" data-exit="3"><code>cmd &gt; out</code></pre>'
                     '<pre data-run="x" data-exit="0">sample</pre>'
                     '<pre data-output="x">answer</pre>'
-                    '<pre data-review="r">verify</pre>')
+                    '<pre data-review="r">verify</pre>'
+                    '<pre data-sql="s"><code>SELECT 1 &lt; 2;\n</code></pre>')
         self.assertEqual(blocks.own, [{"id": "x", "text": "cmd > out", "exit": 3}])
         self.assertEqual(blocks.commands, [{"text": "sample", "exit": 0}])
         self.assertEqual(blocks.expected, [{"text": "answer"}])
         self.assertEqual(blocks.review, [{"id": "r", "text": "verify", "exit": 0}])
+        self.assertEqual(blocks.sql, [{"id": "s", "text": "SELECT 1 < 2;\n", "exit": 0}])
+
+    def test_published_grants_are_exact_and_never_rename_database(self):
+        first = 'CREATE ROLE fleetdiff_reader;\nGRANT CONNECT ON DATABASE litellm TO fleetdiff_reader;\n'
+        second = 'GRANT SELECT (date) ON public."LiteLLM_DailyUserSpend" TO fleetdiff_reader;\n'
+        blocks = [{"id": key, "text": text, "exit": 0} for key, text in zip(
+            ("litellm-reader-grants", "litellm-daily-grants"), (first, second))]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "docs").mkdir()
+            (root / "docs/NATIVE_EXPORT.md").write_text(f"```sql\n{first}```\n```sql\n{second}```\n")
+            self.assertIs(own_data.published_grants(root, blocks), blocks)
+            row_blocks = [blocks[0], dict(blocks[1], id="row-coverage-daily-grants")]
+            self.assertIs(own_data.published_grants(root, row_blocks), row_blocks)
+            for bad in (first.replace("litellm", "fixture"), first + 'GRANT ALL ON SCHEMA public TO fleetdiff_reader;\n',
+                        first.replace("CONNECT", "ALL")):
+                with self.subTest(sql=bad), self.assertRaises(AssertionError):
+                    own_data.published_grants(root, [dict(blocks[0], text=bad), blocks[1]])
+            with self.assertRaises(AssertionError):
+                own_data.published_grants(root, [blocks[0], dict(row_blocks[1], text=second.replace("SELECT", "ALL"))])
+            with self.assertRaises(AssertionError):
+                own_data.published_grants(root, blocks[:1])
+            with self.assertRaises(AssertionError):
+                own_data.published_grants(root, list(reversed(blocks)))
 
     def test_all_real_data_commands_have_runtime_expectations(self):
         ids = []
@@ -224,13 +256,16 @@ class OwnDataTests(unittest.TestCase):
         coverage = Blocks()
         coverage.feed((ROOT / "pages/row-coverage.html").read_text())
         self.assertEqual([b["id"] for b in coverage.own],
-                         ["row-coverage-install", "row-coverage-native", "row-coverage-export", "row-coverage"])
-        self.assertIn("--litellm-db --daily", coverage.own[1]["text"])
-        self.assertIn('--database-url-file "${DATABASE_URL_FILE:', coverage.own[1]["text"])
-        self.assertIn('"${START_UTC:', coverage.own[2]["text"])
-        self.assertIn('"${END_UTC:', coverage.own[2]["text"])
-        self.assertIn("sh ./coverage-helper/export-coverage.sh ./litellm-coverage-export", coverage.own[2]["text"])
-        self.assertIn("--litellm-daily-spend ./litellm-coverage-export/daily.csv", coverage.own[3]["text"])
+                         ["row-coverage-install", "row-coverage-native", "row-coverage", "row-coverage-export",
+                          "row-coverage-export-files"])
+        self.assertEqual(coverage.own[1]["text"], "./bin/fleetdiff investigate --litellm-db "
+                         "--database-url-file ~/.config/litellm-db-url --daily --group-by key")
+        self.assertEqual(coverage.own[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv "
+                         "--litellm-daily-spend ./daily.csv --group-by key")
+        self.assertIn('"$BEFORE"', coverage.own[3]["text"])
+        self.assertIn('"$AFTER"', coverage.own[3]["text"])
+        self.assertIn("sh ./coverage-helper/export-coverage.sh ./litellm-coverage-export", coverage.own[3]["text"])
+        self.assertIn("--litellm-daily-spend ./litellm-coverage-export/daily.csv", coverage.own[4]["text"])
         whatif = Blocks()
         whatif.feed((ROOT / "pages/what-if.html").read_text())
         self.assertEqual([b["id"] for b in whatif.own], ["what-if-install", "what-if-reprice", "what-if-workload-map"])
@@ -241,22 +276,28 @@ class OwnDataTests(unittest.TestCase):
         source = (ROOT / "pages/routing.html").read_text()
         blocks.feed(source)
         self.assertEqual([b["id"] for b in blocks.own],
-                         ["routing-install", "routing-native", "routing-export", "routing-audit", "routing-agents", "routing-scope"])
+                         ["routing-install", "routing-native", "routing-scope", "routing-agents",
+                          "routing-audit", "routing-export", "routing-export-file"])
         self.assertIn("--litellm-db", blocks.own[1]["text"])
         self.assertIn("--routing-audit", blocks.own[1]["text"])
-        self.assertIn("-v routing_details=true", blocks.own[2]["text"])
-        self.assertIn("'service=litellm_readonly'", blocks.own[2]["text"])
-        self.assertIn("./routing-export/spend.csv", blocks.own[3]["text"])
-        for block in blocks.own[3:]:
-            self.assertIn('"${BEFORE_PERIOD_UTC:', block["text"])
-            self.assertIn('"${AFTER_PERIOD_UTC:', block["text"])
-            self.assertNotIn("--show-labels", block["text"])
-        self.assertIn("--routing-by route-agent --format json", blocks.own[4]["text"])
-        self.assertIn('--scope-route "${ORIGINAL_ROUTE:', blocks.own[5]["text"])
-        for block in blocks.own[4:]:
-            self.assertIn("--litellm-db", block["text"])
-            self.assertIn("--database-url-file", block["text"])
-        self.assertEqual(source.count("<h2>Limits</h2>"), 1)
+        by_id = {block["id"]: block["text"] for block in blocks.own}
+        self.assertIn("-v routing_details=true", by_id["routing-export"])
+        self.assertIn("'service=litellm_readonly'", by_id["routing-export"])
+        self.assertIn("--litellm-spend ./spend.csv", by_id["routing-audit"])
+        self.assertIn("./routing-export/spend.csv", by_id["routing-export-file"])
+        for name in ("routing-scope", "routing-audit", "routing-export-file", "routing-agents"):
+            self.assertIn('"$BEFORE"', by_id[name])
+            self.assertIn('"$AFTER"', by_id[name])
+            self.assertNotIn("--show-labels", by_id[name])
+        self.assertIn("--routing-by route-agent --format json", by_id["routing-agents"])
+        self.assertIn('--scope-route "$ROUTE"', by_id["routing-scope"])
+        for name in ("routing-native", "routing-agents", "routing-scope"):
+            self.assertIn("--litellm-db", by_id[name])
+            self.assertIn("--database-url-file ~/.config/litellm-db-url", by_id[name])
+        self.assertEqual(source.count('<details class="measurement-details">'), 1)
+        for limit in ("Failure-row usage has unknown finality", "do not reconstruct physical attempts",
+                      "zero denominator gives an unknown share", "does not establish causal savings"):
+            self.assertIn(limit, (ROOT / "pages/security.html").read_text())
         self.assertEqual(len(blocks.expected), 4)
 
     def test_routing_export_propagates_failure_without_shell_flags(self):
@@ -268,8 +309,8 @@ class OwnDataTests(unittest.TestCase):
                 with self.subTest(shell=shell, curl=curl_status, psql=psql_status), tempfile.TemporaryDirectory() as directory:
                     stubs = f"curl() {{ return {curl_status}; }}\npsql() {{ return {psql_status}; }}\n"
                     result = subprocess.run([shell, "-c", stubs + command], cwd=directory,
-                        env={"PATH": os.defpath, "START_UTC": "2026-10-01T00:00:00Z",
-                             "END_UTC": "2026-10-03T00:00:00Z"},
+                        env={"PATH": os.defpath, "BEFORE": "2026-10-01T00:00:00Z",
+                             "AFTER": "2026-10-03T00:00:00Z"},
                         capture_output=True, text=True, timeout=10)
                     self.assertEqual(result.returncode, curl_status or psql_status)
                     self.assertEqual("Exported routing details" in result.stdout,
@@ -356,6 +397,16 @@ class OwnDataTests(unittest.TestCase):
                 self.assertTrue(result["pass"])
                 self.assertEqual(result["exit"], block["exit"])
                 self.assertEqual(result["command_sha256"], hashlib.sha256(block["text"].encode()).hexdigest())
+            if blocks.sql:
+                native = "row-coverage-native" if slug == "row-coverage" else "litellm-native"
+                expected_sql = own_data.page_native_grants(slug)
+                sql_results = recorded[native]["database"]["sql_blocks"]
+                self.assertEqual([r["block"] for r in sql_results], [b["id"] for b in expected_sql])
+                self.assertEqual(recorded[native]["database"]["database"], "litellm")
+                for block, result in zip(expected_sql, sql_results):
+                    self.assertTrue(result["pass"])
+                    self.assertEqual(result["exit"], 0)
+                    self.assertEqual(result["command_sha256"], hashlib.sha256(block["text"].encode()).hexdigest())
 
 
 if __name__ == "__main__":
