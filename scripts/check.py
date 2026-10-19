@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Code authors: Vijay and Codex
-"""Check generated pages, local links, question titles and the text indexes."""
+"""Check generated pages, local links, guide titles and the text indexes."""
 from html.parser import HTMLParser
 import argparse
 import hashlib
@@ -163,7 +163,9 @@ def main():
             assert page.commands == 0, path.name
             assert 'id="reproduce"' in path.read_text(), path.name
         elif entry["slug"] != "index" and entry.get("kind") != "reference":
-            assert "?" in entry["title"] and page.commands == 1, path.name
+            assert page.commands == 1, path.name
+            if entry["slug"] != "litellm-spend":
+                assert "?" in entry["title"], path.name
             context = html.escape(GUIDE_CONTEXT[entry["slug"]])
             notes_link = '<a href="summaries.html#measurement-notes">Measurement notes</a>'
             if entry["slug"] == "cache-check":
@@ -199,11 +201,17 @@ def main():
     assert home.index('href="anomalies.html"') < home.index('href="traces-usage.html"') < home.index('href="distinct-users.html"')
     assert '<h2>Guides</h2>' in (ROOT / "docs/index.html").read_text()
     for entry in pages:
-        if entry["slug"] in {"token-spike", "tokenmaxxing", "litellm-spend", "row-coverage", "what-if", "cache-check", "cardinality", "traces-usage"}:
+        if entry["slug"] in {"token-spike", "tokenmaxxing", "what-if", "cache-check", "cardinality", "traces-usage"}:
             assert entry["description"] in html.unescape(home), entry["slug"]
         if entry["slug"] in {"token-spike", "tokenmaxxing"}:
             guide = (ROOT / "docs" / (entry["slug"] + ".html")).read_text()
             assert f'<p class="lead">{entry["description"]}</p>' in html.unescape(guide), entry["slug"]
+    # Homepage teasers stay shorter than these guides' search-facing descriptions.
+    for teaser in (
+        "The same comparison straight from LiteLLM's spend logs, plus a check on whether the records are complete.",
+        "Compare exported spend rows with LiteLLM's daily request counts and see any missing rows.",
+    ):
+        assert teaser in html.unescape(home), teaser
     assert ('<p class="lead">Compare two periods of LiteLLM spend logs to see which models and keys '
             'drove a change, and which records have incomplete usage.</p>') in (ROOT / "docs/litellm-spend.html").read_text()
     for slug in ("anomalies", "litellm-spend"):
