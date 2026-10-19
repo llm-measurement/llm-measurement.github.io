@@ -23,13 +23,13 @@ class ReleasePairTests(unittest.TestCase):
                 self.assertNotIn("chart 0.3.4", source)
                 self.assertNotIn("chart-v0.3.5", source)
         home = (ROOT / "pages/index.html").read_text()
-        self.assertIn("Helm chart 0.6.0 and collector v0.6.0", home)
+        self.assertIn("Helm chart 0.6.1 and collector v0.6.1", home)
 
     def test_collector_review_uses_combined_release_metadata(self):
         blocks = Blocks()
         blocks.feed((ROOT / "pages/security.html").read_text())
         command = next(block["text"] for block in blocks.review if block["id"] == "collector")
-        self.assertIn("\nrelease=v0.6.0\n", command)
+        self.assertIn("\nrelease=v0.6.1\n", command)
         self.assertIn(".github/workflows/release.yml@refs/tags/$release", command)
         self.assertNotIn("chart-release.yml", command)
         self.assertIn('image="$(cat image-digest.txt)"', command)
@@ -66,7 +66,7 @@ class ReleasePairTests(unittest.TestCase):
                       (ROOT / "pages/security.html").read_text())
 
     def test_install_guides_pin_the_matching_release_documentation(self):
-        revision = "v0.6.0"
+        revision = "v0.6.1"
         for name in ("anomalies", "token-spike", "index", "security"):
             source = (ROOT / "pages" / (name + ".html")).read_text()
             self.assertIn("otelcol-genai-sketches/blob/" + revision + "/docs/", source)

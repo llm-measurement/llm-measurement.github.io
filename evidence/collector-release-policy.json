@@ -1,0 +1,41 @@
+{
+  "advisories": [
+    {
+      "ghsa_id": "GHSA-w5rp-j3gj-7x54",
+      "url": "https://github.com/llm-measurement/otelcol-genai-sketches/security/advisories/GHSA-w5rp-j3gj-7x54",
+      "vulnerabilities": [
+        {
+          "affected": ">= 0.3.0, <= 0.6.0",
+          "package": "github.com/llm-measurement/otelcol-genai-sketches/connector/genaisketchconnector"
+        },
+        {
+          "affected": ">= 0.3.0, <= 0.6.0",
+          "package": "ghcr.io/llm-measurement/otelcol-genai-sketches"
+        }
+      ]
+    },
+    {
+      "ghsa_id": "GHSA-7mgp-j8jf-wfh4",
+      "url": "https://github.com/llm-measurement/otelcol-genai-sketches/security/advisories/GHSA-7mgp-j8jf-wfh4",
+      "vulnerabilities": [
+        {
+          "affected": "<= 0.3.0",
+          "package": "ghcr.io/llm-measurement/otelcol-genai-sketches"
+        },
+        {
+          "affected": "<= 0.3.2",
+          "package": "ghcr.io/llm-measurement/charts/otelcol-genai-sketches"
+        }
+      ]
+    }
+  ],
+  "checked_at": "2026-10-19T00:59:48.696822+00:00",
+  "latest_stable": "v0.6.1",
+  "release_url": "https://github.com/llm-measurement/otelcol-genai-sketches/releases/tag/v0.6.1",
+  "repository": "llm-measurement/otelcol-genai-sketches",
+  "schema": 1,
+  "sources": [
+    "https://api.github.com/repos/llm-measurement/otelcol-genai-sketches/releases",
+    "https://api.github.com/repos/llm-measurement/otelcol-genai-sketches/security-advisories"
+  ]
+}

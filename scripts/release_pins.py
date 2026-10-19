@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Code authors: Vijay and Codex
-"""Bind active fleetdiff source pins to the cited release, optionally live."""
+"""Bind fleetdiff source pins and collector release/advisory pins, optionally live."""
 import json
 import os
 from pathlib import Path
@@ -92,3 +92,5 @@ def check(root=ROOT, live=False):
                 raise ValueError("verified installed binary does not match the release")
     mode = "live tag resolution" if live else "recorded release (offline)"
     print(f"PASS: {count} fleetdiff commit pins match {FIXTURE_VERSION} -> {commit}; {mode}")
+    from collector_pins import check as check_collector
+    check_collector(root, live=live)

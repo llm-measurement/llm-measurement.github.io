@@ -57,6 +57,8 @@ EXPECTED = {
                      "user-1: [3,600, 3,600] tokens", "100.0% to 100.0%"),
     "row-coverage-export": ("Exported spend.csv and daily.csv in the new private output directory.",),
     "row-coverage-install": ("Verified", "fleetdiff v0.12.0 (" + FIXTURE_COMMIT + ")"),
+    "row-coverage-native": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
+                            "8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
     "row-coverage": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
                      "2026-10-07 UTC: 8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
     "what-if-install": ("Verified",),
@@ -72,7 +74,8 @@ EXPECTED = {
     "routing-agents": (),
     "routing-scope": ("Model-request rows: 2 -> 2 requests; 240 -> 240 recorded tokens;",),
 }
-NATIVE_BLOCKS = {"litellm-native", "litellm-native-env", "routing-native", "routing-agents", "routing-scope"}
+NATIVE_BLOCKS = {"litellm-native", "litellm-native-env", "routing-native", "routing-agents", "routing-scope",
+                 "row-coverage-native"}
 
 
 def run(command, *, cwd, env, data=None, timeout=1800):
@@ -233,12 +236,25 @@ def refresh_database_dates(fresh, env, slug, now):
             target = end - timedelta(days=14 if old.day == 1 else 7)
         else:
             target = end - timedelta(days=16) + timedelta(days=(old.date() - datetime(2026, 9, 23).date()).days)
+        shift = target.date() - old.date()
         for name in ("startTime", "endTime"):
-            row[name] = target.date().isoformat() + row[name][10:]
+            original_date = datetime.fromisoformat(row[name].replace("Z", "+00:00")).date()
+            row[name] = (original_date + shift).isoformat() + row[name][10:]
     with (fresh / "spend.csv").open("w") as handle:
         writer = csv.DictWriter(handle, fieldnames=columns)
         writer.writeheader()
         writer.writerows(rows)
+    if slug == "row-coverage":
+        with (fresh / "daily.csv").open() as handle:
+            reader = csv.DictReader(handle)
+            columns, rows = reader.fieldnames, list(reader)
+        shift = end.date() - datetime.fromisoformat(EXPORT_END.replace("Z", "+00:00")).date()
+        for row in rows:
+            row["date"] = (datetime.fromisoformat(row["date"]).date() + shift).isoformat()
+        with (fresh / "daily.csv").open("w") as handle:
+            writer = csv.DictWriter(handle, fieldnames=columns)
+            writer.writeheader()
+            writer.writerows(rows)
     env.update(START_UTC=(end - timedelta(days=14 if slug == "routing" else 16)).isoformat(),
                END_UTC=end.isoformat(),
                BEFORE_PERIOD_UTC=(end - timedelta(days=14)).date().isoformat(),
@@ -246,13 +262,14 @@ def refresh_database_dates(fresh, env, slug, now):
     return end
 
 
-def native_grants(source):
+def native_grants(source, daily=False):
     document = (source / "docs/NATIVE_EXPORT.md").read_text()
     blocks = re.findall(r"```sql\n(.*?)```", document, re.DOTALL)
     assert len(blocks) == 2 and "CREATE ROLE fleetdiff_reader" in blocks[0]
     assert 'ON TABLE public."LiteLLM_SpendLogs"' in blocks[0]
-    # Provision only the spend role here; native page examples do not use --daily.
-    return blocks[0].replace("CONNECT ON DATABASE litellm", "CONNECT ON DATABASE fixture")
+    assert 'ON TABLE public."LiteLLM_DailyUserSpend"' in blocks[1]
+    grants = blocks[0] + (blocks[1] if daily else "")
+    return grants.replace("CONNECT ON DATABASE litellm", "CONNECT ON DATABASE fixture")
 
 
 def database_sql(fresh, source, coverage=False, routing=False):
@@ -348,7 +365,7 @@ def database(fresh, source, env, coverage=False, routing=False, native=False):
         assert network == "none"
         if native:
             run(["docker", "exec", "-i", name, "psql", "-U", "postgres", "-d", "fixture", "-v", "ON_ERROR_STOP=1"],
-                cwd=fresh, env=env, data=native_grants(source))
+                cwd=fresh, env=env, data=native_grants(source, daily=coverage))
             identity = run(["docker", "exec", name, "psql", "-U", "fleetdiff_reader", "-d", "fixture", "-At", "-c",
                 '''SELECT current_user, current_setting('default_transaction_read_only'),
                 has_column_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'metadata', 'SELECT'),
@@ -356,6 +373,18 @@ def database(fresh, source, env, coverage=False, routing=False, native=False):
                 has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'INSERT'),
                 has_table_privilege(current_user, 'public."LiteLLM_SpendLogs"', 'SELECT');'''], cwd=fresh, env=env).strip()
             assert identity == "fleetdiff_reader|on|t|f|f|f", identity
+            daily_evidence = {}
+            if coverage:
+                daily_identity = run(["docker", "exec", name, "psql", "-U", "fleetdiff_reader", "-d", "fixture", "-At", "-c",
+                    '''SELECT has_column_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'date', 'SELECT'),
+                    has_column_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'api_requests', 'SELECT'),
+                    has_column_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'successful_requests', 'SELECT'),
+                    has_column_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'failed_requests', 'SELECT'),
+                    has_table_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'SELECT'),
+                    has_table_privilege(current_user, 'public."LiteLLM_DailyUserSpend"', 'INSERT');'''], cwd=fresh, env=env).strip()
+                assert daily_identity == "t|t|t|t|f|f", daily_identity
+                daily_evidence = {"daily_readonly_identity": daily_identity,
+                    "daily_fixture_sha256": hashlib.sha256((fresh / "daily.csv").read_bytes()).hexdigest()}
             with postgres_transport(name, env) as (port, transport):
                 url = f"postgresql://fleetdiff_reader@127.0.0.1:{port}/fixture?sslmode=disable"
                 credential = fresh / "database-url"
@@ -369,7 +398,7 @@ def database(fresh, source, env, coverage=False, routing=False, native=False):
             assert transport["connections"] > 0 and transport["client_bytes"] > 0 and transport["server_bytes"] > 0
             assert not transport["errors"], transport
             (fresh / "database-evidence.json").write_text(json.dumps({"postgres": image, "network": network,
-                "readonly_identity": identity, "transport": transport,
+                "readonly_identity": identity, "transport": transport, **daily_evidence,
                 "fixture_sha256": hashlib.sha256((fresh / "spend.csv").read_bytes()).hexdigest()}, indent=2) + "\n")
             return
         service = fresh / "pg_service.conf"
@@ -438,9 +467,10 @@ def check(output, page=None):
                 fresh = Path(directory).resolve()
                 env = environment(fresh)
                 prepare(fresh, source, env, slug)
-                manual_spend = (fresh / "spend.csv").read_bytes() if slug == "litellm-spend" else None
+                manual_spend = (fresh / "spend.csv").read_bytes() if slug in {"litellm-spend", "row-coverage"} else None
+                manual_daily = (fresh / "daily.csv").read_bytes() if slug == "row-coverage" else None
                 database_day = None
-                if slug in {"litellm-spend", "routing"}:
+                if slug in {"litellm-spend", "routing", "row-coverage"}:
                     database_day = refresh_database_dates(fresh, env, slug, datetime.now(timezone.utc))
                 for block in blocks.own:
                     begin = time.monotonic()
@@ -451,7 +481,7 @@ def check(output, page=None):
                             env=selected_env, text=True, capture_output=True, timeout=1800)
                     if block["id"] in NATIVE_BLOCKS:
                         assert datetime.now(timezone.utc).date() == database_day.date(), "UTC day changed; rerun with fresh fixtures"
-                        with database(fresh, source, env, routing=slug == "routing", native=True) as db_env:
+                        with database(fresh, source, env, coverage=slug == "row-coverage", routing=slug == "routing", native=True) as db_env:
                             if block["id"] == "litellm-native-env":
                                 db_env.pop("DATABASE_URL_FILE")
                             else:
@@ -461,12 +491,16 @@ def check(output, page=None):
                             assert set(fresh.iterdir()) == before_files, "native temporary export was not cleaned up"
                         shutil.copyfile(fresh / "database-evidence.json", output / (block["id"] + "-database.json"))
                     elif block["id"] in {"spend-export", "row-coverage-export", "routing-export"}:
-                        if block["id"] == "spend-export":
+                        if block["id"] in {"spend-export", "row-coverage-export"}:
                             # The visible manual example has fixed bounds, unlike native mode.
                             (fresh / "spend.csv").write_bytes(manual_spend)
                         coverage = block["id"] == "row-coverage-export"
                         routing = block["id"] == "routing-export"
-                        with database(fresh, source, env, coverage=coverage, routing=routing) as db_env:
+                        export_env = env
+                        if coverage:
+                            (fresh / "daily.csv").write_bytes(manual_daily)
+                            export_env = dict(env, START_UTC=EXPORT_START, END_UTC=EXPORT_END)
+                        with database(fresh, source, export_env, coverage=coverage, routing=routing) as db_env:
                             try:
                                 result = execute(db_env)
                             finally:
