@@ -1,8 +1,8 @@
 {
-  "method": "Installed Chromium; external requests blocked; laptop and mobile, light and dark; anchor navigation, folded security and page width assertions.",
+  "method": "Installed Chromium; external requests blocked; light-only laptop and mobile; every rendered text/background contrast at least 4.5:1 including opened folds; unchanged element geometry and typography against the prior palette; hover and system-dark checks; anchor navigation, folded security and page width assertions.",
   "files": {
-    "assets/site.css": "10ebcd257b073bb6c38add109b93288e7dbb567f29708b66c14783759fadc773",
-    "docs/assets/site.css": "10ebcd257b073bb6c38add109b93288e7dbb567f29708b66c14783759fadc773",
+    "assets/site.css": "af8dad150c836d47d8474717735c1074a229f2fada610ed448bbf7c9f64aa132",
+    "docs/assets/site.css": "af8dad150c836d47d8474717735c1074a229f2fada610ed448bbf7c9f64aa132",
     "pages.json": "c786e590cf88f5f592e4bdf3b2fe701614db91434156e5f1c5a49506c29305a4",
     "pages/anomalies.html": "4977119b3356671a915e00c1174bf2ac48485f47b7ad3aae77d9a4e770b126a9",
     "docs/anomalies.html": "18b0798f9c030f78e5a3268479cd9d63e1892b4379ea5ab601007773e4747c75",
@@ -12,6 +12,8 @@
     "docs/cardinality.html": "a7883e4ee3a9ac39e24479ba4bf9d479ee46e833c9293ed32a071775e4c3a4a6",
     "pages/distinct-users.html": "368bebc88c283a52b0e4f75ab479164c37226aaedb008aea3f90b59bcb2ea2da",
     "docs/distinct-users.html": "f08688b77dc1f5819a8695e41aec7c864cbd76f5a8b29a4493ec0acb85df566f",
+    "pages/index.html": "211620458172cba7404d9805b2732128be9b0a9d3d71718cb9bd0e304d420009",
+    "docs/index.html": "ea44e38bb8352f375377c15dd30847bec5f937916d8e9accf42ee75b252884e0",
     "pages/litellm-spend.html": "12f73d4d744d537442fd10d26a22800a88bdfaed4b4aa15fadfd39430e51c3f5",
     "docs/litellm-spend.html": "8892964ebc376b1b2dc6d0b881493f24c6ca905d9b3d1b4347d074d125d3e1a3",
     "pages/routing.html": "d8fad28c63532fb6778d93f20a5df7571e6253c54338c6e8e4083fba93a6f1a9",
@@ -22,6 +24,8 @@
     "docs/security.html": "797f217e2e82526577276e65d9824ed18c25b44ca6737373f359e90109c3feb6",
     "pages/session-budget.html": "78f6a33204cda34437018e71722a3620aeb538e72f6b3243f5ce9ff813e0abee",
     "docs/session-budget.html": "5d55231770fd999ad34665f2ad5697880e9d6b24da230c7fb424ab9b8903fc8c",
+    "pages/summaries.html": "694a4c55261eaeb73b28ffc1381b7338432373326f37118a37a9a9837e85a23f",
+    "docs/summaries.html": "2e00f1509e3590deb63e139dadc10f7a2a54bc25d3800a13455bd53486514b12",
     "pages/token-spike.html": "27970579876828a04429ced149eb138740bed22a6364a4c28c92c6c4d1cfeb45",
     "docs/token-spike.html": "502272203d0e5cdfff3069950b882b4c5686ffb44a975bfded06a57ce770aab3",
     "pages/tokenmaxxing.html": "c77fcf3aa99c7958325b99379d51ae1ecfa2a97f4324f9592c8fdefa6224566c",
@@ -33,6 +37,164 @@
   },
   "results": [
     {
+      "slug": "index",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "title": "LLM Measurement",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 5.115384650945418
+        }
+      ],
+      "layoutSha256": "5a2feaacf356fb95f66257ba7b036bad257d21b3be9966c4c79680371807ae6e",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "token-spike",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 275.875,
+        "title": "Which user is driving my LLM token spike?",
+        "folded": true
+      },
+      "words": {
+        "visible": 151,
+        "prose": 129
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "88821444217259179dd6d440d4dbeb38452b107559fc764fc7f3e20cd6b491f1",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "tokenmaxxing",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 343.0625,
+        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+        "folded": true
+      },
+      "words": {
+        "visible": 112,
+        "prose": 112
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "f1e4adc699b06d04fcc4bdc08ba9f36af0e1b88be8776416444a60443d91c430",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
       "slug": "litellm-spend",
       "width": 1366,
       "colorScheme": "light",
@@ -53,6 +215,91 @@
         "#file",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "9c58da83d034d7042b11999efbc7858636262d69bed8e26162126e52538b43e5",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "row-coverage",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 372.75,
+        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 193,
+        "prose": 154
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "7b0ddac36930c3bad402b288c378d0be8d68944898d8b46909258a573a9835a7",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -77,89 +324,37 @@
         "#file",
         "#sample"
       ],
-      "pass": true
-    },
-    {
-      "slug": "row-coverage",
-      "width": 1366,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 372.75,
-        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
-        "folded": true
-      },
-      "words": {
-        "visible": 193,
-        "prose": 154
-      },
-      "anchors": [
-        "#run",
-        "#access",
-        "#file",
-        "#sample"
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
       ],
-      "pass": true
-    },
-    {
-      "slug": "security",
-      "width": 1366,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "title": "For security reviewers",
-        "folded": true
-      },
-      "words": null,
-      "anchors": [],
-      "pass": true
-    },
-    {
-      "slug": "token-spike",
-      "width": 1366,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 275.875,
-        "title": "Which user is driving my LLM token spike?",
-        "folded": true
-      },
-      "words": {
-        "visible": 151,
-        "prose": 129
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "tokenmaxxing",
-      "width": 1366,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 343.0625,
-        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
-        "folded": true
-      },
-      "words": {
-        "visible": 112,
-        "prose": 112
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
+      "layoutSha256": "a538b3952dcb51d6f8512d9f8025731067abb2eb6f5a2eff4f2f21f3b2777e40",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -184,6 +379,37 @@
         "#workload",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "4153318bd0429aa4dbf16280f54d492cbcf4a4e4f6264a5916715f598ae1d49c",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -207,6 +433,37 @@
         "#file",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "5325693872d5face5c0684971529893c4932a5a38f011fdb9cc95f6404a81ebc",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -230,6 +487,37 @@
         "#file",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "5cc8c2614872aea3beb1a142f63a1813b07cf5a7a7c1f9702e3e618fdcf6b190",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -252,6 +540,37 @@
         "#configure",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "4313882c5c783c6e25f553a51635562af8f2600ef3e4418ab2b4b8cb8bda0ea6",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -274,6 +593,37 @@
         "#setup",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "618bb9a697946056a2e63f42c7a9df91e31e28b1eee4cb0dc3aca6f9a403a4f4",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -296,6 +646,37 @@
         "#capture",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "4bdd691f50586a58b5797fb9781a7ef427fa2a6f215e007b754db1fa3b60f08f",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -317,6 +698,285 @@
         "#run",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "d66f306a83c5da8ef951bdc71b1efd9ab1c885bee4b665bb8e97826160f42f44",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "summaries",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "title": "Why summaries instead of raw logs",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "2274c00cc1b24cb5c0b5e72628106eb8fb0d6291b74a7d36740bfdd138fdee4f",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "security",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "title": "For security reviewers",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "44e7c149087026dbe7d5aceb29420a1682a10c30b1307dee5e3536d7c011a822",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "index",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "title": "LLM Measurement",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 5.115384650945418
+        }
+      ],
+      "layoutSha256": "4b8bf976f9bbaa4b2cc0ede6ca29339aa384bce047d131b73e0f19798de756c4",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "token-spike",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 428.234375,
+        "title": "Which user is driving my LLM token spike?",
+        "folded": true
+      },
+      "words": {
+        "visible": 151,
+        "prose": 129
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "fe70014996cd8d07eb35eab833e7acc5b77b1ecb8dea0466bff52c0fa10b6fe7",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "tokenmaxxing",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 423.53125,
+        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+        "folded": true
+      },
+      "words": {
+        "visible": 112,
+        "prose": 112
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "e65731d5f00ce51706df856878b688bdb0967654c94295fff77f83a0b8d773f0",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -340,6 +1000,91 @@
         "#file",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "f94f32576082901cb80cbfeec8414c7b350c535925a7c9455e304cd7e5cc25d0",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "row-coverage",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 515.40625,
+        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 193,
+        "prose": 154
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "9b1ddec67a01bdff875c6be38ed265153ef158c61a8a1d78fae28466c773d85e",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -364,89 +1109,37 @@
         "#file",
         "#sample"
       ],
-      "pass": true
-    },
-    {
-      "slug": "row-coverage",
-      "width": 390,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 515.40625,
-        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
-        "folded": true
-      },
-      "words": {
-        "visible": 193,
-        "prose": 154
-      },
-      "anchors": [
-        "#run",
-        "#access",
-        "#file",
-        "#sample"
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
       ],
-      "pass": true
-    },
-    {
-      "slug": "security",
-      "width": 390,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "title": "For security reviewers",
-        "folded": true
-      },
-      "words": null,
-      "anchors": [],
-      "pass": true
-    },
-    {
-      "slug": "token-spike",
-      "width": 390,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 428.234375,
-        "title": "Which user is driving my LLM token spike?",
-        "folded": true
-      },
-      "words": {
-        "visible": 151,
-        "prose": 129
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "tokenmaxxing",
-      "width": 390,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 423.53125,
-        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
-        "folded": true
-      },
-      "words": {
-        "visible": 112,
-        "prose": 112
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
+      "layoutSha256": "d0164d809b4512fa5768ca705ab288b1fdc42acd6f28f00045bfa8cb7d32430b",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -471,6 +1164,37 @@
         "#workload",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "c22cf4e1cd2bde56e9d312c239476aea489c910955370e5812840a2762554cf3",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -494,6 +1218,37 @@
         "#file",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "b50707d9161057f4c34eb1a4e4301af5258f116942ccbbf213cdf9a5ed0e869a",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -517,6 +1272,37 @@
         "#file",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "47b3bf1312eeacdfc4a950e900989b0990f420e7326d5176b54413f0169afbd1",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -539,6 +1325,37 @@
         "#configure",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "b9e2f0d88ac4115f5a78879f3a762660a24d67621bb34fd2f4b5b35b84988744",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -561,6 +1378,37 @@
         "#setup",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "cee94a026eeb9e1eb094368038317e280984264e6d6c2e600c92247fc7887d75",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -583,6 +1431,37 @@
         "#capture",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "4e30f97143333e225c70b7beca9cbb2732ff6955b8c2795fd7fd58c7c88140ed",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -604,6 +1483,285 @@
         "#run",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "58af5078a6bd0ab5a8d4b51d898a41ca6a7443c1c35f05f411464e647ab0b62a",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "summaries",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "title": "Why summaries instead of raw logs",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "ec8bcf71968dac6771658cde6632758d3714e151671b4baeb73e22f1801bd90c",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "security",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "title": "For security reviewers",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "cd2c8048b0dc8c431a78af8e5f19ebd9d5b9e35acfafe2127014d728865284c8",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "index",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "title": "LLM Measurement",
+        "folded": true
+      },
+      "words": null,
+      "anchors": [],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 5.115384650945418
+        }
+      ],
+      "layoutSha256": "0696179b893937010a90e6d60856d1fb53193fc1a5f4e13df9e7c9ceafd7bb2c",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "token-spike",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 494.21875,
+        "title": "Which user is driving my LLM token spike?",
+        "folded": true
+      },
+      "words": {
+        "visible": 151,
+        "prose": 129
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "4c1576fd813c443ffca720848a98af8627a112848f8f9d9f9f237edf84b9d888",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "tokenmaxxing",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 492.328125,
+        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+        "folded": true
+      },
+      "words": {
+        "visible": 112,
+        "prose": 112
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "d4cfc960446848b84fd76b658f93c7aa20f005b33c63614004f4bffd356c7eb8",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -627,6 +1785,91 @@
         "#file",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "b1b7bab49218daa24f846a64f1ef1e067a45781fb17336b4bce8e2102ae1ad8b",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "pass": true
+    },
+    {
+      "slug": "row-coverage",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 613.890625,
+        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 193,
+        "prose": 154
+      },
+      "anchors": [
+        "#run",
+        "#access",
+        "#file",
+        "#sample"
+      ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "41d0f027257e4215ede65d17c469745c3fb9dd21533ad346129ce1e3636f9c11",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -651,89 +1894,37 @@
         "#file",
         "#sample"
       ],
-      "pass": true
-    },
-    {
-      "slug": "row-coverage",
-      "width": 320,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 613.890625,
-        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
-        "folded": true
-      },
-      "words": {
-        "visible": 193,
-        "prose": 154
-      },
-      "anchors": [
-        "#run",
-        "#access",
-        "#file",
-        "#sample"
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
       ],
-      "pass": true
-    },
-    {
-      "slug": "security",
-      "width": 320,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "title": "For security reviewers",
-        "folded": true
-      },
-      "words": null,
-      "anchors": [],
-      "pass": true
-    },
-    {
-      "slug": "token-spike",
-      "width": 320,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 494.21875,
-        "title": "Which user is driving my LLM token spike?",
-        "folded": true
-      },
-      "words": {
-        "visible": 151,
-        "prose": 129
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "tokenmaxxing",
-      "width": 320,
-      "colorScheme": "light",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 492.328125,
-        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
-        "folded": true
-      },
-      "words": {
-        "visible": 112,
-        "prose": 112
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
+      "layoutSha256": "e83f865231060367e00af3af3f27723b4143e8369ba1bfa1a4e9a30f5d7907de",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -758,6 +1949,37 @@
         "#workload",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "64ce46b7026f2b725f3ada4e1f2ffaf4cfddc78975a1b5759a035acb587cd7d1",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -781,6 +2003,37 @@
         "#file",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "c0e4c025bb6dbc837c480e1516453d4fff84a6b27df42950a299a85dd0da8b65",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -804,6 +2057,37 @@
         "#file",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "6c4747695f4c62ec2c3bb4bbe7c3ba1de271ab9a2ad53ff9acb59df2feabc0c2",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -826,6 +2110,37 @@
         "#configure",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "af6eb99eeb454fadb55c23a021f2c0ca0b35cc28aa3c6f0565b313840f985bf3",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -848,6 +2163,37 @@
         "#setup",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "45bd281cecb69cadb7accf3f69e7583acdad76d89c5ad693093c15ead9af78bd",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -870,6 +2216,37 @@
         "#capture",
         "#sample"
       ],
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
+      "layoutSha256": "be3f645809c6886bd3cbfd1c82fbb04463589270d18b25087404b300a8caaaec",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
@@ -891,656 +2268,88 @@
         "#run",
         "#sample"
       ],
-      "pass": true
-    },
-    {
-      "slug": "litellm-spend",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 372.75,
-        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
-        "folded": true
-      },
-      "words": {
-        "visible": 214,
-        "prose": 190
-      },
-      "anchors": [
-        "#run",
-        "#access",
-        "#file",
-        "#sample"
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
       ],
+      "layoutSha256": "977ba406e65df9eef9939000fe820140c44805dd11415489d380b640d61f1541",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
-      "slug": "routing",
-      "width": 1366,
-      "colorScheme": "dark",
+      "slug": "summaries",
+      "width": 320,
+      "colorScheme": "light",
       "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 335.25,
-        "title": "Which model actually served your LiteLLM route?",
-        "folded": true
-      },
-      "words": {
-        "visible": 236,
-        "prose": 194
-      },
-      "anchors": [
-        "#run",
-        "#scope",
-        "litellm-spend.html#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "row-coverage",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 372.75,
-        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
-        "folded": true
-      },
-      "words": {
-        "visible": 193,
-        "prose": 154
-      },
-      "anchors": [
-        "#run",
-        "#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "security",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "title": "For security reviewers",
+        "width": 320,
+        "scroll": 320,
+        "title": "Why summaries instead of raw logs",
         "folded": true
       },
       "words": null,
       "anchors": [],
-      "pass": true
-    },
-    {
-      "slug": "token-spike",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 275.875,
-        "title": "Which user is driving my LLM token spike?",
-        "folded": true
-      },
-      "words": {
-        "visible": 151,
-        "prose": 129
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
       ],
-      "pass": true
-    },
-    {
-      "slug": "tokenmaxxing",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 343.0625,
-        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
-        "folded": true
-      },
-      "words": {
-        "visible": 112,
-        "prose": 112
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "what-if",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 305.5625,
-        "title": "What would switching models have cost?",
-        "folded": true
-      },
-      "words": {
-        "visible": 166,
-        "prose": 123
-      },
-      "anchors": [
-        "#run",
-        "litellm-spend.html#access",
-        "#file",
-        "#workload",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "session-budget",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 343.0625,
-        "title": "LiteLLM session over its budget? Check what the budget counts",
-        "folded": true
-      },
-      "words": {
-        "visible": 143,
-        "prose": 122
-      },
-      "anchors": [
-        "#run",
-        "litellm-spend.html#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "cache-check",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 343.0625,
-        "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
-        "folded": true
-      },
-      "words": {
-        "visible": 141,
-        "prose": 120
-      },
-      "anchors": [
-        "#run",
-        "litellm-spend.html#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "cardinality",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 313.375,
-        "title": "How do I see LLM usage per user without a metric label for every user?",
-        "folded": true
-      },
-      "words": {
-        "visible": 167,
-        "prose": 137
-      },
-      "anchors": [
-        "#run",
-        "#configure",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "anomalies",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 305.5625,
-        "title": "How do I detect anomalies in LLM token consumption?",
-        "folded": true
-      },
-      "words": {
-        "visible": 133,
-        "prose": 118
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "traces-usage",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 305.5625,
-        "title": "Do my LLM traces record token usage and user IDs?",
-        "folded": true
-      },
-      "words": {
-        "visible": 140,
-        "prose": 118
-      },
-      "anchors": [
-        "#run",
-        "#capture",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "distinct-users",
-      "width": 1366,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 1366,
-        "scroll": 1366,
-        "indexBottom": 343.0625,
-        "title": "How do I count distinct LLM users without storing user IDs?",
-        "folded": true
-      },
-      "words": {
-        "visible": 90,
-        "prose": 90
-      },
-      "anchors": [
-        "#run",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "litellm-spend",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 515.40625,
-        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
-        "folded": true
-      },
-      "words": {
-        "visible": 214,
-        "prose": 190
-      },
-      "anchors": [
-        "#run",
-        "#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "routing",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 517.296875,
-        "title": "Which model actually served your LiteLLM route?",
-        "folded": true
-      },
-      "words": {
-        "visible": 236,
-        "prose": 194
-      },
-      "anchors": [
-        "#run",
-        "#scope",
-        "litellm-spend.html#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "row-coverage",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 515.40625,
-        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
-        "folded": true
-      },
-      "words": {
-        "visible": 193,
-        "prose": 154
-      },
-      "anchors": [
-        "#run",
-        "#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "security",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "title": "For security reviewers",
-        "folded": true
-      },
-      "words": null,
-      "anchors": [],
-      "pass": true
-    },
-    {
-      "slug": "token-spike",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 428.234375,
-        "title": "Which user is driving my LLM token spike?",
-        "folded": true
-      },
-      "words": {
-        "visible": 151,
-        "prose": 129
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "tokenmaxxing",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 423.53125,
-        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
-        "folded": true
-      },
-      "words": {
-        "visible": 112,
-        "prose": 112
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "what-if",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 457.921875,
-        "title": "What would switching models have cost?",
-        "folded": true
-      },
-      "words": {
-        "visible": 166,
-        "prose": 123
-      },
-      "anchors": [
-        "#run",
-        "litellm-spend.html#access",
-        "#file",
-        "#workload",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "session-budget",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 456.03125,
-        "title": "LiteLLM session over its budget? Check what the budget counts",
-        "folded": true
-      },
-      "words": {
-        "visible": 143,
-        "prose": 122
-      },
-      "anchors": [
-        "#run",
-        "litellm-spend.html#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "cache-check",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 488.53125,
-        "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
-        "folded": true
-      },
-      "words": {
-        "visible": 141,
-        "prose": 120
-      },
-      "anchors": [
-        "#run",
-        "litellm-spend.html#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "cardinality",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 396.65625,
-        "title": "How do I see LLM usage per user without a metric label for every user?",
-        "folded": true
-      },
-      "words": {
-        "visible": 167,
-        "prose": 137
-      },
-      "anchors": [
-        "#run",
-        "#configure",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "anomalies",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 453.21875,
-        "title": "How do I detect anomalies in LLM token consumption?",
-        "folded": true
-      },
-      "words": {
-        "visible": 133,
-        "prose": 118
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "traces-usage",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 423.53125,
-        "title": "Do my LLM traces record token usage and user IDs?",
-        "folded": true
-      },
-      "words": {
-        "visible": 140,
-        "prose": 118
-      },
-      "anchors": [
-        "#run",
-        "#capture",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "distinct-users",
-      "width": 390,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 390,
-        "scroll": 390,
-        "indexBottom": 421.640625,
-        "title": "How do I count distinct LLM users without storing user IDs?",
-        "folded": true
-      },
-      "words": {
-        "visible": 90,
-        "prose": 90
-      },
-      "anchors": [
-        "#run",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "litellm-spend",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 643.578125,
-        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
-        "folded": true
-      },
-      "words": {
-        "visible": 214,
-        "prose": 190
-      },
-      "anchors": [
-        "#run",
-        "#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "routing",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 615.78125,
-        "title": "Which model actually served your LiteLLM route?",
-        "folded": true
-      },
-      "words": {
-        "visible": 236,
-        "prose": 194
-      },
-      "anchors": [
-        "#run",
-        "#scope",
-        "litellm-spend.html#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "row-coverage",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 613.890625,
-        "title": "LiteLLM spend logs missing requests? Compare with daily counts",
-        "folded": true
-      },
-      "words": {
-        "visible": 193,
-        "prose": 154
-      },
-      "anchors": [
-        "#run",
-        "#access",
-        "#file",
-        "#sample"
-      ],
+      "layoutSha256": "54b42205ace1eaf9f66c1347604a0765a8db63eb161ca734326a171cd1afecf4",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     },
     {
       "slug": "security",
       "width": 320,
-      "colorScheme": "dark",
+      "colorScheme": "light",
       "geometry": {
         "width": 320,
         "scroll": 320,
@@ -1549,209 +2358,37 @@
       },
       "words": null,
       "anchors": [],
-      "pass": true
-    },
-    {
-      "slug": "token-spike",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 494.21875,
-        "title": "Which user is driving my LLM token spike?",
-        "folded": true
-      },
-      "words": {
-        "visible": 151,
-        "prose": 129
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
       ],
-      "pass": true
-    },
-    {
-      "slug": "tokenmaxxing",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 492.328125,
-        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
-        "folded": true
-      },
-      "words": {
-        "visible": 112,
-        "prose": 112
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "what-if",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 494.21875,
-        "title": "What would switching models have cost?",
-        "folded": true
-      },
-      "words": {
-        "visible": 166,
-        "prose": 123
-      },
-      "anchors": [
-        "#run",
-        "litellm-spend.html#access",
-        "#file",
-        "#workload",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "session-budget",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 524.828125,
-        "title": "LiteLLM session over its budget? Check what the budget counts",
-        "folded": true
-      },
-      "words": {
-        "visible": 143,
-        "prose": 122
-      },
-      "anchors": [
-        "#run",
-        "litellm-spend.html#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "cache-check",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 554.515625,
-        "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
-        "folded": true
-      },
-      "words": {
-        "visible": 141,
-        "prose": 120
-      },
-      "anchors": [
-        "#run",
-        "litellm-spend.html#access",
-        "#file",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "cardinality",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 495.140625,
-        "title": "How do I see LLM usage per user without a metric label for every user?",
-        "folded": true
-      },
-      "words": {
-        "visible": 167,
-        "prose": 137
-      },
-      "anchors": [
-        "#run",
-        "#configure",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "anomalies",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 586.09375,
-        "title": "How do I detect anomalies in LLM token consumption?",
-        "folded": true
-      },
-      "words": {
-        "visible": 133,
-        "prose": 118
-      },
-      "anchors": [
-        "#run",
-        "#setup",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "traces-usage",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 522.015625,
-        "title": "Do my LLM traces record token usage and user IDs?",
-        "folded": true
-      },
-      "words": {
-        "visible": 140,
-        "prose": 118
-      },
-      "anchors": [
-        "#run",
-        "#capture",
-        "#sample"
-      ],
-      "pass": true
-    },
-    {
-      "slug": "distinct-users",
-      "width": 320,
-      "colorScheme": "dark",
-      "geometry": {
-        "width": 320,
-        "scroll": 320,
-        "indexBottom": 457.9375,
-        "title": "How do I count distinct LLM users without storing user IDs?",
-        "folded": true
-      },
-      "words": {
-        "visible": 90,
-        "prose": 90
-      },
-      "anchors": [
-        "#run",
-        "#sample"
-      ],
+      "layoutSha256": "50bb73e9713f2aed858a67d95c91cebad4738450dd6bb3f187cae66ea8cd6093",
+      "layoutUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
       "pass": true
     }
   ]

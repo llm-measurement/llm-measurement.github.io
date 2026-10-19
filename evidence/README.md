@@ -265,15 +265,21 @@ it does not relabel the earlier manual collector provenance check as a new run.
 
 ## Visual checks
 
+The light-only palette check covers all 15 pages at 1366, 390 and 320 pixels:
+45 views. Every rendered text/background pair, including opened folds, meets
+4.5:1; the lowest palette ratio is 5.12:1. Hover colors pass, and a system dark
+preference leaves the page light. Element geometry, fonts and spacing match the
+previous palette exactly. `rewrite-visual-verified.json` binds the current results
+to the page and CSS hashes.
+
 The first rewrite passed 24 views across LiteLLM spend, routing, row coverage
-and security. The final guide rewrite extends this to 78 views: all twelve
+and security. The prior guide rewrite extended this to 78 views: all twelve
 sample guides and security at 1366, 390 and 320 pixels, each in light and dark
 mode. The path indexes are visible without scrolling at laptop width.
 Each path link reached a visible
 section on mobile, with security folded initially and no page-wide overflow.
 The generated pages were checked in installed Chromium with external requests
-blocked. `rewrite-visual-verified.json` binds these results to the page and CSS
-hashes. Titles, descriptions and H1s are unchanged, and the twelve sample
+blocked. Titles, descriptions and H1s are unchanged, and the twelve sample
 commands and their checked output bytes are preserved.
 
 The earlier collector 0.6.1 and native row-coverage update had 22 checked combinations:

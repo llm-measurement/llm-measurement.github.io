@@ -350,6 +350,13 @@ def main():
         assert record["pass"] and record["exit"] == 0
         assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest(), record["block"]
     visual = json.loads((ROOT / "evidence/rewrite-visual-verified.json").read_text())
+    assert all(r["colorScheme"] == "light" for r in visual["results"]), "light-only visual checks"
+    assert {(r["slug"], r["width"]) for r in visual["results"]} == {
+        (p["slug"], width) for p in pages for width in (1366, 390, 320)
+    }, "all pages at laptop and mobile widths"
+    for record in visual["results"]:
+        assert record["layoutUnchanged"] and record["systemDarkRemainsLight"] and record["hoverPass"]
+        assert record["contrastPairs"] and all(pair["ratio"] >= 4.5 for pair in record["contrastPairs"])
     for name, digest in visual["files"].items():
         assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, (name, "stale visual evidence")
     assert all(r["pass"] and r["geometry"]["width"] == r["geometry"]["scroll"] for r in visual["results"])
