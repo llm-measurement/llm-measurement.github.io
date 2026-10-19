@@ -16,15 +16,25 @@
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
 <div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html" aria-current="page">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html" aria-current="page">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>How do I see LLM usage per user without a metric label for every user?</h1><p class="lead">Keep user IDs out of your metric labels.</p>
-<aside class="own-data" aria-labelledby="own-data-title">
+<nav class="path-index" aria-label="Choose your starting point">
+<ul>
+<li><a href="#run">Your collector config</a></li>
+<li><a href="#configure">Set up keyed rankings</a></li>
+<li><a href="#sample">Sample data</a></li>
+</ul>
+</nav>
+<aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
-<p>You need your existing collector YAML, saved locally as <code>collector.yaml</code>; no running collector or metrics-backend access is required for this configuration check.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.12.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="cardinality" data-exit="3"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
+<p>Save your collector configuration as <code>collector.yaml</code>.</p>
+<p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-own="cardinality" data-exit="3"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
 sh install-fleetdiff.sh v0.12.0 ./bin
-./bin/fleetdiff diagnose ./collector.yaml</code></pre><p>Exit 0 means no blocking findings, 3 identifies settings to fix, and 4 means the configuration includes unsupported settings. Follow the reported YAML paths.</p>
-<h3>Configure keyed rankings</h3>
-<p>The released <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/builder.yaml">v0.6.1 collector distribution</a> exports counters and distinct-user metrics through Prometheus or OTLP (gRPC or HTTP), so you can use any backend accepting OTLP metrics while keeping keyed rankings in snapshot logs and summary files.</p>
-<p>With the released genaisketch connector, map your span's user attribute and enable token-weighted user rankings:</p>
-<pre><code>connectors:
+./bin/fleetdiff diagnose ./collector.yaml</code></pre><p>Exit 0: no blocking findings. Exit 3: settings to fix. Exit 4: unsupported settings. Follow the reported YAML paths.</p>
+</aside>
+<section id="configure">
+<h2>Configure keyed rankings</h2>
+<p>With the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/builder.yaml">v0.6.1 collector</a>, map a user attribute and enable token-weighted rankings:</p>
+<pre data-config="cardinality"><code>connectors:
   genaisketch:
     fields:
       user_key:
@@ -35,11 +45,22 @@ sh install-fleetdiff.sh v0.12.0 ./bin
     topk_keys:
       - field: user_key
         weight: tokens</code></pre>
-<p>This fragment goes into a complete collector configuration with the hashing secret and trace pipeline set up. The distinct-user estimate is a metric value; keyed top-user rankings go to snapshot logs and optional summary files. Keep user identity attributes out of <code>slices</code>. <code>topk</code> limits displayed candidates; the configured sketch profile sets the ranking's fixed capacity.</p>
-<p>See the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/TOPK_KEYS.md">v0.6.1 ranking guide</a> and <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/CONFIGURATION.md">complete configuration reference</a>. Then use <a href="token-spike.html">fleetdiff to compare users across windows</a>.</p>
-</aside>
-<h2>What you'll see</h2>
-<p>Example output from the synthetic sample below; your values will reflect your input.</p>
+<p>Add this fragment to a <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/CONFIGURATION.md">complete configuration</a> with a hashing key and trace pipeline. Distinct counts become metrics; rankings go to logs and summaries. Keep user IDs out of <code>slices</code>.</p>
+<p><code>topk</code> sets displayed candidates; the profile sets capacity. See the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/TOPK_KEYS.md">ranking guide</a>.</p>
+</section>
+<details class="security-note"><summary>Security</summary>
+<p>See the <a href="security.html">security reference</a>.</p>
+</details>
+<section id="sample">
+<h2>Try the sample</h2>
+<p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-run="cardinality" data-exit="3"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
+tar -xzf fleetdiff-source.tar.gz
+cd fleetdiff-0.12.0
+sh scripts/install.sh v0.12.0 ./release
+./release/fleetdiff diagnose - &lt; examples/diagnose/unsafe.yaml</code></pre>
+<h3>What you'll see</h3>
+<p>Example output from this synthetic sample; your values will reflect your input.</p>
 <p>The example check finds an <code>enduser.id</code> metric label and an unsafe model-operation filter in a synthetic collector configuration. fleetdiff points to the YAML settings that need changing.</p>
 <pre class="output" data-output="cardinality"><code>2 problems to fix:
   connectors.genaisketch.operation_filter.llm_operations (line 10): Keep only model operations (chat, generate_content, text_completion, embeddings), each once. Tool and agent operations count as model attempts if included.
@@ -55,16 +76,13 @@ sh install-fleetdiff.sh v0.12.0 ./bin
 </ul>
 <h3>Keep the answers without identity labels</h3>
 <p>Use aggregate counters for token usage and model attempts, with a small, capped set of model or route labels. Keep the top token-consuming users in a fixed-capacity ranking outside metric labels. Track the number of distinct users as a scalar estimate, also without a user label. This preserves both questions: how many users were active, and which users accounted for most tokens.</p>
-<h2>No data handy? Try the sample</h2>
-<p class="meta">Requires curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The installer verifies the v0.12.0 release before extraction.</p>
-<pre data-run="cardinality" data-exit="3"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
-tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.0
-sh scripts/install.sh v0.12.0 ./release
-./release/fleetdiff diagnose - &lt; examples/diagnose/unsafe.yaml</code></pre>
 <p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.0/examples/diagnose">released synthetic diagnosis fixtures</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<details class="measurement-details">
+<summary>What the numbers mean</summary>
 <p class="measurement-context">diagnose reads your collector configuration; your metrics backend reports live series counts.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
+</details>
+</section>
 </main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 <a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a> · <a href="security.html#verify-fleetdiff">Manual release verification</a><br>

@@ -5,27 +5,27 @@ from a new directory with fresh caches. No real prompts, user records or
 model-provider credentials are needed. The manual collector provenance check
 uses GitHub authentication as described below.
 
-The sample and own-data command manifests record a full rerun on
-October 19, 2026 (UTC), using published fleetdiff v0.12.0: all twelve sample
-guides and all 35 own-data blocks passed after the first three guides were
-rewritten. The earlier targeted checks are described below. The homepage installs
+The current manifests record fresh full runs of all 12 samples and all 41
+own-data command blocks on October 19, 2026 (UTC), using published fleetdiff
+v0.12.0, plus three executable configuration checks described below. Earlier
+targeted checks are historical, not substituted for the final full run. The homepage installs
 sketchkit v0.4.0 in Python and Go; the existing Python guides retain their checked
 v0.3.0 examples. These site command checks ran on macOS arm64 against the released
 binary, not a local rebuild. The historical offline-analysis evidence below
 retains its v0.7.0 scope; it is not relabeled as a check of later production code.
 
-The later prose pass rechecked all twelve samples and all 35 own-data commands.
-The 93-test suite passed with real PostgreSQL checks enabled and no skips.
-The three rewritten guides have 214, 236 and 193 visible words before their
-sample sections, respectively (LiteLLM spend, routing, row coverage), within
-the 250-word limit. Counts include H1s, path links and visible commands; closed
-details contribute only their summaries. The prose checker also rejects the
-removed phrases anywhere in each revised guide, including folded/sample text.
-Manual release verification is linked from the shared footer.
+The later prose pass rechecked all twelve samples, 41 own-data commands and three
+configuration blocks. The prose checker rejects the removed phrases throughout
+all twelve guides, including folded/sample text, and enforces the reviewed
+installer wording and the manual-verification link's footer location.
+Each guide stays within 250 visible words before the sample for LiteLLM spend,
+routing and row coverage, or 200 for the other nine. Counts include H1s, path
+links and visible commands; closed details contribute only their summaries.
+The source counts match the browser's rendered text across all 72 guide views.
 
-The final publication pass uses plain `BEFORE`, `AFTER` and `ROUTE` variables
-with setup text beside each command. All 35 own-data commands and 97 tests
-passed, including real PostgreSQL regressions, with no skips.
+The final publication pass uses plain `BEFORE`, `AFTER`, `ROUTE` and `PERIOD`
+variables with setup text beside each command. All 41 own-data commands and
+105 tests passed, including real PostgreSQL regressions, with no skips.
 
 | Guide | Released program | Input and reference |
 | --- | --- | --- |
@@ -55,8 +55,9 @@ active pins must match the latest stable runtime and must not fall in an affecte
 range. Unavailable lookups and unsupported range syntax fail the check. The
 offline check uses `collector-release-policy.json`, regenerated from the public
 API by `python3 scripts/collector_pins.py --record evidence/collector-release-policy.json`.
-Collector links pin v0.6.1 configuration and chart 0.6.1; these guide commands do not start
-a collector or claim a live Prometheus series measurement.
+Collector links pin v0.6.1 configuration and chart 0.6.1. The added configuration
+checks execute the pinned collectors' validation subcommand; they do not start
+receiver traffic or claim a live Prometheus series measurement.
 Install-guide, configuration and source links use the same runtime tag.
 
 The reproduction command is:
@@ -113,9 +114,10 @@ The installer checks run with `GH_TOKEN` and `GITHUB_TOKEN` removed and a fresh
 `GH_CONFIG_DIR`: gh must be installed but need not be signed in. The LiteLLM path
 installs first, then checks both an owned mode-0600 credential file and the
 dedicated environment variable against the real database. Both produce identical
-aliased reports. Native fixtures follow the last 14 complete UTC days; an
+aliased reports. Clock-relative native fixtures follow the last 14 complete UTC days; an
 intervening UTC midnight fails the run rather than changing its reference window.
-All six native blocks require actual database traffic and temporary-export cleanup.
+The what-if native block instead retains its explicitly selected historical period.
+All nine native blocks require actual database traffic and temporary-export cleanup.
 The daily mode also verifies column-only read access to the daily table and
 reports the planted 8-row versus 9-request discrepancy. Native fixture dates
 shift start and end timestamps together, preserving cross-midnight durations.
@@ -132,11 +134,11 @@ released binary separately confirms 160 exported rows succeed, while a shortened
 14-day, 140-row export fails the same file-default investigation. This does not
 change native mode's clock-based 14-complete-day default.
 
-`own-data-verified.json` binds the 35 successful command blocks to their source
+`own-data-verified.json` binds all 41 successful command blocks to their source
 hashes and records the released fixture commit, native transport counts, role
 checks and installed binary versions. CI reruns these checks.
 
-### LiteLLM page rewrite check
+### Earlier LiteLLM page rewrite check
 
 The targeted rewrite check reran the five LiteLLM own-data blocks, the environment
 credential block moved to security, and the LiteLLM sample with every displayed
@@ -156,39 +158,72 @@ privileges. Their exact command hashes and results are nested under
 `litellm-native`'s `database.sql_blocks`. PostgreSQL reused the cached pinned image
 with `--pull=never --network=none`; no new image or Git checkout was used.
 
-At that stage, 27 other own-data records and 11 other sample records were retained.
-These were targeted checks; the later full rerun described above supersedes them.
+That earlier targeted refresh retained 27 other own-data records and 11 other
+sample records. The current manifests supersede it with fresh full runs.
 The 13 native/database regression tests also passed, including the shortened
 14-day export failure. The anonymous fleetdiff manual release block was rechecked;
 the unchanged collector OCI verification retains its earlier authenticated result.
 
-### Routing and row-coverage rewrite check
+### Final guide command checks
 
-The next targeted refresh executed all seven routing and five row-coverage
-own-data blocks, plus both samples with every displayed excerpt matched. Native
-commands use the exact home credential path. Routing scope retains explicit
-before/after periods and the private route environment variable. The fixture
-selects recent-date inputs for each native block and original historical inputs
-for each file or manual-export block, including a return to native route-agent
-analysis after the file commands. No published command bytes are rewritten.
+The routing and row-coverage commands separately exercise existing stand-in
+files and the actual SQL-produced exports. Each exported dataset is compared
+with its seeded rows; the reports from both paths must be identical. Historical
+file fixtures and clock-relative native fixtures are selected per block, so a
+later native command cannot accidentally reuse the file example's periods.
+The row page's exact daily SQL is executed after the shared LiteLLM reader grant;
+both hashes are recorded under `row-coverage-native.database.sql_blocks`.
 
-The existing-file commands read the stand-in `./spend.csv` and `./daily.csv`. Separate
-export-file commands read the actual SQL exports. Both exported datasets match
-the seeded rows, and both resulting reports match their stand-in-file reports
-exactly. The manual export comments are included in the executed command hashes.
-All eight routing rows and the 8-versus-9 daily discrepancy remain checked;
-missing metadata stays distinct from recorded zero, and private identities stay
-out of reports.
+The session-budget, cache-check and what-if native commands use the exact
+`~/.config/litellm-db-url` path. Their synthetic database rows preserve session
+and agent IDs, cache and reasoning fields, and missing-versus-zero distinctions.
+The planted session-budget failure matches every discriminator in the released
+SQL projection and remains one recorded rejection. This is a reader/command
+check using synthetic metadata, not a new LiteLLM failure-writer experiment.
 
-The row page's daily SQL is checked against the released statement and executed
-unchanged, following the shared LiteLLM reader-role SQL. Both command hashes are
-recorded under `row-coverage-native.database.sql_blocks`. The same real database
-checks all permitted spend columns, the four daily columns, denied content
-columns, and absence of table-wide or write privileges. This refresh retains
-23 other own-data records and 10 other sample records unchanged. The later full
-rerun covers these paths and every other own-data and sample command again.
-All 36 focused adapter and native-database tests passed without skips, including
-the existing actual-export regression that rejects a shortened 14-day file.
+The token-only what-if fixture has no recorded-spend field. Its database fixture
+deliberately assigns a synthetic USD 1 per row to satisfy the required database
+column; the complete report still must equal the released reference based on
+token prices. This checks that repricing does not use recorded spend. The file
+fixture's tokens and missing splits remain unchanged.
+
+The final Python suite passed all 101 tests with no skips, including the gated
+real-PostgreSQL checks and the retained shortened-export rejection. The static
+site check also passed with all command, SQL, configuration and visual bindings.
+
+### Published configuration checks
+
+The three `data-config` blocks have separate `config_records` in the own-data
+manifest. Each record binds the exact decoded page text with `config_sha256`.
+The workload-map JSON is written byte-for-byte to `workload-map.json`, with mode
+0600. Only the synthetic CSV identities are adapted to match the published
+placeholder IDs. The released CLI consumes that file; checked covered/excluded
+counts, prices and zero unmapped moved observations must still match.
+
+The two YAML fragments are inserted unchanged into minimal complete collector
+configurations. The cardinality fragment connects a local OTLP receiver through
+genaisketch to Prometheus. The file exporter is added alongside a retained debug
+exporter. Actual pinned collectors run `validate` with `--pull=never`,
+`--network none`, a read-only root filesystem, no capabilities, and synthetic
+test-only hashing material. Both configurations must pass; an invalid connector
+weight and an unknown file-exporter setting must be rejected by the respective
+collector. Logs and hashes bind both cases. No receiver traffic is sent and no
+trace capture or ranking output is claimed.
+
+CI explicitly caches these two collector images in addition to the existing
+PostgreSQL digest before executing the full own-data suite:
+
+```sh
+docker pull ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:b17b3489b65c27a622402982e8e61ee44c7ada247ff3168efacc63a3867c7818
+docker pull otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1
+```
+
+The local run reused cached images without downloading new ones. The published
+v0.6.1 OCI index is retained as public test data in
+`scripts/collector-v061-index.json`; its bytes, excluding the file's final newline,
+must hash to the pinned index digest before a cached platform child can be used.
+The manifest distinguishes the declared `image` from the actual
+`runtime_image` and records its architecture and removal after validation.
 
 ## v0.12.0 network boundary
 
@@ -225,18 +260,21 @@ cluster changed by these blocks.
 default site check rejects stale own-data or manual-verification command records.
 
 The earlier full-suite check passed all twelve sample guides and 32 own-data
-blocks. The targeted rewrites add three export-file blocks, for 35 currently bound
-own-data blocks, without claiming a second full-suite execution.
+blocks. The current full run covers all 41 command blocks after the guide rewrites;
+it does not relabel the earlier manual collector provenance check as a new run.
 
 ## Visual checks
 
-The October 19 rewrite passed 24 views: LiteLLM spend, routing, row coverage and security at
-1366, 390 and 320 pixels, each in light and dark mode. The path indexes are
-visible without scrolling at laptop width. Each path link reached a visible
+The first rewrite passed 24 views across LiteLLM spend, routing, row coverage
+and security. The final guide rewrite extends this to 78 views: all twelve
+sample guides and security at 1366, 390 and 320 pixels, each in light and dark
+mode. The path indexes are visible without scrolling at laptop width.
+Each path link reached a visible
 section on mobile, with security folded initially and no page-wide overflow.
 The generated pages were checked in installed Chromium with external requests
 blocked. `rewrite-visual-verified.json` binds these results to the page and CSS
-hashes. The LiteLLM title, description and H1 are unchanged.
+hashes. Titles, descriptions and H1s are unchanged, and the twelve sample
+commands and their checked output bytes are preserved.
 
 The earlier collector 0.6.1 and native row-coverage update had 22 checked combinations:
 homepage, LiteLLM spend, row coverage, cardinality and security at 1440- and
@@ -245,8 +283,8 @@ An exact generated-HTML snapshot ran in cached Chromium via Playwright with
 external requests blocked. Images decoded, mobile navigation worked, and checks
 found no page errors, content overlap or page-level horizontal overflow.
 Intentional code-block scrolling remained reachable. The 110 screenshots and
-source hashes are recorded in `visual-verified.json`. The other pages in this
-batch change version pins only; CSS, navigation and assets are unchanged.
+source hashes are recorded in `visual-verified.json`. In that earlier batch,
+the other pages changed version pins only.
 
 Separately, the historical v0.11.0 visual check covered all 15 pages at 1280- and
 390-pixel widths in light and dark modes, plus the homepage, routing, what-if and

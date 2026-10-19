@@ -15,17 +15,45 @@
 </script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
-<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html" aria-current="page">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html" aria-current="page">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>Which user is driving my LLM token spike?</h1><p class="lead">Usage jumped? Compare two periods and see which users and sessions account for the increase.</p>
-<aside class="own-data" aria-labelledby="own-data-title">
+<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html" aria-current="page">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html" aria-current="page">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>Which user is driving my LLM token spike?</h1><p class="lead">Compare two periods to see which users and sessions account for a token increase.</p>
+<nav class="path-index" aria-label="Choose your starting point">
+<ul>
+<li><a href="#run">Your collector summaries</a></li>
+<li><a href="#setup">Get summary windows</a></li>
+<li><a href="#file">A LiteLLM export</a></li>
+<li><a href="#sample">Sample data</a></li>
+</ul>
+</nav>
+<aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
-<p>A request-level LiteLLM export such as <code>spend.csv</code>, or read-only access to the proxy’s Postgres database to create one. Use the <a href="litellm-spend.html#export">read-only export recipe</a>; the Usage dashboard’s daily aggregate is a different format.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.12.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="token-spike" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
-sh install-fleetdiff.sh v0.12.0 ./bin
-./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user</code></pre><p>The default compares the two most recent complete seven-day UTC periods inside the file; export 16 days. For shorter files, pass <code>--before-period</code> and <code>--after-period</code>. <code>user</code> is the key owner; use <code>--group-by end-user</code> for application users.</p>
-<p>For continuous measurement, enable token-weighted <code>user_key</code> and <code>session_key</code> rankings in the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/TOPK_KEYS.md">released collector</a> and retain two complete <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/SUMMARY_EXPORT_HELM.md">summary windows</a>. Keep the hashing key consistent across the comparison and set <code>--expected</code> to your actual producer inventory. With your producer named <code>app</code>:</p><pre data-own="token-spike-summaries" data-exit="0"><code>./bin/fleetdiff investigate --before ./before --after ./after --expected app</code></pre>
-<p>For a gateway setup, start with the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.6.1/examples/integrations/litellm">LiteLLM recipe</a>. To keep watching, <a href="anomalies.html">scan retained history</a>.</p>
+<p>Save token-weighted user/session summaries in <code>./before</code> and <code>./after</code>. Use one hashing key and replace <code>app</code> with your producer name.</p>
+<p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-own="token-spike-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
+<pre data-own="token-spike-summaries" data-exit="0"><code>./bin/fleetdiff investigate --before ./before --after ./after --expected app</code></pre>
+<p>See changes in attempts, tokens per attempt and contributors.</p>
 </aside>
-<h2>What you'll see</h2>
-<p>Example output from the synthetic sample below; your values will reflect your input.</p>
+<section id="setup">
+<h2>Get summary windows</h2>
+<p>Enable <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/TOPK_KEYS.md">user/session rankings</a>, then <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/SUMMARY_EXPORT_HELM.md">retain summary windows</a>. For LiteLLM, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/tree/v0.6.1/examples/integrations/litellm">gateway recipe</a>.</p>
+</section>
+<section id="file"><h2>Use a LiteLLM export</h2>
+<p>Use request-level <code>spend.csv</code> from the <a href="litellm-spend.html#export">export recipe</a>.</p>
+<pre data-own="token-spike" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user</code></pre>
+<p>Export 16 days for two seven-day UTC periods. <code>user</code> means key owner; use <code>--group-by end-user</code> for application users.</p></section>
+<details class="security-note"><summary>Security</summary>
+<p>See the <a href="security.html">security reference</a>.</p></details>
+<section id="sample">
+<h2>Try the sample</h2>
+<p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-run="token-spike" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
+tar -xzf fleetdiff-source.tar.gz
+cd fleetdiff-0.12.0
+sh scripts/install.sh v0.12.0 ./release
+./release/fleetdiff investigate --before examples/sessions/data/before \
+  --after examples/sessions/data/after --expected app</code></pre>
+<h3>What you'll see</h3>
+<p>Example output from this synthetic sample; your values will reflect your input.</p>
 <p>fleetdiff shows the split between more model attempts and more tokens per attempt. In this example, the application's reported total rises from 400 to 3,300 tokens.</p>
 <pre class="output" data-output="token-spike"><code>1 of 8 tracked sessions flagged for review: 90.91% of attributed tokens.
 Reported tokens: 400 -&gt; 3300; model attempts: 4 -&gt; 13.
@@ -36,17 +64,13 @@ Reported tokens: 400 -&gt; 3300; model attempts: 4 -&gt; 13.
   key / measurement   before -&gt; after  after share  review
   user-1 / top_users  0 -&gt; 3000        90.91%</code></pre>
 <p>To see who uses the most overall, rather than who changed, see <a href="tokenmaxxing.html">Who is tokenmaxxing?</a></p>
-<h2>No data handy? Try the sample</h2>
-<p class="meta">Requires curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. No collector, Docker or model API key is needed for the sample.</p>
-<pre data-run="token-spike" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
-tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.0
-sh scripts/install.sh v0.12.0 ./release
-./release/fleetdiff investigate --before examples/sessions/data/before \
-  --after examples/sessions/data/after --expected app</code></pre>
 <p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.0/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<details class="measurement-details">
+<summary>What the numbers mean</summary>
 <p class="measurement-context">A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
+</details>
+</section>
 </main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 <a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a> · <a href="security.html#verify-fleetdiff">Manual release verification</a><br>

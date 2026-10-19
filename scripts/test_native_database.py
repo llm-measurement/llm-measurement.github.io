@@ -19,6 +19,7 @@ from urllib.parse import urlsplit
 
 from outsider import ROOT, Blocks
 import own_data
+from config_checks import CONFIG_IMAGES
 
 
 class NativeDatabaseTests(unittest.TestCase):
@@ -33,9 +34,11 @@ class NativeDatabaseTests(unittest.TestCase):
         workflow = (ROOT / ".github/workflows/docs.yml").read_text().split("\n  own-data:\n", 1)[1]
         pulls = [line.strip().removeprefix("- run: ") for line in workflow.splitlines()
                  if line.strip().startswith("- run: docker pull ")]
-        self.assertEqual([shlex.split(command) for command in pulls], [["docker", "pull", image]])
+        self.assertEqual([shlex.split(command) for command in pulls],
+                         [["docker", "pull", value] for value in (image, *CONFIG_IMAGES.values())])
         self.assertIn("fleetdiff/" + own_data.FIXTURE_COMMIT + "/examples/litellm-spend/images.json", workflow)
-        self.assertLess(workflow.index(pulls[0]), workflow.index("python3 scripts/check.py --own-data"))
+        for command in pulls:
+            self.assertLess(workflow.index(command), workflow.index("python3 scripts/check.py --own-data"))
         self.assertIn(pulls[0], (ROOT / "README.md").read_text())
 
     def test_native_blocks_are_all_checked_as_database_commands(self):

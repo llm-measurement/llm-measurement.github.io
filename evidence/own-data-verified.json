@@ -16,13 +16,105 @@
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
     }
   ],
+  "config_records": [
+    {
+      "page": "cardinality",
+      "block": "cardinality",
+      "kind": "collector-validate",
+      "pass": true,
+      "config_sha256": "1839602b8e9686a250147d48022fa5cc54d5cd675a5d1ea4b40ca2066297d52d",
+      "composed_sha256": "44918708a02ebac33323bb3c3a61d3ccc2e90a887db59e7cdc0adfd751547b3f",
+      "image": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:b17b3489b65c27a622402982e8e61ee44c7ada247ff3168efacc63a3867c7818",
+      "runtime_image": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:97e17ebfdf513a6f96f2360239eea46e3529a2773b49982f2c09494052195d61",
+      "image_id": "sha256:97e17ebfdf513a6f96f2360239eea46e3529a2773b49982f2c09494052195d61",
+      "containers_removed": true,
+      "image_architecture": "arm64",
+      "network": "none",
+      "pull": "never",
+      "validation": "released collector validate command; no receiver traffic or capture performed",
+      "runtime_args": [
+        "validate",
+        "--config=file:/fixture/config.yaml"
+      ],
+      "results": [
+        {
+          "case": "published",
+          "exit": 0,
+          "pass": true,
+          "configuration_sha256": "44918708a02ebac33323bb3c3a61d3ccc2e90a887db59e7cdc0adfd751547b3f",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "case": "negative",
+          "exit": 1,
+          "pass": true,
+          "configuration_sha256": "dc68e4db6646efea0df4749997e479b4ec1a182e0275b33c0373f0d171d1081e",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "74bbc89ea3bce543cd63a5dbcc44de0148da6525a7fc3f969e2d9d1cd4a20d60"
+        }
+      ]
+    },
+    {
+      "page": "traces-usage",
+      "block": "traces-usage",
+      "kind": "collector-validate",
+      "pass": true,
+      "config_sha256": "7f4d1b6553a2ce2c3d537731450ae5cee6db62f3ad4ca1e52ef8d0348bc06db8",
+      "composed_sha256": "25daeba0d3c4dfb5e6ef2ae5a0bb50978cee1dee3e58f13398d2efbf2514b7c5",
+      "image": "otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
+      "runtime_image": "otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
+      "image_id": "sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
+      "containers_removed": true,
+      "image_architecture": "arm64",
+      "network": "none",
+      "pull": "never",
+      "validation": "released collector validate command; no receiver traffic or capture performed",
+      "runtime_args": [
+        "validate",
+        "--config=file:/fixture/config.yaml"
+      ],
+      "results": [
+        {
+          "case": "published",
+          "exit": 0,
+          "pass": true,
+          "configuration_sha256": "25daeba0d3c4dfb5e6ef2ae5a0bb50978cee1dee3e58f13398d2efbf2514b7c5",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "case": "negative",
+          "exit": 1,
+          "pass": true,
+          "configuration_sha256": "62b3c7e71205316aafa39b7b0af7d1f3b6559ec1ee4c085e752d22312d392de4",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "32748ea228ce0e871d7db999d80e0979c441776cc2f3fc5136142e8f1a319c89"
+        }
+      ]
+    },
+    {
+      "page": "what-if",
+      "block": "what-if-workload-map",
+      "kind": "fleetdiff-workload-map",
+      "pass": true,
+      "exit": 0,
+      "config_sha256": "03a476aa8370c256ca3c57ba5c69d0328b0e80025884d05a10fc0f0ef5007645",
+      "execution_block": "what-if-workload-map",
+      "command_sha256": "69ac38beb06e3f83e63b03b1d5f7e1779cf132cf51b55e72add6ca1b5c7b0f88",
+      "stdout_sha256": "7b86931eb58002da481af3ba8ea3aee87d53e54fc29c5b55ba03a099fffb7bc3",
+      "input_relative_path": "workload-map.json",
+      "fixture_sha256": "2d9890f7ca2de87e5031ab637d2b317cea71e30691a51ce5e3c02b33e962561f",
+      "validation": "exact published JSON consumed by the released CLI; only synthetic CSV identities adapted"
+    }
+  ],
   "results": [
     {
       "page": "index",
       "block": "home-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 2.01,
+      "seconds": 1.33,
       "command_sha256": "d0b7e8b75aed9bda578e5cd76dc1466d31ca667e3b30b77fcd7d0bf3b1bcd5b3",
       "stdout_sha256": "bb5917f2cf529949ea4076162634b14b184c92cb59cf82a10bca182d46d72667",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -34,14 +126,14 @@
       "exit": 0,
       "seconds": 0.01,
       "command_sha256": "2190e825811c6d577db6d53f5dbfd40e0be43083f6c459a1955f634881f74779",
-      "stdout_sha256": "204487dbd708054b316f3c9c05368e42f6ad0ab3eff58d8eb70bd4168a60426d"
+      "stdout_sha256": "a7b141811b9dc94788d9f37911b02a6603d0e110aa067d78caf658f341e23e7b"
     },
     {
       "page": "index",
       "block": "home-python",
       "pass": true,
       "exit": 0,
-      "seconds": 2.07,
+      "seconds": 1.75,
       "command_sha256": "dcc5c54a5057f2ae2be3240de7cf9108022db503fc8ff771d85887a8712b2e01",
       "stdout_sha256": "1ecfa391576f8309c30dd84b4dea95388fb81f674d4af5bac0e918441ff24ef3"
     },
@@ -50,18 +142,18 @@
       "block": "home-go",
       "pass": true,
       "exit": 0,
-      "seconds": 5.93,
+      "seconds": 5.21,
       "command_sha256": "53256d1728c9cfcab706edc92ec0a2a512f7df4e3a7a365f9d8b28a6ee5e5f9e",
       "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "page": "token-spike",
-      "block": "token-spike",
+      "block": "token-spike-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.49,
-      "command_sha256": "d0b7e8b75aed9bda578e5cd76dc1466d31ca667e3b30b77fcd7d0bf3b1bcd5b3",
-      "stdout_sha256": "bb5917f2cf529949ea4076162634b14b184c92cb59cf82a10bca182d46d72667",
+      "seconds": 1.22,
+      "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
+      "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
     },
     {
@@ -74,11 +166,20 @@
       "stdout_sha256": "8399a3a58764a9e88020deb1eb2aff8dc9e26972a7c9ca6bc141afc1ba8f3f29"
     },
     {
+      "page": "token-spike",
+      "block": "token-spike",
+      "pass": true,
+      "exit": 0,
+      "seconds": 0.01,
+      "command_sha256": "2cd1db7ca0d8ece54478afa39352ddd9a5d351ad7b6c8162a4698fa53fdf7026",
+      "stdout_sha256": "3fd843a1625cfc00bad4dd492a0784576108cf9aa54e9987d36a81ae121dce8f"
+    },
+    {
       "page": "litellm-spend",
       "block": "litellm-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.3,
+      "seconds": 1.24,
       "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
       "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -88,7 +189,7 @@
       "block": "litellm-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.29,
+      "seconds": 2.25,
       "command_sha256": "574d1e9b1d5dc03e2db52f55ca2dd033d69140f1f1b4ef2df54c42c3277408b0",
       "stdout_sha256": "6606e65567f3e96c3da02b8e08ca013eaae5c6bc0a542ed113770db7e1992d86",
       "database": {
@@ -166,7 +267,7 @@
       "block": "spend-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.68,
+      "seconds": 1.62,
       "command_sha256": "61e7ee3ec7d0aaa3013a45812a38ea35a70ec448350f6f401a7a99180cdb352d",
       "stdout_sha256": "7cf3bd24f6b2be47126b6dd13f8145174ba5c4f8bcb09e6aa1946994d1998dcb"
     },
@@ -182,30 +283,170 @@
     },
     {
       "page": "session-budget",
+      "block": "session-budget-install",
+      "pass": true,
+      "exit": 0,
+      "seconds": 1.55,
+      "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
+      "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
+      "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
+    },
+    {
+      "page": "session-budget",
+      "block": "session-budget-native",
+      "pass": true,
+      "exit": 0,
+      "seconds": 2.16,
+      "command_sha256": "9fa4cbd0a50df59505ed372300f1fba9cfb4985a6cdafc12bad7d74a48ddcf4a",
+      "stdout_sha256": "dfe5bb1d5e04931ff695ddff09099051c2f38165f94ffd9fcc75216d58c69925",
+      "database": {
+        "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
+        "network": "none",
+        "database": "litellm",
+        "sql_blocks": [
+          {
+            "block": "released-native-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "1c2019cf20e284d1720e523ceb1b3ca775e89f6bb14652ae31fc4ef2ab140bf3",
+            "stdout_sha256": "793665d83a636c2cdeb75cb237c976b91115a9a089652f68415c3f1be85cd60a"
+          }
+        ],
+        "column_select_privileges": {
+          "agent_id": "t",
+          "api_key": "t",
+          "call_type": "t",
+          "completion_tokens": "t",
+          "custom_llm_provider": "t",
+          "endTime": "t",
+          "end_user": "t",
+          "messages": "f",
+          "metadata": "t",
+          "model": "t",
+          "model_group": "t",
+          "model_id": "t",
+          "organization_id": "t",
+          "prompt_tokens": "t",
+          "proxy_server_request": "f",
+          "request_id": "t",
+          "response": "f",
+          "session_id": "t",
+          "spend": "t",
+          "startTime": "t",
+          "status": "t",
+          "team_id": "t",
+          "total_tokens": "t",
+          "user": "t"
+        },
+        "role_restrictions": "litellm|f|f|f|f|f|f|f|f|f|f|f|f",
+        "credential_relative_path": ".config/litellm-db-url",
+        "credential_mode": "0600",
+        "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
+        "transport": {
+          "connections": 1,
+          "client_bytes": 4485,
+          "server_bytes": 5043,
+          "errors": []
+        },
+        "fixture_sha256": "eaeff1d21c6a82beb9896d8391761d17497179185d594ca419890d89f30f392c"
+      },
+      "fixture_utc_midnight": "2026-10-19T00:00:00+00:00"
+    },
+    {
+      "page": "session-budget",
       "block": "session-budget",
       "pass": true,
       "exit": 0,
-      "seconds": 1.45,
-      "command_sha256": "23a45001705b88dda102cf4b5b7d1c6039ca8a0e67e01700c73dc8ac294095a6",
-      "stdout_sha256": "1ff7b045b87214b8a0f4e1d24033f3a7e4f0d3cce5ad131e628279b6ef804ff2",
+      "seconds": 0.01,
+      "command_sha256": "60343e4cd844a77eef8321b2f338e7a1c3b2a35dcaa73a9a403e4d736f441219",
+      "stdout_sha256": "a411af12a88c2efe08056abca78a84a95f1d495e01fc77d9bf46579010c94f7e"
+    },
+    {
+      "page": "cache-check",
+      "block": "cache-check-install",
+      "pass": true,
+      "exit": 0,
+      "seconds": 1.31,
+      "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
+      "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
+    },
+    {
+      "page": "cache-check",
+      "block": "cache-check-native",
+      "pass": true,
+      "exit": 0,
+      "seconds": 2.15,
+      "command_sha256": "9f6f973b83f18ee6b4b6b24af0e870f692efa227cf8e86378218fe279713dc44",
+      "stdout_sha256": "c03882b2406da64687ab525f611f2413368e366336aadcb599e2031ffe93e497",
+      "database": {
+        "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
+        "network": "none",
+        "database": "litellm",
+        "sql_blocks": [
+          {
+            "block": "released-native-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "1c2019cf20e284d1720e523ceb1b3ca775e89f6bb14652ae31fc4ef2ab140bf3",
+            "stdout_sha256": "793665d83a636c2cdeb75cb237c976b91115a9a089652f68415c3f1be85cd60a"
+          }
+        ],
+        "column_select_privileges": {
+          "agent_id": "t",
+          "api_key": "t",
+          "call_type": "t",
+          "completion_tokens": "t",
+          "custom_llm_provider": "t",
+          "endTime": "t",
+          "end_user": "t",
+          "messages": "f",
+          "metadata": "t",
+          "model": "t",
+          "model_group": "t",
+          "model_id": "t",
+          "organization_id": "t",
+          "prompt_tokens": "t",
+          "proxy_server_request": "f",
+          "request_id": "t",
+          "response": "f",
+          "session_id": "t",
+          "spend": "t",
+          "startTime": "t",
+          "status": "t",
+          "team_id": "t",
+          "total_tokens": "t",
+          "user": "t"
+        },
+        "role_restrictions": "litellm|f|f|f|f|f|f|f|f|f|f|f|f",
+        "credential_relative_path": ".config/litellm-db-url",
+        "credential_mode": "0600",
+        "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
+        "transport": {
+          "connections": 1,
+          "client_bytes": 4485,
+          "server_bytes": 8159,
+          "errors": []
+        },
+        "fixture_sha256": "217885455185c730fc76a4ab55b0f257b282d38d90f5aa074a6cf71608ffbbc4"
+      },
+      "fixture_utc_midnight": "2026-10-19T00:00:00+00:00"
     },
     {
       "page": "cache-check",
       "block": "cache-check",
       "pass": true,
       "exit": 0,
-      "seconds": 1.51,
-      "command_sha256": "4ba457032bca1425a19f5ff32c6b8b4ea8cfef699aa698fa7182315631c96466",
-      "stdout_sha256": "481c865369322b8cae0a88c6d08f540d0a3e0e087b82f85a810c0c8d4dea7cb3",
-      "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
+      "seconds": 0.01,
+      "command_sha256": "9c2e84f1caf6045525c98c0a62b35263a99c8d1f6ba40a6caa4fcb272cca465b",
+      "stdout_sha256": "823f49600610130991076f3d795171f0ac296346f1f4a812bbd64d00252b199d"
     },
     {
       "page": "cardinality",
       "block": "cardinality",
       "pass": true,
       "exit": 3,
-      "seconds": 1.77,
+      "seconds": 2.37,
       "command_sha256": "68f8fa76cfe48a455a1d08d6201565d1c825d0f52c0dbf9c4e9b743f626216b0",
       "stdout_sha256": "0cf2cc6539019856e1a1ec782edbcb0d9a30c2d0637d64dd71ebf38fe7a7e9fe",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -217,7 +458,7 @@
       "exit": 0,
       "seconds": 1.33,
       "command_sha256": "224a879db1862ea868d39b4fee0aeb946a127000b061f143b0830b64b4949a7e",
-      "stdout_sha256": "71f0216d19b878dddcf0f947ae661853df4345550315899551532cfe45c87a0e",
+      "stdout_sha256": "fbc9f13868b3a7fb1d0d8058faf4c97419c68560b96543d666c80631eb8e7beb",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
     },
     {
@@ -225,7 +466,7 @@
       "block": "anomalies-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.21,
+      "seconds": 1.35,
       "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
       "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -237,14 +478,14 @@
       "exit": 3,
       "seconds": 0.02,
       "command_sha256": "8310e32c846f582977b24b3ac1c1db1ac629403bf0867fc27330dbfb74e44c5f",
-      "stdout_sha256": "ef1ffc0e0886b83b0620f5f1042ebd4b000293d0810de145e30256e21a263740"
+      "stdout_sha256": "88d5a35f6c16d38bd55417d967e1685d96673b5d49e3259449d8974ec052266d"
     },
     {
       "page": "distinct-users",
       "block": "distinct-users",
       "pass": true,
       "exit": 0,
-      "seconds": 1.85,
+      "seconds": 1.88,
       "command_sha256": "81671cb47bbb144557140e20bbd2ab73a2887df85f0fb48092d1f0a19f421c29",
       "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475"
     },
@@ -262,7 +503,7 @@
       "block": "row-coverage-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.35,
+      "seconds": 1.32,
       "command_sha256": "ad31ff8c5aa7c15ed474f6cad5063e00d554a1396fb594859c69406ca6b2d306",
       "stdout_sha256": "328c93ab051d5160b0f9fe024aad8b497e258cb32b9fd012f94a10c5aaf93f95",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -272,7 +513,7 @@
       "block": "row-coverage-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.3,
+      "seconds": 2.24,
       "command_sha256": "ceb09c621c04a2cdabffc293ef780cb6fcbae3085fa548c2eb32f2e20f12e189",
       "stdout_sha256": "d961422e84b1435ad95432b287963b660b775a2542d557378930871854d63269",
       "database": {
@@ -355,7 +596,7 @@
       "block": "row-coverage-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.87,
+      "seconds": 1.88,
       "command_sha256": "e1ea13695e183a22f7c6e59b852e0b3c5deafead0006387d47c104ef9b510616",
       "stdout_sha256": "04bd25e4f2506bddfa650bbefb7c1c3c2babf131c000d5d36956c7b17d69dbcb",
       "paired_export": {
@@ -391,7 +632,7 @@
       "block": "routing-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.15,
+      "seconds": 1.21,
       "command_sha256": "d9ee6fede6f191c9392b8c1ce08a8bae9b6ce96ec61da710d1f277acf5fc39b2",
       "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
@@ -462,7 +703,7 @@
       "block": "routing-scope",
       "pass": true,
       "exit": 0,
-      "seconds": 2.2,
+      "seconds": 2.16,
       "command_sha256": "72d0a94f8527c8f8efe50cffc1964061139f2033241c42db6d9c66d1a3cc3220",
       "stdout_sha256": "f127fa941d9d3d6c860ae4d575caef16408ff022732faffe653b57904db245a7",
       "database": {
@@ -523,7 +764,7 @@
       "block": "routing-agents",
       "pass": true,
       "exit": 0,
-      "seconds": 2.17,
+      "seconds": 2.16,
       "command_sha256": "4610fcbf5e1ed5bc069a991ff8ba607fd01f9e9bc2a1ae0e4c5d2b01f7cfe14d",
       "stdout_sha256": "c11035e068bcae96177dca7b66f8399704def2f8d912137d9f1547604aa1abc6",
       "database": {
@@ -622,10 +863,72 @@
       "block": "what-if-install",
       "pass": true,
       "exit": 0,
-      "seconds": 1.18,
+      "seconds": 1.16,
       "command_sha256": "73d538bd2e546c40f50399c7bca4d30f135db7ec29bc4d6e692a81ddb51808f8",
       "stdout_sha256": "facb0040652283b94f76f2fec2712a3a35ead7fd2e4565c8b510b7dd9f09e3ed",
       "installed_version": "fleetdiff v0.12.0 (6089061c931fa19fac876e40b3809fdea4792ab8) go1.26.9 darwin/arm64"
+    },
+    {
+      "page": "what-if",
+      "block": "what-if-native",
+      "pass": true,
+      "exit": 0,
+      "seconds": 2.14,
+      "command_sha256": "1bb76d1c3d523ce579fe0246e55166338a9e227911bba57699d146c1ad6f282b",
+      "stdout_sha256": "dd1bac25024ce2759b1efac7d38e5098f7769ac2b225ae036edff7dea1de30f3",
+      "database": {
+        "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
+        "network": "none",
+        "database": "litellm",
+        "sql_blocks": [
+          {
+            "block": "released-native-grants",
+            "exit": 0,
+            "pass": true,
+            "command_sha256": "1c2019cf20e284d1720e523ceb1b3ca775e89f6bb14652ae31fc4ef2ab140bf3",
+            "stdout_sha256": "793665d83a636c2cdeb75cb237c976b91115a9a089652f68415c3f1be85cd60a"
+          }
+        ],
+        "column_select_privileges": {
+          "agent_id": "t",
+          "api_key": "t",
+          "call_type": "t",
+          "completion_tokens": "t",
+          "custom_llm_provider": "t",
+          "endTime": "t",
+          "end_user": "t",
+          "messages": "f",
+          "metadata": "t",
+          "model": "t",
+          "model_group": "t",
+          "model_id": "t",
+          "organization_id": "t",
+          "prompt_tokens": "t",
+          "proxy_server_request": "f",
+          "request_id": "t",
+          "response": "f",
+          "session_id": "t",
+          "spend": "t",
+          "startTime": "t",
+          "status": "t",
+          "team_id": "t",
+          "total_tokens": "t",
+          "user": "t"
+        },
+        "role_restrictions": "litellm|f|f|f|f|f|f|f|f|f|f|f|f",
+        "credential_relative_path": ".config/litellm-db-url",
+        "credential_mode": "0600",
+        "readonly_identity": "fleetdiff_reader|on|t|f|f|f",
+        "transport": {
+          "connections": 1,
+          "client_bytes": 4485,
+          "server_bytes": 3017,
+          "errors": []
+        },
+        "fixture_sha256": "2d9890f7ca2de87e5031ab637d2b317cea71e30691a51ce5e3c02b33e962561f"
+      },
+      "fixture_utc_midnight": "2026-10-19T00:00:00+00:00",
+      "synthetic_recorded_spend_per_row_usd": "1"
     },
     {
       "page": "what-if",
@@ -633,7 +936,7 @@
       "pass": true,
       "exit": 0,
       "seconds": 0.01,
-      "command_sha256": "a7802a98c58d069ddca2efd2f1ba8b273471040a3baa23cd84266202c1143f80",
+      "command_sha256": "bf1cb5c05650db9c2e90ecfa586fe60ddeb6c66679b15e47ce111444ecbd1b35",
       "stdout_sha256": "dd1bac25024ce2759b1efac7d38e5098f7769ac2b225ae036edff7dea1de30f3"
     },
     {
@@ -642,7 +945,7 @@
       "pass": true,
       "exit": 0,
       "seconds": 0.01,
-      "command_sha256": "1e20569ec230a55276454264fb1527d3f8796fa3c315faddfde0dda247d25848",
+      "command_sha256": "69ac38beb06e3f83e63b03b1d5f7e1779cf132cf51b55e72add6ca1b5c7b0f88",
       "stdout_sha256": "7b86931eb58002da481af3ba8ea3aee87d53e54fc29c5b55ba03a099fffb7bc3"
     },
     {

@@ -16,9 +16,27 @@
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
 <div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html" aria-current="page">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html" aria-current="page">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>Who is tokenmaxxing? Find your heaviest AI token users</h1><p class="lead">No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.</p>
-<aside class="own-data" aria-labelledby="own-data-title">
+<nav class="path-index" aria-label="Choose your starting point">
+<ul>
+<li><a href="#run">Your collector</a></li>
+<li><a href="#setup">Collect user rankings</a></li>
+<li><a href="#file">Your usage file</a></li>
+<li><a href="#sample">Sample data</a></li>
+</ul>
+</nav>
+<aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
-<p>Requires Python 3.11+ and your period’s request-level <code>usage.csv</code>, with <code>user_id,tokens</code> columns. The CSV stays local. This recipe ranks recorded token volume; it needs an export or application integration, not a before/after comparison.</p><pre data-own="tokenmaxxing" data-exit="0"><code>python3 -m venv .venv
+<p>Read user rankings from your collector's snapshot logs or summary files. The <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/TOPK_KEYS.md">user-key guide</a> explains token totals and user lookup.</p>
+</aside>
+<section id="setup">
+<h2>Collect user rankings</h2>
+<p>Configure <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/TOPK_KEYS.md">user-key rankings</a> on GenAI spans, then <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/SUMMARY_EXPORT_HELM.md">retain summary windows</a>. Use a user identity attribute and one hashing key.</p>
+</section>
+<section id="file">
+<h2>Already have a usage file?</h2>
+<p>Requires Python 3.11+ and <code>usage.csv</code> with <code>user_id,tokens</code> columns. Get the user count, total tokens and heaviest users.</p>
+<details><summary>Run the Python ranking recipe</summary>
+<pre data-own="tokenmaxxing" data-exit="0"><code>python3 -m venv .venv
 .venv/bin/python -m pip install --no-cache-dir llm-sketchkit==0.3.0
 .venv/bin/python - &lt;&lt;'PY'
 import csv
@@ -52,24 +70,15 @@ if total:
     low = sum(item.lower_bound for item in items) / total
     high = min(1, sum(item.upper_bound for item in items) / total)
     print(f"Displayed users account for {low:.1%} to {high:.1%} of tokens.")
-PY</code></pre><p>For continuous rankings from GenAI spans, use the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/TOPK_KEYS.md">collector’s user-key configuration</a>. The released connector keeps the same keyed, token-weighted ranking in snapshot logs and summary files, without user labels on your metrics. See <a href="cardinality.html">per-user metrics</a>.</p>
-<p>Teams are few, so count them exactly; a few dozen budget lines don't need a sketch. Use the keyed ranking for people, where the list is long and names are sensitive.</p>
-</aside>
-<h2>What you'll see</h2>
-<p>Example output from the synthetic sample below; your values will reflect your input.</p>
-<p>In this synthetic week, 5 of 60 people account for 43% of reported tokens. The ranking holds keyed values, not names; whoever holds the key can look up a person by hashing a known ID.</p>
-<pre class="output" data-output="tokenmaxxing"><code>People using AI this week: 60
-Total reported tokens: 78,126,732
-Heaviest users (keyed; only the key holder can look them up):
-  #1: 17,034,328 tokens
-  #2: 8,652,754 tokens
-  #3: 3,136,006 tokens
-  #4: 2,615,589 tokens
-  #5: 2,273,034 tokens
-The top 5 of 60 people account for 43% of all tokens.</code></pre>
-<p>To see who caused a jump between two periods, see <a href="token-spike.html">Which user is driving my token spike?</a></p>
-<h2>No data handy? Try the sample</h2>
-<p class="meta">Requires Python 3.11 or later. Installation downloads the pinned release from PyPI; ranking runs locally.</p>
+PY</code></pre>
+</details>
+</section>
+<details class="security-note"><summary>Security</summary>
+<p>See the <a href="security.html">security reference</a>.</p>
+</details>
+<section id="sample">
+<h2>Try the sample</h2>
+<p class="meta">Requires Python 3.11+. Rank a synthetic week of usage.</p>
 <pre data-run="tokenmaxxing" data-exit="0"><code>python3 -m venv .venv
 .venv/bin/python -m pip install --no-cache-dir llm-sketchkit==0.3.0
 .venv/bin/python - &lt;&lt;'PY'
@@ -107,9 +116,26 @@ high = min(1.0, sum(i.upper_bound for i in top) / total)
 share = f"{low:.0%}" if f"{low:.0%}" == f"{high:.0%}" else f"{low:.0%} to {high:.0%}"
 print(f"The top 5 of {people} people account for {share} of all tokens.")
 PY</code></pre>
+<h3>What you'll see</h3>
+<p>Example output from this synthetic sample; your values will reflect your input.</p>
+<p>In this synthetic week, 5 of 60 people account for 43% of reported tokens. The ranking holds keyed values, not names; whoever holds the key can look up a person by hashing a known ID.</p>
+<pre class="output" data-output="tokenmaxxing"><code>People using AI this week: 60
+Total reported tokens: 78,126,732
+Heaviest users (keyed; only the key holder can look them up):
+  #1: 17,034,328 tokens
+  #2: 8,652,754 tokens
+  #3: 3,136,006 tokens
+  #4: 2,615,589 tokens
+  #5: 2,273,034 tokens
+The top 5 of 60 people account for 43% of all tokens.</code></pre>
+<p>To see who caused a jump between two periods, see <a href="token-spike.html">Which user is driving my token spike?</a></p>
 <p class="meta">Source: <a href="https://github.com/llm-measurement/llm-sketchkit/tree/v0.3.0">llm-sketchkit v0.3.0</a>. The checked command above defines the complete synthetic input. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<details class="measurement-details">
+<summary>What the numbers mean</summary>
 <p class="measurement-context">Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
+</details>
+</section>
 </main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 <a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a> · <a href="security.html#verify-fleetdiff">Manual release verification</a><br>

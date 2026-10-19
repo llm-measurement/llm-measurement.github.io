@@ -44,18 +44,17 @@ class FleetdiffReleaseTests(unittest.TestCase):
                       'Coding factors fit on HumanEval did not transfer to MBPP, and an earlier per-request test also failed. '
                       '<a href="https://github.com/llm-measurement/fleetdiff/blob/main/docs/WHAT_IF_CALIBRATION.md">'
                       'See the calibration.</a></li>', source)
-        limits = source.split('<h2>Limits</h2>\n<ul>')[1].split('</ul>')[0]
+        limits = source.split('<summary>What the numbers mean</summary>\n<ul>')[1].split('</ul>')[0]
         self.assertEqual(limits.count('<li>'), 4)
         self.assertIn('<li>This re-prices recorded usage under explicit model, cache and workload assumptions. '
                       'It is not a forecast or an invoice.</li>', limits)
-        self.assertIn('<li>No quality equivalence is claimed. Lower modeled cost does not establish that '
-                      'a target model performs the same work equally well.</li>', limits)
+        self.assertIn('<li>No quality equivalence is claimed.</li>', limits)
         blocks = Blocks()
         blocks.feed(source)
         self.assertIn("$0.154400 -> $0.109398 to $0.147974", blocks.expected[0]["text"])
         self.assertIn("Level 1, same work and output verbosity: $0.148703", blocks.expected[0]["text"])
         self.assertIn("Level 2, coding: $0.140323 (propagated mean-interval endpoints $0.133659 to $0.147974)", blocks.expected[0]["text"])
-        self.assertEqual(source.count("<h2>Limits</h2>"), 1)
+        self.assertEqual(source.count("<summary>What the numbers mean</summary>"), 1)
 
     def test_new_guides_are_registered_and_runnable(self):
         pages = json.loads((ROOT / "pages.json").read_text())
@@ -72,8 +71,7 @@ class FleetdiffReleaseTests(unittest.TestCase):
                 self.assertEqual(len(blocks.commands), 1)
                 self.assertTrue(blocks.expected)
                 self.assertTrue(blocks.own)
-                limits_heading = "<h2>Limits</h2>" if slug == "what-if" else "<summary>What the numbers mean</summary>"
-                self.assertEqual(source.count(limits_heading), 1)
+                self.assertEqual(source.count("<summary>What the numbers mean</summary>"), 1)
                 for block in blocks.commands + blocks.own:
                     result = subprocess.run(["bash", "-n"], input=block["text"],
                                             text=True, capture_output=True)

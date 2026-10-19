@@ -4,6 +4,14 @@
     "assets/site.css": "10ebcd257b073bb6c38add109b93288e7dbb567f29708b66c14783759fadc773",
     "docs/assets/site.css": "10ebcd257b073bb6c38add109b93288e7dbb567f29708b66c14783759fadc773",
     "pages.json": "c786e590cf88f5f592e4bdf3b2fe701614db91434156e5f1c5a49506c29305a4",
+    "pages/anomalies.html": "4977119b3356671a915e00c1174bf2ac48485f47b7ad3aae77d9a4e770b126a9",
+    "docs/anomalies.html": "18b0798f9c030f78e5a3268479cd9d63e1892b4379ea5ab601007773e4747c75",
+    "pages/cache-check.html": "8e5d604757a054485ae4c98179910dd27783183d3510efc430cef1f118104375",
+    "docs/cache-check.html": "97f09c930d5e2e3de0f3876c34c4592c70b535479b4d3c9a841cd8f519bae3e5",
+    "pages/cardinality.html": "104f0c4ae3c7cb9456d948a756653c8065bdacbed8d96a5c91a62075a493b64f",
+    "docs/cardinality.html": "a7883e4ee3a9ac39e24479ba4bf9d479ee46e833c9293ed32a071775e4c3a4a6",
+    "pages/distinct-users.html": "368bebc88c283a52b0e4f75ab479164c37226aaedb008aea3f90b59bcb2ea2da",
+    "docs/distinct-users.html": "f08688b77dc1f5819a8695e41aec7c864cbd76f5a8b29a4493ec0acb85df566f",
     "pages/litellm-spend.html": "12f73d4d744d537442fd10d26a22800a88bdfaed4b4aa15fadfd39430e51c3f5",
     "docs/litellm-spend.html": "8892964ebc376b1b2dc6d0b881493f24c6ca905d9b3d1b4347d074d125d3e1a3",
     "pages/routing.html": "d8fad28c63532fb6778d93f20a5df7571e6253c54338c6e8e4083fba93a6f1a9",
@@ -11,7 +19,17 @@
     "pages/row-coverage.html": "484377df83df028d7cdb9fe813fc0c069fcae44b65d3c0a8c58ae2499fe3febf",
     "docs/row-coverage.html": "043bc5f5a0b83f5270aa25d7d6d9af65adcb76194188f16076d0be8c8b8d92ac",
     "pages/security.html": "0c8d5aa3a543c3d19917fc26f5fdf3573ba568454e4ebc61fb2314604cd0a9ba",
-    "docs/security.html": "797f217e2e82526577276e65d9824ed18c25b44ca6737373f359e90109c3feb6"
+    "docs/security.html": "797f217e2e82526577276e65d9824ed18c25b44ca6737373f359e90109c3feb6",
+    "pages/session-budget.html": "78f6a33204cda34437018e71722a3620aeb538e72f6b3243f5ce9ff813e0abee",
+    "docs/session-budget.html": "5d55231770fd999ad34665f2ad5697880e9d6b24da230c7fb424ab9b8903fc8c",
+    "pages/token-spike.html": "27970579876828a04429ced149eb138740bed22a6364a4c28c92c6c4d1cfeb45",
+    "docs/token-spike.html": "502272203d0e5cdfff3069950b882b4c5686ffb44a975bfded06a57ce770aab3",
+    "pages/tokenmaxxing.html": "c77fcf3aa99c7958325b99379d51ae1ecfa2a97f4324f9592c8fdefa6224566c",
+    "docs/tokenmaxxing.html": "bcdb717c0a6ebabd3c9db75c13d942d4a869ef53388f987f0cc19c7f5e560b43",
+    "pages/traces-usage.html": "60d4dd430b8ad307733dc4b13c52d2a81832308ee783353ea459308f792054d6",
+    "docs/traces-usage.html": "9f3e4c7b9f39bca450f0da733f6829ae56c82930b2f15320156cf85ff70c4a42",
+    "pages/what-if.html": "620bf57b8d94d130b515747dc9c0266220da2c8e50bc9942f44a8f25b3c6deb8",
+    "docs/what-if.html": "de0b32ac04e7865fcc19cf9fbcd2aaed680e1d78899e2a83ca3002c18acd096a"
   },
   "results": [
     {
@@ -99,6 +117,209 @@
       "pass": true
     },
     {
+      "slug": "token-spike",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 275.875,
+        "title": "Which user is driving my LLM token spike?",
+        "folded": true
+      },
+      "words": {
+        "visible": 151,
+        "prose": 129
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "tokenmaxxing",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 343.0625,
+        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+        "folded": true
+      },
+      "words": {
+        "visible": 112,
+        "prose": 112
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "what-if",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 305.5625,
+        "title": "What would switching models have cost?",
+        "folded": true
+      },
+      "words": {
+        "visible": 166,
+        "prose": 123
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#workload",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "session-budget",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 343.0625,
+        "title": "LiteLLM session over its budget? Check what the budget counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 143,
+        "prose": 122
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cache-check",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 343.0625,
+        "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
+        "folded": true
+      },
+      "words": {
+        "visible": 141,
+        "prose": 120
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cardinality",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 313.375,
+        "title": "How do I see LLM usage per user without a metric label for every user?",
+        "folded": true
+      },
+      "words": {
+        "visible": 167,
+        "prose": 137
+      },
+      "anchors": [
+        "#run",
+        "#configure",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "anomalies",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 305.5625,
+        "title": "How do I detect anomalies in LLM token consumption?",
+        "folded": true
+      },
+      "words": {
+        "visible": 133,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "traces-usage",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 305.5625,
+        "title": "Do my LLM traces record token usage and user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 140,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#capture",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "distinct-users",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 343.0625,
+        "title": "How do I count distinct LLM users without storing user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 90,
+        "prose": 90
+      },
+      "anchors": [
+        "#run",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
       "slug": "litellm-spend",
       "width": 390,
       "colorScheme": "light",
@@ -183,6 +404,209 @@
       "pass": true
     },
     {
+      "slug": "token-spike",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 428.234375,
+        "title": "Which user is driving my LLM token spike?",
+        "folded": true
+      },
+      "words": {
+        "visible": 151,
+        "prose": 129
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "tokenmaxxing",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 423.53125,
+        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+        "folded": true
+      },
+      "words": {
+        "visible": 112,
+        "prose": 112
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "what-if",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 457.921875,
+        "title": "What would switching models have cost?",
+        "folded": true
+      },
+      "words": {
+        "visible": 166,
+        "prose": 123
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#workload",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "session-budget",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 456.03125,
+        "title": "LiteLLM session over its budget? Check what the budget counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 143,
+        "prose": 122
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cache-check",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 488.53125,
+        "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
+        "folded": true
+      },
+      "words": {
+        "visible": 141,
+        "prose": 120
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cardinality",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 396.65625,
+        "title": "How do I see LLM usage per user without a metric label for every user?",
+        "folded": true
+      },
+      "words": {
+        "visible": 167,
+        "prose": 137
+      },
+      "anchors": [
+        "#run",
+        "#configure",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "anomalies",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 453.21875,
+        "title": "How do I detect anomalies in LLM token consumption?",
+        "folded": true
+      },
+      "words": {
+        "visible": 133,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "traces-usage",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 423.53125,
+        "title": "Do my LLM traces record token usage and user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 140,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#capture",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "distinct-users",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 421.640625,
+        "title": "How do I count distinct LLM users without storing user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 90,
+        "prose": 90
+      },
+      "anchors": [
+        "#run",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
       "slug": "litellm-spend",
       "width": 320,
       "colorScheme": "light",
@@ -264,6 +688,209 @@
       },
       "words": null,
       "anchors": [],
+      "pass": true
+    },
+    {
+      "slug": "token-spike",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 494.21875,
+        "title": "Which user is driving my LLM token spike?",
+        "folded": true
+      },
+      "words": {
+        "visible": 151,
+        "prose": 129
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "tokenmaxxing",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 492.328125,
+        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+        "folded": true
+      },
+      "words": {
+        "visible": 112,
+        "prose": 112
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "what-if",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 494.21875,
+        "title": "What would switching models have cost?",
+        "folded": true
+      },
+      "words": {
+        "visible": 166,
+        "prose": 123
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#workload",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "session-budget",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 524.828125,
+        "title": "LiteLLM session over its budget? Check what the budget counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 143,
+        "prose": 122
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cache-check",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 554.515625,
+        "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
+        "folded": true
+      },
+      "words": {
+        "visible": 141,
+        "prose": 120
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cardinality",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 495.140625,
+        "title": "How do I see LLM usage per user without a metric label for every user?",
+        "folded": true
+      },
+      "words": {
+        "visible": 167,
+        "prose": 137
+      },
+      "anchors": [
+        "#run",
+        "#configure",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "anomalies",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 586.09375,
+        "title": "How do I detect anomalies in LLM token consumption?",
+        "folded": true
+      },
+      "words": {
+        "visible": 133,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "traces-usage",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 522.015625,
+        "title": "Do my LLM traces record token usage and user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 140,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#capture",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "distinct-users",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 457.9375,
+        "title": "How do I count distinct LLM users without storing user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 90,
+        "prose": 90
+      },
+      "anchors": [
+        "#run",
+        "#sample"
+      ],
       "pass": true
     },
     {
@@ -351,6 +978,209 @@
       "pass": true
     },
     {
+      "slug": "token-spike",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 275.875,
+        "title": "Which user is driving my LLM token spike?",
+        "folded": true
+      },
+      "words": {
+        "visible": 151,
+        "prose": 129
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "tokenmaxxing",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 343.0625,
+        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+        "folded": true
+      },
+      "words": {
+        "visible": 112,
+        "prose": 112
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "what-if",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 305.5625,
+        "title": "What would switching models have cost?",
+        "folded": true
+      },
+      "words": {
+        "visible": 166,
+        "prose": 123
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#workload",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "session-budget",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 343.0625,
+        "title": "LiteLLM session over its budget? Check what the budget counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 143,
+        "prose": 122
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cache-check",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 343.0625,
+        "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
+        "folded": true
+      },
+      "words": {
+        "visible": 141,
+        "prose": 120
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cardinality",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 313.375,
+        "title": "How do I see LLM usage per user without a metric label for every user?",
+        "folded": true
+      },
+      "words": {
+        "visible": 167,
+        "prose": 137
+      },
+      "anchors": [
+        "#run",
+        "#configure",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "anomalies",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 305.5625,
+        "title": "How do I detect anomalies in LLM token consumption?",
+        "folded": true
+      },
+      "words": {
+        "visible": 133,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "traces-usage",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 305.5625,
+        "title": "Do my LLM traces record token usage and user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 140,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#capture",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "distinct-users",
+      "width": 1366,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 343.0625,
+        "title": "How do I count distinct LLM users without storing user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 90,
+        "prose": 90
+      },
+      "anchors": [
+        "#run",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
       "slug": "litellm-spend",
       "width": 390,
       "colorScheme": "dark",
@@ -435,6 +1265,209 @@
       "pass": true
     },
     {
+      "slug": "token-spike",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 428.234375,
+        "title": "Which user is driving my LLM token spike?",
+        "folded": true
+      },
+      "words": {
+        "visible": 151,
+        "prose": 129
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "tokenmaxxing",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 423.53125,
+        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+        "folded": true
+      },
+      "words": {
+        "visible": 112,
+        "prose": 112
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "what-if",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 457.921875,
+        "title": "What would switching models have cost?",
+        "folded": true
+      },
+      "words": {
+        "visible": 166,
+        "prose": 123
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#workload",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "session-budget",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 456.03125,
+        "title": "LiteLLM session over its budget? Check what the budget counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 143,
+        "prose": 122
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cache-check",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 488.53125,
+        "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
+        "folded": true
+      },
+      "words": {
+        "visible": 141,
+        "prose": 120
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cardinality",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 396.65625,
+        "title": "How do I see LLM usage per user without a metric label for every user?",
+        "folded": true
+      },
+      "words": {
+        "visible": 167,
+        "prose": 137
+      },
+      "anchors": [
+        "#run",
+        "#configure",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "anomalies",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 453.21875,
+        "title": "How do I detect anomalies in LLM token consumption?",
+        "folded": true
+      },
+      "words": {
+        "visible": 133,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "traces-usage",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 423.53125,
+        "title": "Do my LLM traces record token usage and user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 140,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#capture",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "distinct-users",
+      "width": 390,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 421.640625,
+        "title": "How do I count distinct LLM users without storing user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 90,
+        "prose": 90
+      },
+      "anchors": [
+        "#run",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
       "slug": "litellm-spend",
       "width": 320,
       "colorScheme": "dark",
@@ -516,6 +1549,209 @@
       },
       "words": null,
       "anchors": [],
+      "pass": true
+    },
+    {
+      "slug": "token-spike",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 494.21875,
+        "title": "Which user is driving my LLM token spike?",
+        "folded": true
+      },
+      "words": {
+        "visible": 151,
+        "prose": 129
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "tokenmaxxing",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 492.328125,
+        "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+        "folded": true
+      },
+      "words": {
+        "visible": 112,
+        "prose": 112
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "what-if",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 494.21875,
+        "title": "What would switching models have cost?",
+        "folded": true
+      },
+      "words": {
+        "visible": 166,
+        "prose": 123
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#workload",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "session-budget",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 524.828125,
+        "title": "LiteLLM session over its budget? Check what the budget counts",
+        "folded": true
+      },
+      "words": {
+        "visible": 143,
+        "prose": 122
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cache-check",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 554.515625,
+        "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
+        "folded": true
+      },
+      "words": {
+        "visible": 141,
+        "prose": 120
+      },
+      "anchors": [
+        "#run",
+        "litellm-spend.html#access",
+        "#file",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "cardinality",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 495.140625,
+        "title": "How do I see LLM usage per user without a metric label for every user?",
+        "folded": true
+      },
+      "words": {
+        "visible": 167,
+        "prose": 137
+      },
+      "anchors": [
+        "#run",
+        "#configure",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "anomalies",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 586.09375,
+        "title": "How do I detect anomalies in LLM token consumption?",
+        "folded": true
+      },
+      "words": {
+        "visible": 133,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#setup",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "traces-usage",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 522.015625,
+        "title": "Do my LLM traces record token usage and user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 140,
+        "prose": 118
+      },
+      "anchors": [
+        "#run",
+        "#capture",
+        "#sample"
+      ],
+      "pass": true
+    },
+    {
+      "slug": "distinct-users",
+      "width": 320,
+      "colorScheme": "dark",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 457.9375,
+        "title": "How do I count distinct LLM users without storing user IDs?",
+        "folded": true
+      },
+      "words": {
+        "visible": 90,
+        "prose": 90
+      },
+      "anchors": [
+        "#run",
+        "#sample"
+      ],
       "pass": true
     }
   ]

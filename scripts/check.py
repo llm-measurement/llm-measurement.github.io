@@ -15,7 +15,8 @@ from guide_flow import check_guide_flow
 from guide_prose import check as check_guide_prose
 
 ROOT = Path(__file__).resolve().parents[1]
-PROSE_GUIDES = {"litellm-spend", "routing", "row-coverage"}
+PROSE_GUIDES = {page["slug"] for page in json.loads((ROOT / "pages.json").read_text())
+                if page["slug"] != "index" and not page.get("kind")}
 GUIDE_CONTEXT = {
     "cardinality": "diagnose reads your collector configuration; your metrics backend reports live series counts.",
     "token-spike": "A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.",
@@ -33,6 +34,20 @@ GUIDE_CONTEXT = {
     "anomalies": "This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.",
     "traces-usage": "Readiness describes fields in the captured model attempts; zeros without declared usage origin remain unknown.",
     "distinct-users": "Distinct counts are statistical estimates. Your application hashes raw IDs before they reach the sketch.",
+}
+GUIDE_PATHS = {
+    "litellm-spend": ["#run", "#access", "#file", "#sample"],
+    "row-coverage": ["#run", "#access", "#file", "#sample"],
+    "routing": ["#run", "#scope", "litellm-spend.html#access", "#file", "#sample"],
+    "session-budget": ["#run", "litellm-spend.html#access", "#file", "#sample"],
+    "cache-check": ["#run", "litellm-spend.html#access", "#file", "#sample"],
+    "what-if": ["#run", "litellm-spend.html#access", "#file", "#workload", "#sample"],
+    "token-spike": ["#run", "#setup", "#file", "#sample"],
+    "tokenmaxxing": ["#run", "#setup", "#file", "#sample"],
+    "cardinality": ["#run", "#configure", "#sample"],
+    "anomalies": ["#run", "#setup", "#sample"],
+    "traces-usage": ["#run", "#capture", "#sample"],
+    "distinct-users": ["#run", "#sample"],
 }
 
 
@@ -117,7 +132,7 @@ def main():
         assert '>Trace check</a>' in nav, path.name
         assert nav.index('href="anomalies.html"') < nav.index('href="traces-usage.html"') < nav.index('href="distinct-users.html"'), path.name
         measurement_sections += "measurement-notes" in page.ids
-        if entry["slug"] in {"litellm-spend", "routing", "row-coverage"}:
+        if entry["slug"] != "index" and not entry.get("kind"):
             assert path.read_text().count('<summary>What the numbers mean</summary>') == 1, path.name
         else:
             assert "What the numbers mean" not in path.read_text(), path.name
@@ -157,7 +172,7 @@ def main():
                 assert len(entry["description"]) <= 155
                 assert "--litellm-spend examples/litellm-spend/cache-drop.csv" in source
                 assert "--group-by key" in source and "go run" not in source
-                assert source.index('data-output="cache-check"') < source.index('data-run="cache-check"')
+                assert source.index('data-run="cache-check"') < source.index('data-output="cache-check"')
                 assert "key-1: 80 -&gt; 700 uncached input tokens; change +620." in source
         if entry["slug"] == "session-budget":
             source = (ROOT / "pages/session-budget.html").read_text()
@@ -192,14 +207,7 @@ def main():
                 result = check_guide_prose(source, entry["title"],
                                           250 if entry["slug"] in {"litellm-spend", "routing", "row-coverage"} else 200)
                 print(f"PASS prose: {entry['slug']}: {result['visible_words']} visible words before sample")
-            if entry["slug"] in {"litellm-spend", "row-coverage"}:
-                check_guide_flow(source, ["#run", "#access", "#file", "#sample"])
-            elif entry["slug"] == "routing":
-                check_guide_flow(source, ["#run", "#scope", "litellm-spend.html#access", "#file", "#sample"])
-            else:
-                ordered = ['class="lead"', 'class="own-data"', "What you'll see", "No data handy? Try the sample", 'class="measurement-context"']
-                positions = [source.index(marker) for marker in ordered]
-                assert positions == sorted(positions), (path.name, "own-data-first order")
+            check_guide_flow(source, GUIDE_PATHS[entry["slug"]])
             parsed = Blocks()
             parsed.feed(source)
             assert parsed.own and all("git clone" not in b["text"] for b in parsed.own), path.name
@@ -225,9 +233,12 @@ def main():
     for entry in pages:
         if entry["slug"] in {"token-spike", "tokenmaxxing", "what-if", "cache-check", "cardinality", "traces-usage"}:
             assert entry["description"] in html.unescape(home), entry["slug"]
-        if entry["slug"] in {"token-spike", "tokenmaxxing"}:
+        if entry["slug"] == "tokenmaxxing":
             guide = (ROOT / "docs" / (entry["slug"] + ".html")).read_text()
             assert f'<p class="lead">{entry["description"]}</p>' in html.unescape(guide), entry["slug"]
+        if entry["slug"] == "token-spike":
+            guide = (ROOT / "docs/token-spike.html").read_text()
+            assert '<p class="lead">Compare two periods to see which users and sessions account for a token increase.</p>' in guide
     # Homepage teasers stay shorter than these guides' search-facing descriptions.
     for teaser in (
         "The same comparison straight from LiteLLM's spend logs, plus a check on whether the records are complete.",
@@ -266,7 +277,8 @@ def main():
         command = blocks.commands[0]
         assert record["pass"] and record["exit"] == command["exit"], record["page"]
         assert record["command_sha256"] == hashlib.sha256(command["text"].encode()).hexdigest(), record["page"]
-    own_verified = json.loads((ROOT / "evidence/own-data-verified.json").read_text())["results"]
+    own_document = json.loads((ROOT / "evidence/own-data-verified.json").read_text())
+    own_verified = own_document["results"]
     actual = {}
     for slug in guide_slugs | {"index", "security"}:
         blocks = Blocks()
@@ -295,6 +307,40 @@ def main():
         block = sql_blocks[record["block"]]
         assert record["pass"] and record["exit"] == 0
         assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest(), block["id"]
+    configs = {}
+    for path in (ROOT / "pages").glob("*.html"):
+        parsed = Blocks()
+        parsed.feed(path.read_text())
+        for block in parsed.configs:
+            assert block["id"] not in configs, "duplicate configuration block"
+            configs[block["id"]] = (path.stem, block)
+    config_records = own_document["config_records"]
+    assert len(config_records) == len(configs)
+    assert {r["block"] for r in config_records} == set(configs), "unchecked configuration"
+    from config_checks import CONFIG_IMAGES, compose, platform_image
+    for record in config_records:
+        slug, block = configs[record["block"]]
+        assert record["pass"] and record["page"] == slug
+        assert record["config_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest()
+        if block["id"] in CONFIG_IMAGES:
+            assert record["kind"] == "collector-validate"
+            assert record["image"] == CONFIG_IMAGES[block["id"]]
+            assert record["runtime_image"] in {
+                record["image"], platform_image(block["id"], record["image_architecture"])}
+            assert record["network"] == "none" and record["pull"] == "never"
+            assert record["containers_removed"]
+            assert record["composed_sha256"] == hashlib.sha256(compose(block)).hexdigest()
+            published, negative = record["results"]
+            assert published["case"] == "published" and published["pass"] and published["exit"] == 0
+            assert published["configuration_sha256"] == record["composed_sha256"]
+            assert negative["case"] == "negative" and negative["pass"] and negative["exit"] != 0
+            assert negative["configuration_sha256"] != record["composed_sha256"]
+        else:
+            assert block["id"] == "what-if-workload-map" and record["kind"] == "fleetdiff-workload-map"
+            command = next(r for r in own_verified if r["block"] == record["execution_block"])
+            assert record["exit"] == command["exit"] == 0
+            assert record["command_sha256"] == command["command_sha256"]
+            assert record["stdout_sha256"] == command["stdout_sha256"]
     reviewer = Blocks()
     reviewer.feed((ROOT / "pages/security.html").read_text())
     release_verified = json.loads((ROOT / "evidence/release-review-verified.json").read_text())["results"]
