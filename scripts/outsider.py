@@ -22,12 +22,15 @@ class Blocks(HTMLParser):
         self.own = []
         self.review = []
         self.sql = []
+        self.configs = []
         self.current = None
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "pre":
-            if "data-sql" in attrs:
+            if "data-config" in attrs:
+                self.current = (self.configs, {"id": attrs["data-config"], "text": ""})
+            elif "data-sql" in attrs:
                 self.current = (self.sql, {"id": attrs["data-sql"], "text": "", "exit": 0})
             elif "data-review" in attrs:
                 self.current = (self.review, {"id": attrs["data-review"], "text": "", "exit": 0})

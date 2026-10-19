@@ -1,13 +1,39 @@
 <p class="lead">Compare recorded cache reuse before and after a change, and find which keys or sessions added uncached input.</p>
-<aside class="own-data" aria-labelledby="own-data-title">
+<nav class="path-index" aria-label="Choose your starting point">
+<ul>
+<li><a href="#run">Your database</a></li>
+<li><a href="litellm-spend.html#access">Getting access</a></li>
+<li><a href="#file">An existing export file</a></li>
+<li><a href="#sample">Sample data</a></li>
+</ul>
+</nav>
+<aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
-<p>A request-level LiteLLM export such as <code>spend.csv</code>, or read-only access to the proxy’s Postgres database to create one. Use the <a href="litellm-spend.html#export">read-only export recipe</a>; the Usage dashboard’s daily aggregate is a different format. Include the default cache columns from the projection tested on LiteLLM v1.104.0; missing detail remains unknown.</p><p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer downloads and verifies fleetdiff v0.12.0; analysis reads your local file. For a manual installation, see <a href="security.html#verify-fleetdiff">release verification</a>.</p><pre data-own="cache-check" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
-sh install-fleetdiff.sh v0.12.0 ./bin
-./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by session</code></pre><p>The default compares two complete seven-day periods. Choose <code>--group-by key</code> for keys, or explicit period flags for shorter files. Other grouping choices are <code>team</code>, <code>user</code>, <code>end-user</code> and <code>session</code>.</p>
-<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/README.md#using-litellm">released request-level export path</a> includes cache fields by default, but the <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.0/examples/litellm-spend">pinned writer and export mappings</a> determine which details survive. Keep raw exports private. The <a href="litellm-spend.html">LiteLLM spend guide</a> checks total usage and log completeness; the <a href="traces-usage.html">trace check</a> checks usage and identity fields in an OTLP capture.</p>
+<p>Set up a LiteLLM <a href="litellm-spend.html#access">read-only login</a> and <a href="litellm-spend.html#run">connection file</a>.</p>
+<p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-own="cache-check-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
+<pre data-own="cache-check-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --group-by session</code></pre>
+<p>Compare cache shares and session-level uncached input over the last two complete seven-day UTC periods.</p>
 </aside>
-<h2>What you'll see</h2>
-<p>Example output from the synthetic sample below; your values will reflect your input.</p>
+<section id="file"><h2>Use an existing export</h2>
+<p>Use request-level <code>spend.csv</code> with cache fields from the <a href="litellm-spend.html#export">export recipe</a>.</p>
+<pre data-own="cache-check" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by session</code></pre>
+<p>Export 16 days, or set both period flags. Use <code>--group-by key</code>, <code>team</code>, <code>user</code> or <code>end-user</code> for another view.</p>
+</section>
+<details class="security-note"><summary>Security</summary>
+<p>See the <a href="security.html#native-database">connection reference</a>.</p></details>
+<section id="sample">
+<h2>Try the sample</h2>
+<p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-run="cache-check" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
+tar -xzf fleetdiff-source.tar.gz
+cd fleetdiff-0.12.0
+sh scripts/install.sh v0.12.0 ./release
+./release/fleetdiff investigate --litellm-spend examples/litellm-spend/cache-drop.csv \
+  --before-period 2026-10-07 --after-period 2026-10-08 --group-by key</code></pre>
+<h3>What you'll see</h3>
+<p>Example output from this synthetic sample; your values will reflect your input.</p>
 <p>Recorded cache-read share falls from 92% to 61%, adding 620 uncached input tokens.</p>
 <pre class="output" data-output="cache-check"><code>But cache reuse fell: cache-read share 92% -&gt; 61% (uncached input +620).</code></pre>
 <h3>Which key's uncached input grew?</h3>
@@ -24,14 +50,10 @@ sh install-fleetdiff.sh v0.12.0 ./bin
 <h3>Check coverage before interpreting a change</h3>
 <p>Each cache field has its own covered-input denominator and request count. Missing, invalid and subset-violating details are excluded and counted separately; requests without group identities stay outside the ranking. Explicit zero detail is recorded zero, not proof of provider origin. A missing detail or zero denominator leaves the share unavailable.</p>
 <p>If the recorded share falls, review the provider's cache diagnostics and whether the gateway route preserves cache markers.</p>
-<h2>No data handy? Try the sample</h2>
-<p class="meta">Requires curl, gh, shasum and tar. Linux or macOS, amd64 or arm64. The sample uses the released fleetdiff v0.12.0 binary and a four-request synthetic CSV. No Go, collector, model key or paid call is needed.</p>
-<pre data-run="cache-check" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
-tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.0
-sh scripts/install.sh v0.12.0 ./release
-./release/fleetdiff investigate --litellm-spend examples/litellm-spend/cache-drop.csv \
-  --before-period 2026-10-07 --after-period 2026-10-08 --group-by key</code></pre>
 <p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/cache-drop.csv">released synthetic cache-drop CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<details class="measurement-details">
+<summary>What the numbers mean</summary>
 <p class="measurement-context">Uncached-input growth can reflect input volume or workload mix, not necessarily a per-key cache-share loss. These recorded shares do not diagnose causes or costs; the synthetic example checks arithmetic, not provider cache behavior. Summary-based investigate reports support aggregate shares with sufficient coverage, but do not show per-model cache breakdowns or cache-weighted key/session rankings.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a>. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/CACHE.md">Cache measurements and limits</a>.</p>
+</details>
+</section>

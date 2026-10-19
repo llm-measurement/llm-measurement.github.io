@@ -15,19 +15,42 @@
 </script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
-<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html" aria-current="page">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html" aria-current="page">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>LiteLLM session over its budget? Check what the budget counts</h1><p class="lead">Review recorded session spend against a supplied cap, see which session IDs span keys or agents, and check whether the export records budget rejections.</p>
-<aside class="own-data" aria-labelledby="own-data-title">
+<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html" aria-current="page">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html" aria-current="page">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>LiteLLM session over its budget? Check what the budget counts</h1><p class="lead">Compare session spend with a cap, find shared session IDs and check recorded budget rejections.</p>
+<nav class="path-index" aria-label="Choose your starting point">
+<ul>
+<li><a href="#run">Your database</a></li>
+<li><a href="litellm-spend.html#access">Getting access</a></li>
+<li><a href="#file">An existing export file</a></li>
+<li><a href="#sample">Sample data</a></li>
+</ul>
+</nav>
+<aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your data</h2>
-<p>Start with request-level spend logs from one LiteLLM application and one LiteLLM deployment sharing one cache. Use the <a href="litellm-spend.html#export">read-only SQL export</a> from fleetdiff v0.12.0, including <code>session_id</code>, <code>agent_id</code> and the content-free <code>rejection_kind</code> column. The projection is pinned to LiteLLM v1.104.0. Keep the export private and use its path below.</p>
-<p>Requires curl, gh, shasum and tar on Linux or macOS (amd64 or arm64). Install gh; it need not be signed in. The installer verifies the released binary. Reviewers can use the <a href="security.html#verify-fleetdiff">manual verification steps</a>.</p>
-<pre data-own="session-budget" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
-sh install-fleetdiff.sh v0.12.0 ./bin
-./bin/fleetdiff investigate --litellm-spend ./spend.csv --session-budget-usd 1.00</code></pre>
-<p>Replace <code>1.00</code> with the USD cap you want to review. This mode groups by session ID alone, matching the pinned limiter's counter unit, across keys, teams and agents. It reads local files; it does not configure or enforce a budget.</p>
-<p>The default includes complete UTC days in the file, or its labeled observed span when no complete day is present. Add <code>--period YYYY-MM-DD</code> or a UTC interval to choose a period. If you changed <code>LITELLM_MAX_BUDGET_PER_SESSION_TTL</code>, match <code>--session-counter-window</code> to that duration (default <code>1h</code>). Older exports work too; missing rejection classification is shown as unknown.</p>
+<p>For one LiteLLM deployment sharing one cache, set up a <a href="litellm-spend.html#access">read-only login</a> and <a href="litellm-spend.html#run">connection file</a>.</p>
+<p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-own="session-budget-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
+sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
+<pre data-own="session-budget-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --session-budget-usd 1.00</code></pre>
+<p>Replace <code>1.00</code> with your USD cap. Review the last 14 complete UTC days, grouped by session ID across keys and agents.</p>
 </aside>
-<h2>What you'll see</h2>
-<p>Example output from the synthetic sample below; your numbers will reflect your export and supplied cap.</p>
+<section id="file"><h2>Use an existing export</h2>
+<p>Use <code>spend.csv</code> from the <a href="litellm-spend.html#export">export recipe</a>, including session, agent and rejection fields.</p>
+<pre data-own="session-budget" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./spend.csv --session-budget-usd 1.00</code></pre>
+<p>Select dates with <code>--period</code>. Match <code>--session-counter-window</code> to your counter expiry (default <code>1h</code>).</p>
+</section>
+<details class="security-note"><summary>Security</summary>
+<p>See the <a href="security.html#native-database">connection reference</a>.</p></details>
+<section id="sample">
+<h2>Try the sample</h2>
+<p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-run="session-budget" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
+tar -xzf fleetdiff-source.tar.gz
+cd fleetdiff-0.12.0
+sh scripts/install.sh v0.12.0 ./release
+./release/fleetdiff investigate --litellm-spend examples/litellm-spend/session-budget.csv \
+  --session-budget-usd 1.00</code></pre>
+<h3>What you'll see</h3>
+<p>Example output from this synthetic sample; your numbers will reflect your export and supplied cap.</p>
 <pre class="output" data-output="session-budget"><code>3 of 4 sessions with complete recorded spend exceed the supplied USD 1.00 cap.</code></pre>
 <p>The report prints the exact period immediately below its result. The short sample uses its observed span. Sessions active near an uncovered file edge are marked possibly clipped; a matching session ID with rows outside a selected period is marked clipped.</p>
 <pre class="output" data-output="session-budget"><code>Observed session totals
@@ -39,7 +62,6 @@ Above-cap sessions with no recorded session-budget rejection: 2.</code></pre>
 <p>Start with these review items. Check last-call or parallel-call overshoot, the counter window, agent budget configuration and failure logging. The report also counts sessions with recorded budget or iteration rejections.</p>
 <pre class="output" data-output="session-budget"><code>Sessions spanning more than 3600 seconds between first and last positive-spend request starts: 1.
   session-1: 4000 seconds.</code></pre>
-<p>This is the elapsed time in the records; the duration line alone cannot establish that a reset occurred.</p>
 <pre class="output" data-output="session-budget"><code>Session IDs observed under multiple keys, teams or agents: 1. Each addresses the same counter key; shared storage and agent budget configuration determine actual tracking.
   session-1: keys=2, teams=2, agents=2.</code></pre>
 <p>The same session ID can join activity across agents. Review these aliases when you expected separate session budgets.</p>
@@ -49,17 +71,13 @@ Above-cap sessions with no recorded session-budget rejection: 2.</code></pre>
 <li>The <a href="https://github.com/BerriAI/litellm/blob/79645770fedc7ec2627e6468d31062f20f82aecc/litellm/proxy/hooks/max_budget_per_session_limiter.py#L208-L209">counter key uses the session ID alone</a>, so budget-tracked agents using that ID share the counter. See <a href="https://github.com/BerriAI/litellm/issues/43190">the upstream report on shared session limits across agents</a>.</li>
 <li><a href="https://docs.litellm.ai/docs/a2a_iteration_budgets">LiteLLM documents a one-hour default counter expiry</a>, configurable with <code>LITELLM_MAX_BUDGET_PER_SESSION_TTL</code>.</li>
 </ul>
-<h2>No data handy? Try the sample</h2>
-<p class="meta">Requires curl, gh, shasum and tar. Install gh; it need not be signed in. The example uses a released binary and synthetic request-level records.</p>
-<pre data-run="session-budget" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
-tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.0
-sh scripts/install.sh v0.12.0 ./release
-./release/fleetdiff investigate --litellm-spend examples/litellm-spend/session-budget.csv \
-  --session-budget-usd 1.00</code></pre>
 <p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/session-budget.csv">released synthetic CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/SESSION_BUDGET.md">session-budget guide</a>, and the <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">verification record</a>.</p>
+<details class="measurement-details">
+<summary>What the numbers mean</summary>
 <p class="measurement-context">Recorded session totals are review evidence, not an enforcement verdict or completed-task costs. Missing identities stay unattributed; absent recorded rejections do not prove that no rejection occurred.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
+</details>
+</section>
 </main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 <a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a> · <a href="security.html#verify-fleetdiff">Manual release verification</a><br>

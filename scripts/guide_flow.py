@@ -53,7 +53,7 @@ def check_guide_flow(source, expected_paths=None):
     assert not any(n["tag"] in {"section", "aside", "details"} and not n["parents"]
                    for n in nodes[nodes.index(sample) + 1:]), "sample is last section"
     blocks = [n for n in nodes if n["tag"] == "pre"]
-    kinds = {"data-own", "data-run", "data-output", "data-review", "data-sql"}
+    kinds = {"data-own", "data-run", "data-output", "data-review", "data-sql", "data-config"}
     for block in blocks:
         assert len(kinds.intersection(block["attrs"])) == 1, "unaccounted or ambiguous published block"
         if {"data-run", "data-output"}.intersection(block["attrs"]):

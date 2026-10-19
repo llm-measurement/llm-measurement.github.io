@@ -2,6 +2,7 @@
 # Code authors: Vijay and Codex
 """Keep runnable own-data instructions separate from sample output."""
 import hashlib
+import csv
 from datetime import datetime
 import io
 import json
@@ -23,15 +24,33 @@ class OwnDataTests(unittest.TestCase):
         source = (ROOT / "pages/session-budget.html").read_text()
         blocks = Blocks()
         blocks.feed(source)
-        self.assertEqual([block["id"] for block in blocks.own], ["session-budget"])
+        self.assertEqual([block["id"] for block in blocks.own],
+                         ["session-budget-install", "session-budget-native", "session-budget"])
         self.assertEqual(len(blocks.commands), 1)
-        for command in (blocks.own[0]["text"], blocks.commands[0]["text"]):
+        self.assertIn("sh install-fleetdiff.sh v0.12.0 ./bin", blocks.own[0]["text"])
+        for command in (blocks.own[1]["text"], blocks.own[2]["text"], blocks.commands[0]["text"]):
             self.assertIn("--session-budget-usd 1.00", command)
-            self.assertIn("v0.12.0", command)
             self.assertNotIn("--period", command)
             self.assertNotIn("go run", command)
         self.assertGreaterEqual(len(blocks.expected), 5)
         self.assertNotIn("Redis", source)
+        self.assertEqual(blocks.own[1]["text"], "./bin/fleetdiff investigate --litellm-db "
+                         "--database-url-file ~/.config/litellm-db-url --session-budget-usd 1.00")
+        self.assertEqual(blocks.own[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv "
+                         "--session-budget-usd 1.00")
+
+    def test_cache_and_token_spike_keep_install_and_file_commands_separate(self):
+        cache = own_data.page_blocks("cache-check").own
+        self.assertEqual([b["id"] for b in cache], ["cache-check-install", "cache-check-native", "cache-check"])
+        self.assertIn("sh install-fleetdiff.sh v0.12.0 ./bin", cache[0]["text"])
+        self.assertEqual(cache[1]["text"], "./bin/fleetdiff investigate --litellm-db "
+                         "--database-url-file ~/.config/litellm-db-url --group-by session")
+        self.assertEqual(cache[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by session")
+        spike = own_data.page_blocks("token-spike").own
+        self.assertEqual([b["id"] for b in spike], ["token-spike-install", "token-spike-summaries", "token-spike"])
+        self.assertIn("sh install-fleetdiff.sh v0.12.0 ./bin", spike[0]["text"])
+        self.assertEqual(spike[1]["text"], "./bin/fleetdiff investigate --before ./before --after ./after --expected app")
+        self.assertEqual(spike[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user")
 
     def test_litellm_native_path_precedes_manual_export(self):
         blocks = Blocks()
@@ -93,12 +112,14 @@ class OwnDataTests(unittest.TestCase):
                     '<pre data-run="x" data-exit="0">sample</pre>'
                     '<pre data-output="x">answer</pre>'
                     '<pre data-review="r">verify</pre>'
-                    '<pre data-sql="s"><code>SELECT 1 &lt; 2;\n</code></pre>')
+                    '<pre data-sql="s"><code>SELECT 1 &lt; 2;\n</code></pre>'
+                    '<pre data-config="c"><code>{"x": "&lt;"}\n</code></pre>')
         self.assertEqual(blocks.own, [{"id": "x", "text": "cmd > out", "exit": 3}])
         self.assertEqual(blocks.commands, [{"text": "sample", "exit": 0}])
         self.assertEqual(blocks.expected, [{"text": "answer"}])
         self.assertEqual(blocks.review, [{"id": "r", "text": "verify", "exit": 0}])
         self.assertEqual(blocks.sql, [{"id": "s", "text": "SELECT 1 < 2;\n", "exit": 0}])
+        self.assertEqual(blocks.configs, [{"id": "c", "text": '{"x": "<"}\n'}])
 
     def test_published_grants_are_exact_and_never_rename_database(self):
         first = 'CREATE ROLE fleetdiff_reader;\nGRANT CONNECT ON DATABASE litellm TO fleetdiff_reader;\n'
@@ -268,8 +289,11 @@ class OwnDataTests(unittest.TestCase):
         self.assertIn("--litellm-daily-spend ./litellm-coverage-export/daily.csv", coverage.own[4]["text"])
         whatif = Blocks()
         whatif.feed((ROOT / "pages/what-if.html").read_text())
-        self.assertEqual([b["id"] for b in whatif.own], ["what-if-install", "what-if-reprice", "what-if-workload-map"])
-        self.assertIn("--workload-map ./workload-map.json --format json", whatif.own[2]["text"])
+        self.assertEqual([b["id"] for b in whatif.own],
+                         ["what-if-install", "what-if-native", "what-if-reprice", "what-if-workload-map"])
+        self.assertIn("--litellm-db --database-url-file ~/.config/litellm-db-url", whatif.own[1]["text"])
+        self.assertIn('--period "$PERIOD"', whatif.own[1]["text"])
+        self.assertIn("--workload-map ./workload-map.json --format json", whatif.own[3]["text"])
 
     def test_routing_uses_opt_in_export_and_explicit_scopes(self):
         blocks = Blocks()
@@ -333,7 +357,7 @@ class OwnDataTests(unittest.TestCase):
             self.assertIn("ALTER ROLE fixture_reader SET default_transaction_read_only = on", sql)
             self.assertNotIn("LiteLLM_DailyUserSpend", sql)
 
-    def test_whatif_standin_preserves_cache_columns_and_workload_map(self):
+    def test_whatif_standin_preserves_cache_columns_and_consumes_exact_published_map(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             source, fresh = root / "source", root / "fresh"
@@ -343,16 +367,56 @@ class OwnDataTests(unittest.TestCase):
                 (source / name).mkdir(parents=True)
             (source / "examples/inspect/synthetic-traces.json").write_text("{}")
             (source / "examples/diagnose/unsafe.yaml").write_text("test: true")
-            spend = "request_id,cache_read_input_tokens,cache_write_input_tokens,reasoning_output_tokens\ntest,8000,1000,0\n"
-            mapping = '{"version":1,"mappings":[]}'
+            spend = ("request_id,api_key,team_id,cache_read_input_tokens,cache_write_input_tokens,reasoning_output_tokens\n"
+                     "a,old-key,other-team,8000,1000,0\nb,other-key,old-team,,,\n")
+            mapping = json.dumps({"version": 1, "mappings": [
+                {"selector": {"kind": "key", "value": "old-key"}, "workload": "coding"},
+                {"selector": {"kind": "team", "value": "old-team"}, "workload": "extraction"}]})
             (source / "examples/what-if/spend.csv").write_text(spend)
             (source / "examples/what-if/workload-map.json").write_text(mapping)
             env = {}
             with patch.object(own_data, "run"):
                 own_data.prepare(fresh, source, env, "what-if")
-            self.assertEqual((fresh / "spend.csv").read_text(), spend)
-            self.assertEqual((fresh / "workload-map.json").read_text(), mapping)
-            self.assertEqual(env["PERIOD_UTC"], "2026-10-07")
+            rows = list(csv.DictReader((fresh / "spend.csv").read_text().splitlines()))
+            original = list(csv.DictReader(spend.splitlines()))
+            for before, after in zip(original, rows):
+                self.assertEqual({k: v for k, v in before.items() if k not in {"api_key", "team_id"}},
+                                 {k: v for k, v in after.items() if k not in {"api_key", "team_id"}})
+            self.assertEqual(rows[0]["api_key"], "your-coding-key-id")
+            self.assertEqual(rows[1]["team_id"], "your-extraction-team-id")
+            self.assertEqual((fresh / "workload-map.json").read_bytes(),
+                             own_data.page_blocks("what-if").configs[0]["text"].encode())
+            self.assertEqual((fresh / "workload-map.json").stat().st_mode & 0o777, 0o600)
+            self.assertEqual(env["PERIOD"], "2026-10-07")
+
+    def test_new_native_metadata_projects_missing_zero_and_rejection_discriminators(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "examples/litellm-spend").mkdir(parents=True)
+            (root / "examples/litellm-spend/test-schema.sql").write_text("-- schema\n")
+            spend = ("request_id,status,agent_id,rejection_kind,cache_read_input_tokens,cache_write_input_tokens,reasoning_output_tokens\n"
+                     "rejected,failure,SENTINEL_agent,session_budget,0,,0\n"
+                     "unknown,failure,,,,,\n")
+            (root / "spend.csv").write_text(spend)
+            sql = own_data.database_sql(root, root, details=True)
+            payload = sql.split("FROM STDIN WITH CSV HEADER;\n", 1)[1].split("\n\\.\n", 1)[0]
+            rows = list(csv.DictReader(io.StringIO(payload)))
+            first, second = (json.loads(row["metadata"]) for row in rows)
+            self.assertEqual(rows[0]["agent_id"], "SENTINEL_agent")
+            self.assertEqual(first["additional_usage_values"],
+                             {"cache_read_input_tokens": 0, "completion_tokens_details": {"reasoning_tokens": 0}})
+            self.assertEqual(first["error_information"], {
+                "error_code": "429", "error_class": "ProxyRateLimitError",
+                "error_rate_limit_category": "litellm_rate_limit", "error_rate_limit_type": "budget",
+                "error_message": "litellm.RateLimitError: Session budget exceeded for session SENTINEL_TEST.",
+            })
+            self.assertEqual(second, {"additional_usage_values": {}})
+            self.assertEqual([row["spend"] for row in rows], ["1", "1"])
+            self.assertEqual((root / "spend.csv").read_text(), spend)
+            for bad in (spend.replace("session_budget", "other_budget"), spend.replace("rejected,failure", "rejected,success")):
+                (root / "spend.csv").write_text(bad)
+                with self.assertRaises(AssertionError):
+                    own_data.database_sql(root, root, details=True)
 
     def test_coverage_database_preserves_missing_details_and_recorded_zero(self):
         with tempfile.TemporaryDirectory() as directory:

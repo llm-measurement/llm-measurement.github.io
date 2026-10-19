@@ -38,6 +38,7 @@ EXPECTED = {
     "home-python": ("Successfully installed",),
     "home-go": (),
     "token-spike": ("Logged model requests:", "user-1:"),
+    "token-spike-install": ("Verified",),
     "token-spike-summaries": ("Reported tokens: 400 -> 3300", "user-1"),
     "litellm-spend": ("Logged model requests:", "key-1:"),
     "litellm-export-file": ("Logged model requests: 70 -> 70.", "key-1:"),
@@ -46,9 +47,16 @@ EXPECTED = {
     "session-budget": ("3 of 4 sessions with complete recorded spend exceed the supplied USD 1.00 cap.",
                        "Recorded USD: p50 1.10; p95 1.60; max 1.60 (n=4, exact nearest-rank).",
                        "Above-cap sessions with no recorded session-budget rejection: 2."),
+    "session-budget-install": ("Verified",),
+    "session-budget-native": ("3 of 4 sessions with complete recorded spend exceed the supplied USD 1.00 cap.",
+                       "Recorded USD: p50 1.10; p95 1.60; max 1.60 (n=4, exact nearest-rank).",
+                       "Above-cap sessions with no recorded session-budget rejection: 2.",
+                       "session_budget recorded rejections: 1."),
     "spend-export": ("Exported request-level rows to ./litellm-export/spend.csv",),
     "litellm-install": ("Verified", "installation in ././bin"),
     "cache-check": ("Cache-read share of recorded input:", "session-1:"),
+    "cache-check-install": ("Verified",),
+    "cache-check-native": ("Cache-read share of recorded input:", "session-1:"),
     "cardinality": ("2 problems to fix:", "enduser.id is a metric label"),
     "traces-usage": ("4 model attempts across 6 captured spans; 170 reported tokens.",),
     "anomalies-install": ("Verified",),
@@ -65,6 +73,8 @@ EXPECTED = {
     "row-coverage-export-files": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
                      "2026-10-07 UTC: 8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
     "what-if-install": ("Verified",),
+    "what-if-native": ("$0.154400 -> $0.109398 to $0.147974", "Level 1, same work and output verbosity: $0.148703",
+                        "Coverage: 3 observations priced; missing splits are excluded, never zero.", "missing split: 1"),
     "what-if-reprice": ("$0.154400 -> $0.109398 to $0.147974", "Level 1, same work and output verbosity: $0.148703",
                         "Coverage: 3 observations priced; missing splits are excluded, never zero.", "missing split: 1"),
     "what-if-workload-map": (),
@@ -80,7 +90,7 @@ EXPECTED = {
     "routing-scope": ("Model-request rows: 2 -> 2 requests; 240 -> 240 recorded tokens;",),
 }
 NATIVE_BLOCKS = {"litellm-native", "litellm-native-env", "routing-native", "routing-agents", "routing-scope",
-                 "row-coverage-native"}
+                 "row-coverage-native", "session-budget-native", "cache-check-native", "what-if-native"}
 
 
 def page_blocks(slug):
@@ -172,7 +182,8 @@ def prepare(fresh, source, env, slug):
     if slug == "what-if":
         for name in ("spend.csv", "workload-map.json"):
             shutil.copyfile(source / "examples/what-if" / name, fresh / name)
-        env["PERIOD_UTC"] = "2026-10-07"
+        env["PERIOD"] = "2026-10-07"
+        prepare_workload_map(fresh, source)
     if slug == "routing":
         with (source / "examples/routing/synthetic.csv").open() as handle:
             reader = csv.DictReader(handle)
@@ -227,6 +238,36 @@ def prepare(fresh, source, env, slug):
                     writer.writerow(row)
     if slug == "anomalies":
         run(["go", "run", "./examples/scan", "--out", str(fresh / "summary-history")], cwd=source, env=env)
+
+
+def prepare_workload_map(fresh, source):
+    blocks = page_blocks("what-if").configs
+    assert [b["id"] for b in blocks] == ["what-if-workload-map"]
+    raw = blocks[0]["text"].encode()
+    published = json.loads(raw)
+    original = json.loads((source / "examples/what-if/workload-map.json").read_text())
+    assert published["version"] == original["version"] == 1
+    assert len(published["mappings"]) == len(original["mappings"]) == 2
+    replacements = {}
+    for old, new in zip(original["mappings"], published["mappings"]):
+        assert old["workload"] == new["workload"]
+        assert old["selector"]["kind"] == new["selector"]["kind"]
+        column = {"key": "api_key", "team": "team_id"}[new["selector"]["kind"]]
+        replacements[column] = (old["selector"]["value"], new["selector"]["value"])
+    with (fresh / "spend.csv").open() as handle:
+        reader = csv.DictReader(handle)
+        columns, rows = reader.fieldnames, list(reader)
+    for column, (old, new) in replacements.items():
+        assert any(row[column] == old for row in rows), "published selector has no fixture match"
+        for row in rows:
+            if row[column] == old:
+                row[column] = new
+    with (fresh / "spend.csv").open("w") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns)
+        writer.writeheader()
+        writer.writerows(rows)
+    (fresh / "workload-map.json").write_bytes(raw)
+    (fresh / "workload-map.json").chmod(0o600)
 
 
 def refresh_history(directory, now):
@@ -298,7 +339,11 @@ def database_fixture_variants(fresh, env, slug, now):
                         BEFORE="2026-10-01", AFTER="2026-10-02")
     historical = ({name: (fresh / name).read_bytes() for name in names}, file_env)
     native_env = dict(env)
-    day = refresh_database_dates(fresh, native_env, slug, now)
+    if slug == "what-if":
+        # This page selects an explicit historical period, not a clock-relative default.
+        day = now.astimezone(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    else:
+        day = refresh_database_dates(fresh, native_env, slug, now)
     native = ({name: (fresh / name).read_bytes() for name in names}, native_env)
     return day, {"file": historical, "native": native}
 
@@ -329,7 +374,7 @@ def published_grants(source, blocks):
     return blocks
 
 
-def database_sql(fresh, source, coverage=False, routing=False):
+def database_sql(fresh, source, coverage=False, routing=False, details=False):
     sql = (source / "examples/litellm-spend/test-schema.sql").read_text()
     # Only the disposable fixture role changes database name, never page SQL.
     sql = sql.replace("CONNECT ON DATABASE fixture", "CONNECT ON DATABASE litellm")
@@ -339,29 +384,40 @@ def database_sql(fresh, source, coverage=False, routing=False):
     with (fresh / "spend.csv").open() as handle:
         reader = csv.DictReader(handle)
         rows = list(reader)
-        if not coverage and not routing:
+        if not (coverage or routing or details):
             assert reader.fieldnames == columns
-    if coverage or routing:
+    if coverage or routing or details:
         columns += ["agent_id", "metadata"]
     payload = io.StringIO()
     writer = csv.DictWriter(payload, fieldnames=columns, extrasaction="ignore", lineterminator="\n")
     writer.writeheader()
     for original in rows:
         row = dict(original)
-        if coverage or routing:
-            details = {}
+        if coverage or routing or details:
+            usage = {}
             for field, target in (("cache_read_input_tokens", "cache_read_input_tokens"),
                                   ("cache_write_input_tokens", "cache_creation_input_tokens")):
                 if row.get(field, "") != "":
-                    details[target] = int(row[field])
+                    usage[target] = int(row[field])
             if row.get("reasoning_output_tokens", "") != "":
-                details["completion_tokens_details"] = {"reasoning_tokens": int(row["reasoning_output_tokens"])}
-            assert not row.get("rejection_kind"), "stand-in has an unsupported rejection projection"
-            metadata = {"additional_usage_values": details}
+                usage["completion_tokens_details"] = {"reasoning_tokens": int(row["reasoning_output_tokens"])}
+            metadata = {"additional_usage_values": usage}
+            if row.get("rejection_kind"):
+                assert details and row["rejection_kind"] == "session_budget" and row["status"] == "failure"
+                # Content-free synthetic fixture matching every released SQL discriminator.
+                metadata["error_information"] = {
+                    "error_code": "429", "error_class": "ProxyRateLimitError",
+                    "error_rate_limit_category": "litellm_rate_limit", "error_rate_limit_type": "budget",
+                    "error_message": "litellm.RateLimitError: Session budget exceeded for session SENTINEL_TEST.",
+                }
             if routing:
                 metadata.update({field: row[field] for field in
                     ("original_model_group", "attempted_fallbacks", "internal_call_origin") if row.get(field)})
             row["metadata"] = json.dumps(metadata)
+            if details and "spend" not in row:
+                # What-if's token-only fixture has no recorded cost. A deliberate
+                # synthetic $1 value proves repricing does not use recorded spend.
+                row["spend"] = "1"
         writer.writerow(row)
     sql += '\nCOPY public."LiteLLM_SpendLogs" (' + ','.join('"' + name + '"' for name in columns)
     sql += ") FROM STDIN WITH CSV HEADER;\n" + payload.getvalue() + "\\.\n"
@@ -392,7 +448,7 @@ def comparable_rows(rows):
 
 
 @contextmanager
-def database(fresh, source, env, coverage=False, routing=False, native=False, sql_blocks=None):
+def database(fresh, source, env, coverage=False, routing=False, native=False, sql_blocks=None, details=False):
     """Actual read-only Postgres; Docker transports psql, it does not stub it."""
     name = "site-export-" + uuid.uuid4().hex[:12]
     image = json.loads((source / "examples/litellm-spend/images.json").read_text())["postgres"]
@@ -418,7 +474,7 @@ def database(fresh, source, env, coverage=False, routing=False, native=False, sq
             time.sleep(1)
         else:
             raise RuntimeError("Test database did not become ready")
-        sql = database_sql(fresh, source, coverage, routing)
+        sql = database_sql(fresh, source, coverage, routing, details)
         if native and not coverage:
             sql += '''\nCREATE TABLE public."LiteLLM_DailyUserSpend" (
                 date text NOT NULL, api_requests bigint NOT NULL,
@@ -545,7 +601,7 @@ def check(output, page=None):
     manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
                 "fixture_source": FIXTURE_COMMIT,
                 "method": "Exact published commands; fresh HOME/directories/caches; anonymous fixed-commit source archive; real released installer, CLI and library. Synthetic data is seeded into real read-only Postgres using cached digest-pinned network-none Docker. Native commands use the unchanged installed host binary through a loopback byte transport, not a database mock. The paired psql helper executes unmodified inside the container to retain its inherited descriptors.",
-                "dependencies": [], "results": records}
+                "dependencies": [], "config_records": [], "results": records}
     with tempfile.TemporaryDirectory(prefix="site-own-source-") as directory:
         fixture_root = Path(directory)
         source, provenance = fixture_source(fixture_root)
@@ -562,6 +618,13 @@ def check(output, page=None):
                 fresh = Path(directory).resolve()
                 env = environment(fresh)
                 prepare(fresh, source, env, slug)
+                expected_configs = {"cardinality": ["cardinality"], "traces-usage": ["traces-usage"],
+                                    "what-if": ["what-if-workload-map"]}.get(slug, [])
+                assert [b["id"] for b in blocks.configs] == expected_configs, slug
+                if slug in {"cardinality", "traces-usage"}:
+                    from config_checks import validate
+                    manifest["config_records"].append(validate(blocks.configs[0], fresh, env, output / "configs"))
+                    (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
                 if slug == "security":
                     dependency = next(b for b in page_blocks("litellm-spend").own if b["id"] == "litellm-install")
                     result = subprocess.run(["bash", "-e", "-c", dependency["text"]], cwd=fresh,
@@ -579,7 +642,8 @@ def check(output, page=None):
                 database_day = None
                 variants = None
                 file_reports = {}
-                if slug in {"litellm-spend", "routing", "row-coverage", "security"}:
+                if slug in {"litellm-spend", "routing", "row-coverage", "security",
+                            "session-budget", "cache-check", "what-if"}:
                     database_day, variants = database_fixture_variants(fresh, env, slug, datetime.now(timezone.utc))
                 for block in blocks.own:
                     begin = time.monotonic()
@@ -596,7 +660,8 @@ def check(output, page=None):
                     if block["id"] in NATIVE_BLOCKS:
                         assert datetime.now(timezone.utc).date() == database_day.date(), "UTC day changed; rerun with fresh fixtures"
                         with database(fresh, source, env, coverage=slug == "row-coverage", routing=slug == "routing",
-                                      native=True, sql_blocks=page_native_grants(slug)) as db_env:
+                                      native=True, sql_blocks=page_native_grants(slug),
+                                      details=slug in {"session-budget", "cache-check", "what-if"}) as db_env:
                             if block["id"] == "litellm-native-env":
                                 # Compare both published credential paths against this same fixture,
                                 # including when checking security independently of the spend page.
@@ -645,6 +710,8 @@ def check(output, page=None):
                     if block["id"] in NATIVE_BLOCKS:
                         record["database"] = json.loads((fresh / "database-evidence.json").read_text())
                         record["fixture_utc_midnight"] = database_day.isoformat()
+                        if slug == "what-if":
+                            record["synthetic_recorded_spend_per_row_usd"] = "1"
                         if block["id"] == "litellm-native-env":
                             record["file_source_comparison"] = {"pass": True,
                                 "command_sha256": hashlib.sha256(file_block["text"].encode()).hexdigest(),
@@ -702,7 +769,7 @@ def check(output, page=None):
                         record["paired_export"] = {"start_utc": EXPORT_START, "end_exclusive": EXPORT_END,
                             "fixture_oct07_spend_rows": 8, "fixture_oct07_daily_requests": 9,
                             "fixture_oct08_spend_rows": 1, "readonly": True, "network": "none"}
-                    if block["id"] == "what-if-reprice":
+                    if block["id"] in {"what-if-reprice", "what-if-native"}:
                         assert result.stdout == (source / "examples/what-if/expected.text").read_text()
                     if block["id"] == "what-if-workload-map":
                         mapped = json.loads(result.stdout)
@@ -711,6 +778,16 @@ def check(output, page=None):
                         assert mapped["covered_observations"] == 3 and mapped["excluded_observations"] == {"missing_split": 1}
                         assert mapped["unmapped_moved_observations"] == 0
                         assert len(mapped["level2"]) == 1 and mapped["level2"][0]["workload"] == "mapped"
+                        raw = blocks.configs[0]["text"].encode()
+                        assert (fresh / "workload-map.json").read_bytes() == raw
+                        manifest["config_records"].append({
+                            "page": slug, "block": "what-if-workload-map", "kind": "fleetdiff-workload-map",
+                            "pass": True, "exit": result.returncode, "config_sha256": hashlib.sha256(raw).hexdigest(),
+                            "execution_block": block["id"], "command_sha256": record["command_sha256"],
+                            "stdout_sha256": record["stdout_sha256"], "input_relative_path": "workload-map.json",
+                            "fixture_sha256": hashlib.sha256((fresh / "spend.csv").read_bytes()).hexdigest(),
+                            "validation": "exact published JSON consumed by the released CLI; only synthetic CSV identities adapted",
+                        })
                     if block["id"] == "routing-export":
                         assert (fresh / "export.sql").read_bytes() == (source / "examples/litellm-spend/export.sql").read_bytes()
                         with (fresh / "routing-export/spend.csv").open() as handle:
@@ -734,8 +811,11 @@ def check(output, page=None):
                             assert responses[side]["agent"]["missing_rows"] == 1
                         assert len(audit["cohorts"]) == 2
                     assert all(raw not in result.stdout for raw in ("private-ana", "private-ben", "private-cy"))
-                    if slug in {"session-budget", "what-if", "routing"}:
+                    if slug in {"session-budget", "what-if", "routing", "cache-check"}:
                         assert "SENTINEL_" not in result.stdout + result.stderr
+                    if slug == "what-if":
+                        assert all(value not in result.stdout + result.stderr for value in
+                                   ("your-coding-key-id", "your-extraction-team-id"))
                     record["pass"] = True
                     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
                     print(f"PASS own data: {slug}/{block['id']}; exit {result.returncode}", flush=True)
