@@ -5,7 +5,7 @@ An evidence page explains what can be shared and retained with summaries.
 
 Current command examples pin fleetdiff v0.12.0. The home-page library installs
 pin llm-sketchkit v0.4.0; the existing Python guides retain v0.3.0. Collector
-configuration pins v0.6.0 and Helm chart 0.6.0. Historical evidence
+configuration pins v0.6.1 and Helm chart 0.6.1. Historical evidence
 retains the versions and source revisions used for those measurements.
 
 | Question | Page |
@@ -36,8 +36,15 @@ python3 scripts/check.py --release-pins
 ```
 
 The release-pin check resolves the cited fleetdiff tag anonymously and rejects
-any active installer or source commit pin that differs. CI runs it on every PR.
-The other static checks remain offline.
+any active installer or source commit pin that differs. Collector pins must
+match the latest stable runtime release and avoid published advisory ranges.
+CI reads both anonymously on every PR and fails if the lookup is unavailable.
+The other static checks remain offline, using the recorded public policy snapshot.
+Refresh that snapshot when updating collector pins:
+
+```sh
+python3 scripts/collector_pins.py --record evidence/collector-release-policy.json
+```
 
 Open `docs/index.html` in a browser. The site uses Plausible for visitor analytics.
 The guides are static HTML and require no account or external fonts to read.

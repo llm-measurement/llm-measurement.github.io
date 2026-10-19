@@ -5,7 +5,7 @@ from a new directory with fresh caches. No real prompts, user records or
 model-provider credentials are needed. The manual collector provenance check
 uses GitHub authentication as described below.
 
-The sample and own-data command manifests were refreshed on October 18, 2026 (UTC),
+The sample and own-data command manifests were refreshed on October 19, 2026 (UTC),
 using published fleetdiff v0.12.0. The homepage installs
 sketchkit v0.4.0 in Python and Go; the existing Python guides retain their checked
 v0.3.0 examples. These site command checks ran on macOS arm64 against the released
@@ -35,7 +35,12 @@ to match the released fixture commit exactly.
 `python3 scripts/check.py --release-pins` also resolves the tag anonymously and
 checks every active fleetdiff commit URL in source and generated pages. The
 build job runs this check; unavailable or mismatched tag resolution fails it.
-Collector links pin v0.6.0 configuration and chart 0.6.0; these guide commands do not start
+It also reads the collector's public stable releases and advisories anonymously:
+active pins must match the latest stable runtime and must not fall in an affected
+range. Unavailable lookups and unsupported range syntax fail the check. The
+offline check uses `collector-release-policy.json`, regenerated from the public
+API by `python3 scripts/collector_pins.py --record evidence/collector-release-policy.json`.
+Collector links pin v0.6.1 configuration and chart 0.6.1; these guide commands do not start
 a collector or claim a live Prometheus series measurement.
 Install-guide, configuration and source links use the same runtime tag.
 
@@ -59,8 +64,9 @@ The checked-in `verified.json` records the run without local paths or credential
 
 ## Own-data commands
 
-Every guide and the homepage put the operator's data first. LiteLLM spend and
-routing lead with native database investigation; routing adds `--routing-audit`.
+Every guide and the homepage put the operator's data first. LiteLLM spend,
+routing and row coverage lead with native database investigation; routing adds
+`--routing-audit` and row coverage adds `--daily`.
 Run the exact published commands with synthetic inputs:
 
 ```sh
@@ -94,7 +100,10 @@ installs first, then checks both an owned mode-0600 credential file and the
 dedicated environment variable against the real database. Both produce identical
 aliased reports. Native fixtures follow the last 14 complete UTC days; an
 intervening UTC midnight fails the run rather than changing its reference window.
-All five native blocks require actual database traffic and temporary-export cleanup.
+All six native blocks require actual database traffic and temporary-export cleanup.
+The daily mode also verifies column-only read access to the daily table and
+reports the planted 8-row versus 9-request discrepancy. Native fixture dates
+shift start and end timestamps together, preserving cross-midnight durations.
 The routing path checks native audit, route-agent JSON and route scope, plus the
 manual opt-in SQL projection against all eight seeded rows and the file audit.
 Missing agent and cache fields stay missing, and private sentinel labels stay
@@ -108,7 +117,7 @@ released binary separately confirms 160 exported rows succeed, while a shortened
 14-day, 140-row export fails the same file-default investigation. This does not
 change native mode's clock-based 14-complete-day default.
 
-`own-data-verified.json` binds the 31 successful command blocks to their source
+`own-data-verified.json` binds the 32 successful command blocks to their source
 hashes and records the released fixture commit, native transport counts, role
 checks and installed binary versions. CI reruns these checks.
 
@@ -136,8 +145,8 @@ OCI provenance API checks, execute the security page's exact manual verification
 python3 scripts/check.py --release-review --output evidence/local/release-review
 ```
 
-The fleetdiff v0.12.0 and collector v0.6.0 / chart 0.6.0 manual checks both passed
-on October 18, 2026 (UTC), using gh 2.69.0 and Cosign 3.1.3.
+The fleetdiff v0.12.0 and collector v0.6.1 / chart 0.6.1 manual checks both passed
+on October 19, 2026 (UTC), using gh 2.69.0 and Cosign 3.1.3.
 Downloads, fleetdiff
 bundle verification and Cosign checks use anonymous access; collector OCI
 provenance verification uses existing GitHub CLI credentials. Working directories,
@@ -146,19 +155,18 @@ cluster changed by these blocks.
 `release-review-verified.json` binds the commands to the successful check. The
 default site check rejects stale own-data or manual-verification command records.
 
-The refreshed checks passed all twelve sample guides and 31 own-data blocks.
+The refreshed checks passed all twelve sample guides and 32 own-data blocks.
 
 ## Visual checks
 
-The v0.12.0 update has 16 checked combinations: homepage, LiteLLM spend, routing
-and security at 1440 x 1000 and 390 x 844, each in light and dark mode. Generated
-HTML was served over ephemeral loopback HTTP in cached Chromium via Playwright;
-external requests were blocked. Images decoded, mobile routing navigation worked,
-and checks found no page errors, content overlap or page-level horizontal overflow.
-Intentional code-block scrolling remained reachable. Forty screenshots were
-retained, and the server was stopped with its port confirmed closed. Source
-hashes still match after the release evidence refresh. `visual-verified.json`
-records this scope and the source/screenshot hashes. The other pages in this
+The collector 0.6.1 and native row-coverage update has 22 checked combinations:
+homepage, LiteLLM spend, row coverage, cardinality and security at 1440- and
+390-pixel widths, plus row coverage at 320 pixels, each in light and dark mode.
+An exact generated-HTML snapshot ran in cached Chromium via Playwright with
+external requests blocked. Images decoded, mobile navigation worked, and checks
+found no page errors, content overlap or page-level horizontal overflow.
+Intentional code-block scrolling remained reachable. The 110 screenshots and
+source hashes are recorded in `visual-verified.json`. The other pages in this
 batch change version pins only; CSS, navigation and assets are unchanged.
 
 Separately, the historical v0.11.0 visual check covered all 15 pages at 1280- and

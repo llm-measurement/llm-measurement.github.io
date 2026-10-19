@@ -3,6 +3,7 @@
 """Check native page contracts; opt in to a real cached PostgreSQL fixture."""
 import csv
 from datetime import datetime, timedelta, timezone
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -71,6 +72,44 @@ class NativeDatabaseTests(unittest.TestCase):
         self.assertNotIn("FLEETDIFF_LITELLM_DATABASE_URL", env)
         self.assertNotIn("DATABASE_URL_FILE", env)
 
+    def test_daily_page_documents_additional_grants_and_private_connection(self):
+        source = (ROOT / "pages/row-coverage.html").read_text()
+        for text in ("SELECT (date, api_requests, successful_requests, failed_requests)",
+                     'public."LiteLLM_DailyUserSpend"', "0600", "0700", "effective user", "symlink",
+                     "sslmode=verify-full", "sslrootcert", "numeric loopback", "exactly one",
+                     "FLEETDIFF_LITELLM_DATABASE_URL</code> unset", "--keep-export NEWDIR",
+                     "last 14 complete UTC days", "16 days", "litellm-spend.html#credentials"):
+            self.assertIn(text, source)
+
+    def test_daily_dates_move_with_spend_without_changing_counts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fresh = Path(directory)
+            (fresh / "spend.csv").write_text(
+                "request_id,startTime,endTime,spend\n"
+                "last,2026-10-08T23:00:00Z,2026-10-08T23:00:01Z,0.002\n"
+                "cross,2026-10-07T23:59:59.000Z,2026-10-08T00:00:01.000Z,0.003\n")
+            (fresh / "daily.csv").write_text(
+                "date,api_requests,successful_requests,failed_requests\n"
+                "2026-10-07,9,8,1\n2026-10-08,1,1,0\n")
+            env = {}
+            end = own_data.refresh_database_dates(fresh, env, "row-coverage",
+                                                   datetime(2030, 2, 15, 23, 59, tzinfo=timezone.utc))
+            with (fresh / "spend.csv").open() as handle:
+                spend = list(csv.DictReader(handle))
+            with (fresh / "daily.csv").open() as handle:
+                daily = list(csv.DictReader(handle))
+            self.assertEqual([row["date"] for row in daily], ["2030-02-13", "2030-02-14"])
+            self.assertEqual(spend[0]["startTime"], daily[-1]["date"] + "T23:00:00Z")
+            self.assertEqual(spend[0]["endTime"], daily[-1]["date"] + "T23:00:01Z")
+            self.assertEqual(spend[0]["spend"], "0.002")
+            self.assertEqual(spend[1]["startTime"], "2030-02-13T23:59:59.000Z")
+            self.assertEqual(spend[1]["endTime"], "2030-02-14T00:00:01.000Z")
+            self.assertEqual(spend[1]["spend"], "0.003")
+            self.assertEqual([(r["api_requests"], r["successful_requests"], r["failed_requests"]) for r in daily],
+                             [("9", "8", "1"), ("1", "1", "0")])
+            self.assertEqual(env["START_UTC"], (end - timedelta(days=16)).isoformat())
+            self.assertEqual(env["END_UTC"], end.isoformat())
+
     def test_routing_dates_follow_utc_windows_without_changing_values(self):
         with tempfile.TemporaryDirectory() as directory:
             fresh = Path(directory)
@@ -116,13 +155,14 @@ class RealPostgresFixtureTests(unittest.TestCase):
 
     def test_documented_role_credentials_and_real_postgres_transport(self):
         source = Path(os.environ["SITE_POSTGRES_SOURCE"]).resolve(strict=True)
-        for slug in ("litellm-spend", "routing"):
+        for slug in ("litellm-spend", "routing", "row-coverage"):
             with self.subTest(page=slug), tempfile.TemporaryDirectory(prefix="site-db-test-") as directory:
                 fresh = Path(directory).resolve()
                 env = own_data.environment(fresh)
                 own_data.prepare(fresh, source, env, slug)
                 own_data.refresh_database_dates(fresh, env, slug, datetime.now(timezone.utc))
-                with own_data.database(fresh, source, env, routing=slug == "routing", native=True) as db_env:
+                with own_data.database(fresh, source, env, coverage=slug == "row-coverage",
+                                       routing=slug == "routing", native=True) as db_env:
                     credential = Path(db_env["DATABASE_URL_FILE"])
                     self.assertEqual(credential.stat().st_mode & 0o777, 0o600)
                     url = urlsplit(credential.read_text().strip())
@@ -136,6 +176,68 @@ class RealPostgresFixtureTests(unittest.TestCase):
                 self.assertEqual(evidence["readonly_identity"], "fleetdiff_reader|on|t|f|f|f")
                 self.assertEqual(evidence["transport"]["connections"], 1)
                 self.assertFalse(evidence["transport"]["errors"])
+                if slug == "row-coverage":
+                    self.assertEqual(evidence["daily_readonly_identity"], "t|t|t|t|f|f")
+                    self.assertEqual(evidence["daily_fixture_sha256"],
+                                     hashlib.sha256((fresh / "daily.csv").read_bytes()).hexdigest())
+
+    def test_daily_grants_are_opt_in_and_match_released_column_grants(self):
+        source = Path(os.environ["SITE_POSTGRES_SOURCE"]).resolve(strict=True)
+        spend = own_data.native_grants(source)
+        daily = own_data.native_grants(source, daily=True)
+        self.assertNotIn("LiteLLM_DailyUserSpend", spend)
+        self.assertTrue(daily.startswith(spend))
+        self.assertEqual(daily[len(spend):].strip(),
+                         'GRANT SELECT (date, api_requests, successful_requests, failed_requests)\n'
+                         '  ON TABLE public."LiteLLM_DailyUserSpend" TO fleetdiff_reader;')
+
+
+@unittest.skipUnless(os.environ.get("SITE_POSTGRES_SOURCE") and os.environ.get("SITE_FLEETDIFF_BINARY"),
+                     "set SITE_POSTGRES_SOURCE and SITE_FLEETDIFF_BINARY for the real native daily command")
+class NativeDailyCommandTests(unittest.TestCase):
+    def test_exact_page_command_with_released_binary_and_real_daily_database(self):
+        source = Path(os.environ["SITE_POSTGRES_SOURCE"]).resolve(strict=True)
+        binary = Path(os.environ["SITE_FLEETDIFF_BINARY"]).resolve(strict=True)
+        binary_hash = hashlib.sha256(binary.read_bytes()).hexdigest()
+        blocks = Blocks()
+        blocks.feed((ROOT / "pages/row-coverage.html").read_text())
+        command = next(b["text"] for b in blocks.own if b["id"] == "row-coverage-native")
+        with tempfile.TemporaryDirectory(prefix="site-native-daily-") as directory:
+            fresh = Path(directory).resolve()
+            env = own_data.environment(fresh)
+            own_data.prepare(fresh, source, env, "row-coverage")
+            end = own_data.refresh_database_dates(fresh, env, "row-coverage", datetime.now(timezone.utc))
+            (fresh / "bin").mkdir()
+            installed = fresh / "bin/fleetdiff"
+            shutil.copyfile(binary, installed)
+            installed.chmod(0o700)
+            version = own_data.run([str(installed), "--version"], cwd=fresh, env=env)
+            self.assertEqual(version.split()[:3], ["fleetdiff", own_data.FIXTURE_VERSION,
+                                                  "(" + own_data.FIXTURE_COMMIT + ")"])
+            with own_data.database(fresh, source, env, coverage=True, native=True) as db_env:
+                db_env.pop("FLEETDIFF_LITELLM_DATABASE_URL")
+                before_files = set(fresh.iterdir())
+                result = subprocess.run(["bash", "-e", "-c", command], cwd=fresh,
+                                        env=db_env, text=True, capture_output=True, timeout=60)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(set(fresh.iterdir()), before_files, "temporary export was not removed")
+                self.assertEqual(datetime.now(timezone.utc).date(), end.date(), "UTC day changed; rerun")
+                for excerpt in own_data.EXPECTED["row-coverage-native"]:
+                    self.assertIn(excerpt, result.stdout)
+                missing_day = (end - timedelta(days=2)).date().isoformat()
+                matching_day = (end - timedelta(days=1)).date().isoformat()
+                self.assertIn(missing_day + " UTC: 8 exported rows; 9 daily requests", result.stdout)
+                self.assertIn(matching_day + " UTC: 1 exported row; 1 daily request", result.stdout)
+                with (fresh / "spend.csv").open() as handle:
+                    for row in csv.DictReader(handle):
+                        if row["api_key"]:
+                            self.assertNotIn(row["api_key"], result.stdout + result.stderr)
+                self.assertNotIn("postgresql://", result.stdout + result.stderr)
+            evidence = json.loads((fresh / "database-evidence.json").read_text())
+            self.assertEqual(evidence["daily_readonly_identity"], "t|t|t|t|f|f")
+            self.assertGreater(evidence["transport"]["server_bytes"], 0)
+            self.assertEqual(hashlib.sha256(installed.read_bytes()).hexdigest(), binary_hash)
+        self.assertEqual(hashlib.sha256(binary.read_bytes()).hexdigest(), binary_hash)
 
 
 @unittest.skipUnless(os.environ.get("SITE_POSTGRES_SOURCE") and os.environ.get("SITE_FLEETDIFF_BINARY"),
