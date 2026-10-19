@@ -101,7 +101,8 @@ class BuildTests(unittest.TestCase):
             root = Path(directory)
             for folder in ("assets", "pages"):
                 shutil.copytree(source / folder, root / folder)
-            shutil.copyfile(source / name, root / name)
+            for static_name in build.STATIC_ROOT_FILES:
+                shutil.copyfile(source / static_name, root / static_name)
             with patch.object(build, "ROOT", root):
                 build.build()
                 verification = root / "docs" / name
