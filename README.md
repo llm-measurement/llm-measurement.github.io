@@ -3,7 +3,7 @@
 Twelve guides to LLM usage, with commands and output from released tools.
 An evidence page explains what can be shared and retained with summaries.
 
-Current command examples pin fleetdiff v0.12.0. The home-page library installs
+Current command examples pin fleetdiff v0.12.1. The home-page library installs
 pin llm-sketchkit v0.4.0; the existing Python guides retain v0.3.0. Collector
 configuration pins v0.6.1 and Helm chart 0.6.1. Historical evidence
 retains the versions and source revisions used for those measurements.
@@ -71,7 +71,7 @@ not a mock fallback. The fixture provisions the documented read-only role and
 tests both credential sources. No model calls are made.
 
 On a fresh machine, first populate the Docker cache with the exact PostgreSQL
-digest from the [released fixture image manifest](https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/examples/litellm-spend/images.json).
+digest from the [released fixture image manifest](https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/examples/litellm-spend/images.json).
 CI runs this explicit preparation before the own-data check; the database
 runtime itself never pulls an image:
 

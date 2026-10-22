@@ -21,7 +21,7 @@
 
 ## Released tools used in these examples
 
-- fleetdiff v0.12.0
+- fleetdiff v0.12.1
 - llm-sketchkit v0.4.0 on the home page; v0.3.0 in the existing Python guides
 - Collector configuration guidance: v0.6.1; Helm chart 0.6.1
 

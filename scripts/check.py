@@ -160,7 +160,7 @@ def main():
                 assert source in page.links, source
         if entry["slug"] in {"token-spike", "cardinality", "anomalies", "litellm-spend", "traces-usage", "cache-check"}:
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
-            assert "/archive/refs/tags/v0.12.0.tar.gz" in source and "sh scripts/install.sh v0.12.0 ./release" in source
+            assert "/archive/refs/tags/v0.12.1.tar.gz" in source and "sh scripts/install.sh v0.12.1 ./release" in source
             assert "fleetdiff/v0.6.0" not in source
             if entry["slug"] == "traces-usage":
                 assert "./release/fleetdiff inspect examples/inspect/synthetic-traces.json" in source
@@ -176,7 +176,7 @@ def main():
                 assert "key-1: 80 -&gt; 700 uncached input tokens; change +620." in source
         if entry["slug"] == "session-budget":
             source = (ROOT / "pages/session-budget.html").read_text()
-            assert "/archive/refs/tags/v0.12.0.tar.gz" in source and "sh scripts/install.sh v0.12.0 ./release" in source
+            assert "/archive/refs/tags/v0.12.1.tar.gz" in source and "sh scripts/install.sh v0.12.1 ./release" in source
             assert "--session-budget-usd 1.00" in source and "Redis" not in source
             for url in ("https://docs.litellm.ai/docs/a2a_iteration_budgets",
                         "https://github.com/BerriAI/litellm/issues/34732",
@@ -197,7 +197,7 @@ def main():
                                     (context if isinstance(context, list) else [context]))
             notes_link = '<a href="summaries.html#measurement-notes">Measurement notes</a>'
             if entry["slug"] == "cache-check":
-                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/CACHE.md">Cache measurements and limits</a>.'
+                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/docs/CACHE.md">Cache measurements and limits</a>.'
             expected = (f'<p class="measurement-context">{context}<br>\n'
                         f'{notes_link}</p>')
             assert expected in path.read_text(), (path.name, "guide context must precede its notes link")

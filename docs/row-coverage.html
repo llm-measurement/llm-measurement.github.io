@@ -24,8 +24,8 @@
 <h2 id="own-data-title">Check your LiteLLM database</h2>
 <p><strong>1. Install.</strong> Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
 <pre data-own="row-coverage-install" data-exit="0"><code>set -eu
-curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
-sh install-fleetdiff.sh v0.12.0 ./bin
+curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
+sh install-fleetdiff.sh v0.12.1 ./bin
 ./bin/fleetdiff --version</code></pre>
 <p><strong>2. Run it</strong> with the connection file from the <a href="litellm-spend.html#run">LiteLLM spend guide</a>:</p>
 <pre data-own="row-coverage-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --daily --group-by key</code></pre>
@@ -48,7 +48,7 @@ umask 077
 mkdir ./coverage-helper
 for file in export-coverage.sh export.sql daily-projection.sql; do
   curl -fsSLo "./coverage-helper/$file" \
-    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.0/examples/litellm-spend/$file"
+    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/litellm-spend/$file"
 done
 sh ./coverage-helper/export-coverage.sh ./litellm-coverage-export \
   "$BEFORE" \
@@ -72,11 +72,11 @@ sh ./coverage-helper/export-coverage.sh ./litellm-coverage-export \
 <pre data-run="row-coverage" data-exit="0"><code>set -eu
 umask 077
 mkdir fleetdiff-row-coverage
-curl -fsSLo fleetdiff-v0.12.0.tar.gz \
-  https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/refs/tags/v0.12.0
-tar -xzf fleetdiff-v0.12.0.tar.gz --strip-components=1 -C fleetdiff-row-coverage
+curl -fsSLo fleetdiff-v0.12.1.tar.gz \
+  https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/refs/tags/v0.12.1
+tar -xzf fleetdiff-v0.12.1.tar.gz --strip-components=1 -C fleetdiff-row-coverage
 cd fleetdiff-row-coverage
-sh scripts/install.sh v0.12.0 ./release
+sh scripts/install.sh v0.12.1 ./release
 ./release/fleetdiff investigate \
   --litellm-spend examples/litellm-spend/coverage_runtime_spend.csv \
   --litellm-daily-spend examples/litellm-spend/coverage_runtime_daily.csv \
@@ -91,7 +91,7 @@ Token and spend totals below use exported rows only.</code></pre>
 <p>The first day has one fewer spend row than daily requests; the next day matches.</p>
 <p>Add <code>--format json</code> for per-day counts and status under <code>row_coverage.days</code>.</p>
 <p>The sample reproduces a real <a href="https://github.com/BerriAI/litellm/issues/46403">response-ID collision</a> through LiteLLM's own database writers.</p>
-<p class="meta">The released <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/coverage_runtime_spend.csv">spend CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/coverage_runtime_daily.csv">daily CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/litellm-spend/TESTING.md">verification record</a> come from a synthetic workload through pinned LiteLLM v1.104.0's proxy and database writers.</p>
+<p class="meta">The released <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/coverage_runtime_spend.csv">spend CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/coverage_runtime_daily.csv">daily CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/TESTING.md">verification record</a> come from a synthetic workload through pinned LiteLLM v1.104.0's proxy and database writers.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p>All selected request rows count, including failed records and call types excluded from token analysis. Days follow request <code>startTime</code> in UTC. fleetdiff does not fill in missing tokens, spend or contributor totals.</p>

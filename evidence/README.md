@@ -1,11 +1,43 @@
 # Guide Verification
 
+## October 22 fleetdiff pin verification
+
+Current fleetdiff commands pin v0.12.1 and source
+`0d7db95c5bb3013f8c564c91fbb07b6235a2664e`. Ten fleetdiff sample blocks and 37
+own-data blocks were freshly executed on macOS arm64, including real PostgreSQL
+checks using the cached pinned image. The manual fleetdiff verification block
+also passed with real anonymous GitHub CLI attestation verification. Release
+bytes came from the previously verified local release cache; these are
+cache-backed executions, not fresh anonymous downloads. Source archives were
+reconstructed from the exact release Git tree, not claimed to be historical
+codeload response bytes. No new dependencies or images were acquired.
+The full local suite passed 130 tests with no skips after enabling its seven
+real cached-database regressions. The 14 Node interaction tests, five summary
+evidence tests and the static/summary checks also passed.
+
+The two unchanged Python samples and four unchanged Python/Go own-data blocks
+retain their historical command hashes and results. The byte-identical collector
+configuration and manual collector verification retain their prior real results;
+the former's pinned runtime image was absent locally, and the latter needs
+credentials that this run did not read. Their records identify that retained
+history rather than claiming a fresh execution. Full hosted own-data validation
+remains required. Collector v0.6.1, chart 0.6.1 and all collector digests stay
+unchanged.
+
+Fresh contact/copy verification covers all 15 pages at 1366, 390 and 320 pixels
+against the exact merged contact baseline. The 45-view report is
+`contact-copy-visual-verified.json`. Clipboard text, keyboard activation, contact
+targets, palette, contrast and geometry passed; all external requests, including
+Plausible, were intercepted, with zero external requests completed.
+
+## Historical verification
+
 The guides use synthetic inputs and released software. Each command is checked
 from a new directory with fresh caches. No real prompts, user records or
 model-provider credentials are needed. The manual collector provenance check
 uses GitHub authentication as described below.
 
-The current manifests record fresh full runs of all 12 samples and all 41
+The earlier manifests recorded fresh full runs of all 12 samples and all 41
 own-data command blocks on October 19, 2026 (UTC), using published fleetdiff
 v0.12.0, plus three executable configuration checks described below. Earlier
 targeted checks are historical, not substituted for the final full run. The homepage installs
@@ -44,8 +76,8 @@ variables with setup text beside each command. All 41 own-data commands and
 
 The fleetdiff v0.12.0 tag resolves to `6089061c931fa19fac876e40b3809fdea4792ab8`.
 The installer checks the binary and checksum-file attestations before extraction.
-Installer URLs pin `6089061c931fa19fac876e40b3809fdea4792ab8` and explicitly
-request v0.12.0. Own-data checks require the installed version and source commit
+Installer URLs pin `0d7db95c5bb3013f8c564c91fbb07b6235a2664e` and explicitly
+request v0.12.1. Own-data checks require the installed version and source commit
 to match the released fixture commit exactly.
 `python3 scripts/check.py --release-pins` also resolves the tag anonymously and
 checks every active fleetdiff commit URL in source and generated pages. The
@@ -92,7 +124,7 @@ python3 scripts/check.py --own-data --output evidence/local/own-data
 This requires Docker for a cached digest-pinned Postgres fixture as well as the
 tools named on the pages. Containers use `--pull=never --network=none`; a missing
 image fails the check. Fresh machines must first cache the exact image listed
-in the [released fixture manifest](https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/examples/litellm-spend/images.json);
+in the [released fixture manifest](https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/examples/litellm-spend/images.json);
 the own-data CI job explicitly pulls that digest before the runtime check.
 This local verification reused the existing image and did not pull a new one.
 Native commands run the unchanged installed host binary
@@ -159,7 +191,7 @@ privileges. Their exact command hashes and results are nested under
 with `--pull=never --network=none`; no new image or Git checkout was used.
 
 That earlier targeted refresh retained 27 other own-data records and 11 other
-sample records. The current manifests supersede it with fresh full runs.
+sample records. The later historical full run superseded that targeted refresh.
 The 13 native/database regression tests also passed, including the shortened
 14-day export failure. The anonymous fleetdiff manual release block was rechecked;
 the unchanged collector OCI verification retains its earlier authenticated result.
@@ -260,17 +292,17 @@ cluster changed by these blocks.
 default site check rejects stale own-data or manual-verification command records.
 
 The earlier full-suite check passed all twelve sample guides and 32 own-data
-blocks. The current full run covers all 41 command blocks after the guide rewrites;
+blocks. The later historical full run covered all 41 command blocks after the guide rewrites;
 it does not relabel the earlier manual collector provenance check as a new run.
 
-## Visual checks
+## Historical visual checks
 
 The light-only palette check covers all 15 pages at 1366, 390 and 320 pixels:
 45 views. Every rendered text/background pair, including opened folds, meets
 4.5:1; the lowest palette ratio is 5.12:1. Hover colors pass, and a system dark
 preference leaves the page light. Element geometry, fonts and spacing match the
-previous palette exactly. `rewrite-visual-verified.json` binds the current results
-to the page and CSS hashes.
+previous palette exactly. `rewrite-visual-verified.json` binds those historical results
+to the then-current page and CSS hashes.
 
 The first rewrite passed 24 views across LiteLLM spend, routing, row coverage
 and security. The prior guide rewrite extended this to 78 views: all twelve

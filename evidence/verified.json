@@ -7,9 +7,10 @@
       "page": "token-spike",
       "exit": 0,
       "pass": true,
-      "seconds": 2.6,
-      "command_sha256": "15cd434c52e8dd24ad6cbd99d868a664e1bb89a34bc5470705a94f56a23d1b42",
-      "stdout_sha256": "3450c506b88881e48659f189795d63744d1d580b4ee0dc14ca3766d43a0dcea1"
+      "seconds": 1.16,
+      "command_sha256": "3bdcaa7137bcd220d4f668d7c4e33db815163a3f73215c1e1930a5f8539120cf",
+      "stdout_sha256": "5b4f6db3cce793a16dc7ba5b1854ca6f13fc91d6db9d178bbb35ec180cbc7d1d",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "tokenmaxxing",
@@ -17,79 +18,89 @@
       "pass": true,
       "seconds": 2.1,
       "command_sha256": "c1e8ee059b44e9ed9b3dcae4b4b6e5f0963415b02e455b4960870fa0e9778a00",
-      "stdout_sha256": "c358b3761063238539484747ac0233fd495c8585b8e99cf9fca43a7c9dbb48f4"
+      "stdout_sha256": "c358b3761063238539484747ac0233fd495c8585b8e99cf9fca43a7c9dbb48f4",
+      "retained_history": "Unchanged command bytes; prior verification retained, not rerun on October 22"
     },
     {
       "page": "litellm-spend",
       "exit": 0,
       "pass": true,
-      "seconds": 1.57,
-      "command_sha256": "0fb2a5dd0f0b505eac3a839e1739423020cea1880f59574569e9d5ea96f3f462",
-      "stdout_sha256": "51179983f6673eced6f4b0b66795890109264db13987467076a49cbfa9765bcb"
+      "seconds": 1.02,
+      "command_sha256": "dd2e6e01411463bf41a813bd76b6d1fee59d11fb5f495ac47263cda7327952ee",
+      "stdout_sha256": "8fbbd85377da475e8d32302708ad803773f83bcd0d4adbe16eabd40bfa295330",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "row-coverage",
       "exit": 0,
       "pass": true,
-      "seconds": 1.47,
-      "command_sha256": "8856c884ae41dcb9b7d22db67041b3b73650ead165b1dcbcb21fc27b3a6ae85a",
-      "stdout_sha256": "dca020a45fd9d1382bea8e0c3e0b6a20d6daefc75ed08a0fdc308e0491f2f895"
+      "seconds": 1.04,
+      "command_sha256": "12337f806d8d5aeb3444c8edbbb51b2d5476ae220bceb15a4d5efbc47f944cdd",
+      "stdout_sha256": "e7c1f3a0505357b9dfc089b155e17b18849f89418726694dc46e9a879cff55df",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "routing",
       "exit": 0,
       "pass": true,
-      "seconds": 1.86,
-      "command_sha256": "b41b9ca03621881a86c386d041b789fe3ecfbfa8ef3cf081296627b02255122d",
-      "stdout_sha256": "383fcaa18dc748f833a63288d6185293c33b1408a872e5423a0b9325357d70f2"
+      "seconds": 1.0,
+      "command_sha256": "ad506cc0b0e6520e4e467e97e9505ddb65429f2f6c476be0d274b25efc95d726",
+      "stdout_sha256": "4145b704cc439971380918364c22de0293a14656f8dbd0e7b5f3b1f38fbbe0fa",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "what-if",
       "exit": 0,
       "pass": true,
-      "seconds": 1.41,
-      "command_sha256": "6bd70fa8bd84bd253c9594cadde324a233913a99e176384c45f82f3a20fcf3e0",
-      "stdout_sha256": "4fd77228e23d0ae93b4a9a014c9679b4599f6f65a344c46d951bc9e2d6424ce6"
+      "seconds": 0.98,
+      "command_sha256": "06608e28e7cadc713663a43ac98a981d883842e88e0da0a46b0fa74be3ee718d",
+      "stdout_sha256": "00629374a2e25ed318d54a9a1cc0a41310fbf8fad611fec087789f3273703d46",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "session-budget",
       "exit": 0,
       "pass": true,
-      "seconds": 1.54,
-      "command_sha256": "07c47e75d5b9926c4e2ebbefed90d95da43f4853443ef3250cde5aef91fdd139",
-      "stdout_sha256": "714028d85662a71615cc3f3f556780f72fa4c0db81516f611a02289d97f78e1a"
+      "seconds": 1.01,
+      "command_sha256": "97166b11a92b6a109b6e4a173da740bd62a97bf6d7193ed804e1f654b5d8226c",
+      "stdout_sha256": "6f5df896c101272282576264a3b725c08687424c244df050f50e5b52149bc5fd",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "cache-check",
       "exit": 0,
       "pass": true,
-      "seconds": 1.52,
-      "command_sha256": "6af72e1ad6b97ad1c73ca370cfa07ca85bf768676d9bc181da574a3767a87657",
-      "stdout_sha256": "70192a456b448ad116ae5978c15b91073f4f4b3d3badd3a8ad0920dc2ed97c46"
+      "seconds": 1.06,
+      "command_sha256": "210c824d685dca28742ffe5025906a4288a9d9380c16896982c321f689e86fee",
+      "stdout_sha256": "2f6b40ff56367adae1f0686ad71d1cd1c07d80096df8279a7271c423b6d92c86",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "cardinality",
       "exit": 3,
       "pass": true,
-      "seconds": 1.75,
-      "command_sha256": "1a0b82f96665b3e3b298e7498af881cd371a65c55b10fd63ad0126470512a423",
-      "stdout_sha256": "0e5675a613894111e3be5a9b3b3bc8d6876ba8102955afc394d0f06a8cf231b7"
+      "seconds": 1.02,
+      "command_sha256": "7b4e4d0ffffc28a2e6320fe3609bfccbd7fdeeadafe38f80f3c19e52d4ea83c1",
+      "stdout_sha256": "a68b1892c1266aea988021ac44edd695750e8d4e1858d61cff552a2e04565b36",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "anomalies",
       "exit": 3,
       "pass": true,
-      "seconds": 8.86,
-      "command_sha256": "cad9013855d713e17a02e60844459b351d4edc0fe6a3524d6059659b60365c2f",
-      "stdout_sha256": "921d108bc3b5d54e75bbaa66b8b5fc9a3b9faa991a7ed12672f3d1ec6bf3cfd8"
+      "seconds": 3.89,
+      "command_sha256": "333274e1e20d5fe1a5ea7cbb647a2613dfc36c4dc6fb411151b0fafedcce5690",
+      "stdout_sha256": "c700d3425c6baf5e17507b3d24a03f5ff4e1e863f4bcd4128b1e42a0ea7c34f7",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "traces-usage",
       "exit": 0,
       "pass": true,
-      "seconds": 1.6,
-      "command_sha256": "311c8a79174655abacb8f54fe3250f2947f03875383fd5bf044f040bf94ef74b",
-      "stdout_sha256": "6d5e9f04f6ede8965da143af90f68ed9f8452d733d1a3b645caa97ba3b66a778"
+      "seconds": 1.05,
+      "command_sha256": "30299f9f340bb626add3619b402316097db8710faaff70a7d6affb5e77acdda4",
+      "stdout_sha256": "006c61160140050f478477a14786f97aaabfcd94c1b0b0287e41f9e605bb2761",
+      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
     },
     {
       "page": "distinct-users",
@@ -97,7 +108,9 @@
       "pass": true,
       "seconds": 1.88,
       "command_sha256": "026a82c0ce2de554f8207536246fc177e247590ace955c778771c323b34c2de2",
-      "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475"
+      "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475",
+      "retained_history": "Unchanged command bytes; prior verification retained, not rerun on October 22"
     }
-  ]
+  ],
+  "method": "Mixed dated evidence: ten fleetdiff samples freshly executed October 22 using verified local release cache; two byte-identical Python examples retain historical runs without dependency acquisition."
 }
