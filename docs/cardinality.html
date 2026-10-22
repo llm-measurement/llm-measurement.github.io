@@ -13,6 +13,7 @@
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
+<script defer src="assets/site.js"></script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
 <div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html" aria-current="page">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html" aria-current="page">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>How do I see LLM usage per user without a metric label for every user?</h1><p class="lead">Keep user IDs out of your metric labels.</p>
@@ -83,7 +84,14 @@ sh scripts/install.sh v0.12.0 ./release
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
 </details>
 </section>
-</main></div>
+<p class="guide-contact"><a href="mailto:evijay+fleetdiff@gmail.com" data-contact="email">evijay+fleetdiff@gmail.com</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/q-a" data-contact="questions">Questions</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/show-and-tell" data-contact="show-and-tell">Ran it on your data? Tell us what it found</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/security/advisories/new">Security issues (private)</a></p></main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 <a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a> · <a href="security.html#verify-fleetdiff">Manual release verification</a><br>
+<p class="contact-links"><a href="mailto:evijay+fleetdiff@gmail.com" data-contact="email">evijay+fleetdiff@gmail.com</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/q-a" data-contact="questions">Questions</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/show-and-tell" data-contact="show-and-tell">Ran it on your data? Tell us what it found</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/security/advisories/new">Security issues (private)</a></p>
 Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>: no cookies, no personal data</footer></body></html>

@@ -13,6 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://llm-measurement.github.io/"
 PAGES = json.loads((ROOT / "pages.json").read_text())
 STATIC_ROOT_FILES = ("googled831a5845f87080c.html", "1fcb3191597647daa6285898dc9171b1.txt")
+CONTACT = '''<a href="mailto:evijay+fleetdiff@gmail.com" data-contact="email">evijay+fleetdiff@gmail.com</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/q-a" data-contact="questions">Questions</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/show-and-tell" data-contact="show-and-tell">Ran it on your data? Tell us what it found</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/security/advisories/new">Security issues (private)</a>'''
 FRAME = Template('''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>$document_title</title><meta name="description" content="$description">
@@ -28,11 +32,13 @@ FRAME = Template('''<!doctype html>
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
+<script defer src="assets/site.js"></script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html">$header_mark LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
-<div class="layout"><div class="desktop-guides"><nav aria-label="Guides">$nav</nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides">$nav</nav></details><main id="main"><h1>$title</h1>$body</main></div>
+<div class="layout"><div class="desktop-guides"><nav aria-label="Guides">$nav</nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides">$nav</nav></details><main id="main"><h1>$title</h1>$body$guide_contact</main></div>
 <footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
 $measurement_link<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a> · <a href="security.html#verify-fleetdiff">Manual release verification</a><br>
+<p class="contact-links">$contact</p>
 Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>: no cookies, no personal data</footer></body></html>
 ''')
 
@@ -62,6 +68,9 @@ def build():
             for p, label in zip(PAGES, names)
         )
         rendered = FRAME.substitute(
+            contact=CONTACT,
+            guide_contact=('<p class="guide-contact">' + CONTACT + '</p>'
+                           if page["slug"] != "index" and not page.get("kind") else ""),
             measurement_link=('<a href="summaries.html#measurement-notes">Measurement notes</a> · '
                               if page["slug"] == "index" or page.get("kind") in {"evidence", "reference"} else ""),
             header_mark=ET.tostring(header_mark, encoding="unicode"),

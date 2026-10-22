@@ -46,4 +46,13 @@ a:hover, nav a:hover { color: var(--link-hover); }
 section[id], aside[id], details[id], h2[id], h3[id] { scroll-margin-top: 20px; }
 details > summary { cursor: pointer; font-weight: 600; padding: 12px 0; }
 .security-note { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 24px 0; }
+.guide-contact { border-top: 1px solid var(--line); margin-top: 32px; padding-top: 16px; font-size: 14px; color: var(--muted); }
+.contact-links, .guide-contact { overflow-wrap: anywhere; }
+.command-block { margin: 16px 0; min-width: 0; }
+.command-block > pre { margin: 0; }
+.command-tools { display: flex; justify-content: flex-end; align-items: center; gap: 12px; min-height: 36px; padding: 0 0 6px; }
+.copy-command { flex: 0 0 52px; height: 30px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); color: var(--link); font: inherit; font-size: 13px; cursor: pointer; }
+.copy-command:hover { color: var(--link-hover); border-color: var(--link-hover); }
+.copy-command:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.copy-status { color: var(--muted); font-size: 12px; text-align: right; }
 @media (max-width: 767px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 20px 20px 40px; } .desktop-guides { display: none; } .mobile-guides { display: block; } nav { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 12px; } nav a { border-left: none; border-bottom: 2px solid transparent; padding: 6px 10px; } h1 { font-size: 26px; } header { padding: 18px 20px; } }
