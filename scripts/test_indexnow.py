@@ -122,7 +122,11 @@ class IndexNowTests(unittest.TestCase):
         workflow = (Path(__file__).resolve().parents[1] / '.github/workflows/docs.yml').read_text()
         job = workflow.split('  indexnow:\n', 1)[1]
         self.assertIn("if: github.event_name == 'push' && github.ref == 'refs/heads/main'", job)
-        self.assertIn('needs: [build, examples, own-data]', job)
+        self.assertIn('needs: [deploy]', job)
+        deployment = workflow.split('  deploy:\n', 1)[1].split('  indexnow:\n', 1)[0]
+        self.assertIn('needs: [build, examples, own-data]', deployment)
+        self.assertIn('fetch-depth: 0', deployment)
+        self.assertIn('scripts/sitemap.py --check', deployment)
         self.assertIn('fetch-depth: 2', job)
         self.assertIn('persist-credentials: false', job)
         self.assertIn('python3 scripts/indexnow.py --submit', job)
