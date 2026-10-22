@@ -1,15 +1,16 @@
 {
   "system": "Darwin",
   "machine": "arm64",
-  "method": "Exact published commands; fresh working directories, caches and Docker credential configuration; anonymous downloads and Cosign checks; collector GitHub API verification uses existing gh credentials; trusted verification tools supplied on PATH.",
+  "method": "Mixed dated evidence: fleetdiff manual verification freshly executed October 22 using real anonymous gh verification over verified cached release bytes; byte-identical collector verification retains its historical credentialed result, not rerun.",
   "results": [
     {
       "block": "fleetdiff",
       "pass": true,
       "exit": 0,
-      "authentication": "anonymous",
-      "command_sha256": "35f244c1b18b7ab27d9b10836ccf5d0e0eca046147f423e4b8d45e36dc980124",
-      "stdout_sha256": "164ea22cc56e3df8a4850af2710f2e3fd01b49f56862073a3764e613cc73879b"
+      "authentication": "anonymous verifier with fresh configuration and keychain-denying wrapper; release bytes supplied by verified local cache",
+      "command_sha256": "bcf5dc680eb06023e0c38d46ddd2e4328b433a2f0692fc94b74722bfdf3d49ec",
+      "stdout_sha256": "b5c88c00749f48c8a687eb2441a2f27e679b98d64bc551af4a2f5ee11fc92eb9",
+      "verification_run": "2026-10-22; cached release bytes, not fresh anonymous downloads"
     },
     {
       "block": "collector",
@@ -17,7 +18,8 @@
       "exit": 0,
       "authentication": "credentialed GitHub API",
       "command_sha256": "86a6bf5f41e54eb9fcc67496658e6e5d76168b3d3f06ed1926d167779144bb15",
-      "stdout_sha256": "5a621994797552384ea97bd0a2d9d3abd50f116b885502b61b7dcbc63f883803"
+      "stdout_sha256": "5a621994797552384ea97bd0a2d9d3abd50f116b885502b61b7dcbc63f883803",
+      "retained_history": "Exact collector command bytes unchanged; prior credentialed verification retained; no credential read or new execution"
     }
   ],
   "verified_at_utc": "2026-10-19T00:57:08.237202+00:00"

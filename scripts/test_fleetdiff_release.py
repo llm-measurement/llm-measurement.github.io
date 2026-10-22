@@ -6,7 +6,7 @@ import subprocess
 import unittest
 
 from outsider import Blocks, ROOT
-from own_data import FIXTURE_COMMIT
+from own_data import FIXTURE_COMMIT, FIXTURE_VERSION
 
 
 class FleetdiffReleaseTests(unittest.TestCase):
@@ -22,9 +22,11 @@ class FleetdiffReleaseTests(unittest.TestCase):
                 blocks.feed(source)
                 for block in blocks.commands + blocks.own:
                     if "install.sh" in block["text"] or "install-fleetdiff.sh" in block["text"]:
-                        self.assertIn("v0.12.0", block["text"])
+                        self.assertIn("v0.12.1", block["text"])
                     if "curl" in block["text"] and "install-fleetdiff.sh" in block["text"]:
                         self.assertIn("fleetdiff/" + FIXTURE_COMMIT + "/scripts/install.sh", block["text"])
+                    if "/archive/refs/tags/" in block["text"]:
+                        self.assertIn("cd fleetdiff-" + FIXTURE_VERSION.removeprefix("v") + "\n", block["text"])
                     self.assertNotIn("git clone", block["text"])
                 self.assertNotIn("v0.11.0", source)
 

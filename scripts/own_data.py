@@ -26,9 +26,9 @@ from postgres_transport import postgres_transport
 
 PAGES = ("index", "token-spike", "litellm-spend", "session-budget", "cache-check", "cardinality",
          "traces-usage", "anomalies", "distinct-users", "tokenmaxxing", "row-coverage", "routing", "what-if", "security")
-FIXTURE_VERSION = "v0.12.0"
+FIXTURE_VERSION = "v0.12.1"
 # Must match the release source commit; installed binaries are checked against it.
-FIXTURE_COMMIT = "6089061c931fa19fac876e40b3809fdea4792ab8"
+FIXTURE_COMMIT = "0d7db95c5bb3013f8c564c91fbb07b6235a2664e"
 FIXTURE_URL = "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/" + FIXTURE_COMMIT
 EXPORT_START = "2026-09-23T00:00:00Z"
 EXPORT_END = "2026-10-09T00:00:00Z"
@@ -65,7 +65,7 @@ EXPECTED = {
     "tokenmaxxing": ("Estimated distinct users: 3", "Recorded tokens: 4,800",
                      "user-1: [3,600, 3,600] tokens", "100.0% to 100.0%"),
     "row-coverage-export": ("Exported spend.csv and daily.csv in the new private output directory.",),
-    "row-coverage-install": ("Verified", "fleetdiff v0.12.0 (" + FIXTURE_COMMIT + ")"),
+    "row-coverage-install": ("Verified", "fleetdiff v0.12.1 (" + FIXTURE_COMMIT + ")"),
     "row-coverage-native": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
                             "8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
     "row-coverage": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
@@ -721,7 +721,7 @@ def check(output, page=None):
                     assert result.returncode == block["exit"], (slug, block["id"], result.returncode, result.stderr)
                     for excerpt in EXPECTED[block["id"]]:
                         assert excerpt in result.stdout, (block["id"], excerpt, result.stdout)
-                    if "sh install-fleetdiff.sh v0.12.0" in block["text"]:
+                    if "sh install-fleetdiff.sh v0.12.1" in block["text"]:
                         record["installed_version"] = installed_version(fresh, env)
                     if block["id"] == "home-go":
                         assert "github.com/llm-measurement/llm-sketchkit v0.4.0" in (fresh / "measurement-go/go.mod").read_text()

@@ -27,7 +27,7 @@ class OwnDataTests(unittest.TestCase):
         self.assertEqual([block["id"] for block in blocks.own],
                          ["session-budget-install", "session-budget-native", "session-budget"])
         self.assertEqual(len(blocks.commands), 1)
-        self.assertIn("sh install-fleetdiff.sh v0.12.0 ./bin", blocks.own[0]["text"])
+        self.assertIn("sh install-fleetdiff.sh v0.12.1 ./bin", blocks.own[0]["text"])
         for command in (blocks.own[1]["text"], blocks.own[2]["text"], blocks.commands[0]["text"]):
             self.assertIn("--session-budget-usd 1.00", command)
             self.assertNotIn("--period", command)
@@ -42,13 +42,13 @@ class OwnDataTests(unittest.TestCase):
     def test_cache_and_token_spike_keep_install_and_file_commands_separate(self):
         cache = own_data.page_blocks("cache-check").own
         self.assertEqual([b["id"] for b in cache], ["cache-check-install", "cache-check-native", "cache-check"])
-        self.assertIn("sh install-fleetdiff.sh v0.12.0 ./bin", cache[0]["text"])
+        self.assertIn("sh install-fleetdiff.sh v0.12.1 ./bin", cache[0]["text"])
         self.assertEqual(cache[1]["text"], "./bin/fleetdiff investigate --litellm-db "
                          "--database-url-file ~/.config/litellm-db-url --group-by session")
         self.assertEqual(cache[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by session")
         spike = own_data.page_blocks("token-spike").own
         self.assertEqual([b["id"] for b in spike], ["token-spike-install", "token-spike-summaries", "token-spike"])
-        self.assertIn("sh install-fleetdiff.sh v0.12.0 ./bin", spike[0]["text"])
+        self.assertIn("sh install-fleetdiff.sh v0.12.1 ./bin", spike[0]["text"])
         self.assertEqual(spike[1]["text"], "./bin/fleetdiff investigate --before ./before --after ./after --expected app")
         self.assertEqual(spike[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user")
 
@@ -198,7 +198,7 @@ class OwnDataTests(unittest.TestCase):
             self.assertIn(FIXTURE_COMMIT, request.full_url)
             self.assertNotIn("Authorization", request.headers)
             self.assertEqual(provenance["expected_commit"], FIXTURE_COMMIT)
-            self.assertEqual(provenance["version"], "v0.12.0")
+            self.assertEqual(provenance["version"], "v0.12.1")
             self.assertEqual(provenance["archive_sha256"], hashlib.sha256(data).hexdigest())
             self.assertEqual(set(provenance["files"]), {"go.mod", "examples/litellm-spend/export.sql"})
             self.assertFalse(provenance["git_operations"])
@@ -227,7 +227,7 @@ class OwnDataTests(unittest.TestCase):
                 own_data.fixture_source(Path("/not-created"))
 
     def test_public_manifest_keeps_full_source_inventory_private(self):
-        provenance = {"version": "v0.12.0", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
+        provenance = {"version": "v0.12.1", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
                       "archive_sha256": "a" * 64, "source_sha256": "b" * 64, "files": {"test": "c" * 64}}
         with tempfile.TemporaryDirectory() as directory, patch.object(own_data, "PAGES", ()), \
                 patch.object(own_data, "fixture_source", return_value=(Path(directory), provenance)):
@@ -241,8 +241,8 @@ class OwnDataTests(unittest.TestCase):
 
     def test_installed_binary_requires_exact_release_and_commit_with_build_metadata(self):
         for version, accepted in (
-            ("fleetdiff v0.12.0 (" + FIXTURE_COMMIT + ") go1.26.9 darwin/arm64", True),
-            ("fleetdiff v0.12.0 (" + "0" * 40 + ") go1.26.9 darwin/arm64", False),
+            ("fleetdiff v0.12.1 (" + FIXTURE_COMMIT + ") go1.26.9 darwin/arm64", True),
+            ("fleetdiff v0.12.1 (" + "0" * 40 + ") go1.26.9 darwin/arm64", False),
             ("fleetdiff v0.11.0 (" + FIXTURE_COMMIT + ") go1.26.9 darwin/arm64", False),
             ("fleetdiff dev (unknown) go1.26.9 darwin/arm64", False),
         ):
@@ -250,7 +250,7 @@ class OwnDataTests(unittest.TestCase):
                 root = Path(directory)
                 (root / "pages").mkdir()
                 (root / "pages/test.html").write_text(
-                    '<pre data-own="test-install" data-exit="0">sh install-fleetdiff.sh v0.12.0 ./bin</pre>')
+                    '<pre data-own="test-install" data-exit="0">sh install-fleetdiff.sh v0.12.1 ./bin</pre>')
                 provenance = {"files": {}}
                 result = subprocess.CompletedProcess([], 0, stdout="Verified", stderr="")
                 with patch.object(own_data, "ROOT", root), patch.object(own_data, "PAGES", ("test",)), \

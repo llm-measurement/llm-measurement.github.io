@@ -14,9 +14,9 @@
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
 <pre data-own="what-if-install" data-exit="0"><code>umask 077
 curl --proto '=https' --tlsv1.2 -fsSLo install-fleetdiff.sh \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
-sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
-<p>Set <code>PERIOD</code> to a completed date, such as <code>2026-10-07</code>. Choose models from the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/internal/reprice/data/prices.json">price table</a>.</p>
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
+sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
+<p>Set <code>PERIOD</code> to a completed date, such as <code>2026-10-07</code>. Choose models from the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/internal/reprice/data/prices.json">price table</a>.</p>
 <pre data-own="what-if-native" data-exit="0"><code>./bin/fleetdiff what-if --litellm-db --database-url-file ~/.config/litellm-db-url \
   --period "$PERIOD" \
   --from claude-sonnet-5-5 --to gpt-6.1-sol --fraction 0.5</code></pre>
@@ -59,10 +59,10 @@ umask 077
 mkdir fleetdiff-what-if-sample
 cd fleetdiff-what-if-sample
 curl --proto '=https' --tlsv1.2 -fsSLo install-fleetdiff.sh \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
-sh install-fleetdiff.sh v0.12.0 ./release
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
+sh install-fleetdiff.sh v0.12.1 ./release
 curl --proto '=https' --tlsv1.2 -fsSLo spend.csv \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.0/examples/what-if/spend.csv
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/what-if/spend.csv
 ./release/fleetdiff what-if --litellm-spend spend.csv \
   --period 2026-10-07 --from claude-sonnet-5-5 --to gpt-6.1-sol --fraction 0.5</code></pre>
 <h3>What you'll see</h3>
@@ -84,7 +84,7 @@ Level 2, coding: $0.140323 (propagated mean-interval endpoints $0.133659 to $0.1
   missing split: 1
   3 moved observations have no workload mapping; all three workload assumptions are shown where measured.</code></pre>
 <p>Three sample records have complete component splits. The fourth lacks cache details and is excluded, not priced as zero. Source and proposed costs both use the dated price table, not the export's recorded spend.</p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/what-if/spend.csv">released synthetic CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/what-if/expected.text">full checked text output</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/what-if/expected.json">JSON output</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/what-if/spend.csv">released synthetic CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/what-if/expected.text">full checked text output</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/what-if/expected.json">JSON output</a>.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <ul>
@@ -93,7 +93,7 @@ Level 2, coding: $0.140323 (propagated mean-interval endpoints $0.133659 to $0.1
 <li>Level 2 endpoints show the uncertainty of the measured <em>average</em> output-verbosity factor, not a range for your traffic. In a fresh calibration on 20 batches of 30 tasks, they contained the measured cost of the moved traffic in 19 of 20 batches for Sol to Luna QA and 17 of 20 for Sol to Luna extraction, but in only 2 to 14 of 20 for the other six completed cases. Coding factors fit on HumanEval did not transfer to MBPP, and an earlier per-request test also failed. <a href="https://github.com/llm-measurement/fleetdiff/blob/main/docs/WHAT_IF_CALIBRATION.md">See the calibration.</a></li>
 <li>No quality equivalence is claimed.</li>
 </ul>
-<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/evidence/model-mix/README.md">released benchmark evidence</a> records model IDs, fit counts, dates, dataset and license pins, estimator and price sources; the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/internal/reprice/data/factors.json">factor table</a> links each measured pair to that provenance.</p>
+<p>The <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/evidence/model-mix/README.md">released benchmark evidence</a> records model IDs, fit counts, dates, dataset and license pins, estimator and price sources; the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/internal/reprice/data/factors.json">factor table</a> links each measured pair to that provenance.</p>
 <p class="measurement-context">This synthetic example checks repricing arithmetic for recorded model attempts with complete token splits, not completed-task costs.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
 </details>

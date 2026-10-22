@@ -28,10 +28,10 @@
 <h2 id="own-data-title">Run it on your data</h2>
 <p>Put your OTLP JSON/JSONL or protobuf capture at <code>./traces.jsonl</code>.</p>
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="traces-usage" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
-sh install-fleetdiff.sh v0.12.0 ./bin
+<pre data-own="traces-usage" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
+sh install-fleetdiff.sh v0.12.1 ./bin
 ./bin/fleetdiff inspect ./traces.jsonl</code></pre>
-<p>See <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.0/examples/inspect">SDK and LiteLLM capture recipes</a> or the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/INSPECT.md">field guide</a>.</p>
+<p>See <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.1/examples/inspect">SDK and LiteLLM capture recipes</a> or the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/docs/INSPECT.md">field guide</a>.</p>
 </aside>
 <section id="capture"><h2>Capture from your collector</h2>
 <p>Add a file exporter to your Contrib collector:</p><pre data-config="traces-usage"><code>exporters:
@@ -40,7 +40,7 @@ sh install-fleetdiff.sh v0.12.0 ./bin
     format: json
     rotation:
       max_megabytes: 4
-      max_backups: 1</code></pre><p>Create the directory, writable by the collector. Add <code>file/inspect</code> alongside existing trace exporters. Stop and flush the capture, then copy it to <code>./traces.jsonl</code>. Follow the <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.0/examples/inspect#route-1-a-collector-file-exporter">capture recipe</a>.</p>
+      max_backups: 1</code></pre><p>Create the directory, writable by the collector. Add <code>file/inspect</code> alongside existing trace exporters. Stop and flush the capture, then copy it to <code>./traces.jsonl</code>. Follow the <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.1/examples/inspect#route-1-a-collector-file-exporter">capture recipe</a>.</p>
 </section>
 <details class="security-note"><summary>Security</summary>
 <p>See the <a href="security.html">security reference</a> for capture settings.</p>
@@ -48,10 +48,10 @@ sh install-fleetdiff.sh v0.12.0 ./bin
 <section id="sample">
 <h2>Try the sample</h2>
 <p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-run="traces-usage" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
+<pre data-run="traces-usage" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.1.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.0
-sh scripts/install.sh v0.12.0 ./release
+cd fleetdiff-0.12.1
+sh scripts/install.sh v0.12.1 ./release
 ./release/fleetdiff inspect examples/inspect/synthetic-traces.json</code></pre>
 <h3>What you'll see</h3>
 <p>Example output from this synthetic sample; your values will reflect your input.</p>
@@ -70,7 +70,7 @@ Origin unknown: input 4, output 4 attempts.</code></pre>
 <p>Only two of the four attempts have session IDs.</p>
 <pre class="output" data-output="traces-usage"><code>session: ~2 distinct; identity present on 2/4 attempts</code></pre>
 <p>The report also lists standard attribute names and uses local aliases for individual users and sessions.</p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/examples/inspect/synthetic-traces.json">released synthetic OTLP capture</a> and <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.0/examples/inspect">capture recipes</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/inspect/synthetic-traces.json">released synthetic OTLP capture</a> and <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.1/examples/inspect">capture recipes</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p class="measurement-context">Readiness describes fields in the captured model attempts; zeros without declared usage origin remain unknown.<br>

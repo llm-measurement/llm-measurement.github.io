@@ -10,9 +10,9 @@
 <h2 id="own-data-title">Run it on your data</h2>
 <p>Put complete summary windows in <code>./summary-history</code>: 24 baseline windows plus recent ones. Use consistent hashing and accounting settings; replace <code>app</code> with your producer name.</p>
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="anomalies-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/6089061c931fa19fac876e40b3809fdea4792ab8/scripts/install.sh
-sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
-<pre data-own="anomalies" data-exit="3"><code>./bin/fleetdiff scan ./summary-history --expected app --recent 2</code></pre><p>Exit 3 means findings; 0 means none. See the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.0/docs/SCAN.md">scan guide</a> for thresholds.</p>
+<pre data-own="anomalies-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
+sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
+<pre data-own="anomalies" data-exit="3"><code>./bin/fleetdiff scan ./summary-history --expected app --recent 2</code></pre><p>Exit 3 means findings; 0 means none. See the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/docs/SCAN.md">scan guide</a> for thresholds.</p>
 </aside>
 <section id="setup">
 <h2>Start retaining windows</h2>
@@ -25,10 +25,10 @@ sh install-fleetdiff.sh v0.12.0 ./bin</code></pre>
 <h2>Try the sample</h2>
 <p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
 <p>Go 1.26.9 or later generates the synthetic windows.</p>
-<pre data-run="anomalies" data-exit="3"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.0.tar.gz
+<pre data-run="anomalies" data-exit="3"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.1.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.0
-sh scripts/install.sh v0.12.0 ./release
+cd fleetdiff-0.12.1
+sh scripts/install.sh v0.12.1 ./release
 GOWORK=off go run ./examples/scan --out ./synthetic-windows
 ./release/fleetdiff scan ./synthetic-windows --expected app --recent 2 \
   --as-of 2026-10-04T00:30:00Z</code></pre>
@@ -46,7 +46,7 @@ GOWORK=off go run ./examples/scan --out ./synthetic-windows
 <p>When a window reports missing usage, check the fields in a local capture: <a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a></p>
 <p>Exit code <code>3</code> means findings were detected; <code>0</code> means none were found.</p>
 <p>The fixed <code>--as-of</code> date reproduces this sample.</p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.0/examples/scan">released history generator and tests</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.1/examples/scan">released history generator and tests</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p class="measurement-context">This example checks planted changes. Review any flag against your own history; sessions that turn over often can look newly prominent.<br>
