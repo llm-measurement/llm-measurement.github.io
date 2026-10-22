@@ -69,7 +69,7 @@ class BuildTests(unittest.TestCase):
                     self.assertEqual(rendered.count(element), 1)
                 self.assertEqual(rendered.count(f'href="{slug}.html" aria-current="page">{label}</a>'), 2)
                 body = (build.ROOT / "pages" / (slug + ".html")).read_text()
-                self.assertIn(f"<h1>{escaped_title}</h1>{body}</main>", rendered)
+                self.assertIn(f"<h1>{escaped_title}</h1>{body}<p class=\"guide-contact\">", rendered)
                 self.assertIn(f"- [{title}]({build.BASE}{slug}.html): {description}\n", index)
 
     def test_every_page_has_the_supplied_analytics_once_in_head(self):
@@ -77,8 +77,11 @@ class BuildTests(unittest.TestCase):
             with self.subTest(page=page["slug"]):
                 parsed = Scripts()
                 parsed.feed((build.ROOT / "docs" / (page["slug"] + ".html")).read_text())
-                self.assertEqual(len(parsed.scripts), 2)
-                external, bootstrap = parsed.scripts
+                self.assertEqual(len(parsed.scripts), 3)
+                external, bootstrap, interactions = parsed.scripts
+                self.assertTrue(interactions["in_head"])
+                self.assertEqual(interactions["attrs"], {"defer": None, "src": "assets/site.js"})
+                self.assertEqual(interactions["text"], "")
                 self.assertTrue(external["in_head"] and bootstrap["in_head"])
                 self.assertEqual(external["attrs"], {
                     "async": None,
