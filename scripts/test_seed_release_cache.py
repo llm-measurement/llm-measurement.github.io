@@ -157,11 +157,16 @@ class SeedTests(unittest.TestCase):
                 with self.subTest(key=key), self.assertRaises(ValueError):
                     download_log.seed_requests(log)
 
-    def test_bootstrap_does_not_change_existing_command_transport(self):
+    def test_consumers_restore_only_and_seed_stays_manually_guarded(self):
         root = cache.HERE.parent
         workflow = (root / '.github/workflows/seed-release-cache.yml').read_text()
         docs = (root / '.github/workflows/docs.yml').read_text()
-        self.assertNotIn('SITE_RELEASE_CACHE', docs)
+        self.assertEqual(docs.count('SITE_RELEASE_CACHE:'), 2)
+        self.assertEqual(docs.count('fail-on-cache-miss: true'), 2)
+        self.assertEqual(docs.count('test "$EXACT_HIT" = true'), 2)
+        self.assertNotIn('seed_release_cache.py', docs)
+        self.assertNotIn('restore-keys:', docs)
+        self.assertNotIn('actions/cache/save@', docs)
         self.assertNotIn('needs: release-cache', docs)
         self.assertEqual(docs.count("go-version: '1.26.10'"), 2)
         self.assertIn('if: success()', docs)

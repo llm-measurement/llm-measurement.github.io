@@ -19,10 +19,10 @@ import tarfile
 import tempfile
 import time
 import uuid
-import urllib.request
 
 from outsider import Blocks, ROOT
 from postgres_transport import postgres_transport
+from release_cache import consumer_pin, read_url
 
 PAGES = ("index", "token-spike", "litellm-spend", "session-budget", "cache-check", "cardinality",
          "traces-usage", "anomalies", "distinct-users", "tokenmaxxing", "row-coverage", "routing", "what-if", "security")
@@ -124,6 +124,9 @@ def environment(fresh):
         "GOMODCACHE": str(fresh / "go-mod"), "GOPROXY": "https://proxy.golang.org", "GOSUMDB": "sum.golang.org",
         "GOENV": "off", "GOTELEMETRY": "off", "PIP_CONFIG_FILE": os.devnull,
         "PIP_INDEX_URL": "https://pypi.org/simple", "PIP_CACHE_DIR": str(fresh / "pip")})
+    if "SITE_RELEASE_CACHE" in os.environ:
+        from release_cache import environment as cached_environment
+        env = cached_environment(fresh, env)
     return env
 
 
@@ -151,10 +154,7 @@ def extract_fixture(archive, root):
 def fixture_source(root):
     if not callable(getattr(tarfile, "data_filter", None)):
         raise RuntimeError("Python tarfile data filter support is required before downloading fixtures.")
-    request = urllib.request.Request(FIXTURE_URL, headers={"User-Agent": "site-own-data-verifier"})
-    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-    with opener.open(request, timeout=120) as response:
-        data = response.read(32 * 1024 * 1024 + 1)
+    data = read_url(FIXTURE_URL)
     assert len(data) <= 32 * 1024 * 1024, "fixture archive exceeds size bound"
     archive = root / "fleetdiff-source.tar.gz"
     archive.write_bytes(data)
@@ -163,6 +163,7 @@ def fixture_source(root):
              for path in sorted(source.rglob("*")) if path.is_file()}
     inventory = "".join(f"{checksum}  {name}\n" for name, checksum in files.items())
     provenance = {"version": FIXTURE_VERSION, "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
+        "transport": "pinned cache; reconstructed git archive, not fresh anonymous codeload bytes",
         "archive_sha256": hashlib.sha256(data).hexdigest(), "archive_bytes": len(data),
         "archive_root": source.name, "source_sha256": hashlib.sha256(inventory.encode()).hexdigest(),
         "files": files, "git_operations": False}
@@ -599,8 +600,8 @@ def check(output, page=None):
     output.mkdir(parents=True, exist_ok=True)
     records = []
     manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
-                "fixture_source": FIXTURE_COMMIT,
-                "method": "Exact published commands; fresh HOME/directories/caches; anonymous fixed-commit source archive; real released installer, CLI and library. Synthetic data is seeded into real read-only Postgres using cached digest-pinned network-none Docker. Native commands use the unchanged installed host binary through a loopback byte transport, not a database mock. The paired psql helper executes unmodified inside the container to retain its inherited descriptors.",
+                "fixture_source": FIXTURE_COMMIT, "site_cache_pin": consumer_pin(),
+                "method": "Exact published commands with pinned cache-only curl transport; fresh HOME/directories; original release archive, installer and provenance, not fresh anonymous downloads. Synthetic data is seeded into real read-only Postgres using cached digest-pinned network-none Docker. Native commands use the unchanged installed host binary through a loopback byte transport, not a database mock. The paired psql helper executes unmodified inside the container to retain its inherited descriptors.",
                 "dependencies": [], "config_records": [], "results": records}
     with tempfile.TemporaryDirectory(prefix="site-own-source-") as directory:
         fixture_root = Path(directory)

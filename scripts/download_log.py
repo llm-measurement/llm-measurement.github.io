@@ -35,7 +35,7 @@ def integer(value):
     return value
 
 
-def seed_requests(path):
+def seed_requests(path, collapse=False):
     from release_cache import spec
     definition = spec()
     data = path.read_bytes()
@@ -66,7 +66,20 @@ def seed_requests(path):
         if 'error_type' in item and not item['error_type'].isidentifier():
             raise ValueError('invalid sanitized error type')
         records.append(item)
-    return records
+    if not collapse:
+        return records
+    requests = {}
+    for item in records:
+        key = (item['run_id'], item['run_attempt'], item['asset'], item['started_at'])
+        if item['status'] == 'started':
+            if key in requests:
+                raise ValueError('duplicate seed request start')
+            requests[key] = item
+        else:
+            if key not in requests or requests[key]['status'] != 'started' or requests[key]['url'] != item['url']:
+                raise ValueError('seed request completion does not match one start')
+            requests[key] = item
+    return list(requests.values())
 
 
 def snapshot(repository, fetch=fetch_json):
@@ -111,8 +124,9 @@ def main():
     args = parser.parse_args()
     record = snapshot(args.repository)
     if args.seed_log:
-        record['related_protected_main_seed_requests'] = seed_requests(args.seed_log)
-        record['seed_log_note'] = 'Historical request events, including started/verified/failed states. Not new requests by this metadata collector; never subtract these from cumulative provider counters.'
+        record['related_protected_main_seed_requests'] = seed_requests(args.seed_log, collapse=True)
+        record['related_seed_asset_request_count'] = len(record['related_protected_main_seed_requests'])
+        record['seed_log_note'] = 'Historical asset requests, with each start/completion pair counted once. Not new requests by this metadata collector; never subtract these from cumulative provider counters.'
     with args.output.open('x') as stream:
         stream.write(json.dumps(record, indent=2) + '\n')
     print(f"Recorded {len(record['assets'])} cumulative asset counters; zero deliberate asset downloads")
