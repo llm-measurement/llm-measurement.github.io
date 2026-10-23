@@ -2,11 +2,13 @@
 # Code authors: Vijay and Codex
 """Pinned release-cache preparation and fail-closed curl transport for routine checks."""
 import argparse
+from datetime import datetime, timezone
 import gzip
 import hashlib
 import io
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -14,6 +16,7 @@ from urllib.parse import urlsplit
 
 HERE = Path(__file__).resolve().parent
 SPEC = HERE / "release_cache_manifest.json"
+PIN = HERE / "site_cache_pin.json"
 
 
 def digest(data):
@@ -22,6 +25,41 @@ def digest(data):
 
 def spec():
     return json.loads(SPEC.read_text())
+
+
+def consumer_pin(check_metadata=False, now=None):
+    pin = json.loads(PIN.read_text())
+    definition = spec()
+    for key, value in (("release_manifest_sha256", digest(SPEC.read_bytes())),
+                       ("release_version", definition["version"]), ("release_commit", definition["commit"]),
+                       ("repository", "llm-measurement/llm-measurement.github.io"),
+                       ("seed_workflow", ".github/workflows/seed-release-cache.yml")):
+        if pin.get(key) != value:
+            raise ValueError("site cache pin differs from the reviewed source: " + key)
+    artifact = pin["artifact"]
+    if type(artifact["id"]) is not int or artifact["id"] <= 0 or type(pin["seed_run_id"]) is not int or pin["seed_run_id"] <= 0:
+        raise ValueError("site cache requires actual positive artifact/run IDs")
+    for value in (pin["member_manifest_sha256"], artifact["digest"].removeprefix("sha256:")):
+        if not re.fullmatch(r"[0-9a-f]{64}", value):
+            raise ValueError("invalid site cache digest")
+    if not artifact["digest"].startswith("sha256:") or not re.fullmatch(r"[0-9a-f]{40}", pin["seed_source_sha"]):
+        raise ValueError("invalid site cache source or archive digest")
+    if pin["cache_key"] != "site-release-cache-" + str(artifact["id"]) + "-" + pin["member_manifest_sha256"]:
+        raise ValueError("cache key is not bound to the exact artifact and member manifest")
+    expiry = datetime.fromisoformat(artifact["expires_at"])
+    if expiry.tzinfo is None or expiry <= (now or datetime.now(timezone.utc)):
+        raise ValueError("pinned site artifact expired; no download fallback")
+    if check_metadata:
+        from download_log import fetch_json
+        metadata = fetch_json("https://api.github.com/repos/" + pin["repository"] + "/actions/artifacts/" + str(artifact["id"]))
+        expected = dict(artifact, run_id=pin["seed_run_id"])
+        check_artifact(metadata, expected, pin["seed_source_sha"])
+        run = metadata["workflow_run"]
+        if run.get("head_branch") != "main" or any(run.get(key) != pin["repository_id"] for key in ("repository_id", "head_repository_id")):
+            raise ValueError("site artifact did not originate from the pinned protected-main repository")
+        if metadata.get("expires_at") != artifact["expires_at"]:
+            raise ValueError("site artifact retention differs from the reviewed pin")
+    return pin
 
 
 def checked_file(root, item):
@@ -44,6 +82,8 @@ def cache_root():
     root = Path(value).resolve(strict=True)
     if not root.is_dir():
         raise ValueError("release cache is not a directory")
+    pin = consumer_pin()
+    checked_file(root, {"file": "cache-members.json", "sha256": pin["member_manifest_sha256"]})
     manifest = json.loads((root / "cache-identity.json").read_text())
     if manifest["spec_sha256"] != digest(SPEC.read_bytes()):
         raise ValueError("cache was prepared for a different pinned specification")
@@ -75,15 +115,15 @@ def source_archive(source, prefix):
     return buffer.getvalue()
 
 
-def check_artifact(metadata):
-    expected = spec()["artifact"]
-    if metadata.get("expired"):
+def check_artifact(metadata, expected=None, source_sha=None):
+    expected = spec()["artifact"] if expected is None else expected
+    if metadata.get("expired") is not False:
         raise ValueError("original release workflow artifact expired; no release-download fallback")
     for key in ("id", "name", "digest"):
         if metadata.get(key) != expected[key]:
             raise ValueError("wrong original workflow artifact " + key)
     run = metadata.get("workflow_run", {})
-    if run.get("id") != expected["run_id"] or run.get("head_sha") != spec()["commit"]:
+    if run.get("id") != expected["run_id"] or run.get("head_sha") != (source_sha or spec()["commit"]):
         raise ValueError("artifact is not from the pinned release source/run")
 
 
@@ -250,8 +290,17 @@ def main():
     parser.add_argument("--output", type=Path)
     parser.add_argument("--verify", type=Path)
     parser.add_argument("--manifest-sha256")
+    parser.add_argument("--consumer-pin", action="store_true")
     args = parser.parse_args()
-    if args.verify:
+    if args.consumer_pin:
+        pin = consumer_pin(check_metadata=True)
+        if not os.environ.get("GITHUB_OUTPUT"):
+            parser.error("consumer pin validation requires GITHUB_OUTPUT")
+        with Path(os.environ["GITHUB_OUTPUT"]).open("a") as stream:
+            stream.write("cache_key=" + pin["cache_key"] + "\n")
+            stream.write("manifest_sha256=" + pin["member_manifest_sha256"] + "\n")
+        print("Validated actual site artifact metadata and exact consumer cache pin")
+    elif args.verify:
         if not args.manifest_sha256:
             parser.error("restored cache verification requires the exact manifest SHA256")
         verified = verify_cache(args.verify, args.manifest_sha256)

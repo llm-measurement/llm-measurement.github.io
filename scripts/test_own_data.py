@@ -186,17 +186,15 @@ class OwnDataTests(unittest.TestCase):
                 archive.addfile(extra)
         return buffer.getvalue()
 
-    def test_anonymous_archive_is_commit_bound_and_records_inventory(self):
+    def test_cached_archive_is_commit_bound_and_records_inventory(self):
         data = self.source_archive()
-        with tempfile.TemporaryDirectory() as directory, patch.object(own_data.urllib.request, "build_opener") as opener, \
+        with tempfile.TemporaryDirectory() as directory, patch.object(own_data, "read_url", return_value=data) as fetch, \
                 patch.object(own_data, "run", side_effect=AssertionError("no Git or setup commands")):
-            opener.return_value.open.return_value = io.BytesIO(data)
             source, provenance = own_data.fixture_source(Path(directory))
             self.assertEqual(source.name, "fleetdiff-" + FIXTURE_COMMIT)
-            request = opener.return_value.open.call_args.args[0]
-            self.assertEqual(request.full_url, FIXTURE_URL)
-            self.assertIn(FIXTURE_COMMIT, request.full_url)
-            self.assertNotIn("Authorization", request.headers)
+            fetch.assert_called_once_with(FIXTURE_URL)
+            self.assertIn(FIXTURE_COMMIT, FIXTURE_URL)
+            self.assertIn("not fresh anonymous", provenance["transport"])
             self.assertEqual(provenance["expected_commit"], FIXTURE_COMMIT)
             self.assertEqual(provenance["version"], "v0.12.1")
             self.assertEqual(provenance["archive_sha256"], hashlib.sha256(data).hexdigest())
@@ -220,9 +218,9 @@ class OwnDataTests(unittest.TestCase):
                     own_data.extract_fixture(archive, root)
                 self.assertFalse((root / prefix).exists())
 
-    def test_python_311_requires_backported_data_filter_before_download(self):
+    def test_python_311_requires_backported_data_filter_before_cache_read(self):
         with patch.object(own_data.tarfile, "data_filter", None), \
-                patch.object(own_data.urllib.request, "build_opener", side_effect=AssertionError("network access")):
+                patch.object(own_data, "read_url", side_effect=AssertionError("cache access")):
             with self.assertRaisesRegex(RuntimeError, "data filter"):
                 own_data.fixture_source(Path("/not-created"))
 
@@ -241,10 +239,10 @@ class OwnDataTests(unittest.TestCase):
 
     def test_installed_binary_requires_exact_release_and_commit_with_build_metadata(self):
         for version, accepted in (
-            ("fleetdiff v0.12.1 (" + FIXTURE_COMMIT + ") go1.26.9 darwin/arm64", True),
-            ("fleetdiff v0.12.1 (" + "0" * 40 + ") go1.26.9 darwin/arm64", False),
-            ("fleetdiff v0.11.0 (" + FIXTURE_COMMIT + ") go1.26.9 darwin/arm64", False),
-            ("fleetdiff dev (unknown) go1.26.9 darwin/arm64", False),
+            ("fleetdiff v0.12.1 (" + FIXTURE_COMMIT + ") go1.26.10 darwin/arm64", True),
+            ("fleetdiff v0.12.1 (" + "0" * 40 + ") go1.26.10 darwin/arm64", False),
+            ("fleetdiff v0.11.0 (" + FIXTURE_COMMIT + ") go1.26.10 darwin/arm64", False),
+            ("fleetdiff dev (unknown) go1.26.10 darwin/arm64", False),
         ):
             with self.subTest(version=version), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)

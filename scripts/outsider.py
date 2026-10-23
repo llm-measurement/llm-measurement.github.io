@@ -60,6 +60,9 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--page", choices=["cardinality", "token-spike", "tokenmaxxing", "litellm-spend", "row-coverage", "routing", "what-if", "session-budget", "cache-check", "anomalies", "traces-usage", "distinct-users"])
     args = parser.parse_args()
+    from release_cache import consumer_pin
+    from release_cache import cache_root
+    cache = cache_root()
     args.output.mkdir(parents=True, exist_ok=True)
     records = []
     pages = json.loads((ROOT / "pages.json").read_text())
@@ -102,7 +105,10 @@ def main():
                 "stdout_sha256": hashlib.sha256(result.stdout.encode()).hexdigest(),
             })
             print(f"PASS: {slug}; exit {result.returncode}; every displayed excerpt matches", flush=True)
-    manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(), "results": records}
+    manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
+                "transport": "pinned cache-only curl; not a fresh anonymous public download",
+                "release_cache": json.loads((cache / "cache-identity.json").read_text()),
+                "site_cache_pin": consumer_pin(), "results": records}
     (args.output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 
 

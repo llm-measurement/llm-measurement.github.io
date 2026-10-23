@@ -10,6 +10,9 @@ on:
       - '.github/workflows/download-log.yml'
       - 'scripts/download_log.py'
       - 'scripts/test_download_log.py'
+      - 'scripts/release_cache.py'
+      - 'scripts/site_cache_pin.json'
+      - 'scripts/test_cache_consumers.py'
 permissions:
   contents: read
 jobs:
@@ -25,8 +28,24 @@ jobs:
           python-version: '3.13'
       - name: Check snapshot boundaries
         run: python3 -m unittest discover -s scripts -p 'test_download_log.py'
+      - name: Validate pinned site artifact metadata
+        id: pin
+        run: python3 scripts/release_cache.py --consumer-pin
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: restored
+        with:
+          path: .site-release-cache
+          key: ${{ steps.pin.outputs.cache_key }}
+          fail-on-cache-miss: true
+      - name: Require exact cache and verify every byte and original signed subject
+        env:
+          EXACT_HIT: ${{ steps.restored.outputs.cache-hit }}
+          MANIFEST_SHA256: ${{ steps.pin.outputs.manifest_sha256 }}
+        run: |
+          test "$EXACT_HIT" = true
+          python3 scripts/release_cache.py --verify .site-release-cache --manifest-sha256 "$MANIFEST_SHA256"
       - name: Record cumulative counts without asset downloads
-        run: python3 scripts/download_log.py --output "$RUNNER_TEMP/download-counts.json"
+        run: python3 scripts/download_log.py --seed-log .site-release-cache/deliberate-downloads.jsonl --output "$RUNNER_TEMP/download-counts.json"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: download-counts-${{ github.run_id }}-${{ github.run_attempt }}
