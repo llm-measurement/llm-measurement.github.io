@@ -120,7 +120,7 @@ def environment(fresh):
         "XDG_CACHE_HOME": str(fresh / "cache"), "GH_CONFIG_DIR": str(fresh / "gh"),
         "DOCKER_CONFIG": str(fresh / "docker"), "TMPDIR": str(fresh),
         "GIT_TERMINAL_PROMPT": "0", "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
-        "GOWORK": "off", "GOTOOLCHAIN": "go1.26.9", "PYTHONNOUSERSITE": "1", "GOCACHE": str(fresh / "go-build"),
+        "GOWORK": "off", "GOTOOLCHAIN": "go1.26.10", "PYTHONNOUSERSITE": "1", "GOCACHE": str(fresh / "go-build"),
         "GOMODCACHE": str(fresh / "go-mod"), "GOPROXY": "https://proxy.golang.org", "GOSUMDB": "sum.golang.org",
         "GOENV": "off", "GOTELEMETRY": "off", "PIP_CONFIG_FILE": os.devnull,
         "PIP_INDEX_URL": "https://pypi.org/simple", "PIP_CACHE_DIR": str(fresh / "pip")})

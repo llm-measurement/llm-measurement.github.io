@@ -39,7 +39,7 @@ jobs:
           python-version: '3.13'
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
-          go-version: '1.26.9'
+          go-version: '1.26.10'
       - run: python3 scripts/outsider.py --output evidence/local
   own-data:
     runs-on: ubuntu-latest
@@ -53,13 +53,22 @@ jobs:
           python-version: '3.13'
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
-          go-version: '1.26.9'
+          go-version: '1.26.10'
       # https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/examples/litellm-spend/images.json
       - run: docker pull postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
       # Published collector v0.6.1 and the Contrib 0.161.0 capture-recipe pin.
       - run: docker pull ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:b17b3489b65c27a622402982e8e61ee44c7ada247ff3168efacc63a3867c7818
       - run: docker pull otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1
       - run: python3 scripts/check.py --own-data --output evidence/local/own-data
+      - name: Preserve successful synthetic own-data evidence
+        if: success()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: site-own-data-evidence-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+          path: evidence/local/own-data/
+          if-no-files-found: error
+          include-hidden-files: false
+          retention-days: 7
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [build, examples, own-data]

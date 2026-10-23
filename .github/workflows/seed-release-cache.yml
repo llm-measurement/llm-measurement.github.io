@@ -1,0 +1,114 @@
+# SPDX-License-Identifier: Apache-2.0
+# Code authors: Vijay and Codex
+name: seed-release-cache
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: site-deliberate-release-cache-seed
+  cancel-in-progress: false
+jobs:
+  seed:
+    if: github.repository == 'llm-measurement/llm-measurement.github.io' && github.ref == 'refs/heads/main' && github.ref_protected && github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+      artifact_digest: ${{ steps.upload.outputs.artifact-digest }}
+      manifest_sha256: ${{ steps.prepare.outputs.manifest_sha256 }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: llm-measurement/fleetdiff
+          ref: 0d7db95c5bb3013f8c564c91fbb07b6235a2664e
+          path: release-source
+          persist-credentials: false
+      - name: Deliberately seed exactly the reviewed published assets
+        id: prepare
+        run: python3 scripts/seed_release_cache.py --source release-source --work "$RUNNER_TEMP/seed-evidence" --output "$RUNNER_TEMP/release-cache"
+      - name: Record cumulative counts alongside deliberate request events
+        if: always()
+        run: python3 scripts/download_log.py --seed-log "$RUNNER_TEMP/seed-evidence/deliberate-downloads.jsonl" --output "$RUNNER_TEMP/seed-evidence/download-counts.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: deliberate-seed-download-log-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/seed-evidence/deliberate-downloads.jsonl
+            ${{ runner.temp }}/seed-evidence/download-counts.json
+          if-no-files-found: error
+          retention-days: 90
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        id: upload
+        with:
+          name: site-release-cache-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/release-cache/
+          if-no-files-found: error
+          retention-days: 90
+  readback:
+    needs: seed
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      cache_key: ${{ steps.identity.outputs.cache_key }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.seed.outputs.artifact_id }}
+          digest-mismatch: error
+          merge-multiple: true
+          path: .site-release-cache
+      - name: Verify actual restored bytes and original provenance
+        env:
+          MANIFEST_SHA256: ${{ needs.seed.outputs.manifest_sha256 }}
+        run: python3 scripts/release_cache.py --verify .site-release-cache --manifest-sha256 "$MANIFEST_SHA256"
+      - name: Bind cache key to actual site artifact and manifest
+        id: identity
+        env:
+          ARTIFACT_ID: ${{ needs.seed.outputs.artifact_id }}
+          MANIFEST_SHA256: ${{ needs.seed.outputs.manifest_sha256 }}
+        run: printf 'cache_key=site-release-cache-%s-%s\n' "$ARTIFACT_ID" "$MANIFEST_SHA256" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .site-release-cache
+          key: ${{ steps.identity.outputs.cache_key }}
+  cache-readback:
+    needs: [seed, readback]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: restored
+        with:
+          path: .site-release-cache
+          key: ${{ needs.readback.outputs.cache_key }}
+          fail-on-cache-miss: true
+      - name: Refuse prefix matches and verify cached bytes and provenance
+        env:
+          EXACT_HIT: ${{ steps.restored.outputs.cache-hit }}
+          MANIFEST_SHA256: ${{ needs.seed.outputs.manifest_sha256 }}
+        run: |
+          test "$EXACT_HIT" = true
+          python3 scripts/release_cache.py --verify .site-release-cache --manifest-sha256 "$MANIFEST_SHA256"
