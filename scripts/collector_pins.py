@@ -231,12 +231,26 @@ def check_source(name, source, record):
     return len(pins)
 
 
+def current_evidence(source):
+    start = "<!-- historical-verification:start -->"
+    end = "<!-- historical-verification:end -->"
+    if (source.lower().count("historical-verification") != 2
+            or source.count(start) != 1 or source.count(end) != 1
+            or source.index(end) < source.index(start)):
+        raise ValueError("evidence needs exactly one ordered historical-verification marker pair")
+    before, _, remainder = source.partition(start)
+    _, _, after = remainder.partition(end)
+    return before + after
+
+
 def check(root, live=False):
     record = live_policy() if live else json.loads((root / "evidence/collector-release-policy.json").read_text())
     validate_policy(record)
-    paths = [root / "README.md", root / "evidence/README.md", root / "docs/llms.txt"]
+    paths = [root / "README.md", root / "docs/llms.txt"]
     paths += sorted((root / "pages").glob("*.html")) + sorted((root / "docs").glob("*.html"))
     count = sum(check_source(str(p.relative_to(root)), p.read_text(), record) for p in paths)
+    evidence = root / "evidence/README.md"
+    count += check_source("evidence/README.md", current_evidence(evidence.read_text()), record)
     if not count:
         raise ValueError("no collector version pins found")
     mode = "live anonymous release/advisory lookup" if live else "recorded release/advisory snapshot (offline)"

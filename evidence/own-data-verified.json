@@ -3,7 +3,26 @@
   "machine": "arm64",
   "python": "3.14.2",
   "fixture_source": "0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
-  "method": "Mixed dated records: 37 own-data blocks freshly executed October 22 using verified local release cache, exact reconstructed Git fixture source, cached native toolchain and real cached PostgreSQL. Four unchanged Python/Go installation/example blocks retain prior historical results. Two configuration records refreshed; byte-identical collector configuration retains historical validation because the pinned image is absent. No new dependency/image acquisition and no anonymous download claim.",
+  "site_cache_pin": {
+    "repository": "llm-measurement/llm-measurement.github.io",
+    "seed_workflow": ".github/workflows/seed-release-cache.yml",
+    "seed_source_sha": "dd5a49ed5efc883dd6b40c82d530c2c59762e709",
+    "seed_run_id": 39883709543,
+    "seed_run_attempt": 1,
+    "artifact": {
+      "id": 12471731808,
+      "name": "site-release-cache-39883709543-1",
+      "digest": "sha256:053ac508858e7b86eb22cc6eeeefa692f003c39717d5630f9893d7fbf5e8e08b",
+      "expires_at": "2027-01-21T01:23:23Z"
+    },
+    "member_manifest_sha256": "ec4cba42a4fe66cb23e7da861c0ca9a6b49455fa2657aeb3068feedb95dbd35e",
+    "cache_key": "site-release-cache-12471731808-ec4cba42a4fe66cb23e7da861c0ca9a6b49455fa2657aeb3068feedb95dbd35e",
+    "release_manifest_sha256": "56c9569b9de95864de91b4ca5159d1c9fe1cd4c817af5525c71df4003bfb0312",
+    "release_version": "v0.12.1",
+    "release_commit": "0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
+    "repository_id": 1412683546
+  },
+  "method": "Dated local evidence: 37 blocks and three real config records executed October 22, including actual released v0.6.2 cardinality validation; home-go executed October 23 with cached released v0.4.0 modules through a private file-only proxy. Total 38 executed blocks, not a single new full-41 run. Three byte-identical Python blocks retain historical results; required published Python wheels unavailable locally. All selected published assertions unchanged; synthetic real PostgreSQL and cache-backed release bytes, not anonymous downloads. Hosted full 41-block/3-config run remains mandatory.",
   "dependencies": [
     {
       "page": "security",
@@ -16,110 +35,33 @@
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64"
     }
   ],
-  "config_records": [
-    {
-      "page": "cardinality",
-      "block": "cardinality",
-      "kind": "collector-validate",
-      "pass": true,
-      "config_sha256": "1839602b8e9686a250147d48022fa5cc54d5cd675a5d1ea4b40ca2066297d52d",
-      "composed_sha256": "44918708a02ebac33323bb3c3a61d3ccc2e90a887db59e7cdc0adfd751547b3f",
-      "image": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:b17b3489b65c27a622402982e8e61ee44c7ada247ff3168efacc63a3867c7818",
-      "runtime_image": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:97e17ebfdf513a6f96f2360239eea46e3529a2773b49982f2c09494052195d61",
-      "image_id": "sha256:97e17ebfdf513a6f96f2360239eea46e3529a2773b49982f2c09494052195d61",
-      "containers_removed": true,
-      "image_architecture": "arm64",
-      "network": "none",
-      "pull": "never",
-      "validation": "released collector validate command; no receiver traffic or capture performed",
-      "runtime_args": [
-        "validate",
-        "--config=file:/fixture/config.yaml"
-      ],
-      "results": [
-        {
-          "case": "published",
-          "exit": 0,
-          "pass": true,
-          "configuration_sha256": "44918708a02ebac33323bb3c3a61d3ccc2e90a887db59e7cdc0adfd751547b3f",
-          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        {
-          "case": "negative",
-          "exit": 1,
-          "pass": true,
-          "configuration_sha256": "dc68e4db6646efea0df4749997e479b4ec1a182e0275b33c0373f0d171d1081e",
-          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "stderr_sha256": "74bbc89ea3bce543cd63a5dbcc44de0148da6525a7fc3f969e2d9d1cd4a20d60"
-        }
-      ],
-      "retained_history": "Exact configuration bytes unchanged; prior real validation retained. Required collector image absent locally; no fresh validation claimed."
-    },
-    {
-      "page": "traces-usage",
-      "block": "traces-usage",
-      "kind": "collector-validate",
-      "pass": true,
-      "config_sha256": "7f4d1b6553a2ce2c3d537731450ae5cee6db62f3ad4ca1e52ef8d0348bc06db8",
-      "composed_sha256": "25daeba0d3c4dfb5e6ef2ae5a0bb50978cee1dee3e58f13398d2efbf2514b7c5",
-      "image": "otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
-      "runtime_image": "otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
-      "image_id": "sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
-      "containers_removed": true,
-      "image_architecture": "arm64",
-      "network": "none",
-      "pull": "never",
-      "validation": "released collector validate command; no receiver traffic or capture performed",
-      "runtime_args": [
-        "validate",
-        "--config=file:/fixture/config.yaml"
-      ],
-      "results": [
-        {
-          "case": "published",
-          "exit": 0,
-          "pass": true,
-          "configuration_sha256": "25daeba0d3c4dfb5e6ef2ae5a0bb50978cee1dee3e58f13398d2efbf2514b7c5",
-          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        {
-          "case": "negative",
-          "exit": 1,
-          "pass": true,
-          "configuration_sha256": "62b3c7e71205316aafa39b7b0af7d1f3b6559ec1ee4c085e752d22312d392de4",
-          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "stderr_sha256": "32748ea228ce0e871d7db999d80e0979c441776cc2f3fc5136142e8f1a319c89"
-        }
-      ]
-    },
-    {
-      "page": "what-if",
-      "block": "what-if-workload-map",
-      "kind": "fleetdiff-workload-map",
-      "pass": true,
-      "exit": 0,
-      "config_sha256": "03a476aa8370c256ca3c57ba5c69d0328b0e80025884d05a10fc0f0ef5007645",
-      "execution_block": "what-if-workload-map",
-      "command_sha256": "69ac38beb06e3f83e63b03b1d5f7e1779cf132cf51b55e72add6ca1b5c7b0f88",
-      "stdout_sha256": "7b86931eb58002da481af3ba8ea3aee87d53e54fc29c5b55ba03a099fffb7bc3",
-      "input_relative_path": "workload-map.json",
-      "fixture_sha256": "2d9890f7ca2de87e5031ab637d2b317cea71e30691a51ce5e3c02b33e962561f",
-      "validation": "exact published JSON consumed by the released CLI; only synthetic CSV identities adapted"
-    }
-  ],
+  "fixture_archive": {
+    "version": "v0.12.1",
+    "expected_commit": "0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
+    "url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
+    "transport": "pinned cache; reconstructed git archive, not fresh anonymous codeload bytes",
+    "archive_sha256": "b64137f79e566f9c054eb9d0fe54ff9895b79c0f2596b0877d20a9a4f0f8bf73",
+    "archive_bytes": 1262053,
+    "archive_root": "fleetdiff-0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
+    "source_sha256": "4070530662077a5c41ffb5e5154b9214d81f74b8ce31b341966a72676936dc37",
+    "git_operations": false,
+    "file_count": 452
+  },
+  "actual_local_transport": "Existing local bytes reconstructed to the actual protected seed member-manifest hash; all seven original subjects freshly reverified before use. Not a hosted cache restore or fresh anonymous download.",
+  "local_fixture_toolchain": "Existing approved Go 1.26.9 offline, GOMAXPROCS=4, -p=4; public hosted CI remains Go 1.26.10. No toolchain acquisition.",
+  "verification_time_et": "2026-10-22T22:36:07.649565-04:00",
   "results": [
     {
       "page": "index",
       "block": "home-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 0.96,
+      "seconds": 1.12,
       "command_sha256": "44607753bb1bba4edc681b46c848b222435db7ecc1607ebd1b8cbbea8e90c9f3",
       "stdout_sha256": "bece36f81fca9e843467d35173e51e686e71138230c9d2d03c0c08c3367cc775",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "index",
@@ -128,8 +70,9 @@
       "exit": 0,
       "seconds": 0.01,
       "command_sha256": "2190e825811c6d577db6d53f5dbfd40e0be43083f6c459a1955f634881f74779",
-      "stdout_sha256": "8e22f70e498427bd827659ed85b1d30005f9c82fa794f379dc1f5a600870ccb8",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "stdout_sha256": "d0440df0abd4587bd71fe4e9b6f950b475f8bbf6f290161965b9be24f54439d1",
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "index",
@@ -144,33 +87,31 @@
         "fixture_source": "6089061c931fa19fac876e40b3809fdea4792ab8",
         "system": "Darwin",
         "machine": "arm64"
-      }
+      },
+      "local_recheck_note": "Exact published block unchanged; no new execution claimed. Required published v0.3.0/v0.4.0 Python wheels absent from approved cache. Full hosted run remains mandatory."
     },
     {
       "page": "index",
       "block": "home-go",
       "pass": true,
       "exit": 0,
-      "seconds": 5.21,
+      "seconds": 0.55,
       "command_sha256": "53256d1728c9cfcab706edc92ec0a2a512f7df4e3a7a365f9d8b28a6ee5e5f9e",
       "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "retained_history": {
-        "reason": "Exact command bytes unchanged; not rerun or relabeled",
-        "fixture_source": "6089061c931fa19fac876e40b3809fdea4792ab8",
-        "system": "Darwin",
-        "machine": "arm64"
-      }
+      "verification_run": "2026-10-23T08:44:32.997373-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "token-spike",
       "block": "token-spike-install",
       "pass": true,
       "exit": 0,
-      "seconds": 0.83,
+      "seconds": 0.88,
       "command_sha256": "0abac5873cdd8cf302cf2cc386ed724eb9d4fc34352d9b2384af12a153b62494",
       "stdout_sha256": "709f7f4480760de752c5cc03ddfab7d43287ff235c67be5794952636778039dc",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "token-spike",
@@ -180,7 +121,8 @@
       "seconds": 0.01,
       "command_sha256": "3ffc6f50e8fc5e926f9cb061e94fa5099db5989ebe2a78c3dd40eb10b6c4ebca",
       "stdout_sha256": "8399a3a58764a9e88020deb1eb2aff8dc9e26972a7c9ca6bc141afc1ba8f3f29",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "token-spike",
@@ -190,27 +132,29 @@
       "seconds": 0.01,
       "command_sha256": "2cd1db7ca0d8ece54478afa39352ddd9a5d351ad7b6c8162a4698fa53fdf7026",
       "stdout_sha256": "3fd843a1625cfc00bad4dd492a0784576108cf9aa54e9987d36a81ae121dce8f",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "litellm-spend",
       "block": "litellm-install",
       "pass": true,
       "exit": 0,
-      "seconds": 0.96,
+      "seconds": 0.92,
       "command_sha256": "0abac5873cdd8cf302cf2cc386ed724eb9d4fc34352d9b2384af12a153b62494",
       "stdout_sha256": "709f7f4480760de752c5cc03ddfab7d43287ff235c67be5794952636778039dc",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "litellm-spend",
       "block": "litellm-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.21,
+      "seconds": 2.24,
       "command_sha256": "574d1e9b1d5dc03e2db52f55ca2dd033d69140f1f1b4ef2df54c42c3277408b0",
-      "stdout_sha256": "5278068ba5a6320f08e1e2391b41f1c9e6eaf43d7706a9acd966e17e9a3dfbf7",
+      "stdout_sha256": "d4921012ea3d29ae636996d6aa96b655aa16825cb82b7af0293e346591c50265",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
@@ -268,61 +212,66 @@
           "errors": []
         },
         "daily_readonly_identity": "t|t|t|t|f|f",
-        "fixture_sha256": "e6e3615023fdf23dfd8ddcb1b86ee67d560c4381c51212ad0212eef9026c2fb1"
+        "fixture_sha256": "7d1f1084b87e99be38845d1565dfe98cfb80dac86422b1ee3305977079df58a5"
       },
-      "fixture_utc_midnight": "2026-10-22T00:00:00+00:00",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "fixture_utc_midnight": "2026-10-23T00:00:00+00:00",
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "litellm-spend",
       "block": "litellm-spend",
       "pass": true,
       "exit": 0,
-      "seconds": 0.01,
+      "seconds": 0.02,
       "command_sha256": "d1b8a61d2aff170b55604823de3306b9a5a2a7b4509730fa80e0d9f0ea43994c",
       "stdout_sha256": "102c72d6940e30ee9d68dc6c864bb44da53ce41cf204095f2b8a6e9ff3ce86ec",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "litellm-spend",
       "block": "spend-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.54,
+      "seconds": 1.6,
       "command_sha256": "5ab6573918d7c4950171b539383de42914e21a7cd947aead29bdd05365a301b5",
       "stdout_sha256": "7cf3bd24f6b2be47126b6dd13f8145174ba5c4f8bcb09e6aa1946994d1998dcb",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "litellm-spend",
       "block": "litellm-export-file",
       "pass": true,
       "exit": 0,
-      "seconds": 0.01,
+      "seconds": 0.02,
       "command_sha256": "da730162bcad82d2540240d33bb5f68468ab2db245989ba04e2d18a5d81cc848",
       "stdout_sha256": "102c72d6940e30ee9d68dc6c864bb44da53ce41cf204095f2b8a6e9ff3ce86ec",
       "input_sha256": "b2af2f58c5696aadebb9c30d2f89931eac8764a632463e5b9cca1d95930c23e3",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "session-budget",
       "block": "session-budget-install",
       "pass": true,
       "exit": 0,
-      "seconds": 0.84,
+      "seconds": 0.98,
       "command_sha256": "0abac5873cdd8cf302cf2cc386ed724eb9d4fc34352d9b2384af12a153b62494",
       "stdout_sha256": "709f7f4480760de752c5cc03ddfab7d43287ff235c67be5794952636778039dc",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "session-budget",
       "block": "session-budget-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.08,
+      "seconds": 2.14,
       "command_sha256": "9fa4cbd0a50df59505ed372300f1fba9cfb4985a6cdafc12bad7d74a48ddcf4a",
-      "stdout_sha256": "0a2b4c2f70e35fc33fcd602179a1d0528be86ea2034cef2db841feba8f71f2c4",
+      "stdout_sha256": "8d7b15882dd14ae38bcba20802d764139da8d2b0f5166a0f4815e8cb4e860a68",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
@@ -372,10 +321,11 @@
           "server_bytes": 5043,
           "errors": []
         },
-        "fixture_sha256": "beba9b1f69bf596dbfcbf78fa19e0fc177b27010483b0e008fe24d5b6840f728"
+        "fixture_sha256": "7099061e329f8af3e53f2c6430f3a45509a56f17781f3e484934e86b45264b4e"
       },
-      "fixture_utc_midnight": "2026-10-22T00:00:00+00:00",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "fixture_utc_midnight": "2026-10-23T00:00:00+00:00",
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "session-budget",
@@ -385,27 +335,29 @@
       "seconds": 0.01,
       "command_sha256": "60343e4cd844a77eef8321b2f338e7a1c3b2a35dcaa73a9a403e4d736f441219",
       "stdout_sha256": "a411af12a88c2efe08056abca78a84a95f1d495e01fc77d9bf46579010c94f7e",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "cache-check",
       "block": "cache-check-install",
       "pass": true,
       "exit": 0,
-      "seconds": 0.84,
+      "seconds": 0.92,
       "command_sha256": "0abac5873cdd8cf302cf2cc386ed724eb9d4fc34352d9b2384af12a153b62494",
       "stdout_sha256": "709f7f4480760de752c5cc03ddfab7d43287ff235c67be5794952636778039dc",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "cache-check",
       "block": "cache-check-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.09,
+      "seconds": 2.14,
       "command_sha256": "9f6f973b83f18ee6b4b6b24af0e870f692efa227cf8e86378218fe279713dc44",
-      "stdout_sha256": "3d252027d9ac885bc0f5e83319b2e92d518e8febd7222bb5d59bc23d2991d87e",
+      "stdout_sha256": "66334414e6b5b0d96daa35ec3427121da2985be226def65087476a291419197e",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
@@ -455,10 +407,11 @@
           "server_bytes": 8159,
           "errors": []
         },
-        "fixture_sha256": "0bc435ea68f8b86040aae92b39339498252db11c6708302f58c0983e538bef7a"
+        "fixture_sha256": "1410183afe83bc478a7c4997106a9408558461785967f9df28bec1351893196f"
       },
-      "fixture_utc_midnight": "2026-10-22T00:00:00+00:00",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "fixture_utc_midnight": "2026-10-23T00:00:00+00:00",
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "cache-check",
@@ -468,40 +421,44 @@
       "seconds": 0.01,
       "command_sha256": "9c2e84f1caf6045525c98c0a62b35263a99c8d1f6ba40a6caa4fcb272cca465b",
       "stdout_sha256": "823f49600610130991076f3d795171f0ac296346f1f4a812bbd64d00252b199d",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "cardinality",
       "block": "cardinality",
-      "exit": 3,
       "pass": true,
+      "exit": 3,
+      "seconds": 1.21,
       "command_sha256": "e65b3f2207525adb2547cd8f4e87da4a56dc500283015e02e7e0a4a335d0dcc5",
       "stdout_sha256": "99276e5ce8186a58690061ae07927b557d43f5c7b24fe61d2e0ce7332c60c2d4",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "method": "Exact published analysis/install block with verified local release cache. Separate collector configuration validation not rerun: cached image absent.",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:39:47.272680-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "traces-usage",
       "block": "traces-usage",
       "pass": true,
       "exit": 0,
-      "seconds": 0.99,
+      "seconds": 1.12,
       "command_sha256": "107e2c81b2eb436f96f83ebcf1d242f1c85184054e70543e5cddff48c60df365",
-      "stdout_sha256": "8856659c60708c94597f86fb6d13d0af9403f4ed1bd1a403a8683f52d6a8ad83",
+      "stdout_sha256": "5328495900ee9b9e14d249956a50fbb20f7838b1c567a02c391c4900ef3394a0",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "anomalies",
       "block": "anomalies-install",
       "pass": true,
       "exit": 0,
-      "seconds": 0.86,
+      "seconds": 0.91,
       "command_sha256": "0abac5873cdd8cf302cf2cc386ed724eb9d4fc34352d9b2384af12a153b62494",
       "stdout_sha256": "709f7f4480760de752c5cc03ddfab7d43287ff235c67be5794952636778039dc",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "anomalies",
@@ -510,8 +467,9 @@
       "exit": 3,
       "seconds": 0.02,
       "command_sha256": "8310e32c846f582977b24b3ac1c1db1ac629403bf0867fc27330dbfb74e44c5f",
-      "stdout_sha256": "915b734c2757420924f0bd40d9348dbf0df2ba3919dbafeb06931b136d98a644",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "stdout_sha256": "d2947093bd369b413adb5f0130701f783c7cf167f1f69515416b888a2219e3e2",
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "distinct-users",
@@ -526,7 +484,8 @@
         "fixture_source": "6089061c931fa19fac876e40b3809fdea4792ab8",
         "system": "Darwin",
         "machine": "arm64"
-      }
+      },
+      "local_recheck_note": "Exact published block unchanged; no new execution claimed. Required published v0.3.0/v0.4.0 Python wheels absent from approved cache. Full hosted run remains mandatory."
     },
     {
       "page": "tokenmaxxing",
@@ -541,27 +500,29 @@
         "fixture_source": "6089061c931fa19fac876e40b3809fdea4792ab8",
         "system": "Darwin",
         "machine": "arm64"
-      }
+      },
+      "local_recheck_note": "Exact published block unchanged; no new execution claimed. Required published v0.3.0/v0.4.0 Python wheels absent from approved cache. Full hosted run remains mandatory."
     },
     {
       "page": "row-coverage",
       "block": "row-coverage-install",
       "pass": true,
       "exit": 0,
-      "seconds": 0.95,
+      "seconds": 1.04,
       "command_sha256": "d68bbffb3ad93a952cb5696aaf8d5b4f120279c98079aad7847812f5db71a9aa",
       "stdout_sha256": "1a205ac744262c462d6e574bb76f8efa4fbd7b4df8f2182856edb0abe028922e",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "row-coverage",
       "block": "row-coverage-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.18,
+      "seconds": 2.23,
       "command_sha256": "ceb09c621c04a2cdabffc293ef780cb6fcbae3085fa548c2eb32f2e20f12e189",
-      "stdout_sha256": "a60fe09a2404d1a28a6edfbb4fb4417df6ac717a7ce777b1a2fbced3aa2a9cb1",
+      "stdout_sha256": "ee93c3d9d594399c9bbe7cac96edbc6afdce92ff6d1221a21814836d93553565",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
@@ -619,11 +580,12 @@
           "errors": []
         },
         "daily_readonly_identity": "t|t|t|t|f|f",
-        "daily_fixture_sha256": "371ea3b62d47408a27de37a5c387cde9899c48bbad9e2227e341e8d8c2d2e4a8",
-        "fixture_sha256": "68e1a5a2ae017aa34ad82d7f6eae9756b145156072b804310e97a194fe384359"
+        "daily_fixture_sha256": "d30f2d9754cbde87b0a21c24bc4e7b1a94866713c83556486b31bb7262fe9df8",
+        "fixture_sha256": "0b882166ca35d1948a5c12ac1b20c87c4d14e64a16228c7a0e5960fcb2132dc1"
       },
-      "fixture_utc_midnight": "2026-10-22T00:00:00+00:00",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "fixture_utc_midnight": "2026-10-23T00:00:00+00:00",
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "row-coverage",
@@ -637,14 +599,15 @@
         "spend.csv": "00b946ccc650388abb4f4541875cf3fe8950260e0865b18e74d87648ed0f94f8",
         "daily.csv": "c2cdaa6624fa773a415f3659a7bbeb1b2eaa9e0de6647b0a5b0a3616fbc8f096"
       },
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "row-coverage",
       "block": "row-coverage-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.64,
+      "seconds": 1.74,
       "command_sha256": "f7cd29b67d5821b4ae5254c52b31659170abc474a18303137496e1f83c9a9e02",
       "stdout_sha256": "04bd25e4f2506bddfa650bbefb7c1c3c2babf131c000d5d36956c7b17d69dbcb",
       "paired_export": {
@@ -656,7 +619,8 @@
         "readonly": true,
         "network": "none"
       },
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "row-coverage",
@@ -675,27 +639,29 @@
         "pass": true,
         "stdout_sha256": "c8d539ebab9acb25195435c035fd2cef060ef0d9d7303bc78335ff5f96d1e934"
       },
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "routing",
       "block": "routing-install",
       "pass": true,
       "exit": 0,
-      "seconds": 0.85,
+      "seconds": 0.93,
       "command_sha256": "0abac5873cdd8cf302cf2cc386ed724eb9d4fc34352d9b2384af12a153b62494",
       "stdout_sha256": "709f7f4480760de752c5cc03ddfab7d43287ff235c67be5794952636778039dc",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "routing",
       "block": "routing-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.08,
+      "seconds": 2.15,
       "command_sha256": "aa7ed681e3d23d371392b5fc673156ad218e183b2318461414d66549fac0f733",
-      "stdout_sha256": "969fd0437a718cea8b0ab9de322257b51c75bb037453cb612d2710acf4b7ad67",
+      "stdout_sha256": "2f5c1313dd787cf3c1a2f4651cbe775ec4e1865d6fbe55d3a4448d1ad94ad609",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
@@ -745,19 +711,20 @@
           "server_bytes": 4372,
           "errors": []
         },
-        "fixture_sha256": "3d39b9a8a0521218abb3fdd999b2dca40cc93089de4c05c9bd8f95e641c5384e"
+        "fixture_sha256": "a69d7d1830a0d0e2a1c39b1cfa3de6f509dbe92777f533ac48e00adfdc6b4a9e"
       },
-      "fixture_utc_midnight": "2026-10-22T00:00:00+00:00",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "fixture_utc_midnight": "2026-10-23T00:00:00+00:00",
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "routing",
       "block": "routing-scope",
       "pass": true,
       "exit": 0,
-      "seconds": 2.09,
+      "seconds": 2.17,
       "command_sha256": "72d0a94f8527c8f8efe50cffc1964061139f2033241c42db6d9c66d1a3cc3220",
-      "stdout_sha256": "a7f26720f8b26b4c9b58f7e4bde4995e354e015da8f34fa5aed986283fe413fb",
+      "stdout_sha256": "c44711a8430c7f9e79a600e174d4a391d59411cc91c725d6d37bbcab253e9d79",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
@@ -807,19 +774,20 @@
           "server_bytes": 4372,
           "errors": []
         },
-        "fixture_sha256": "3d39b9a8a0521218abb3fdd999b2dca40cc93089de4c05c9bd8f95e641c5384e"
+        "fixture_sha256": "a69d7d1830a0d0e2a1c39b1cfa3de6f509dbe92777f533ac48e00adfdc6b4a9e"
       },
-      "fixture_utc_midnight": "2026-10-22T00:00:00+00:00",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "fixture_utc_midnight": "2026-10-23T00:00:00+00:00",
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "routing",
       "block": "routing-agents",
       "pass": true,
       "exit": 0,
-      "seconds": 2.1,
+      "seconds": 2.17,
       "command_sha256": "4610fcbf5e1ed5bc069a991ff8ba607fd01f9e9bc2a1ae0e4c5d2b01f7cfe14d",
-      "stdout_sha256": "ca046e2130163a5599fc44d6a43a9bc53be3cb06085373a6738cc3cf048dc607",
+      "stdout_sha256": "3bd38d8e9bc37e948013fa14a8f801fd2589a9bb49d7ec1d3b3611a4c9a03b43",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
@@ -869,10 +837,11 @@
           "server_bytes": 4372,
           "errors": []
         },
-        "fixture_sha256": "3d39b9a8a0521218abb3fdd999b2dca40cc93089de4c05c9bd8f95e641c5384e"
+        "fixture_sha256": "a69d7d1830a0d0e2a1c39b1cfa3de6f509dbe92777f533ac48e00adfdc6b4a9e"
       },
-      "fixture_utc_midnight": "2026-10-22T00:00:00+00:00",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "fixture_utc_midnight": "2026-10-23T00:00:00+00:00",
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "routing",
@@ -885,17 +854,19 @@
       "input_sha256": {
         "spend.csv": "71725a897aec8088d5b92baab8ead27103e3144079b1323ebe055e2a436f6607"
       },
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "routing",
       "block": "routing-export",
       "pass": true,
       "exit": 0,
-      "seconds": 1.53,
+      "seconds": 1.61,
       "command_sha256": "63c0cc4bad0719b3f973e0fe532c2546a2baf92c55cdf4a709e7dfba60b9a2ef",
       "stdout_sha256": "9c321e601742d0e138165dc7c9e36285a934db0a6e10400813c1d9c4c3d82f27",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "routing",
@@ -913,7 +884,8 @@
         "pass": true,
         "stdout_sha256": "da5234c00e0f20d26d7266500f72056f3e67e8f103511a84368f6037985f937e"
       },
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "what-if",
@@ -924,14 +896,15 @@
       "command_sha256": "1a441f8e33a73a3d80b3810b7335b4487143d57fdbb703697b7effd506451a67",
       "stdout_sha256": "709f7f4480760de752c5cc03ddfab7d43287ff235c67be5794952636778039dc",
       "installed_version": "fleetdiff v0.12.1 (0d7db95c5bb3013f8c564c91fbb07b6235a2664e) go1.26.10 darwin/arm64",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "what-if",
       "block": "what-if-native",
       "pass": true,
       "exit": 0,
-      "seconds": 2.08,
+      "seconds": 2.15,
       "command_sha256": "1bb76d1c3d523ce579fe0246e55166338a9e227911bba57699d146c1ad6f282b",
       "stdout_sha256": "dd1bac25024ce2759b1efac7d38e5098f7769ac2b225ae036edff7dea1de30f3",
       "database": {
@@ -985,9 +958,10 @@
         },
         "fixture_sha256": "2d9890f7ca2de87e5031ab637d2b317cea71e30691a51ce5e3c02b33e962561f"
       },
-      "fixture_utc_midnight": "2026-10-22T00:00:00+00:00",
+      "fixture_utc_midnight": "2026-10-23T00:00:00+00:00",
       "synthetic_recorded_spend_per_row_usd": "1",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "what-if",
@@ -997,7 +971,8 @@
       "seconds": 0.01,
       "command_sha256": "bf1cb5c05650db9c2e90ecfa586fe60ddeb6c66679b15e47ce111444ecbd1b35",
       "stdout_sha256": "dd1bac25024ce2759b1efac7d38e5098f7769ac2b225ae036edff7dea1de30f3",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "what-if",
@@ -1007,16 +982,17 @@
       "seconds": 0.01,
       "command_sha256": "69ac38beb06e3f83e63b03b1d5f7e1779cf132cf51b55e72add6ca1b5c7b0f88",
       "stdout_sha256": "7b86931eb58002da481af3ba8ea3aee87d53e54fc29c5b55ba03a099fffb7bc3",
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     },
     {
       "page": "security",
       "block": "litellm-native-env",
       "pass": true,
       "exit": 0,
-      "seconds": 2.14,
+      "seconds": 2.21,
       "command_sha256": "fd9ac14b2de89171aa42627f5171cbb00ea80e652ba50698a15ca89e7cb1500f",
-      "stdout_sha256": "5278068ba5a6320f08e1e2391b41f1c9e6eaf43d7706a9acd966e17e9a3dfbf7",
+      "stdout_sha256": "d4921012ea3d29ae636996d6aa96b655aa16825cb82b7af0293e346591c50265",
       "database": {
         "postgres": "postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826",
         "network": "none",
@@ -1066,28 +1042,119 @@
           "server_bytes": 81912,
           "errors": []
         },
-        "fixture_sha256": "e6e3615023fdf23dfd8ddcb1b86ee67d560c4381c51212ad0212eef9026c2fb1"
+        "fixture_sha256": "7d1f1084b87e99be38845d1565dfe98cfb80dac86422b1ee3305977079df58a5"
       },
-      "fixture_utc_midnight": "2026-10-22T00:00:00+00:00",
+      "fixture_utc_midnight": "2026-10-23T00:00:00+00:00",
       "file_source_comparison": {
         "pass": true,
         "command_sha256": "574d1e9b1d5dc03e2db52f55ca2dd033d69140f1f1b4ef2df54c42c3277408b0",
-        "stdout_sha256": "5278068ba5a6320f08e1e2391b41f1c9e6eaf43d7706a9acd966e17e9a3dfbf7"
+        "stdout_sha256": "d4921012ea3d29ae636996d6aa96b655aa16825cb82b7af0293e346591c50265"
       },
-      "verification_run": "2026-10-22; verified local release cache; real cached PostgreSQL where applicable; no anonymous-download claim"
+      "verification_run": "2026-10-22T22:36:07.649565-04:00",
+      "acquisition": "Previously verified cached bytes/tools; not fresh anonymous downloads"
     }
   ],
-  "fixture_archive": {
-    "version": "v0.12.1",
-    "expected_commit": "0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
-    "url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
-    "archive_sha256": "5ecb11513d2b3345ef00c725cc20ceb07f0c64f9cd1c792290045974a85949f3",
-    "archive_bytes": 1270474,
-    "archive_root": "fleetdiff-0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
-    "source_sha256": "4070530662077a5c41ffb5e5154b9214d81f74b8ce31b341966a72676936dc37",
-    "git_operations": false,
-    "acquisition": "local archive reconstructed from exact approved Git commit; not downloaded",
-    "codeload_bytes_claimed": false,
-    "file_count": 452
+  "config_records": [
+    {
+      "page": "cardinality",
+      "block": "cardinality",
+      "kind": "collector-validate",
+      "pass": true,
+      "config_sha256": "1839602b8e9686a250147d48022fa5cc54d5cd675a5d1ea4b40ca2066297d52d",
+      "composed_sha256": "44918708a02ebac33323bb3c3a61d3ccc2e90a887db59e7cdc0adfd751547b3f",
+      "image": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:c2573a74714249c2e407477997903da5cc367e3d7405bccf0d7cfc049c5fe289",
+      "runtime_image": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:e26262c16484ca62e1618077facf614940dbe8c11c3d05689b570b33f387c152",
+      "image_id": "sha256:e26262c16484ca62e1618077facf614940dbe8c11c3d05689b570b33f387c152",
+      "containers_removed": true,
+      "image_architecture": "arm64",
+      "network": "none",
+      "pull": "never",
+      "validation": "released collector validate command; no receiver traffic or capture performed",
+      "runtime_args": [
+        "validate",
+        "--config=file:/fixture/config.yaml"
+      ],
+      "results": [
+        {
+          "case": "published",
+          "exit": 0,
+          "pass": true,
+          "configuration_sha256": "44918708a02ebac33323bb3c3a61d3ccc2e90a887db59e7cdc0adfd751547b3f",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "case": "negative",
+          "exit": 1,
+          "pass": true,
+          "configuration_sha256": "dc68e4db6646efea0df4749997e479b4ec1a182e0275b33c0373f0d171d1081e",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "74bbc89ea3bce543cd63a5dbcc44de0148da6525a7fc3f969e2d9d1cd4a20d60"
+        }
+      ]
+    },
+    {
+      "page": "traces-usage",
+      "block": "traces-usage",
+      "kind": "collector-validate",
+      "pass": true,
+      "config_sha256": "7f4d1b6553a2ce2c3d537731450ae5cee6db62f3ad4ca1e52ef8d0348bc06db8",
+      "composed_sha256": "25daeba0d3c4dfb5e6ef2ae5a0bb50978cee1dee3e58f13398d2efbf2514b7c5",
+      "image": "otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
+      "runtime_image": "otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
+      "image_id": "sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
+      "containers_removed": true,
+      "image_architecture": "arm64",
+      "network": "none",
+      "pull": "never",
+      "validation": "released collector validate command; no receiver traffic or capture performed",
+      "runtime_args": [
+        "validate",
+        "--config=file:/fixture/config.yaml"
+      ],
+      "results": [
+        {
+          "case": "published",
+          "exit": 0,
+          "pass": true,
+          "configuration_sha256": "25daeba0d3c4dfb5e6ef2ae5a0bb50978cee1dee3e58f13398d2efbf2514b7c5",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "case": "negative",
+          "exit": 1,
+          "pass": true,
+          "configuration_sha256": "62b3c7e71205316aafa39b7b0af7d1f3b6559ec1ee4c085e752d22312d392de4",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "32748ea228ce0e871d7db999d80e0979c441776cc2f3fc5136142e8f1a319c89"
+        }
+      ]
+    },
+    {
+      "page": "what-if",
+      "block": "what-if-workload-map",
+      "kind": "fleetdiff-workload-map",
+      "pass": true,
+      "exit": 0,
+      "config_sha256": "03a476aa8370c256ca3c57ba5c69d0328b0e80025884d05a10fc0f0ef5007645",
+      "execution_block": "what-if-workload-map",
+      "command_sha256": "69ac38beb06e3f83e63b03b1d5f7e1779cf132cf51b55e72add6ca1b5c7b0f88",
+      "stdout_sha256": "7b86931eb58002da481af3ba8ea3aee87d53e54fc29c5b55ba03a099fffb7bc3",
+      "input_relative_path": "workload-map.json",
+      "fixture_sha256": "2d9890f7ca2de87e5031ab637d2b317cea71e30691a51ce5e3c02b33e962561f",
+      "validation": "exact published JSON consumed by the released CLI; only synthetic CSV identities adapted"
+    }
+  ],
+  "local_coverage": {
+    "executed_blocks": 38,
+    "historical_unrun_blocks": [
+      "home-python",
+      "distinct-users",
+      "tokenmaxxing"
+    ],
+    "config_records": 3,
+    "fresh_full_41_claimed": false,
+    "fixture_toolchain": "cached local Go 1.26.9; hosted CI pins Go 1.26.10"
   }
 }

@@ -16,7 +16,7 @@ sh install-fleetdiff.sh v0.12.1 ./bin
 </aside>
 <section id="configure">
 <h2>Configure keyed rankings</h2>
-<p>With the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/builder.yaml">v0.6.1 collector</a>, map a user attribute and enable token-weighted rankings:</p>
+<p>With the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.2/builder.yaml">v0.6.2 collector</a>, map a user attribute and enable token-weighted rankings:</p>
 <pre data-config="cardinality"><code>connectors:
   genaisketch:
     fields:
@@ -28,8 +28,8 @@ sh install-fleetdiff.sh v0.12.1 ./bin
     topk_keys:
       - field: user_key
         weight: tokens</code></pre>
-<p>Add this fragment to a <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/CONFIGURATION.md">complete configuration</a> with a hashing key and trace pipeline. Distinct counts become metrics; rankings go to logs and summaries. Keep user IDs out of <code>slices</code>.</p>
-<p><code>topk</code> sets displayed candidates; the profile sets capacity. See the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/docs/TOPK_KEYS.md">ranking guide</a>.</p>
+<p>Add this fragment to a <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.2/docs/CONFIGURATION.md">complete configuration</a> with a hashing key and trace pipeline. Distinct counts become metrics; rankings go to logs and summaries. Keep user IDs out of <code>slices</code>.</p>
+<p><code>topk</code> sets displayed candidates; the profile sets capacity. See the <a href="https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.2/docs/TOPK_KEYS.md">ranking guide</a>.</p>
 </section>
 <details class="security-note"><summary>Security</summary>
 <p>See the <a href="security.html">security reference</a>.</p>

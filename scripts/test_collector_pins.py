@@ -3,6 +3,8 @@
 """Reject stale collector pins, affected versions and incomplete live lookups."""
 import io
 import json
+from pathlib import Path
+import tempfile
 import unittest
 from unittest.mock import patch
 import urllib.error
@@ -69,6 +71,77 @@ class CollectorPinTests(unittest.TestCase):
     def test_stale_but_not_vulnerable_version_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "latest stable"):
             pins.check_source("page", "collector v0.2.9", self.record)
+
+    def test_historical_evidence_keeps_its_actual_measured_version(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in ("pages", "docs", "evidence"):
+                (root / name).mkdir()
+            (root / "README.md").write_text("collector v0.6.1")
+            (root / "docs/llms.txt").write_text("chart 0.6.1")
+            history = "Historical collector v0.6.0 measurement; not a current upgrade pin."
+            before, after = "collector v0.6.1\n", "\nchart 0.6.1"
+            source = before + "<!-- historical-verification:start -->" + history + "<!-- historical-verification:end -->" + after
+            (root / "evidence/README.md").write_text(source)
+            (root / "evidence/collector-release-policy.json").write_text(json.dumps(self.record))
+            pins.check(root)
+            self.assertEqual((root / "evidence/README.md").read_text(), source)
+            self.assertEqual(pins.current_evidence(source), before + after)
+
+    def test_historical_exception_does_not_exempt_any_current_surface(self):
+        for name in ("README.md", "docs/llms.txt", "pages/index.html", "docs/index.html"):
+            for stale in ("v0.6.0", "v0.2.9"):
+                with self.subTest(name=name, stale=stale), tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    for folder in ("pages", "docs", "evidence"):
+                        (root / folder).mkdir()
+                    for path in ("README.md", "docs/llms.txt", "pages/index.html", "docs/index.html"):
+                        (root / path).write_text("collector v0.6.1")
+                    (root / "evidence/README.md").write_text(
+                        "<!-- historical-verification:start -->Historical collector v0.6.0<!-- historical-verification:end -->")
+                    (root / "evidence/collector-release-policy.json").write_text(json.dumps(self.record))
+                    (root / name).write_text("collector " + stale)
+                    with self.assertRaisesRegex(ValueError, "affected by|latest stable"):
+                        pins.check(root)
+
+    def test_current_evidence_prefix_and_suffix_reject_stale_and_affected_pins(self):
+        for side in ("before", "after"):
+            for stale in ("v0.6.0", "v0.2.9"):
+                for text in ("collector " + stale,
+                             "https://github.com/" + pins.REPO + "/blob/" + stale + "/README.md"):
+                    with self.subTest(side=side, text=text), tempfile.TemporaryDirectory() as directory:
+                        root = Path(directory)
+                        for folder in ("pages", "docs", "evidence"):
+                            (root / folder).mkdir()
+                        (root / "README.md").write_text("collector v0.6.1")
+                        (root / "docs/llms.txt").write_text("chart 0.6.1")
+                        history = "<!-- historical-verification:start -->Historical collector v0.6.0<!-- historical-verification:end -->"
+                        source = text + "\n" + history if side == "before" else history + "\n" + text
+                        (root / "evidence/README.md").write_text(source)
+                        (root / "evidence/collector-release-policy.json").write_text(json.dumps(self.record))
+                        with self.assertRaisesRegex(ValueError, "affected by|latest stable"):
+                            pins.check(root)
+
+    def test_malformed_duplicate_reversed_and_nested_history_markers_fail_closed(self):
+        start = "<!-- historical-verification:start -->"
+        end = "<!-- historical-verification:end -->"
+        for source in ("", "Historical collector v0.6.0", start, end, end + start,
+                       start + start + end + end, start + end + start + end,
+                       start.replace(":start", ":begin") + end,
+                       start.replace(" -->", "-->") + end,
+                       start.upper() + end,
+                       start + end + "<!-- historical-verification:broken",
+                       start + "<!-- historical-verification:other -->" + end):
+            with self.subTest(source=source), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                for folder in ("pages", "docs", "evidence"):
+                    (root / folder).mkdir()
+                (root / "README.md").write_text("collector v0.6.1")
+                (root / "docs/llms.txt").write_text("chart 0.6.1")
+                (root / "evidence/README.md").write_text(source)
+                (root / "evidence/collector-release-policy.json").write_text(json.dumps(self.record))
+                with self.assertRaisesRegex(ValueError, "historical-verification"):
+                    pins.check(root)
 
     def test_latest_release_is_rejected_if_advisory_affects_it(self):
         record = pins.policy([release("v0.6.1")], [advisory("<= 0.6.1")])

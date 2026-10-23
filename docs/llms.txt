@@ -23,6 +23,6 @@
 
 - fleetdiff v0.12.1
 - llm-sketchkit v0.4.0 on the home page; v0.3.0 in the existing Python guides
-- Collector configuration guidance: v0.6.1; Helm chart 0.6.1
+- Collector configuration guidance: v0.6.2; Helm chart 0.6.2
 
 Command guides use synthetic inputs. The summaries evidence page separates released coding-agent records from synthetic scale workloads and pins its experimental source. See each page for its methods and limits.
