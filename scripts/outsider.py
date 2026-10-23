@@ -80,7 +80,7 @@ def main():
                 "HOME": fresh, "XDG_CACHE_HOME": fresh + "/cache",
                 "GH_CONFIG_DIR": fresh + "/gh", "GIT_TERMINAL_PROMPT": "0",
                 "GIT_CONFIG_COUNT": "1", "GIT_CONFIG_KEY_0": "credential.helper",
-                "GIT_CONFIG_VALUE_0": "", "GOWORK": "off", "GOTOOLCHAIN": "go1.26.9", "PYTHONNOUSERSITE": "1",
+                "GIT_CONFIG_VALUE_0": "", "GOWORK": "off", "GOTOOLCHAIN": "go1.26.10", "PYTHONNOUSERSITE": "1",
                 "GOCACHE": fresh + "/go-build", "GOMODCACHE": fresh + "/go-mod",
                 "PIP_CACHE_DIR": fresh + "/pip",
             })

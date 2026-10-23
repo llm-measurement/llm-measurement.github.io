@@ -1,0 +1,136 @@
+{
+  "version": "v0.12.1",
+  "commit": "0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
+  "tag_ref": "refs/tags/v0.12.1",
+  "tag_object": "910a4907a699bd6a7e17b33fa0f91900b3d35a9c",
+  "tree": "a5ccf518899d5ec0bfc2a860898ba1eca09c7d7e",
+  "artifact": {
+    "id": 12465610751,
+    "name": "release-files",
+    "run_id": 39868118137,
+    "repository": "llm-measurement/fleetdiff",
+    "digest": "sha256:2a8093b11cb98983e92214279174118e1ad6617dcd1249db728e0e77a14be810"
+  },
+  "assets": {
+    "SHA256SUMS": "1b110f883f60d8b2dd8559846180b1ac26e7580ee5a238bcb47829460f457a70",
+    "build.txt": "f8ddc4d6261a33616a6b0bb727842f3e4fc4684b32931126e6a9bde44e170906",
+    "sbom.spdx.json": "28f690e4e15fb2b5853029dbf4482f386df3a90a97eba340a518697c60f96795",
+    "provenance.jsonl": "f7ce76dc9775c0363097edf9469871e2dad2f1547f1e3fac6fb78e9c0240dd89",
+    "fleetdiff_v0.12.1_darwin_amd64.tar.gz": "cfb169582ad88c6febc2e97b3633f7a358962522692f95018085d4a9335dfc55",
+    "fleetdiff_v0.12.1_darwin_arm64.tar.gz": "c367c04a1b12abe816fe7998225ba5893720404bf1026e3979e032c32afd8359",
+    "fleetdiff_v0.12.1_linux_amd64.tar.gz": "723456463e74120b8a61d110e9d45a2fbef4e3cca442392e25770e66f6c4c668",
+    "fleetdiff_v0.12.1_linux_arm64.tar.gz": "f6c8055a2cc60ffb3100dfada9474e70adbbdf5b92e3ceedd5cc142e69bfd131"
+  },
+  "source_files": {
+    "scripts/install.sh": {
+      "file": "source-files/scripts/install.sh",
+      "sha256": "b77c956511abe3f53dd6e461f47fdb882b7a8a451455360cbd1fb466f4425a33",
+      "source": "scripts/install.sh"
+    },
+    "examples/litellm-spend/export.sql": {
+      "file": "source-files/examples/litellm-spend/export.sql",
+      "sha256": "0b57656b137d1216f9e657535434800a6ebede545230a4a55a271235ffd1fe2c",
+      "source": "examples/litellm-spend/export.sql"
+    },
+    "examples/litellm-spend/export-coverage.sh": {
+      "file": "source-files/examples/litellm-spend/export-coverage.sh",
+      "sha256": "d44304d135a6785358503ed16b04782f8eb31034b6477519cb642e11256b7688",
+      "source": "examples/litellm-spend/export-coverage.sh"
+    },
+    "examples/litellm-spend/daily-projection.sql": {
+      "file": "source-files/examples/litellm-spend/daily-projection.sql",
+      "sha256": "efd20f10a06a237782664101e36536df94ee4c80bcb47cf7188a6c77222fe1e5",
+      "source": "examples/litellm-spend/daily-projection.sql"
+    },
+    "examples/routing/synthetic.csv": {
+      "file": "source-files/examples/routing/synthetic.csv",
+      "sha256": "c1638b0350ab11ce476a07a6eb28297d95c24371fadd05b66232497c2cb46125",
+      "source": "examples/routing/synthetic.csv"
+    },
+    "examples/what-if/spend.csv": {
+      "file": "source-files/examples/what-if/spend.csv",
+      "sha256": "da2589ec8f0a09120b1f1aef3697f414b728110845ea3009521ea5f6cc2b9ce6",
+      "source": "examples/what-if/spend.csv"
+    }
+  },
+  "source_archives": {
+    "fleetdiff-0d7db95c5bb3013f8c564c91fbb07b6235a2664e": {
+      "file": "source-commit.tar.gz",
+      "sha256": "b64137f79e566f9c054eb9d0fe54ff9895b79c0f2596b0877d20a9a4f0f8bf73"
+    },
+    "fleetdiff-0.12.1": {
+      "file": "source-tag.tar.gz",
+      "sha256": "415286159dfbb40d4ef3e3912188b0cb67786c9e915820a86e72a6617550d9cf"
+    }
+  },
+  "urls": {
+    "https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/SHA256SUMS": {
+      "file": "SHA256SUMS",
+      "sha256": "1b110f883f60d8b2dd8559846180b1ac26e7580ee5a238bcb47829460f457a70"
+    },
+    "https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/build.txt": {
+      "file": "build.txt",
+      "sha256": "f8ddc4d6261a33616a6b0bb727842f3e4fc4684b32931126e6a9bde44e170906"
+    },
+    "https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/sbom.spdx.json": {
+      "file": "sbom.spdx.json",
+      "sha256": "28f690e4e15fb2b5853029dbf4482f386df3a90a97eba340a518697c60f96795"
+    },
+    "https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/provenance.jsonl": {
+      "file": "provenance.jsonl",
+      "sha256": "f7ce76dc9775c0363097edf9469871e2dad2f1547f1e3fac6fb78e9c0240dd89"
+    },
+    "https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/fleetdiff_v0.12.1_darwin_amd64.tar.gz": {
+      "file": "fleetdiff_v0.12.1_darwin_amd64.tar.gz",
+      "sha256": "cfb169582ad88c6febc2e97b3633f7a358962522692f95018085d4a9335dfc55"
+    },
+    "https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/fleetdiff_v0.12.1_darwin_arm64.tar.gz": {
+      "file": "fleetdiff_v0.12.1_darwin_arm64.tar.gz",
+      "sha256": "c367c04a1b12abe816fe7998225ba5893720404bf1026e3979e032c32afd8359"
+    },
+    "https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/fleetdiff_v0.12.1_linux_amd64.tar.gz": {
+      "file": "fleetdiff_v0.12.1_linux_amd64.tar.gz",
+      "sha256": "723456463e74120b8a61d110e9d45a2fbef4e3cca442392e25770e66f6c4c668"
+    },
+    "https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/fleetdiff_v0.12.1_linux_arm64.tar.gz": {
+      "file": "fleetdiff_v0.12.1_linux_arm64.tar.gz",
+      "sha256": "f6c8055a2cc60ffb3100dfada9474e70adbbdf5b92e3ceedd5cc142e69bfd131"
+    },
+    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh": {
+      "file": "source-files/scripts/install.sh",
+      "sha256": "b77c956511abe3f53dd6e461f47fdb882b7a8a451455360cbd1fb466f4425a33"
+    },
+    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/litellm-spend/export.sql": {
+      "file": "source-files/examples/litellm-spend/export.sql",
+      "sha256": "0b57656b137d1216f9e657535434800a6ebede545230a4a55a271235ffd1fe2c"
+    },
+    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/litellm-spend/export-coverage.sh": {
+      "file": "source-files/examples/litellm-spend/export-coverage.sh",
+      "sha256": "d44304d135a6785358503ed16b04782f8eb31034b6477519cb642e11256b7688"
+    },
+    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/litellm-spend/daily-projection.sql": {
+      "file": "source-files/examples/litellm-spend/daily-projection.sql",
+      "sha256": "efd20f10a06a237782664101e36536df94ee4c80bcb47cf7188a6c77222fe1e5"
+    },
+    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/routing/synthetic.csv": {
+      "file": "source-files/examples/routing/synthetic.csv",
+      "sha256": "c1638b0350ab11ce476a07a6eb28297d95c24371fadd05b66232497c2cb46125"
+    },
+    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/what-if/spend.csv": {
+      "file": "source-files/examples/what-if/spend.csv",
+      "sha256": "da2589ec8f0a09120b1f1aef3697f414b728110845ea3009521ea5f6cc2b9ce6"
+    },
+    "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/0d7db95c5bb3013f8c564c91fbb07b6235a2664e": {
+      "file": "source-commit.tar.gz",
+      "sha256": "b64137f79e566f9c054eb9d0fe54ff9895b79c0f2596b0877d20a9a4f0f8bf73"
+    },
+    "https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.1.tar.gz": {
+      "file": "source-tag.tar.gz",
+      "sha256": "415286159dfbb40d4ef3e3912188b0cb67786c9e915820a86e72a6617550d9cf"
+    },
+    "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/refs/tags/v0.12.1": {
+      "file": "source-tag.tar.gz",
+      "sha256": "415286159dfbb40d4ef3e3912188b0cb67786c9e915820a86e72a6617550d9cf"
+    }
+  }
+}

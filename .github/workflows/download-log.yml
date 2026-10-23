@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: Apache-2.0
+# Code authors: Vijay and Codex
+name: download-log
+on:
+  schedule:
+    - cron: '17 1 * * *'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/download-log.yml'
+      - 'scripts/download_log.py'
+      - 'scripts/test_download_log.py'
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - name: Check snapshot boundaries
+        run: python3 -m unittest discover -s scripts -p 'test_download_log.py'
+      - name: Record cumulative counts without asset downloads
+        run: python3 scripts/download_log.py --output "$RUNNER_TEMP/download-counts.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: download-counts-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/download-counts.json
+          if-no-files-found: error
+          retention-days: 90
