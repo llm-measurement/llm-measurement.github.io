@@ -82,7 +82,13 @@
       "seconds": 1.75,
       "command_sha256": "dcc5c54a5057f2ae2be3240de7cf9108022db503fc8ff771d85887a8712b2e01",
       "stdout_sha256": "1ecfa391576f8309c30dd84b4dea95388fb81f674d4af5bac0e918441ff24ef3",
-      "retained_history": "Exact published block unchanged; no new execution claimed. Required published v0.3.0/v0.4.0 Python wheels absent from approved cache. Full hosted run remains mandatory."
+      "retained_history": {
+        "reason": "Exact command bytes unchanged; not rerun or relabeled",
+        "fixture_source": "6089061c931fa19fac876e40b3809fdea4792ab8",
+        "system": "Darwin",
+        "machine": "arm64"
+      },
+      "local_recheck_note": "Exact published block unchanged; no new execution claimed. Required published v0.3.0/v0.4.0 Python wheels absent from approved cache. Full hosted run remains mandatory."
     },
     {
       "page": "index",
@@ -473,7 +479,13 @@
       "seconds": 1.88,
       "command_sha256": "81671cb47bbb144557140e20bbd2ab73a2887df85f0fb48092d1f0a19f421c29",
       "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475",
-      "retained_history": "Exact published block unchanged; no new execution claimed. Required published v0.3.0/v0.4.0 Python wheels absent from approved cache. Full hosted run remains mandatory."
+      "retained_history": {
+        "reason": "Exact command bytes unchanged; not rerun or relabeled",
+        "fixture_source": "6089061c931fa19fac876e40b3809fdea4792ab8",
+        "system": "Darwin",
+        "machine": "arm64"
+      },
+      "local_recheck_note": "Exact published block unchanged; no new execution claimed. Required published v0.3.0/v0.4.0 Python wheels absent from approved cache. Full hosted run remains mandatory."
     },
     {
       "page": "tokenmaxxing",
@@ -483,7 +495,13 @@
       "seconds": 1.81,
       "command_sha256": "5e889bcd47ea4221fe9470bdb92d29a042e1de835e4449545f49885ca94bbc69",
       "stdout_sha256": "3602de85e92ba5bcb4a2fa5330baa39d07c5f77ac32acefd46092618dd511635",
-      "retained_history": "Exact published block unchanged; no new execution claimed. Required published v0.3.0/v0.4.0 Python wheels absent from approved cache. Full hosted run remains mandatory."
+      "retained_history": {
+        "reason": "Exact command bytes unchanged; not rerun or relabeled",
+        "fixture_source": "6089061c931fa19fac876e40b3809fdea4792ab8",
+        "system": "Darwin",
+        "machine": "arm64"
+      },
+      "local_recheck_note": "Exact published block unchanged; no new execution claimed. Required published v0.3.0/v0.4.0 Python wheels absent from approved cache. Full hosted run remains mandatory."
     },
     {
       "page": "row-coverage",
