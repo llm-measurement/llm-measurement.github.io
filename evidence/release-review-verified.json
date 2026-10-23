@@ -1,7 +1,7 @@
 {
   "system": "Darwin",
   "machine": "arm64",
-  "method": "Mixed dated evidence: fleetdiff manual verification freshly executed October 22 using real anonymous gh verification over verified cached release bytes; byte-identical collector verification retains its historical credentialed result, not rerun.",
+  "method": "Mixed dated exact-command records: the collector v0.6.2 verification block executed October 23 unchanged using five parent-authenticated cached metadata assets, real anonymous Cosign and existing normal credentialed GitHub OCI provenance verification; no new release-asset download. Unchanged fleetdiff block retains its original dated verification record. No binary scanner is part of these two command blocks.",
   "results": [
     {
       "block": "fleetdiff",
@@ -16,11 +16,32 @@
       "block": "collector",
       "pass": true,
       "exit": 0,
-      "authentication": "credentialed GitHub API",
-      "command_sha256": "86a6bf5f41e54eb9fcc67496658e6e5d76168b3d3f06ed1926d167779144bb15",
-      "stdout_sha256": "5a621994797552384ea97bd0a2d9d3abd50f116b885502b61b7dcbc63f883803",
-      "retained_history": "Exact collector command bytes unchanged; prior credentialed verification retained; no credential read or new execution"
+      "authentication": "parent-authenticated cached release bytes; real anonymous Cosign and normal credentialed GitHub OCI provenance API",
+      "command_sha256": "35b198156f4f5fec1df3f91c84dea32c597e1e737887484513f682f5396e2b12",
+      "stdout_sha256": "af7d954d4cca55a9c840f2f5a78c6f3f7606b65656ce3402ea35b467893b9ef1",
+      "verification_run": "2026-10-23T08:45:31.789189-04:00"
     }
   ],
-  "verified_at_utc": "2026-10-19T00:57:08.237202+00:00"
+  "verified_at_utc": "2026-10-19T00:57:08.237202+00:00",
+  "separate_released_binary_assessment": {
+    "assessment": "Explicitly accepted authenticated OpenVEX, not_affected GO-2026-5932 for the exact released binaries; not a clean raw scan",
+    "user_acceptance_et": "2026-10-23T08:39:00-04:00",
+    "parent_result_sha256": "5d246853219cae442b4f8de4c65f403002f98d3905aa559b3ded755c4ed5f4a2",
+    "source_commit": "0dcad703dee919c1b265bc97e8d26446cca09696",
+    "image_ref": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:c2573a74714249c2e407477997903da5cc367e3d7405bccf0d7cfc049c5fe289",
+    "raw_scan_exit": {
+      "amd64": 3,
+      "arm64": 3
+    },
+    "raw_clean": false,
+    "amd64_scan_repeated": false,
+    "scanner_suppression": false,
+    "binary_sha256": {
+      "amd64": "2227885ee7e5862a6c956babeac3b3bcaec49eba2e46652ace82611da1c4ceb8",
+      "arm64": "38b5ab61101771f5b6ccec615054b2ee9c522bfa610bb8381cb6a016b980fe7f"
+    },
+    "arm64_openpgp_packages": 0,
+    "arm64_openpgp_import_edges": 0,
+    "scope": "Exact published image/binaries and GO-2026-5932 only; not custom builds, additional components or other vulnerabilities"
+  }
 }

@@ -29,9 +29,9 @@
       ]
     }
   ],
-  "checked_at": "2026-10-19T00:59:48.696822+00:00",
-  "latest_stable": "v0.6.1",
-  "release_url": "https://github.com/llm-measurement/otelcol-genai-sketches/releases/tag/v0.6.1",
+  "checked_at": "2026-10-23T02:36:17.863810+00:00",
+  "latest_stable": "v0.6.2",
+  "release_url": "https://github.com/llm-measurement/otelcol-genai-sketches/releases/tag/v0.6.2",
   "repository": "llm-measurement/otelcol-genai-sketches",
   "schema": 1,
   "sources": [

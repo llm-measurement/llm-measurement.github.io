@@ -5,7 +5,7 @@ An evidence page explains what can be shared and retained with summaries.
 
 Current command examples pin fleetdiff v0.12.1. The home-page library installs
 pin llm-sketchkit v0.4.0; the existing Python guides retain v0.3.0. Collector
-configuration pins v0.6.1 and Helm chart 0.6.1. Historical evidence
+configuration pins v0.6.2 and Helm chart 0.6.2. Historical evidence
 retains the versions and source revisions used for those measurements.
 
 | Question | Page |

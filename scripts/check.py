@@ -146,7 +146,7 @@ def main():
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
             assert "v0.5.0" not in source and "v0.3.1" not in source and "0.2.2" not in source
         if entry["slug"] == "anomalies":
-            assert '>chart 0.6.1</a>' in path.read_text()
+            assert '>chart 0.6.2</a>' in path.read_text()
         if entry["slug"] == "cardinality":
             assert entry["title"] == "How do I see LLM usage per user without a metric label for every user?"
             assert '<p class="lead">Keep user IDs out of your metric labels.' in path.read_text()
@@ -155,7 +155,7 @@ def main():
                 "https://grafana.com/docs/grafana-cloud/platform/pricing-and-usage/metrics/",
                 "https://docs.datadoghq.com/account_management/billing/custom_metrics/",
                 "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html",
-                "https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.1/builder.yaml",
+                "https://github.com/llm-measurement/otelcol-genai-sketches/blob/v0.6.2/builder.yaml",
             ):
                 assert source in page.links, source
         if entry["slug"] in {"token-spike", "cardinality", "anomalies", "litellm-spend", "traces-usage", "cache-check"}:

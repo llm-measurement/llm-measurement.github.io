@@ -1,5 +1,41 @@
 # Guide Verification
 
+## Collector v0.6.2 Pin Verification, October 22-23, 2026
+
+The current collector configuration record uses the actual published v0.6.2
+image index. Three exact configuration records passed, including real released
+arm64 cardinality validation with its unchanged negative control. This is a
+configuration test, not a Kubernetes deployment or a binary-scanner clean claim.
+
+The own-data record combines 37 blocks executed October 22 and the exact
+home-page Go install block executed October 23 with cached released v0.4.0
+modules. Three unchanged Python blocks retain their historical results because
+the required published v0.3.0/v0.4.0 wheels are not cached locally. Thus 38 blocks
+were executed for this candidate, NOT a fresh full-41 run. Full hosted coverage
+of all 41 blocks and three configurations is still required on the final PR head.
+Cached bytes and the local Go 1.26.9 fixture toolchain are identified separately
+from hosted Go 1.26.10 and fresh anonymous downloads. No dependencies were acquired.
+
+The exact collector v0.6.2 security verification block passed October 23 using
+five authenticated cached metadata files, real anonymous Cosign verification
+and normal credentialed GitHub OCI provenance checks. The unchanged fleetdiff
+block retains its original dated verification. No release assets were downloaded
+by these new local checks.
+
+Separately, both actual released binary scanners exited 3 on GO-2026-5932;
+the raw scans are NOT clean. Stripped-binary fallback reports conservative
+module-level wildcard findings, not proof of linked OpenPGP code. The existing
+authenticated OpenVEX assessment matches both exact binaries and records
+OpenPGP code absent from their import graphs. Vijay explicitly accepted this
+scoped assessment on October 23 at 08:39 ET. It covers only the exact published
+image/binaries and that vulnerability, not custom builds or other findings.
+The amd64 scan was not repeated and no scanner suppression was used. The paired
+chart 0.6.2/app 0.6.2 template passed against the authenticated image digest.
+
+The records below remain dated history; they are not relabeled as these checks.
+
+
+<!-- historical-verification:start -->
 ## October 22 fleetdiff pin verification
 
 Current fleetdiff commands pin v0.12.1 and source
@@ -368,3 +404,4 @@ and scan. Scan returned the expected 3; the other cases returned 0.
 [`offline-verified.json`](offline-verified.json) records the commits, artifact
 hashes, verification constraints and results. This released-binary run covers
 Linux arm64; the earlier built-binary checks covered Linux arm64 and amd64.
+<!-- historical-verification:end -->
