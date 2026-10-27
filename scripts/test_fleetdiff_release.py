@@ -10,11 +10,12 @@ from own_data import FIXTURE_COMMIT, FIXTURE_VERSION
 
 
 class FleetdiffReleaseTests(unittest.TestCase):
-    def test_fleetdiff_commands_pin_v0120(self):
+    def test_fleetdiff_commands_pin_each_guide_release(self):
         for path in (ROOT / "pages").glob("*.html"):
             if path.stem == "summaries":
                 continue
             source = path.read_text()
+            release = json.loads((ROOT / "evidence/langfuse-release.json").read_text()) if path.stem == "langfuse-spend" else {"version": FIXTURE_VERSION, "commit": FIXTURE_COMMIT}
             with self.subTest(page=path.stem):
                 self.assertNotIn("fleetdiff/v0.8.0", source)
                 self.assertNotIn("fleetdiff v0.8.0", source)
@@ -22,9 +23,9 @@ class FleetdiffReleaseTests(unittest.TestCase):
                 blocks.feed(source)
                 for block in blocks.commands + blocks.own:
                     if "install.sh" in block["text"] or "install-fleetdiff.sh" in block["text"]:
-                        self.assertIn("v0.12.1", block["text"])
+                        self.assertIn(release["version"], block["text"])
                     if "curl" in block["text"] and "install-fleetdiff.sh" in block["text"]:
-                        self.assertIn("fleetdiff/" + FIXTURE_COMMIT + "/scripts/install.sh", block["text"])
+                        self.assertIn("fleetdiff/" + release["commit"] + "/scripts/install.sh", block["text"])
                     if "/archive/refs/tags/" in block["text"]:
                         self.assertIn("cd fleetdiff-" + FIXTURE_VERSION.removeprefix("v") + "\n", block["text"])
                     self.assertNotIn("git clone", block["text"])
@@ -65,7 +66,7 @@ class FleetdiffReleaseTests(unittest.TestCase):
         self.assertLess(slugs.index("row-coverage"), slugs.index("what-if"))
         self.assertLess(slugs.index("row-coverage"), slugs.index("routing"))
         self.assertLess(slugs.index("routing"), slugs.index("what-if"))
-        for slug in ("row-coverage", "routing", "what-if"):
+        for slug in ("row-coverage", "routing", "what-if", "langfuse-spend"):
             source = (ROOT / "pages" / (slug + ".html")).read_text()
             blocks = Blocks()
             blocks.feed(source)

@@ -1,0 +1,56 @@
+{
+  "checked_utc": "2026-10-27T00:00:18.386115+00:00",
+  "system": "Darwin",
+  "machine": "arm64",
+  "release": {
+    "version": "v0.13.0",
+    "commit": "2cf3f222e145bd4c5fae18d73caa7ee90976ae03",
+    "sample_url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/2cf3f222e145bd4c5fae18d73caa7ee90976ae03",
+    "sample_sha256": "1c88f08b2ee573301834564141d6f3655bed125674d79a924d618fb956e258a7",
+    "sample_project_dir": "fleetdiff-2cf3f222e145bd4c5fae18d73caa7ee90976ae03/examples/langfuse-spend/export",
+    "sample_kind": "pinned released source archive, not a standalone release asset"
+  },
+  "installed_version": "fleetdiff v0.13.0 (2cf3f222e145bd4c5fae18d73caa7ee90976ae03) go1.26.10 darwin/arm64",
+  "method": "Exact published sample and all own-data blocks; independent fresh HOME/directories; real public release checksum/attestation verification. Own fixture: 32 manifest-covered synthetic days derived from released rows. No provider or Langfuse API calls.",
+  "sample": {
+    "page": "langfuse-spend",
+    "exit": 0,
+    "pass": true,
+    "command_sha256": "feb5ec0c17253519fbb916e27defd4f5a23f42d808214bedc739cf5f7181d566",
+    "stdout_sha256": "27392993d030f1bb24481dab90914fc5406431de0a5ecdf02d3c5686f3572747",
+    "stdout": "./fleetdiff_v0.13.0_darwin_arm64.tar.gz: OK\nVerified darwin/arm64 installation in ././fleetdiff-install\nRun fleetdiff --version from that directory before use.\nlangfuse-sample.tar.gz: OK\nLangfuse GENERATION observations; recorded cost (Langfuse), not an invoice.\nLocal coverage: 2 manifests, 2/2 files verified; 0 missing, 0 partial, 0 unmanifested.\nObservations: 10 physical, 10 unique, 0 duplicate copies removed; 10 GENERATION.\nUsage coverage: 0 missing, 0 partial, 0 invalid; 0 unmapped category occurrences; 0 usage rows with zero recorded cost.\nRecorded tokens doubled (8,000 -> 16,000).\nmodel-1 accounts for 100% of the net recorded increase (+8,000 tokens).\nLogged model requests: 4 -> 6.\nBefore: Wed 2026-10-07 00:00:00 UTC to Wed 2026-10-07 01:00:00 UTC (end exclusive).\nAfter: Thu 2026-10-08 00:00:00 UTC to Thu 2026-10-08 01:00:00 UTC (end exclusive).\n\nWhat changed?\n  model-1: 8,000 -> 16,000 recorded tokens; 4 -> 6 requests.\n  Cache detail not recorded in this export.\n\nWho drove the increase?\n  provided_model_name-1: 8,000 -> 16,000 tokens; change +8,000.\n  1 leading tracked provided_model_name accounts for 100% of the net recorded increase.\n  Attributed tokens: 8,000 -> 16,000.\n\nHow complete is the export?\n  Records needing usage review (categories may overlap): 4 -> 6.\n  Unknown status: 4 -> 6.\n  Zero-filled: cannot determine from this export. Provider origin: not established by Langfuse observations.\n  Recorded cost (Langfuse, analyzed GENERATION observations): 0.008 -> 0.016.\n  No other usage problems found.\n  Rows read: 10.\n  Whole-period per-request split needs clearer usage; recorded totals remain shown.\n  model-1 per-request split needs clearer usage on 4 before / 6 after records.\n\nNext: review the leading contributors and flagged records in your local Langfuse export.\n",
+    "transport": "fresh anonymous public downloads; no cache shim or credentials"
+  },
+  "own": [
+    {
+      "page": "langfuse-spend",
+      "exit": 0,
+      "pass": true,
+      "command_sha256": "1795ba4d3d6c52f4a011277961c1dca50c4ba888bda48b36022200bceccbe9f7",
+      "stdout_sha256": "2cffc7c59a8c5dd020135735c1ba6219b7a6d99eab1d086132610e427d6ef8e5",
+      "stdout": "./fleetdiff_v0.13.0_darwin_arm64.tar.gz: OK\nVerified darwin/arm64 installation in ././fleetdiff-install\nRun fleetdiff --version from that directory before use.\nfleetdiff v0.13.0 (2cf3f222e145bd4c5fae18d73caa7ee90976ae03) go1.26.10 darwin/arm64\n",
+      "transport": "fresh anonymous public downloads; no cache shim or credentials",
+      "block": "langfuse-install"
+    },
+    {
+      "page": "langfuse-spend",
+      "exit": 0,
+      "pass": true,
+      "command_sha256": "969805e266e72f1a3e4ed71839859abf26dd3a16902aaca805930efae89991a5",
+      "stdout_sha256": "3d4161395c8c82ce0fbbfe56f2c2b3f4c7e9f835297a5c390b1bb87619fb178d",
+      "stdout": "Langfuse GENERATION observations; recorded cost (Langfuse), not an invoice.\nLocal coverage: 32 manifests, 32/32 files verified; 0 missing, 0 partial, 0 unmanifested.\nObservations: 128 physical, 128 unique, 0 duplicate copies removed; 128 GENERATION.\nUsage coverage: 0 missing, 0 partial, 0 invalid; 0 unmapped category occurrences; 0 usage rows with zero recorded cost.\nRecorded tokens were unchanged (56,000 -> 56,000).\nLogged model requests: 28 -> 28.\nBefore: Wed 2026-10-07 00:00:00 UTC to Wed 2026-10-14 00:00:00 UTC (end exclusive).\nAfter: Wed 2026-10-14 00:00:00 UTC to Wed 2026-10-21 00:00:00 UTC (end exclusive).\n\nWhat changed?\n  model-1: 56,000 -> 56,000 recorded tokens; 28 -> 28 requests.\n  Cache detail not recorded in this export.\n\nWho drove the change?\n  provided_model_name-1: 56,000 -> 56,000 tokens; change +0.\n  Attributed tokens: 56,000 -> 56,000.\n\nHow complete is the export?\n  Records needing usage review (categories may overlap): 28 -> 28.\n  Unknown status: 28 -> 28.\n  Zero-filled: cannot determine from this export. Provider origin: not established by Langfuse observations.\n  Recorded cost (Langfuse, analyzed GENERATION observations): 0.056 -> 0.056.\n  No other usage problems found.\n  Rows read: 128; outside periods: 72.\n  Whole-period per-request split needs clearer usage; recorded totals remain shown.\n  model-1 per-request split needs clearer usage on 28 before / 28 after records.\n\nNext: review the leading contributors and flagged records in your local Langfuse export.\n",
+      "transport": "fresh anonymous public downloads; no cache shim or credentials",
+      "block": "langfuse-own"
+    },
+    {
+      "page": "langfuse-spend",
+      "exit": 0,
+      "pass": true,
+      "command_sha256": "b4c67832485d1f28117ce4e8cac00a0b72b43528210b4f4374ad1414a135c480",
+      "stdout_sha256": "4aa68b8dfd7411d7def85fc1ead0b9f6aa91b9892fa36d46d0607b093b6e12f4",
+      "stdout": "Langfuse GENERATION observations; recorded cost (Langfuse), not an invoice.\nLocal coverage: 32 manifests, 32/32 files verified; 0 missing, 0 partial, 0 unmanifested.\nObservations: 128 physical, 128 unique, 0 duplicate copies removed; 128 GENERATION.\nUsage coverage: 0 missing, 0 partial, 0 invalid; 0 unmapped category occurrences; 0 usage rows with zero recorded cost.\nRecorded tokens were unchanged (8,000 -> 8,000).\nLogged model requests: 4 -> 4.\nBefore: Sat 2026-10-10 12:00:00 UTC to Sun 2026-10-11 12:00:00 UTC (end exclusive).\nAfter: Sat 2026-10-17 12:00:00 UTC to Sun 2026-10-18 12:00:00 UTC (end exclusive).\n\nWhat changed?\n  model-1: 8,000 -> 8,000 recorded tokens; 4 -> 4 requests.\n  Cache detail not recorded in this export.\n\nWho drove the change?\n  provided_model_name-1: 8,000 -> 8,000 tokens; change +0.\n  Attributed tokens: 8,000 -> 8,000.\n\nHow complete is the export?\n  Records needing usage review (categories may overlap): 4 -> 4.\n  Unknown status: 4 -> 4.\n  Zero-filled: cannot determine from this export. Provider origin: not established by Langfuse observations.\n  Recorded cost (Langfuse, analyzed GENERATION observations): 0.008 -> 0.008.\n  No other usage problems found.\n  Rows read: 128; outside periods: 120.\n  Whole-period per-request split needs clearer usage; recorded totals remain shown.\n  model-1 per-request split needs clearer usage on 4 before / 4 after records.\n\nNext: review the leading contributors and flagged records in your local Langfuse export.\n",
+      "transport": "fresh anonymous public downloads; no cache shim or credentials",
+      "block": "langfuse-short"
+    }
+  ]
+}

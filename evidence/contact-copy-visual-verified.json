@@ -1,42 +1,45 @@
 {
   "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.",
-  "baselineCommit": "3c0b01463175e4d869008df4c35dad26349b516a",
+  "baselineCommit": "99be8f9f646b67fcc811b5ecc5db25aa5c7ab127",
+  "newPageMethod": "Langfuse is new: verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical Langfuse intro comparison is claimed.",
   "files": {
     "assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
     "assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
     "docs/assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
     "docs/assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
-    "pages.json": "c786e590cf88f5f592e4bdf3b2fe701614db91434156e5f1c5a49506c29305a4",
-    "pages/index.html": "473b8549391b74d838359d7d6a986219b5dd81dad4e6a910fe6ae633305cfd13",
-    "docs/index.html": "74181b39fbd5b52b260d9d0df88d338be1e32aa1af464d37dbbf66986e61d54f",
+    "pages.json": "8d6c1bad6c8f688ec69eab36d4617def64e6baa47f9b7ef79c8acdf824d1b43b",
+    "pages/index.html": "676713e588b3f4b52ac6a40a6900481179f76a871abe71f18f930f547ffba9a1",
+    "docs/index.html": "fbaab397d963415f8493acdba31ded373f0ed1da1ef255b9c8017aeb16f438c6",
     "pages/token-spike.html": "c9117cf7c4ca50b629e3b86392cc4349ccb27a517a2314736569d9b8789e9d8c",
-    "docs/token-spike.html": "f703e19efdef01c435eba7cee7f8d42f62b4d7d74eff5b468cb68ff505e877c3",
+    "docs/token-spike.html": "5eddba15f9213f4111d70ec9dfa1be7ef2ea4bab8b35b70ea3c12950c7b04a77",
     "pages/tokenmaxxing.html": "f31c982435e0c38cb05f7081e378820b3f553f22f8dbf7ec632200ca9868022d",
-    "docs/tokenmaxxing.html": "aefdc280e3f30ea4e7e3f44ad6f352b94bfec4a3a35d0002119da00205d8fa9f",
+    "docs/tokenmaxxing.html": "d547501ce2da59eb07b25bd64094ad07fcd3e151bcb533423a7be7a84aa89cf2",
     "pages/litellm-spend.html": "2889093b380879de5dfe001ee1d85fb79a4aaa2582dc733cf0585f43ef1d71c4",
-    "docs/litellm-spend.html": "47069b99c76721f99a26bbf76110be357b38848d34aec50dc3ba2c55325cfbac",
+    "docs/litellm-spend.html": "a885072470ca50b844cda59aa97d41d5cadad201f6af13e35292c61854c60ff3",
+    "pages/langfuse-spend.html": "ab9da9e6dac2b42036afbcddadc0688766e3beb3aed45c3e5a84d514bd5454b7",
+    "docs/langfuse-spend.html": "144d4e58a1a1ac765521fd789ecddd9bc721b5902ba5cdde47c5513ab6bb06f3",
     "pages/row-coverage.html": "83ec64d469b21c124a4358122898676fb79c18cc4ebf5e17503e17b1a43040a4",
-    "docs/row-coverage.html": "11398a0e9d0d8c4277457b7dcfb8fb4214d1779d8c3e9786efe1a4d1b8accc2b",
+    "docs/row-coverage.html": "11eb6488efa2268e85c196a05c838d3a131719851063c25c9a7100684b74cee3",
     "pages/routing.html": "8be79c89e1d76985fb8c09d50b65fedb815f5ea3e40b1bd61112db6cde32cacc",
-    "docs/routing.html": "2a3e0a432d52745b36d50b54aea4d5380c0f54a4d9185e2d155a665960e0273d",
+    "docs/routing.html": "8488a2cd7d9dea1d22ddf28757999b8793705f9910b5809522cbd4ce40e86cea",
     "pages/what-if.html": "f572bbda95599e77ea824910c1dcb55289e4b721497ae2d5317423f727762038",
-    "docs/what-if.html": "0356272c508149d61f9846864d0f0a3e22851b65efeecf67e2fb50ef2db95e04",
+    "docs/what-if.html": "9dae4ac9ec1c222f9ee4c6531a78ccc9fec073e4814d77569ffefa1bf88bd4e2",
     "pages/session-budget.html": "f479718c28be29157d2c70ae09e5f8575d190ed4f4394739659a1c1cc75b8d84",
-    "docs/session-budget.html": "e94ae3a986b695be6a7ab7132698b90c55c4c33488822898b4147ec71553d544",
+    "docs/session-budget.html": "51ef6c09eb20845e81de46447d250c392228936038456d8732a5b8ad156d83e2",
     "pages/cache-check.html": "307ea1f97605cd468ee3238e2844b5a698ed3628727e190d46203f979e54a2f9",
-    "docs/cache-check.html": "9214e85efc09760ce5458b3ce0f39f45749191cf2760b9787975de6441c1951a",
+    "docs/cache-check.html": "41b330f75372d3e31fe46296f246fc1dbae439c44f3f8472ba436c4407e67d8e",
     "pages/cardinality.html": "440f67fa8ca7cdfd61b66f44ff9e5f59ab3c00951d773f54c42471d150213f9e",
-    "docs/cardinality.html": "43fea4f43c46a9cfdd4e2bb190d1809c8a9b2041347d5b6d20ba6747c07be37d",
+    "docs/cardinality.html": "c6a6ebf1fb713f08dfe38253bb134ba0d05b03656f44fdbef3903188df9fd44b",
     "pages/anomalies.html": "ef744bceb9cc1965bfa239c0e2c3720e88531249f6a12962937559e15133ff01",
-    "docs/anomalies.html": "7fece386287174f6bee954d74b4e5f1111301478e850fdc8245f9b4afa1ee129",
+    "docs/anomalies.html": "22b245109b73ac5f77949fa97892afb76e3503f8854431657af3ed895cfdfb04",
     "pages/traces-usage.html": "9f771bcf45211cc88bda24f83c501bc43ba593c305321584f8ee390dc024a56d",
-    "docs/traces-usage.html": "58a3e5f8b97065f2da28022de90bf3a47bec9fe449ab1b4d97a3e7042f3b4bcc",
+    "docs/traces-usage.html": "fba635ded19926ffc301c27dfd0776d0bc58bb172f3c2d2263188d2f1bf887d5",
     "pages/distinct-users.html": "cd018843e28458d2a6d5d7d40bb0ff66be97d483bb1effeb53f4e90f32318dc7",
-    "docs/distinct-users.html": "3a64a3f6b4e510f2f44c957049650eee56f43fa301dc87fb599c5ed0be295239",
+    "docs/distinct-users.html": "8bb15e6f73f2bdc7080e4a2885d6557b7312047a04278279ad6d511bae261388",
     "pages/summaries.html": "694a4c55261eaeb73b28ffc1381b7338432373326f37118a37a9a9837e85a23f",
-    "docs/summaries.html": "2d85391ec9ef91a700e18a1e6609a1dd675df5fda74a3342dcbff6e26397d186",
+    "docs/summaries.html": "68ef810798840315639f58b0343a7ce65ccb92fda03bf6a70807d76ee041a89b",
     "pages/security.html": "425b94aa1d800210042d978962c2eebbc334b784ef890ffa580131e18b34198a",
-    "docs/security.html": "8c492ed5f2ef7b4523c660da8dbb606ec149adf59fd7d8e288fd1c2e4f7bf6cd"
+    "docs/security.html": "9b7220d0a993639fd82a07bdb5b644da1a900d8174ad103d7249b7747f952e74"
   },
   "results": [
     {
@@ -82,6 +85,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -138,6 +143,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -189,6 +196,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -245,6 +254,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -253,6 +264,64 @@
       "contactPass": true,
       "commandBlocks": 8,
       "eventsChecked": 14,
+      "qaTrackerStubbed": true,
+      "externalRequestsSent": 0,
+      "pass": true
+    },
+    {
+      "slug": "langfuse-spend",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 305.5625,
+        "title": "What changed in your Langfuse costs?",
+        "folded": true
+      },
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 5.115384650945418
+        }
+      ],
+      "inputFirstUnchanged": null,
+      "inputFirstVerified": true,
+      "newPage": true,
+      "paletteUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "keyboardPass": true,
+      "clipboardPass": true,
+      "contactPass": true,
+      "commandBlocks": 4,
+      "eventsChecked": 10,
       "qaTrackerStubbed": true,
       "externalRequestsSent": 0,
       "pass": true
@@ -301,6 +370,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -357,6 +428,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -413,6 +486,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -469,6 +544,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -525,6 +602,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -581,6 +660,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -637,6 +718,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -693,6 +776,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -749,6 +834,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -799,6 +886,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -849,6 +938,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -904,6 +995,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -960,6 +1053,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1011,6 +1106,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1067,6 +1164,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1075,6 +1174,64 @@
       "contactPass": true,
       "commandBlocks": 8,
       "eventsChecked": 14,
+      "qaTrackerStubbed": true,
+      "externalRequestsSent": 0,
+      "pass": true
+    },
+    {
+      "slug": "langfuse-spend",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 423.53125,
+        "title": "What changed in your Langfuse costs?",
+        "folded": true
+      },
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 5.115384650945418
+        }
+      ],
+      "inputFirstUnchanged": null,
+      "inputFirstVerified": true,
+      "newPage": true,
+      "paletteUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "keyboardPass": true,
+      "clipboardPass": true,
+      "contactPass": true,
+      "commandBlocks": 4,
+      "eventsChecked": 10,
       "qaTrackerStubbed": true,
       "externalRequestsSent": 0,
       "pass": true
@@ -1123,6 +1280,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1179,6 +1338,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1235,6 +1396,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1291,6 +1454,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1347,6 +1512,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1403,6 +1570,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1459,6 +1628,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1515,6 +1686,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1571,6 +1744,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1621,6 +1796,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1671,6 +1848,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1726,6 +1905,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1782,6 +1963,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1833,6 +2016,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1889,6 +2074,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1897,6 +2084,64 @@
       "contactPass": true,
       "commandBlocks": 8,
       "eventsChecked": 14,
+      "qaTrackerStubbed": true,
+      "externalRequestsSent": 0,
+      "pass": true
+    },
+    {
+      "slug": "langfuse-spend",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 489.515625,
+        "title": "What changed in your Langfuse costs?",
+        "folded": true
+      },
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 5.115384650945418
+        }
+      ],
+      "inputFirstUnchanged": null,
+      "inputFirstVerified": true,
+      "newPage": true,
+      "paletteUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "keyboardPass": true,
+      "clipboardPass": true,
+      "contactPass": true,
+      "commandBlocks": 4,
+      "eventsChecked": 10,
       "qaTrackerStubbed": true,
       "externalRequestsSent": 0,
       "pass": true
@@ -1945,6 +2190,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2001,6 +2248,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2057,6 +2306,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2113,6 +2364,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2169,6 +2422,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2225,6 +2480,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2281,6 +2538,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2337,6 +2596,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2393,6 +2654,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2443,6 +2706,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2493,6 +2758,8 @@
         }
       ],
       "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
