@@ -598,10 +598,18 @@ def database(fresh, source, env, coverage=False, routing=False, native=False, sq
 
 def check(output, page=None):
     output.mkdir(parents=True, exist_ok=True)
+    independent_evidence = []
+    if page in {None, "langfuse-spend"}:
+        from langfuse_check import check as check_langfuse
+        check_langfuse(output / "langfuse")
+        independent_evidence.append("langfuse/langfuse-verified.json")
+        if page == "langfuse-spend":
+            return
     records = []
     manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
                 "fixture_source": FIXTURE_COMMIT, "site_cache_pin": consumer_pin(),
                 "method": "Exact published commands with pinned cache-only curl transport; fresh HOME/directories; original release archive, installer and provenance, not fresh anonymous downloads. Synthetic data is seeded into real read-only Postgres using cached digest-pinned network-none Docker. Native commands use the unchanged installed host binary through a loopback byte transport, not a database mock. The paired psql helper executes unmodified inside the container to retain its inherited descriptors.",
+                "independent_guide_evidence": independent_evidence,
                 "dependencies": [], "config_records": [], "results": records}
     with tempfile.TemporaryDirectory(prefix="site-own-source-") as directory:
         fixture_root = Path(directory)

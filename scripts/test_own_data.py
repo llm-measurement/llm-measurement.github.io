@@ -228,6 +228,7 @@ class OwnDataTests(unittest.TestCase):
         provenance = {"version": "v0.12.1", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
                       "archive_sha256": "a" * 64, "source_sha256": "b" * 64, "files": {"test": "c" * 64}}
         with tempfile.TemporaryDirectory() as directory, patch.object(own_data, "PAGES", ()), \
+                patch("langfuse_check.check"), \
                 patch.object(own_data, "fixture_source", return_value=(Path(directory), provenance)):
             output = Path(directory) / "evidence"
             own_data.check(output)
@@ -252,6 +253,7 @@ class OwnDataTests(unittest.TestCase):
                 provenance = {"files": {}}
                 result = subprocess.CompletedProcess([], 0, stdout="Verified", stderr="")
                 with patch.object(own_data, "ROOT", root), patch.object(own_data, "PAGES", ("test",)), \
+                        patch("langfuse_check.check"), \
                         patch.object(own_data, "EXPECTED", {"test-install": ("Verified",)}), \
                         patch.object(own_data, "fixture_source", return_value=(root, provenance)), \
                         patch.object(own_data, "prepare"), patch.object(own_data.subprocess, "run", return_value=result), \

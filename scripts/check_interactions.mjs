@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const [root, baseline, out] = process.argv.slice(2);
 assert(root && baseline && out, 'supply candidate, verified baseline and evidence-output directories');
@@ -69,10 +70,12 @@ try {
       const origin = new URL(request.url()).origin;
       if (!['https://llm-measurement.github.io', 'https://baseline.invalid'].includes(origin)) externalRequestsSent++;
     });
-    for (const { slug, kind } of pages) {
+    for (const { slug, kind, title } of pages) {
       const page = await context.newPage();
       const original = await context.newPage();
-      await original.goto('https://baseline.invalid/' + (slug === 'index' ? '' : slug + '.html'));
+      const newPage = !(await fs.access(path.join(baseline, 'docs', slug + '.html')).then(() => true, () => false));
+      assert(!newPage || slug === 'langfuse-spend', 'unexpected missing baseline page');
+      await original.goto('https://baseline.invalid/' + (newPage ? 'litellm-spend.html' : slug === 'index' ? '' : slug + '.html'));
       await page.goto('https://llm-measurement.github.io/' + (slug === 'index' ? '' : slug + '.html') +
         '?email=private-email&userid=private-ID&command=private-command#private-fragment');
       const isGuide = slug !== 'index' && !kind;
@@ -80,7 +83,13 @@ try {
       const before = await original.evaluate(visualState), after = await page.evaluate(visualState);
       assert.deepEqual(after.palette, before.palette, 'palette changed');
       assert.deepEqual(after.typography, before.typography, 'typography changed');
-      assert.deepEqual(after.intro, before.intro, 'input-first introduction changed');
+      if (newPage) {
+        assert.equal(after.intro[0][1], title);
+        assert.equal(after.intro[1][0], 'P');
+        assert.equal(after.intro[2][0], 'NAV');
+      } else {
+        assert.deepEqual(after.intro, before.intro, 'input-first introduction changed');
+      }
       await original.close();
 
       const initialBlocks = await page.locator('main pre').evaluateAll(nodes => nodes.map(e => ({
@@ -185,13 +194,14 @@ try {
       assert.equal(geometry.width, geometry.scroll, `${slug}/${width}: horizontal overflow`);
       assert(geometry.folded);
       if (slug === 'litellm-spend' && width === 1366) assert(geometry.indexBottom < 768);
-      if (['index', 'litellm-spend'].includes(slug)) {
+      if (['index', 'litellm-spend', 'langfuse-spend'].includes(slug)) {
         await page.screenshot({ path: path.join(out, `${slug}-${width}.png`) });
         await page.locator('footer').scrollIntoViewIfNeeded();
         await page.screenshot({ path: path.join(out, `${slug}-${width}-contact.png`) });
       }
       results.push({ slug, width, colorScheme: 'light', geometry, contrastPairs,
-        inputFirstUnchanged: true, paletteUnchanged: true, systemDarkRemainsLight: true,
+        inputFirstUnchanged: newPage ? null : true, inputFirstVerified: true, newPage,
+        paletteUnchanged: true, systemDarkRemainsLight: true,
         hoverPass: true, keyboardPass: true, clipboardPass: true, contactPass: true,
         commandBlocks: await commands.count(), eventsChecked: events.length,
         qaTrackerStubbed: true, externalRequestsSent, pass: true });
@@ -210,7 +220,8 @@ for (const name of ['assets/site.css', 'assets/site.js', 'docs/assets/site.css',
   files[name] = createHash('sha256').update(await fs.readFile(path.join(root, name))).digest('hex');
 }
 const report = { method: 'Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.',
-  baselineCommit: 'a54d774914e01ab94e0f64243495b91de30b7707', files, results };
+  baselineCommit: execFileSync('git', ['-C', root, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+  newPageMethod: 'Langfuse is new: verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical Langfuse intro comparison is claimed.', files, results };
 await fs.writeFile(path.join(root, 'evidence/contact-copy-visual-verified.json'), JSON.stringify(report, null, 2) + '\n');
 await fs.writeFile(path.join(out, 'results.json'), JSON.stringify(report, null, 2) + '\n');
 console.log(`PASS: ${results.length} page/viewports; ${results.reduce((n, r) => n + r.commandBlocks, 0)} exact keyboard copies; ${results.reduce((n, r) => n + r.eventsChecked, 0)} path-only events`);

@@ -79,7 +79,7 @@ class InteractionPagesTests(unittest.TestCase):
                 self.assertIn('Security issues (private)', footer)
         self.assertEqual(sum('<p class="guide-contact">' in
                          (build.ROOT / 'docs' / (p['slug'] + '.html')).read_text()
-                         for p in build.PAGES), 12)
+                         for p in build.PAGES), 13)
 
     def test_all_displayed_blocks_match_the_published_baseline_and_sources(self):
         baseline = json.loads((Path(__file__).parent / 'published_blocks.json').read_text())

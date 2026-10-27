@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROSE_GUIDES = {page["slug"] for page in json.loads((ROOT / "pages.json").read_text())
                 if page["slug"] != "index" and not page.get("kind")}
 GUIDE_CONTEXT = {
+    "langfuse-spend": "Costs and GENERATION counts are Langfuse records, not an invoice or independently verified provider requests. Manifests verify the local copy, not upstream ingestion completeness.",
     "cardinality": "diagnose reads your collector configuration; your metrics backend reports live series counts.",
     "token-spike": "A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.",
     "tokenmaxxing": "Reported tokens measure usage, not productivity or useful work. Rankings from keyed IDs are pseudonymous: whoever holds the key can identify people.",
@@ -36,6 +37,7 @@ GUIDE_CONTEXT = {
     "distinct-users": "Distinct counts are statistical estimates. Your application hashes raw IDs before they reach the sketch.",
 }
 GUIDE_PATHS = {
+    "langfuse-spend": ["#run", "#access", "#sample"],
     "litellm-spend": ["#run", "#access", "#file", "#sample"],
     "row-coverage": ["#run", "#access", "#file", "#sample"],
     "routing": ["#run", "#scope", "litellm-spend.html#access", "#file", "#sample"],
@@ -205,7 +207,7 @@ def main():
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
             if entry["slug"] in PROSE_GUIDES:
                 result = check_guide_prose(source, entry["title"],
-                                          250 if entry["slug"] in {"litellm-spend", "routing", "row-coverage"} else 200)
+                                          250 if entry["slug"] in {"litellm-spend", "langfuse-spend", "routing", "row-coverage"} else 200)
                 print(f"PASS prose: {entry['slug']}: {result['visible_words']} visible words before sample")
             check_guide_flow(source, GUIDE_PATHS[entry["slug"]])
             parsed = Blocks()
@@ -267,7 +269,9 @@ def main():
     for name in STATIC_ROOT_FILES:
         assert (ROOT / "docs" / name).read_bytes() == (ROOT / name).read_bytes(), name
     guides = sum(p["slug"] != "index" and not p.get("kind") for p in pages)
-    verified = json.loads((ROOT / "evidence/verified.json").read_text())["results"]
+    from langfuse_check import saved_verification
+    langfuse = saved_verification(ROOT)
+    verified = json.loads((ROOT / "evidence/verified.json").read_text())["results"] + [langfuse["sample"]]
     guide_slugs = {p["slug"] for p in pages if p["slug"] != "index" and not p.get("kind")}
     assert len(verified) == len(guide_slugs) and {r["page"] for r in verified} == guide_slugs
     for record in verified:
@@ -278,7 +282,7 @@ def main():
         assert record["pass"] and record["exit"] == command["exit"], record["page"]
         assert record["command_sha256"] == hashlib.sha256(command["text"].encode()).hexdigest(), record["page"]
     own_document = json.loads((ROOT / "evidence/own-data-verified.json").read_text())
-    own_verified = own_document["results"]
+    own_verified = own_document["results"] + langfuse["own"]
     actual = {}
     for slug in guide_slugs | {"index", "security"}:
         blocks = Blocks()
@@ -355,7 +359,7 @@ def main():
         (p["slug"], width) for p in pages for width in (1366, 390, 320)
     }, "all pages at laptop and mobile widths"
     for record in visual["results"]:
-        assert record["inputFirstUnchanged"] and record["paletteUnchanged"]
+        assert (record["inputFirstVerified"] if record.get("newPage") else record["inputFirstUnchanged"]) and record["paletteUnchanged"]
         assert record["systemDarkRemainsLight"] and record["hoverPass"]
         assert record["keyboardPass"] and record["clipboardPass"] and record["contactPass"]
         assert record["qaTrackerStubbed"] and record["externalRequestsSent"] == 0

@@ -58,17 +58,21 @@ def normalize(text):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--page", choices=["cardinality", "token-spike", "tokenmaxxing", "litellm-spend", "row-coverage", "routing", "what-if", "session-budget", "cache-check", "anomalies", "traces-usage", "distinct-users"])
+    parser.add_argument("--page", choices=["cardinality", "token-spike", "tokenmaxxing", "litellm-spend", "langfuse-spend", "row-coverage", "routing", "what-if", "session-budget", "cache-check", "anomalies", "traces-usage", "distinct-users"])
     args = parser.parse_args()
     from release_cache import consumer_pin
     from release_cache import cache_root
-    cache = cache_root()
+    cache = None if args.page == "langfuse-spend" else cache_root()
     args.output.mkdir(parents=True, exist_ok=True)
     records = []
     pages = json.loads((ROOT / "pages.json").read_text())
     for page in pages:
         slug = page["slug"]
         if slug == "index" or page.get("kind") in {"evidence", "reference"} or (args.page and slug != args.page):
+            continue
+        if slug == "langfuse-spend":
+            from langfuse_check import check
+            records.append(check(args.output / "langfuse")["sample"])
             continue
         blocks = Blocks()
         source = (ROOT / "pages" / (slug + ".html")).read_text()
@@ -106,9 +110,9 @@ def main():
             })
             print(f"PASS: {slug}; exit {result.returncode}; every displayed excerpt matches", flush=True)
     manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
-                "transport": "pinned cache-only curl; not a fresh anonymous public download",
-                "release_cache": json.loads((cache / "cache-identity.json").read_text()),
-                "site_cache_pin": consumer_pin(), "results": records}
+                "transport": "Langfuse: fresh anonymous public downloads; other guides: pinned cache-only curl, not fresh downloads",
+                "release_cache": json.loads((cache / "cache-identity.json").read_text()) if cache else None,
+                "site_cache_pin": consumer_pin() if cache else None, "results": records}
     (args.output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 
 

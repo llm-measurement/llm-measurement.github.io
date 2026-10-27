@@ -1,5 +1,38 @@
 # Guide Verification
 
+## Langfuse v0.13.0 Guide, October 26, 2026
+
+The new Langfuse guide independently pins fleetdiff v0.13.0 at
+`2cf3f222e145bd4c5fae18d73caa7ee90976ae03`; existing guide pins and dated
+records below remain unchanged. `langfuse-release.json` records the four resolved
+release/sample values. There is no standalone sample asset: the checksum-pinned
+released source archive supplies the synthetic export without building source.
+
+The exact sample and all three own-data blocks passed with independent fresh
+directories/HOMEs and real anonymous public release downloads, including installer
+checksum/attestation verification. No provider or Langfuse API was contacted.
+The own-data fixture contains 32 manifest-covered synthetic days derived from
+released rows, not operator data. `langfuse-verified.json` records actual commands,
+output, hashes and installed version. Reproduce with:
+
+```sh
+python3 scripts/outsider.py --page langfuse-spend --output evidence/local/langfuse
+```
+
+The reviewed offline suite passes 162 tests with seven real-database checks skipped;
+those older Docker checks were not rerun for this page. Browser verification
+covers all 16 pages at 1366/390/320 pixels (48 page/viewports), including exact
+keyboard clipboard copies, private query/hash exclusion, contrast and overflow.
+The new page matches shared styles and input-first ordering; no historical
+Langfuse page comparison is claimed. Full hosted checks remain a publication gate.
+The October 26 review names the supported plans, warns about identifiers in trace
+tags, and describes the v0.13.0 component sums/status behavior in direct terms.
+Those sums were checked against that exact release's native reader and directory
+projection, not inferred from a later main branch.
+The final reviewed setup wording uses 218 visible words before the sample; this
+guide uses the same 250-word limit as the other detailed export-setup guides.
+Other guide limits remain unchanged.
+
 ## Collector v0.6.2 Pin Verification, October 22-23, 2026
 
 The current collector configuration record uses the actual published v0.6.2

@@ -45,11 +45,11 @@ def resolve_tag(tag):
     return refs.get(ref + "^{}", refs[ref])
 
 
-def check_source(name, source, commit):
+def check_source(name, source, commit, version=FIXTURE_VERSION):
     pins = PIN.findall(source)
     for pin in pins:
         if pin != commit:
-            raise ValueError(f"{name}: fleetdiff pin {pin} != {FIXTURE_VERSION} commit {commit}")
+            raise ValueError(f"{name}: fleetdiff pin {pin} != {version} commit {commit}")
     blocks = Blocks()
     blocks.feed(source)
     for block in blocks.commands + blocks.own + blocks.review:
@@ -62,8 +62,8 @@ def check_source(name, source, commit):
             versions = [words[index + 1] for index, word in enumerate(words[:-1])
                         if index > 0 and words[index - 1] in {"sh", "bash"}
                         and word in {"install-fleetdiff.sh", "./install-fleetdiff.sh", "scripts/install.sh"}]
-            if versions != [FIXTURE_VERSION]:
-                raise ValueError(f"{name}: pinned installer must explicitly install {FIXTURE_VERSION}")
+            if versions != [version]:
+                raise ValueError(f"{name}: pinned installer must explicitly install {version}")
     return len(pins)
 
 
@@ -75,7 +75,13 @@ def check(root=ROOT, live=False):
     paths += sorted((root / "pages").glob("*.html"))
     paths += sorted((root / "docs").glob("*.html"))
     paths += [root / "docs/llms.txt"]
-    count = sum(check_source(str(path.relative_to(root)), path.read_text(), commit) for path in paths)
+    langfuse = json.loads((root / "evidence/langfuse-release.json").read_text())
+    if live and resolve_tag(langfuse["version"]) != langfuse["commit"]:
+        raise ValueError("Langfuse guide release tag changed")
+    count = sum(check_source(str(path.relative_to(root)), path.read_text(),
+                            langfuse["commit"] if path.name == "langfuse-spend.html" else commit,
+                            langfuse["version"] if path.name == "langfuse-spend.html" else FIXTURE_VERSION)
+                for path in paths)
     if not count:
         raise ValueError("no fleetdiff commit pins found")
     note = (root / "evidence/README.md").read_text()
@@ -91,6 +97,6 @@ def check(root=ROOT, live=False):
             if result["installed_version"].split()[:3] != ["fleetdiff", FIXTURE_VERSION, f"({commit})"]:
                 raise ValueError("verified installed binary does not match the release")
     mode = "live tag resolution" if live else "recorded release (offline)"
-    print(f"PASS: {count} fleetdiff commit pins match {FIXTURE_VERSION} -> {commit}; {mode}")
+    print(f"PASS: {count} release-bound fleetdiff pins; existing guides {FIXTURE_VERSION}, Langfuse {langfuse['version']}; {mode}")
     from collector_pins import check as check_collector
     check_collector(root, live=live)
