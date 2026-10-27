@@ -32,16 +32,16 @@ sh install-fleetdiff.sh v0.13.0 ./fleetdiff-install
 <pre data-own="langfuse-own" data-exit="0"><code>./fleetdiff-install/fleetdiff investigate \
   --langfuse-export ./langfuse-export/my-project \
   --group-by provided_model_name</code></pre>
-<p>Compares the latest two complete seven-day UTC periods. For shorter periods, set dates.</p>
+<p>By default, fleetdiff compares the two latest complete seven-day UTC periods. To compare shorter periods, give the dates:</p>
 <pre data-own="langfuse-short" data-exit="0"><code>./fleetdiff-install/fleetdiff investigate \
   --langfuse-export ./langfuse-export/my-project \
   --before-period 2026-10-10T12:00:00Z/2026-10-11T12:00:00Z \
   --after-period 2026-10-17T12:00:00Z/2026-10-18T12:00:00Z \
   --group-by provided_model_name</code></pre>
-<p>Also group by <code>--group-by trace_name</code> or <code>--group-by release</code>; <code>--format json</code> returns JSON.</p>
+<p>Use <code>--group-by trace_name</code> or <code>--group-by release</code> to see traces or releases instead of models, and add <code>--format json</code> for JSON output.</p>
 </aside>
 <section id="access"><h2>Get an export</h2>
-<p>In Langfuse, open <strong>Project Settings &gt; Integrations &gt; Blob Storage</strong>. Available on Langfuse Cloud Pro with the Teams add-on, Enterprise, or self-hosted; not Hobby/Core.</p>
+<p>In Langfuse, open <strong>Project Settings &gt; Integrations &gt; Blob Storage</strong>. Available on Langfuse Cloud Pro with the Teams add-on, Enterprise, or self-hosted. Hobby and Core plans don't include it.</p>
 <ol>
 <li>Configure your storage destination. Use enriched exports containing <code>observations_v2/</code>.</li>
 <li>Choose JSONL, gzip compression and an hourly schedule.</li>

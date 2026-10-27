@@ -1,6 +1,6 @@
 {
   "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.",
-  "baselineCommit": "99be8f9f646b67fcc811b5ecc5db25aa5c7ab127",
+  "baselineCommit": "c4fd5537afc74bebd1ef1780b4196e151dd9cd22",
   "newPageMethod": "Langfuse is new: verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical Langfuse intro comparison is claimed.",
   "files": {
     "assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
@@ -16,8 +16,8 @@
     "docs/tokenmaxxing.html": "d547501ce2da59eb07b25bd64094ad07fcd3e151bcb533423a7be7a84aa89cf2",
     "pages/litellm-spend.html": "2889093b380879de5dfe001ee1d85fb79a4aaa2582dc733cf0585f43ef1d71c4",
     "docs/litellm-spend.html": "a885072470ca50b844cda59aa97d41d5cadad201f6af13e35292c61854c60ff3",
-    "pages/langfuse-spend.html": "ab9da9e6dac2b42036afbcddadc0688766e3beb3aed45c3e5a84d514bd5454b7",
-    "docs/langfuse-spend.html": "144d4e58a1a1ac765521fd789ecddd9bc721b5902ba5cdde47c5513ab6bb06f3",
+    "pages/langfuse-spend.html": "0b79daeeb885a6b1f073d3a18f053a81d60b520ae7a7fdd61e740ba65391145a",
+    "docs/langfuse-spend.html": "bd8c092bd84912cdec00490755167d7deee3b1f4be4c335fceee9f19f6aa6b44",
     "pages/row-coverage.html": "83ec64d469b21c124a4358122898676fb79c18cc4ebf5e17503e17b1a43040a4",
     "docs/row-coverage.html": "11eb6488efa2268e85c196a05c838d3a131719851063c25c9a7100684b74cee3",
     "pages/routing.html": "8be79c89e1d76985fb8c09d50b65fedb815f5ea3e40b1bd61112db6cde32cacc",

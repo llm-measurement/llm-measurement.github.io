@@ -7,12 +7,16 @@ from unittest.mock import patch
 
 from langfuse_check import ROOT, environment, saved_verification
 from release_pins import check_source
+from guide_prose import check as check_prose
 
 
 class LangfuseChecks(unittest.TestCase):
     def test_reviewed_plan_privacy_and_accounting_copy(self):
         source = (ROOT / 'pages/langfuse-spend.html').read_text()
-        for required in ('Langfuse Cloud Pro with the Teams add-on, Enterprise, or self-hosted; not Hobby/Core',
+        check_prose(source, 'What changed in your Langfuse costs?', 250)
+        for required in ('Langfuse Cloud Pro with the Teams add-on, Enterprise, or self-hosted. Hobby and Core plans don\'t include it.',
+                         'By default, fleetdiff compares the two latest complete seven-day UTC periods. To compare shorter periods, give the dates:',
+                         'to see traces or releases instead of models, and add <code>--format json</code> for JSON output',
                          'also exports trace tags. Keep identifiers out of tags.',
                          'conflicting copies stop the comparison with an error',
                          'base input plus cache-read/cache-write, and base output plus reasoning, once',

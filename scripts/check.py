@@ -207,7 +207,7 @@ def main():
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
             if entry["slug"] in PROSE_GUIDES:
                 result = check_guide_prose(source, entry["title"],
-                                          250 if entry["slug"] in {"litellm-spend", "routing", "row-coverage"} else 200)
+                                          250 if entry["slug"] in {"litellm-spend", "langfuse-spend", "routing", "row-coverage"} else 200)
                 print(f"PASS prose: {entry['slug']}: {result['visible_words']} visible words before sample")
             check_guide_flow(source, GUIDE_PATHS[entry["slug"]])
             parsed = Blocks()

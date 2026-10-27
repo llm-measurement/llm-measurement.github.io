@@ -29,6 +29,9 @@ The October 26 review names the supported plans, warns about identifiers in trac
 tags, and describes the v0.13.0 component sums/status behavior in direct terms.
 Those sums were checked against that exact release's native reader and directory
 projection, not inferred from a later main branch.
+The final reviewed setup wording uses 218 visible words before the sample; this
+guide uses the same 250-word limit as the other detailed export-setup guides.
+Other guide limits remain unchanged.
 
 ## Collector v0.6.2 Pin Verification, October 22-23, 2026
 
