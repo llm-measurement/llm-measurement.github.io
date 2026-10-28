@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -22,7 +23,10 @@ class LangfuseChecks(unittest.TestCase):
                          'base input plus cache-read/cache-write, and base output plus reasoning, once',
                          'declared <code>total</code> is checked against that sum, not added to it',
                          'Missing component detail is counted as unreported',
-                         'v0.13.0 reports Langfuse request status as unknown; token and cost totals are unaffected'):
+                         'The bounded <code>level</code> enum describes observation severity',
+                         'DEFAULT, DEBUG and WARNING alone leave usage review clear',
+                         'ERROR tokens are shown separately, and missing or invalid levels require review',
+                         'Provider call status stays unknown; severity does not establish provider success or billing'):
             self.assertIn(required, source)
         for removed in ('conflicting copies refuse', 'Do not add', 'not a known zero',
                         'it does not build source', 'Parquet'):
@@ -32,7 +36,31 @@ class LangfuseChecks(unittest.TestCase):
         result = saved_verification()
         self.assertEqual(len(result['own']), 3)
         self.assertTrue(result['sample']['pass'])
-        self.assertIn('v0.13.0', result['installed_version'])
+        self.assertIn(result['release']['version'], result['installed_version'])
+        self.assertIn('Observation levels: DEFAULT 4 -> 6.', result['sample']['stdout'])
+        self.assertNotIn('Records needing usage review', result['sample']['stdout'])
+
+    def test_langfuse_version_matches_readme_and_text_index(self):
+        release = json.loads((ROOT / 'evidence/langfuse-release.json').read_text())
+        self.assertIn('The Langfuse guide pins fleetdiff ' + release['version'],
+                      (ROOT / 'README.md').read_text())
+        self.assertIn('fleetdiff ' + release['version'] + ' in the Langfuse guide',
+                      (ROOT / 'docs/llms.txt').read_text())
+
+    def test_clean_sample_review_flag_is_rejected_even_with_matching_hash(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for folder in ('pages', 'evidence'):
+                (root / folder).mkdir()
+            for name in ('pages/langfuse-spend.html', 'evidence/langfuse-release.json',
+                         'evidence/langfuse-verified.json'):
+                shutil.copy2(ROOT / name, root / name)
+            record = json.loads((root / 'evidence/langfuse-verified.json').read_text())
+            record['sample']['stdout'] += '\nRecords needing usage review: 4 -> 6.\n'
+            record['sample']['stdout_sha256'] = hashlib.sha256(record['sample']['stdout'].encode()).hexdigest()
+            (root / 'evidence/langfuse-verified.json').write_text(json.dumps(record))
+            with self.assertRaises(AssertionError):
+                saved_verification(root)
 
     def test_credentials_and_cache_shim_setting_not_inherited(self):
         with patch.dict('os.environ', {'GH_TOKEN': 'private', 'OPENAI_API_KEY': 'private',

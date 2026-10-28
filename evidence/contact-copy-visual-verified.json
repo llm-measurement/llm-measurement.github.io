@@ -1,6 +1,6 @@
 {
   "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.",
-  "baselineCommit": "c4fd5537afc74bebd1ef1780b4196e151dd9cd22",
+  "baselineCommit": "3dc6492e8693256d2895f841b8271fbe5217ad81",
   "newPageMethod": "Langfuse is new: verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical Langfuse intro comparison is claimed.",
   "files": {
     "assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
@@ -16,8 +16,8 @@
     "docs/tokenmaxxing.html": "d547501ce2da59eb07b25bd64094ad07fcd3e151bcb533423a7be7a84aa89cf2",
     "pages/litellm-spend.html": "2889093b380879de5dfe001ee1d85fb79a4aaa2582dc733cf0585f43ef1d71c4",
     "docs/litellm-spend.html": "a885072470ca50b844cda59aa97d41d5cadad201f6af13e35292c61854c60ff3",
-    "pages/langfuse-spend.html": "0b79daeeb885a6b1f073d3a18f053a81d60b520ae7a7fdd61e740ba65391145a",
-    "docs/langfuse-spend.html": "bd8c092bd84912cdec00490755167d7deee3b1f4be4c335fceee9f19f6aa6b44",
+    "pages/langfuse-spend.html": "ac50bf2378f03df29a767c2eda4894fc5848d05072594037f0e7cf1bf881d592",
+    "docs/langfuse-spend.html": "02569aa705356b3c676e93b04e06e6fb13d86b2c54087002ba51e7ad37f91104",
     "pages/row-coverage.html": "83ec64d469b21c124a4358122898676fb79c18cc4ebf5e17503e17b1a43040a4",
     "docs/row-coverage.html": "11eb6488efa2268e85c196a05c838d3a131719851063c25c9a7100684b74cee3",
     "pages/routing.html": "8be79c89e1d76985fb8c09d50b65fedb815f5ea3e40b1bd61112db6cde32cacc",
@@ -311,9 +311,9 @@
           "ratio": 5.115384650945418
         }
       ],
-      "inputFirstUnchanged": null,
+      "inputFirstUnchanged": true,
       "inputFirstVerified": true,
-      "newPage": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1221,9 +1221,9 @@
           "ratio": 5.115384650945418
         }
       ],
-      "inputFirstUnchanged": null,
+      "inputFirstUnchanged": true,
       "inputFirstVerified": true,
-      "newPage": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2131,9 +2131,9 @@
           "ratio": 5.115384650945418
         }
       ],
-      "inputFirstUnchanged": null,
+      "inputFirstUnchanged": true,
       "inputFirstVerified": true,
-      "newPage": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
