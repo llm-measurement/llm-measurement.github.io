@@ -1,18 +1,44 @@
 # Guide Verification
 
-## Langfuse v0.13.0 Guide, October 26, 2026
+## Langfuse v0.13.1 Guide, October 27, 2026
+
+The Langfuse guide pins the released v0.13.1 commit
+`73df8c41de98e55758291d5282314d00347e4a27`. Both installer blocks and the
+synthetic source archive use that revision. The source archive's SHA256 is
+`8576c6323d568320c23b9a8595f274595e8da1bd9d45fa4ab7ee10a80261848d`.
+`langfuse-release.json` binds these values; other guides retain their existing
+release lanes and dated evidence.
+
+The exact sample and all three own-data blocks passed on macOS ARM64 with
+independent fresh directories and homes, actual anonymous public downloads and
+installer checksum/provenance verification. The displayed completeness excerpt
+matches the released binary: DEFAULT observations increase from 4 to 6 with no
+usage-review line. The 32-day own-data fixture also retains valid DEFAULT levels.
+No provider or Langfuse API calls were made. `langfuse-verified.json` records the
+new commands, output, hashes and installed version. Reproduce with:
+
+```sh
+python3 scripts/outsider.py --page langfuse-spend --output evidence/local/langfuse
+```
+
+The October 26 v0.13.0 JSON is preserved byte-for-byte as
+`langfuse-verified-v0130-20261026.json`. It is history, not verification of the
+new commands. The page explains the bounded level enum separately from unknown
+provider call status and billing. No other guide's command pins were changed.
+
+## Historical Langfuse v0.13.0 Guide, October 26, 2026
 
 The new Langfuse guide independently pins fleetdiff v0.13.0 at
 `2cf3f222e145bd4c5fae18d73caa7ee90976ae03`; existing guide pins and dated
-records below remain unchanged. `langfuse-release.json` records the four resolved
-release/sample values. There is no standalone sample asset: the checksum-pinned
+records below remain unchanged. `langfuse-verified-v0130-20261026.json` retains
+the original release/sample values. There is no standalone sample asset: the checksum-pinned
 released source archive supplies the synthetic export without building source.
 
 The exact sample and all three own-data blocks passed with independent fresh
 directories/HOMEs and real anonymous public release downloads, including installer
 checksum/attestation verification. No provider or Langfuse API was contacted.
 The own-data fixture contains 32 manifest-covered synthetic days derived from
-released rows, not operator data. `langfuse-verified.json` records actual commands,
+released rows, not operator data. `langfuse-verified-v0130-20261026.json` records actual commands,
 output, hashes and installed version. Reproduce with:
 
 ```sh

@@ -22,7 +22,7 @@
 
 ## Released tools used in these examples
 
-- fleetdiff v0.13.0 in the Langfuse guide; v0.12.1 in the existing guides
+- fleetdiff v0.13.1 in the Langfuse guide; v0.12.1 in the existing guides
 - llm-sketchkit v0.4.0 on the home page; v0.3.0 in the existing Python guides
 - Collector configuration guidance: v0.6.2; Helm chart 0.6.2
 

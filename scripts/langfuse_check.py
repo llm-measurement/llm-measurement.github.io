@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Code authors: Vijay and Codex
-"""Verify the v0.13.0 guide independently of the older release-cache lane."""
+"""Verify the current Langfuse guide independently of the older release-cache lane."""
 import argparse
 from datetime import datetime, timedelta, timezone
 import hashlib
@@ -82,6 +82,8 @@ def check(output, root=ROOT):
     with tempfile.TemporaryDirectory(prefix='langfuse-sample-') as directory:
         fresh = Path(directory)
         sample = execute(parsed.commands[0], fresh, output, 'sample')
+        assert 'Observation levels: DEFAULT 4 -> 6.' in sample['stdout']
+        assert 'Records needing usage review' not in sample['stdout']
         for expected in parsed.expected:
             assert normalize(expected['text']) in normalize(sample['stdout']), expected['text']
         archive = fresh / 'langfuse-sample.tar.gz'
@@ -99,6 +101,8 @@ def check(output, root=ROOT):
                 record['block'] = block['id']
                 if block['id'] != 'langfuse-install':
                     assert 'Logged model requests:' in record['stdout']
+                    assert 'Observation levels: DEFAULT' in record['stdout']
+                    assert 'Records needing usage review' not in record['stdout']
                 own.append(record)
     result = {'checked_utc': datetime.now(timezone.utc).isoformat(), 'system': platform.system(),
               'machine': platform.machine(), 'release': release, 'installed_version': version,
@@ -119,6 +123,9 @@ def saved_verification(root=ROOT):
         assert actual['command_sha256'] == digest(expected['text'].encode())
         assert actual['stdout_sha256'] == digest(actual['stdout'].encode())
     assert len(record['own']) == len(parsed.own)
+    assert 'Observation levels: DEFAULT 4 -> 6.' in record['sample']['stdout']
+    for actual in [record['sample'], *record['own'][1:]]:
+        assert 'Records needing usage review' not in actual['stdout']
     for expected in parsed.expected:
         assert normalize(expected['text']) in normalize(record['sample']['stdout'])
     return record

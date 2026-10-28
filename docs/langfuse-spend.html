@@ -25,8 +25,8 @@
 <aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Your Langfuse export</h2>
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="langfuse-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/2cf3f222e145bd4c5fae18d73caa7ee90976ae03/scripts/install.sh
-sh install-fleetdiff.sh v0.13.0 ./fleetdiff-install
+<pre data-own="langfuse-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/73df8c41de98e55758291d5282314d00347e4a27/scripts/install.sh
+sh install-fleetdiff.sh v0.13.1 ./fleetdiff-install
 ./fleetdiff-install/fleetdiff --version</code></pre>
 <p>Copy your project directory, including <code>observations_v2/</code>, <code>manifests/</code> and every listed file.</p>
 <pre data-own="langfuse-own" data-exit="0"><code>./fleetdiff-install/fleetdiff investigate \
@@ -55,14 +55,14 @@ sh install-fleetdiff.sh v0.13.0 ./fleetdiff-install
 </details>
 <section id="sample"><h2>Try the sample</h2>
 <p>No Langfuse project is needed. This downloads the released source archive for its synthetic export.</p>
-<pre data-run="langfuse-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/2cf3f222e145bd4c5fae18d73caa7ee90976ae03/scripts/install.sh
-sh install-fleetdiff.sh v0.13.0 ./fleetdiff-install
-curl -fsSLo langfuse-sample.tar.gz 'https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/2cf3f222e145bd4c5fae18d73caa7ee90976ae03'
-printf '%s  %s\n' '1c88f08b2ee573301834564141d6f3655bed125674d79a924d618fb956e258a7' langfuse-sample.tar.gz \
+<pre data-run="langfuse-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/73df8c41de98e55758291d5282314d00347e4a27/scripts/install.sh
+sh install-fleetdiff.sh v0.13.1 ./fleetdiff-install
+curl -fsSLo langfuse-sample.tar.gz 'https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/73df8c41de98e55758291d5282314d00347e4a27'
+printf '%s  %s\n' '8576c6323d568320c23b9a8595f274595e8da1bd9d45fa4ab7ee10a80261848d' langfuse-sample.tar.gz \
   | shasum -a 256 -c -
 tar -xzf langfuse-sample.tar.gz
 ./fleetdiff-install/fleetdiff investigate \
-  --langfuse-export 'fleetdiff-2cf3f222e145bd4c5fae18d73caa7ee90976ae03/examples/langfuse-spend/export' \
+  --langfuse-export 'fleetdiff-73df8c41de98e55758291d5282314d00347e4a27/examples/langfuse-spend/export' \
   --before-period 2026-10-07T00:00:00Z/2026-10-07T01:00:00Z \
   --after-period 2026-10-08T00:00:00Z/2026-10-08T01:00:00Z \
   --group-by provided_model_name</code></pre>
@@ -72,6 +72,12 @@ tar -xzf langfuse-sample.tar.gz
 model-1 accounts for 100% of the net recorded increase (+8,000 tokens).
 Logged model requests: 4 -&gt; 6.</code></pre>
 <p>The report also shows model contributors and local export coverage. Try trace-name grouping to locate the synthetic interactive trace behind the increase.</p>
+<pre class="output" data-output="langfuse-spend"><code>How complete is the export?
+  Observation levels: DEFAULT 4 -&gt; 6.
+  Call status unknown (Langfuse doesn't record it): 4 -&gt; 6.
+  Zero-filled: cannot determine from this export. Provider origin: not established by Langfuse observations.
+  Recorded cost (Langfuse, analyzed GENERATION observations): 0.008 -&gt; 0.016.
+  No other usage problems found.</code></pre>
 <details class="measurement-details"><summary>What the numbers mean</summary>
 <p class="measurement-context">Costs and GENERATION counts are Langfuse records, not an invoice or independently verified provider requests. Manifests verify the local copy, not upstream ingestion completeness.<br>
 <a href="summaries.html#measurement-notes">Measurement notes</a></p>
@@ -79,7 +85,7 @@ Logged model requests: 4 -&gt; 6.</code></pre>
 <li>Only GENERATION observations enter comparisons. Other observation types are counted separately. Duplicate project/observation IDs are deduplicated; conflicting copies stop the comparison with an error.</li>
 <li>Missing files or uncovered windows remain partial. Restore them before drawing whole-period conclusions.</li>
 <li>For reported input/output, fleetdiff sums base input plus cache-read/cache-write, and base output plus reasoning, once. The declared <code>total</code> is checked against that sum, not added to it. Missing component detail is counted as unreported.</li>
-<li>v0.13.0 reports Langfuse request status as unknown; token and cost totals are unaffected.</li>
+<li>The bounded <code>level</code> enum describes observation severity. DEFAULT, DEBUG and WARNING alone leave usage review clear; ERROR tokens are shown separately, and missing or invalid levels require review. Provider call status stays unknown; severity does not establish provider success or billing.</li>
 <li>JSONL, JSON and CSV work with or without gzip. Oversize comparisons stop with guidance.</li>
 </ul>
 </details></section>
