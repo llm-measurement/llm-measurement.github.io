@@ -6,7 +6,7 @@
 
 - [Which user is driving my LLM token spike?](https://llm-measurement.github.io/token-spike.html): Usage jumped? Compare two periods and see which users and sessions account for the increase.
 - [Who is tokenmaxxing? Find your heaviest AI token users](https://llm-measurement.github.io/tokenmaxxing.html): No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.
-- [Check your LiteLLM cost tracking: what changed and who drove it](https://llm-measurement.github.io/litellm-spend.html): One read-only command on your LiteLLM database shows which models, teams and keys drove a spend change, and which requests never reached the spend logs.
+- [LiteLLM spend tracking: see who drove a spend increase](https://llm-measurement.github.io/litellm-spend.html): Spend tracking already on? A read-only command on your LiteLLM spend logs shows what changed, which model, team or key drove it, and what the logs missed.
 - [What changed in your Langfuse costs?](https://llm-measurement.github.io/langfuse-spend.html): Compare two periods of a local Langfuse export to find model and trace contributors to recorded cost and token changes, with export coverage kept visible.
 - [LiteLLM spend logs missing requests? Compare with daily counts](https://llm-measurement.github.io/row-coverage.html): Compare LiteLLM spend-log rows with daily request counts to find requests that never reached the spend logs, with a real response-ID collision as the example.
 - [Which model actually served your LiteLLM route?](https://llm-measurement.github.io/routing.html): Audit LiteLLM Auto Routing and fallbacks: compare model shares, missing attribution and classifier overhead using recorded spend only.

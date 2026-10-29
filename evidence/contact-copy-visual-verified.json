@@ -1,13 +1,13 @@
 {
-  "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.",
-  "baselineCommit": "3dc6492e8693256d2895f841b8271fbe5217ad81",
+  "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised. October29 approved exception: only the LiteLLM H1 changes to the exact approved snippet; its following paragraph/navigation and every other page introduction remain equal to baseline. Metadata-only source/HTML scope is independently checked.",
+  "baselineCommit": "148cb426f020486eefafff4193bd539ff6fd87ae",
   "newPageMethod": "Langfuse is new: verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical Langfuse intro comparison is claimed.",
   "files": {
     "assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
     "assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
     "docs/assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
     "docs/assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
-    "pages.json": "8d6c1bad6c8f688ec69eab36d4617def64e6baa47f9b7ef79c8acdf824d1b43b",
+    "pages.json": "4d4f1e2a76bd125b988b10fe3ba7dcab6d7fe994c6ceb010aa34dc4d9ca9b8ae",
     "pages/index.html": "676713e588b3f4b52ac6a40a6900481179f76a871abe71f18f930f547ffba9a1",
     "docs/index.html": "fbaab397d963415f8493acdba31ded373f0ed1da1ef255b9c8017aeb16f438c6",
     "pages/token-spike.html": "c9117cf7c4ca50b629e3b86392cc4349ccb27a517a2314736569d9b8789e9d8c",
@@ -15,7 +15,7 @@
     "pages/tokenmaxxing.html": "f31c982435e0c38cb05f7081e378820b3f553f22f8dbf7ec632200ca9868022d",
     "docs/tokenmaxxing.html": "d547501ce2da59eb07b25bd64094ad07fcd3e151bcb533423a7be7a84aa89cf2",
     "pages/litellm-spend.html": "2889093b380879de5dfe001ee1d85fb79a4aaa2582dc733cf0585f43ef1d71c4",
-    "docs/litellm-spend.html": "a885072470ca50b844cda59aa97d41d5cadad201f6af13e35292c61854c60ff3",
+    "docs/litellm-spend.html": "9f6b8772bcb5402525ac9eb46fcb85a33aecf18e7a70f26b3228fcdc3c30525c",
     "pages/langfuse-spend.html": "ac50bf2378f03df29a767c2eda4894fc5848d05072594037f0e7cf1bf881d592",
     "docs/langfuse-spend.html": "02569aa705356b3c676e93b04e06e6fb13d86b2c54087002ba51e7ad37f91104",
     "pages/row-coverage.html": "83ec64d469b21c124a4358122898676fb79c18cc4ebf5e17503e17b1a43040a4",
@@ -218,7 +218,7 @@
         "width": 1366,
         "scroll": 1366,
         "indexBottom": 372.75,
-        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
+        "title": "LiteLLM spend tracking: see who drove a spend increase",
         "folded": true
       },
       "contrastPairs": [
@@ -1127,8 +1127,8 @@
       "geometry": {
         "width": 390,
         "scroll": 390,
-        "indexBottom": 515.40625,
-        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
+        "indexBottom": 482.90625,
+        "title": "LiteLLM spend tracking: see who drove a spend increase",
         "folded": true
       },
       "contrastPairs": [
@@ -2037,8 +2037,8 @@
       "geometry": {
         "width": 320,
         "scroll": 320,
-        "indexBottom": 643.578125,
-        "title": "Check your LiteLLM cost tracking: what changed and who drove it",
+        "indexBottom": 611.078125,
+        "title": "LiteLLM spend tracking: see who drove a spend increase",
         "folded": true
       },
       "contrastPairs": [

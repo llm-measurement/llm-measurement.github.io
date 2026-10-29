@@ -41,9 +41,9 @@ class BuildTests(unittest.TestCase):
     def test_litellm_discovery_metadata_keeps_short_navigation_and_page_bodies(self):
         expected = (
             ("litellm-spend", "LiteLLM spend",
-             "Check your LiteLLM cost tracking: what changed and who drove it",
-             "One read-only command on your LiteLLM database shows which models, teams and keys drove a spend change, "
-             "and which requests never reached the spend logs."),
+             "LiteLLM spend tracking: see who drove a spend increase",
+             "Spend tracking already on? A read-only command on your LiteLLM spend logs shows what changed, "
+             "which model, team or key drove it, and what the logs missed."),
             ("row-coverage", "Row coverage",
              "LiteLLM spend logs missing requests? Compare with daily counts",
              "Compare LiteLLM spend-log rows with daily request counts to find requests that never reached "
