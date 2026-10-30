@@ -11,8 +11,8 @@
 <h2 id="own-data-title">Run it on your data</h2>
 <p>Set up a LiteLLM <a href="litellm-spend.html#access">read-only login</a> and <a href="litellm-spend.html#run">connection file</a>.</p>
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="cache-check-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
-sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
+<pre data-own="cache-check-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin</code></pre>
 <pre data-own="cache-check-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --group-by session</code></pre>
 <p>Compare cache shares and session-level uncached input over the last two complete seven-day UTC periods.</p>
 </aside>
@@ -26,10 +26,10 @@ sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
 <section id="sample">
 <h2>Try the sample</h2>
 <p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-run="cache-check" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.1.tar.gz
+<pre data-run="cache-check" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.14.0.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.1
-sh scripts/install.sh v0.12.1 ./release
+cd fleetdiff-0.14.0
+sh scripts/install.sh v0.14.0 ./release
 ./release/fleetdiff investigate --litellm-spend examples/litellm-spend/cache-drop.csv \
   --before-period 2026-10-07 --after-period 2026-10-08 --group-by key</code></pre>
 <h3>What you'll see</h3>
@@ -50,10 +50,10 @@ sh scripts/install.sh v0.12.1 ./release
 <h3>Check coverage before interpreting a change</h3>
 <p>Each cache field has its own covered-input denominator and request count. Missing, invalid and subset-violating details are excluded and counted separately; requests without group identities stay outside the ranking. Explicit zero detail is recorded zero, not proof of provider origin. A missing detail or zero denominator leaves the share unavailable.</p>
 <p>If the recorded share falls, review the provider's cache diagnostics and whether the gateway route preserves cache markers.</p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/cache-drop.csv">released synthetic cache-drop CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/examples/litellm-spend/cache-drop.csv">released synthetic cache-drop CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p class="measurement-context">Uncached-input growth can reflect input volume or workload mix, not necessarily a per-key cache-share loss. These recorded shares do not diagnose causes or costs; the synthetic example checks arithmetic, not provider cache behavior. Summary-based investigate reports support aggregate shares with sufficient coverage, but do not show per-model cache breakdowns or cache-weighted key/session rankings.<br>
-<a href="summaries.html#measurement-notes">Measurement notes</a>. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/docs/CACHE.md">Cache measurements and limits</a>.</p>
+<a href="summaries.html#measurement-notes">Measurement notes</a>. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/docs/CACHE.md">Cache measurements and limits</a>.</p>
 </details>
 </section>

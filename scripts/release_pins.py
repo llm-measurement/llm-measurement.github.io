@@ -46,6 +46,12 @@ def resolve_tag(tag):
 
 
 def check_source(name, source, commit, version=FIXTURE_VERSION):
+    if name == "evidence/README.md":
+        start, end = "<!-- historical-verification:start -->", "<!-- historical-verification:end -->"
+        assert source.count(start) == source.count(end) == 1
+        before, history = source.split(start)
+        _, after = history.split(end)
+        source = before + after
     pins = PIN.findall(source)
     for pin in pins:
         if pin != commit:

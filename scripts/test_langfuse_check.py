@@ -42,9 +42,9 @@ class LangfuseChecks(unittest.TestCase):
 
     def test_langfuse_version_matches_readme_and_text_index(self):
         release = json.loads((ROOT / 'evidence/langfuse-release.json').read_text())
-        self.assertIn('The Langfuse guide pins fleetdiff ' + release['version'],
+        self.assertIn('All fleetdiff guides pin ' + release['version'],
                       (ROOT / 'README.md').read_text())
-        self.assertIn('fleetdiff ' + release['version'] + ' in the Langfuse guide',
+        self.assertIn('fleetdiff ' + release['version'] + ' in all fleetdiff guides',
                       (ROOT / 'docs/llms.txt').read_text())
 
     def test_clean_sample_review_flag_is_rejected_even_with_matching_hash(self):

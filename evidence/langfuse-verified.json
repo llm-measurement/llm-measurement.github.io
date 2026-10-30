@@ -1,24 +1,24 @@
 {
-  "checked_utc": "2026-10-28T01:52:27.909478+00:00",
+  "checked_utc": "2026-10-30T01:20:08.391256+00:00",
   "system": "Darwin",
   "machine": "arm64",
   "release": {
-    "version": "v0.13.1",
-    "commit": "73df8c41de98e55758291d5282314d00347e4a27",
-    "sample_url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/73df8c41de98e55758291d5282314d00347e4a27",
-    "sample_sha256": "8576c6323d568320c23b9a8595f274595e8da1bd9d45fa4ab7ee10a80261848d",
-    "sample_project_dir": "fleetdiff-73df8c41de98e55758291d5282314d00347e4a27/examples/langfuse-spend/export",
+    "version": "v0.14.0",
+    "commit": "78c6448de2f11e96ca63fb5d6ecff2ad2364304a",
+    "sample_url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/78c6448de2f11e96ca63fb5d6ecff2ad2364304a",
+    "sample_sha256": "7a00a92d3fd6539b451b3520b5949377cb4d1732e33b279dbd400ea8ef3ad52e",
+    "sample_project_dir": "fleetdiff-78c6448de2f11e96ca63fb5d6ecff2ad2364304a/examples/langfuse-spend/export",
     "sample_kind": "pinned released source archive, not a standalone release asset"
   },
-  "installed_version": "fleetdiff v0.13.1 (73df8c41de98e55758291d5282314d00347e4a27) go1.26.10 darwin/arm64",
+  "installed_version": "fleetdiff v0.14.0 (78c6448de2f11e96ca63fb5d6ecff2ad2364304a) go1.26.10 darwin/arm64",
   "method": "Exact published sample and all own-data blocks; independent fresh HOME/directories; real public release checksum/attestation verification. Own fixture: 32 manifest-covered synthetic days derived from released rows. No provider or Langfuse API calls.",
   "sample": {
     "page": "langfuse-spend",
     "exit": 0,
     "pass": true,
-    "command_sha256": "e373d5dc6b1f75877bd8875ade07dab1a20c1dac9968e172ab23797375ace3ae",
-    "stdout_sha256": "87d869ea882ec4e55f0bf09b86f296a834ee10973860f0f95e14d8ea3d8e9f44",
-    "stdout": "./fleetdiff_v0.13.1_darwin_arm64.tar.gz: OK\nVerified darwin/arm64 installation in ././fleetdiff-install\nRun fleetdiff --version from that directory before use.\nlangfuse-sample.tar.gz: OK\nLangfuse GENERATION observations; recorded cost (Langfuse), not an invoice.\nLocal coverage: 2 manifests, 2/2 files verified; 0 missing, 0 partial, 0 unmanifested.\nObservations: 10 physical, 10 unique, 0 duplicate copies removed; 10 GENERATION.\nUsage coverage: 0 missing, 0 partial, 0 invalid; 0 unmapped category occurrences; 0 usage rows with zero recorded cost.\nRecorded tokens doubled (8,000 -> 16,000).\nmodel-1 accounts for 100% of the net recorded increase (+8,000 tokens).\nLogged model requests: 4 -> 6.\nBefore: Wed 2026-10-07 00:00:00 UTC to Wed 2026-10-07 01:00:00 UTC (end exclusive).\nAfter: Thu 2026-10-08 00:00:00 UTC to Thu 2026-10-08 01:00:00 UTC (end exclusive).\n\nWhat changed?\n  model-1: 8,000 -> 16,000 recorded tokens; 4 -> 6 requests.\n  Cache detail not recorded in this export.\n\nWho drove the increase?\n  model-1: 8,000 -> 16,000 tokens; change +8,000.\n  1 leading tracked provided_model_name accounts for 100% of the net recorded increase.\n  Attributed tokens: 8,000 -> 16,000.\n\nHow complete is the export?\n  Observation levels: DEFAULT 4 -> 6.\n  Call status unknown (Langfuse doesn't record it): 4 -> 6.\n  Zero-filled: cannot determine from this export. Provider origin: not established by Langfuse observations.\n  Recorded cost (Langfuse, analyzed GENERATION observations): 0.008 -> 0.016.\n  No other usage problems found.\n  Rows read: 10.\n  Whole-period per-request split unavailable while provider call status is unknown; observation severity does not establish success.\n  model-1 per-request split unavailable while provider call status is unknown.\n\nNext: review the leading contributors in your local Langfuse export.\n",
+    "command_sha256": "c4a595931fc4116e279e6bb376f1c31d5c05dad2c61d0a958fce72cb06d02e67",
+    "stdout_sha256": "869089ae021d7006aa2fa5b937ae8ce5f4045259689dfca26e17744d47d7f90f",
+    "stdout": "./fleetdiff_v0.14.0_darwin_arm64.tar.gz: OK\nVerified darwin/arm64 installation in ././fleetdiff-install\nRun fleetdiff --version from that directory before use.\nlangfuse-sample.tar.gz: OK\nLangfuse GENERATION observations; recorded cost (Langfuse), not an invoice.\nLocal coverage: 2 manifests, 2/2 files verified; 0 missing, 0 partial, 0 unmanifested.\nObservations: 10 physical, 10 unique, 0 duplicate copies removed; 10 GENERATION.\nUsage coverage: 0 missing, 0 partial, 0 invalid; 0 unmapped category occurrences; 0 usage rows with zero recorded cost.\nRecorded tokens doubled (8,000 -> 16,000).\nmodel-1 accounts for 100% of the net recorded increase (+8,000 tokens).\nLogged model requests: 4 -> 6.\nBefore: Wed 2026-10-07 00:00:00 UTC to Wed 2026-10-07 01:00:00 UTC (end exclusive).\nAfter: Thu 2026-10-08 00:00:00 UTC to Thu 2026-10-08 01:00:00 UTC (end exclusive).\n\nWhat changed?\n  model-1: 8,000 -> 16,000 recorded tokens; 4 -> 6 requests.\n  Cache detail not recorded in this export.\n\nWho drove the increase?\n  model-1: 8,000 -> 16,000 tokens; change +8,000.\n  1 leading tracked provided_model_name accounts for 100% of the net recorded increase.\n  Attributed tokens: 8,000 -> 16,000.\n\nHow complete is the export?\n  Observation levels: DEFAULT 4 -> 6.\n  Call status unknown (Langfuse doesn't record it): 4 -> 6.\n  Zero-filled: cannot determine from this export. Provider origin: not established by Langfuse observations.\n  Recorded cost (Langfuse, analyzed GENERATION observations): 0.008 -> 0.016.\n  No other usage problems found.\n  Rows read: 10.\n  Whole-period per-request split unavailable while provider call status is unknown; observation severity does not establish success.\n  model-1 per-request split unavailable while provider call status is unknown.\n\nNext: review the leading contributors in your local Langfuse export.\n",
     "transport": "fresh anonymous public downloads; no cache shim or credentials"
   },
   "own": [
@@ -26,9 +26,9 @@
       "page": "langfuse-spend",
       "exit": 0,
       "pass": true,
-      "command_sha256": "660d9ed85cbf5fc041028d2c5592321553ee02b22c4d8fc196868b89cf86829f",
-      "stdout_sha256": "152189ed423ce1a537f0697d9dfdfd8e695ec719ac627803310c0c498a89b36f",
-      "stdout": "./fleetdiff_v0.13.1_darwin_arm64.tar.gz: OK\nVerified darwin/arm64 installation in ././fleetdiff-install\nRun fleetdiff --version from that directory before use.\nfleetdiff v0.13.1 (73df8c41de98e55758291d5282314d00347e4a27) go1.26.10 darwin/arm64\n",
+      "command_sha256": "055f67eaab2946298810cc6b1d998c706a91ec5ec5a43534aeaae723a0b17c76",
+      "stdout_sha256": "87c3d02b8db8e83cc3484793a96f65d938e818e9f72112d0791d83bb929c078c",
+      "stdout": "./fleetdiff_v0.14.0_darwin_arm64.tar.gz: OK\nVerified darwin/arm64 installation in ././fleetdiff-install\nRun fleetdiff --version from that directory before use.\nfleetdiff v0.14.0 (78c6448de2f11e96ca63fb5d6ecff2ad2364304a) go1.26.10 darwin/arm64\n",
       "transport": "fresh anonymous public downloads; no cache shim or credentials",
       "block": "langfuse-install"
     },

@@ -22,6 +22,19 @@ class ReleasePinTests(unittest.TestCase):
     def test_matching_installer_and_release(self):
         self.assertEqual(check_source("page", self.block(), FIXTURE_COMMIT), 1)
 
+    def test_only_explicit_evidence_history_is_excluded(self):
+        start, end = '<!-- historical-verification:start -->', '<!-- historical-verification:end -->'
+        old = 'https://raw.githubusercontent.com/llm-measurement/fleetdiff/' + 'a' * 40 + '/examples/fixture.csv'
+        text = self.block() + start + old + end
+        self.assertEqual(check_source('evidence/README.md', text, FIXTURE_COMMIT), 1)
+        with self.assertRaises(ValueError):
+            check_source('page', text, FIXTURE_COMMIT)
+        with self.assertRaises(ValueError):
+            check_source('evidence/README.md', text + old, FIXTURE_COMMIT)
+        for bad in (text.replace(end, ''), text + start + end):
+            with self.assertRaises(AssertionError):
+                check_source('evidence/README.md', bad, FIXTURE_COMMIT)
+
     def test_branch_head_installer_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "pin.*!="):
             check_source("page", self.block("a" * 40), FIXTURE_COMMIT)

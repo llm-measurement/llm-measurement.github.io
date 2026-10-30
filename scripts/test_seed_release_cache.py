@@ -143,7 +143,7 @@ class SeedTests(unittest.TestCase):
 
     def test_daily_log_distinguishes_seed_events_from_metadata_collection(self):
         definition = cache.spec()
-        item = {"asset": "SHA256SUMS", "url": "https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/SHA256SUMS",
+        item = {"asset": "SHA256SUMS", "url": "https://github.com/llm-measurement/fleetdiff/releases/download/" + definition["version"] + "/SHA256SUMS",
                 "purpose": "deliberate protected-main cache seed", "run_id": 123, "run_attempt": 1,
                 "started_at": "2026-10-22T23:00:00+00:00", "finished_at": "2026-10-22T23:00:01+00:00",
                 "status": "verified", "bytes": 579, "sha256": definition["assets"]["SHA256SUMS"]}

@@ -2,115 +2,155 @@
   "system": "Darwin",
   "machine": "arm64",
   "python": "3.14.2",
+  "transport": "Langfuse: fresh anonymous public downloads; other guides: pinned cache-only curl, not fresh downloads",
+  "release_cache": {
+    "mode": "verified-cache, not fresh anonymous downloads",
+    "version": "v0.14.0",
+    "source_commit": "78c6448de2f11e96ca63fb5d6ecff2ad2364304a",
+    "source_tree": "9244694578e1a97f6cc41e061947e4dfbc36530b",
+    "artifact": {
+      "id": 12944010808,
+      "name": "release-files",
+      "run_id": 40978251401,
+      "repository": "llm-measurement/fleetdiff",
+      "digest": "sha256:f397b1229aa7724157e2773b09155dca3b59fd7540ec2b3d80d458fa18a6818d"
+    },
+    "spec_sha256": "ec3166956e9cb6eb672dfce5306cda154d813fac8d69634732912d965c86d792",
+    "attested_subjects_verified": [
+      "SHA256SUMS",
+      "build.txt",
+      "fleetdiff_v0.14.0_darwin_amd64.tar.gz",
+      "fleetdiff_v0.14.0_darwin_arm64.tar.gz",
+      "fleetdiff_v0.14.0_linux_amd64.tar.gz",
+      "fleetdiff_v0.14.0_linux_arm64.tar.gz",
+      "sbom.spdx.json"
+    ],
+    "source_archives": "deterministic git archive of the pinned commit; not original codeload bytes",
+    "provenance": "original published bundle; consumers still run real gh verification"
+  },
+  "site_cache_pin": {
+    "artifact": {
+      "digest": "sha256:a9221c71aa55e51c15d941c4e7ddd309fc0dde8ec0c256dfe56ffe81a18694f2",
+      "expires_at": "2027-01-28T00:54:29Z",
+      "id": 12944934095,
+      "name": "site-release-cache-40982598894-1"
+    },
+    "cache_key": "site-release-cache-12944934095-671ea1847dac46064e591f14429ef8ef909188325316f467aa96c6e4241438df",
+    "member_manifest_sha256": "671ea1847dac46064e591f14429ef8ef909188325316f467aa96c6e4241438df",
+    "release_commit": "78c6448de2f11e96ca63fb5d6ecff2ad2364304a",
+    "release_manifest_sha256": "ec3166956e9cb6eb672dfce5306cda154d813fac8d69634732912d965c86d792",
+    "release_version": "v0.14.0",
+    "repository": "llm-measurement/llm-measurement.github.io",
+    "repository_id": 1412683546,
+    "seed_run_attempt": 1,
+    "seed_run_id": 40982598894,
+    "seed_source_sha": "4584515bf0a311866fce6a2d3ad6b2936f0409ff",
+    "seed_workflow": ".github/workflows/seed-release-cache.yml"
+  },
   "results": [
     {
       "page": "token-spike",
       "exit": 0,
       "pass": true,
-      "seconds": 1.16,
-      "command_sha256": "3bdcaa7137bcd220d4f668d7c4e33db815163a3f73215c1e1930a5f8539120cf",
-      "stdout_sha256": "5b4f6db3cce793a16dc7ba5b1854ca6f13fc91d6db9d178bbb35ec180cbc7d1d",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 1.61,
+      "command_sha256": "b73cc47d16ea721441a401f109a012651ec298ce8198dfb70c86da62c2419b0d",
+      "stdout_sha256": "4910289bb8b4267db44e63a5250f9200a71ef82318fd00d28a36550b3ae746f4"
     },
     {
       "page": "tokenmaxxing",
       "exit": 0,
       "pass": true,
-      "seconds": 2.1,
+      "seconds": 3.84,
       "command_sha256": "c1e8ee059b44e9ed9b3dcae4b4b6e5f0963415b02e455b4960870fa0e9778a00",
-      "stdout_sha256": "c358b3761063238539484747ac0233fd495c8585b8e99cf9fca43a7c9dbb48f4",
-      "retained_history": "Unchanged command bytes; prior verification retained, not rerun on October 22"
+      "stdout_sha256": "c358b3761063238539484747ac0233fd495c8585b8e99cf9fca43a7c9dbb48f4"
     },
     {
       "page": "litellm-spend",
       "exit": 0,
       "pass": true,
-      "seconds": 1.02,
-      "command_sha256": "dd2e6e01411463bf41a813bd76b6d1fee59d11fb5f495ac47263cda7327952ee",
-      "stdout_sha256": "8fbbd85377da475e8d32302708ad803773f83bcd0d4adbe16eabd40bfa295330",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 1.28,
+      "command_sha256": "7533e2a2512d8a1eca4ba3190dfe1aa5ba1b69d0a87b1c7f5ada8cd7e72282fa",
+      "stdout_sha256": "ef523d210c97d4bb44dfc60979667f924503c32657b93ad0ee979d6e7585fd22"
+    },
+    {
+      "page": "agent-spend",
+      "exit": 0,
+      "pass": true,
+      "seconds": 1.62,
+      "command_sha256": "717014a2c344ad72b6463eef1c3fc7a8021380e2b0e7fed1b5618bb323ce997c",
+      "stdout_sha256": "69c2d4973a80992bff88ab1113d2a6c36d1c9efc17365808e77d8b68279fd1de"
     },
     {
       "page": "row-coverage",
       "exit": 0,
       "pass": true,
-      "seconds": 1.04,
-      "command_sha256": "12337f806d8d5aeb3444c8edbbb51b2d5476ae220bceb15a4d5efbc47f944cdd",
-      "stdout_sha256": "e7c1f3a0505357b9dfc089b155e17b18849f89418726694dc46e9a879cff55df",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 1.25,
+      "command_sha256": "bcb14f5da6029ae1ed30c74e5d956acf3c0dce161852c698a66904f03788d3c8",
+      "stdout_sha256": "3c06d1f6bc6a6fd4f4a43c5da071ea6241faeafc7d8650b4693d0e4e49a3820e"
     },
     {
       "page": "routing",
       "exit": 0,
       "pass": true,
-      "seconds": 1.0,
-      "command_sha256": "ad506cc0b0e6520e4e467e97e9505ddb65429f2f6c476be0d274b25efc95d726",
-      "stdout_sha256": "4145b704cc439971380918364c22de0293a14656f8dbd0e7b5f3b1f38fbbe0fa",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 1.32,
+      "command_sha256": "111bb65e9d13e079fcec21ce83e680c24eea36e6d7e1dc28e1db07cdd3e7779e",
+      "stdout_sha256": "2648b336b2259934646b73ac51df886a670953619f8336d725b5aa72a6a27caf"
     },
     {
       "page": "what-if",
       "exit": 0,
       "pass": true,
-      "seconds": 0.98,
-      "command_sha256": "06608e28e7cadc713663a43ac98a981d883842e88e0da0a46b0fa74be3ee718d",
-      "stdout_sha256": "00629374a2e25ed318d54a9a1cc0a41310fbf8fad611fec087789f3273703d46",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 1.28,
+      "command_sha256": "1ac41176265c283201779c995b228f608f0a6fb9a0b68b5b2dd8d5fa1408a28a",
+      "stdout_sha256": "8ab6957e10f612b671b2d1c687ed34193283eb7fc614f3beb32c94249bd29dc4"
     },
     {
       "page": "session-budget",
       "exit": 0,
       "pass": true,
-      "seconds": 1.01,
-      "command_sha256": "97166b11a92b6a109b6e4a173da740bd62a97bf6d7193ed804e1f654b5d8226c",
-      "stdout_sha256": "6f5df896c101272282576264a3b725c08687424c244df050f50e5b52149bc5fd",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 1.45,
+      "command_sha256": "eec1decf437e66beb2198feb300528169f28b9895be4163878d744afc3030b5b",
+      "stdout_sha256": "c55de8eef7315734e4ff5e063c442fcdb4c4a05748e9f0732829f2c2adad10ff"
     },
     {
       "page": "cache-check",
       "exit": 0,
       "pass": true,
-      "seconds": 1.06,
-      "command_sha256": "210c824d685dca28742ffe5025906a4288a9d9380c16896982c321f689e86fee",
-      "stdout_sha256": "2f6b40ff56367adae1f0686ad71d1cd1c07d80096df8279a7271c423b6d92c86",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 1.51,
+      "command_sha256": "8293d53b3ffdbf1d4ac593e8d01dbdb97f96eb7c3ff558e2e572e03633e7d230",
+      "stdout_sha256": "78d0ca52a575cf831b5d08ce3f9cd7a77c9642d04eb7bae02d51bdefd6e17cd2"
     },
     {
       "page": "cardinality",
       "exit": 3,
       "pass": true,
-      "seconds": 1.02,
-      "command_sha256": "7b4e4d0ffffc28a2e6320fe3609bfccbd7fdeeadafe38f80f3c19e52d4ea83c1",
-      "stdout_sha256": "a68b1892c1266aea988021ac44edd695750e8d4e1858d61cff552a2e04565b36",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 1.35,
+      "command_sha256": "b9084e43b1996f502f4b39fac97e917bc75b48311e2c6d4ae54835ee5a924de8",
+      "stdout_sha256": "df8089a377bbed138b628af7514b299bba6399fe23e9aa3900bc4146cb7084fc"
     },
     {
       "page": "anomalies",
       "exit": 3,
       "pass": true,
-      "seconds": 3.89,
-      "command_sha256": "333274e1e20d5fe1a5ea7cbb647a2613dfc36c4dc6fb411151b0fafedcce5690",
-      "stdout_sha256": "c700d3425c6baf5e17507b3d24a03f5ff4e1e863f4bcd4128b1e42a0ea7c34f7",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 10.98,
+      "command_sha256": "e58c0892b1dc4dfd9144755cd3185fb614916dd4efae7f6425b6bb43992c9c8f",
+      "stdout_sha256": "d82344a56936786a97b58b2f1da5c64b45319ff71bc8670846795b7c237d8099"
     },
     {
       "page": "traces-usage",
       "exit": 0,
       "pass": true,
-      "seconds": 1.05,
-      "command_sha256": "30299f9f340bb626add3619b402316097db8710faaff70a7d6affb5e77acdda4",
-      "stdout_sha256": "006c61160140050f478477a14786f97aaabfcd94c1b0b0287e41f9e605bb2761",
-      "verification_run": "2026-10-22; exact published commands; verified local release cache; reconstructed exact Git source archives; not anonymous downloads"
+      "seconds": 1.41,
+      "command_sha256": "a8634b9f97a6c830efdf1623717ced41f232e6525e263d5056cf91a088d281bf",
+      "stdout_sha256": "62342a0fb2f99a566773af09eb3f471ed09b5daafec70eb1336650b1ca6bd038"
     },
     {
       "page": "distinct-users",
       "exit": 0,
       "pass": true,
-      "seconds": 1.88,
+      "seconds": 3.49,
       "command_sha256": "026a82c0ce2de554f8207536246fc177e247590ace955c778771c323b34c2de2",
-      "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475",
-      "retained_history": "Unchanged command bytes; prior verification retained, not rerun on October 22"
+      "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475"
     }
-  ],
-  "method": "Mixed dated evidence: ten fleetdiff samples freshly executed October 22 using verified local release cache; two byte-identical Python examples retain historical runs without dependency acquisition."
+  ]
 }

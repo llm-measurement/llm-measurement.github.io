@@ -16,7 +16,7 @@
 <script defer src="assets/site.js"></script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
-<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html" aria-current="page">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html" aria-current="page">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>Which user is driving my LLM token spike?</h1><p class="lead">Compare two periods to see which users and sessions account for a token increase.</p>
+<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html" aria-current="page">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="agent-spend.html">Agent spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html" aria-current="page">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="agent-spend.html">Agent spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>Which user is driving my LLM token spike?</h1><p class="lead">Compare two periods to see which users and sessions account for a token increase.</p>
 <nav class="path-index" aria-label="Choose your starting point">
 <ul>
 <li><a href="#run">Your collector summaries</a></li>
@@ -29,8 +29,8 @@
 <h2 id="own-data-title">Run it on your data</h2>
 <p>Save token-weighted user/session summaries in <code>./before</code> and <code>./after</code>. Use one hashing key and replace <code>app</code> with your producer name.</p>
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="token-spike-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
-sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
+<pre data-own="token-spike-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin</code></pre>
 <pre data-own="token-spike-summaries" data-exit="0"><code>./bin/fleetdiff investigate --before ./before --after ./after --expected app</code></pre>
 <p>See changes in attempts, tokens per attempt and contributors.</p>
 </aside>
@@ -47,10 +47,10 @@ sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
 <section id="sample">
 <h2>Try the sample</h2>
 <p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-run="token-spike" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.1.tar.gz
+<pre data-run="token-spike" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.14.0.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.1
-sh scripts/install.sh v0.12.1 ./release
+cd fleetdiff-0.14.0
+sh scripts/install.sh v0.14.0 ./release
 ./release/fleetdiff investigate --before examples/sessions/data/before \
   --after examples/sessions/data/after --expected app</code></pre>
 <h3>What you'll see</h3>
@@ -65,7 +65,7 @@ Reported tokens: 400 -&gt; 3300; model attempts: 4 -&gt; 13.
   key / measurement   before -&gt; after  after share  review
   user-1 / top_users  0 -&gt; 3000        90.91%</code></pre>
 <p>To see who uses the most overall, rather than who changed, see <a href="tokenmaxxing.html">Who is tokenmaxxing?</a></p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.1/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.14.0/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p class="measurement-context">A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.<br>

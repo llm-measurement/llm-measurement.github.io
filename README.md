@@ -1,9 +1,9 @@
 # LLM Measurement Guides
 
-Thirteen guides to LLM usage, with commands and output from released tools.
+Fourteen guides to LLM usage, with commands and output from released tools.
 An evidence page explains what can be shared and retained with summaries.
 
-The Langfuse guide pins fleetdiff v0.13.1; existing command examples retain v0.12.1. The home-page library installs
+All fleetdiff guides pin v0.14.0. The home-page library installs
 pin llm-sketchkit v0.4.0; the existing Python guides retain v0.3.0. Collector
 configuration pins v0.6.2 and Helm chart 0.6.2. Historical evidence
 retains the versions and source revisions used for those measurements.
@@ -14,6 +14,7 @@ retains the versions and source revisions used for those measurements.
 | Who is tokenmaxxing? Find your heaviest AI token users | [Tokenmaxxing](docs/tokenmaxxing.html) |
 | Why did our LiteLLM usage jump, and are the spend logs complete? | [LiteLLM spend](docs/litellm-spend.html) |
 | What changed in your Langfuse costs? | [Langfuse costs](docs/langfuse-spend.html) |
+| Which agent drove your LLM spend increase? | [Agent spend](docs/agent-spend.html) |
 | Are all our requests actually in the spend log? | [Row coverage](docs/row-coverage.html) |
 | Which models served each LiteLLM route? | [Routing audit](docs/routing.html) |
 | What would switching models have cost? | [Model what-if](docs/what-if.html) |
@@ -72,7 +73,7 @@ not a mock fallback. The fixture provisions the documented read-only role and
 tests both credential sources. No model calls are made.
 
 On a fresh machine, first populate the Docker cache with the exact PostgreSQL
-digest from the [released fixture image manifest](https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/examples/litellm-spend/images.json).
+digest from the [released fixture image manifest](https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/examples/litellm-spend/images.json).
 CI runs this explicit preparation before the own-data check; the database
 runtime itself never pulls an image:
 

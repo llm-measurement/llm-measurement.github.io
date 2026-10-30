@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROSE_GUIDES = {page["slug"] for page in json.loads((ROOT / "pages.json").read_text())
                 if page["slug"] != "index" and not page.get("kind")}
 GUIDE_CONTEXT = {
+    "agent-spend": "Recorded spend is source accounting, not an invoice. Missing and ambiguous identities stay in the totals; attribution does not establish why usage changed.",
     "langfuse-spend": "Costs and GENERATION counts are Langfuse records, not an invoice or independently verified provider requests. Manifests verify the local copy, not upstream ingestion completeness.",
     "cardinality": "diagnose reads your collector configuration; your metrics backend reports live series counts.",
     "token-spike": "A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.",
@@ -37,6 +38,7 @@ GUIDE_CONTEXT = {
     "distinct-users": "Distinct counts are statistical estimates. Your application hashes raw IDs before they reach the sketch.",
 }
 GUIDE_PATHS = {
+    "agent-spend": ["#run", "#source", "#sample"],
     "langfuse-spend": ["#run", "#access", "#sample"],
     "litellm-spend": ["#run", "#access", "#file", "#sample"],
     "row-coverage": ["#run", "#access", "#file", "#sample"],
@@ -162,7 +164,7 @@ def main():
                 assert source in page.links, source
         if entry["slug"] in {"token-spike", "cardinality", "anomalies", "litellm-spend", "traces-usage", "cache-check"}:
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
-            assert "/archive/refs/tags/v0.12.1.tar.gz" in source and "sh scripts/install.sh v0.12.1 ./release" in source
+            assert "/archive/refs/tags/v0.14.0.tar.gz" in source and "sh scripts/install.sh v0.14.0 ./release" in source
             assert "fleetdiff/v0.6.0" not in source
             if entry["slug"] == "traces-usage":
                 assert "./release/fleetdiff inspect examples/inspect/synthetic-traces.json" in source
@@ -178,7 +180,7 @@ def main():
                 assert "key-1: 80 -&gt; 700 uncached input tokens; change +620." in source
         if entry["slug"] == "session-budget":
             source = (ROOT / "pages/session-budget.html").read_text()
-            assert "/archive/refs/tags/v0.12.1.tar.gz" in source and "sh scripts/install.sh v0.12.1 ./release" in source
+            assert "/archive/refs/tags/v0.14.0.tar.gz" in source and "sh scripts/install.sh v0.14.0 ./release" in source
             assert "--session-budget-usd 1.00" in source and "Redis" not in source
             for url in ("https://docs.litellm.ai/docs/a2a_iteration_budgets",
                         "https://github.com/BerriAI/litellm/issues/34732",
@@ -199,7 +201,7 @@ def main():
                                     (context if isinstance(context, list) else [context]))
             notes_link = '<a href="summaries.html#measurement-notes">Measurement notes</a>'
             if entry["slug"] == "cache-check":
-                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/docs/CACHE.md">Cache measurements and limits</a>.'
+                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/docs/CACHE.md">Cache measurements and limits</a>.'
             expected = (f'<p class="measurement-context">{context}<br>\n'
                         f'{notes_link}</p>')
             assert expected in path.read_text(), (path.name, "guide context must precede its notes link")

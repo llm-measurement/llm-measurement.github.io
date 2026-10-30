@@ -1,8 +1,8 @@
 {
-  "version": "v0.13.1",
-  "commit": "73df8c41de98e55758291d5282314d00347e4a27",
-  "sample_url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/73df8c41de98e55758291d5282314d00347e4a27",
-  "sample_sha256": "8576c6323d568320c23b9a8595f274595e8da1bd9d45fa4ab7ee10a80261848d",
-  "sample_project_dir": "fleetdiff-73df8c41de98e55758291d5282314d00347e4a27/examples/langfuse-spend/export",
+  "version": "v0.14.0",
+  "commit": "78c6448de2f11e96ca63fb5d6ecff2ad2364304a",
+  "sample_url": "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/78c6448de2f11e96ca63fb5d6ecff2ad2364304a",
+  "sample_sha256": "7a00a92d3fd6539b451b3520b5949377cb4d1732e33b279dbd400ea8ef3ad52e",
+  "sample_project_dir": "fleetdiff-78c6448de2f11e96ca63fb5d6ecff2ad2364304a/examples/langfuse-spend/export",
   "sample_kind": "pinned released source archive, not a standalone release asset"
 }

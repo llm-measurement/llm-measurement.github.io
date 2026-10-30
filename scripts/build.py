@@ -60,7 +60,7 @@ def build():
     shutil.copytree(ROOT / "assets", out / "assets", ignore=excluded)
     for name in STATIC_ROOT_FILES:
         shutil.copyfile(ROOT / name, out / name)
-    names = ["All guides", "A token spike", "Tokenmaxxing", "LiteLLM spend", "Langfuse costs", "Row coverage", "Routing audit", "Model what-if", "Session budget", "Cache check", "Per-user metrics", "Unusual windows", "Trace check", "Distinct users", "Why summaries", "Security review"]
+    names = ["All guides", "A token spike", "Tokenmaxxing", "LiteLLM spend", "Langfuse costs", "Agent spend", "Row coverage", "Routing audit", "Model what-if", "Session budget", "Cache check", "Per-user metrics", "Unusual windows", "Trace check", "Distinct users", "Why summaries", "Security review"]
     assert len(names) == len(PAGES), "every page needs a navigation label"
     for page in PAGES:
         nav = "".join(
@@ -83,7 +83,7 @@ def build():
         (out / (page["slug"] + ".html")).write_text(rendered)
     urls = [BASE + ("" if p["slug"] == "index" else p["slug"] + ".html") for p in PAGES]
     (out / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{u}</loc></url>\n' for u in urls) + '</urlset>\n')
-    (out / "llms.txt").write_text("# LLM Measurement\n\n> Local open-source tools for LLM usage investigations and measurement.\n\n## Guides\n\n" + ''.join(f'- [{p["title"]}]({u}): {p["description"]}\n' for p, u in zip(PAGES[1:], urls[1:])) + "\n## Released tools used in these examples\n\n- fleetdiff v0.13.1 in the Langfuse guide; v0.12.1 in the existing guides\n- llm-sketchkit v0.4.0 on the home page; v0.3.0 in the existing Python guides\n- Collector configuration guidance: v0.6.2; Helm chart 0.6.2\n\nCommand guides use synthetic inputs. The summaries evidence page separates released coding-agent records from synthetic scale workloads and pins its experimental source. See each page for its methods and limits.\n")
+    (out / "llms.txt").write_text("# LLM Measurement\n\n> Local open-source tools for LLM usage investigations and measurement.\n\n## Guides\n\n" + ''.join(f'- [{p["title"]}]({u}): {p["description"]}\n' for p, u in zip(PAGES[1:], urls[1:])) + "\n## Released tools used in these examples\n\n- fleetdiff v0.14.0 in all fleetdiff guides\n- llm-sketchkit v0.4.0 on the home page; v0.3.0 in the existing Python guides\n- Collector configuration guidance: v0.6.2; Helm chart 0.6.2\n\nCommand guides use synthetic inputs. The summaries evidence page separates released coding-agent records from synthetic scale workloads and pins its experimental source. See each page for its methods and limits.\n")
     (out / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n")
     (out / ".nojekyll").write_text("")
 

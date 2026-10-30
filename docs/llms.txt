@@ -8,6 +8,7 @@
 - [Who is tokenmaxxing? Find your heaviest AI token users](https://llm-measurement.github.io/tokenmaxxing.html): No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.
 - [LiteLLM spend tracking: see who drove a spend increase](https://llm-measurement.github.io/litellm-spend.html): Spend tracking already on? A read-only command on your LiteLLM spend logs shows what changed, which model, team or key drove it, and what the logs missed.
 - [What changed in your Langfuse costs?](https://llm-measurement.github.io/langfuse-spend.html): Compare two periods of a local Langfuse export to find model and trace contributors to recorded cost and token changes, with export coverage kept visible.
+- [Which agent drove your LLM spend increase?](https://llm-measurement.github.io/agent-spend.html): Compare recorded agent spend in LiteLLM logs or Langfuse exports, with missing and ambiguous identities kept visible.
 - [LiteLLM spend logs missing requests? Compare with daily counts](https://llm-measurement.github.io/row-coverage.html): Compare LiteLLM spend-log rows with daily request counts to find requests that never reached the spend logs, with a real response-ID collision as the example.
 - [Which model actually served your LiteLLM route?](https://llm-measurement.github.io/routing.html): Audit LiteLLM Auto Routing and fallbacks: compare model shares, missing attribution and classifier overhead using recorded spend only.
 - [What would switching models have cost?](https://llm-measurement.github.io/what-if.html): Re-price recorded usage under a proposed model mix, with measured workload factors and explicit assumptions.
@@ -22,7 +23,7 @@
 
 ## Released tools used in these examples
 
-- fleetdiff v0.13.1 in the Langfuse guide; v0.12.1 in the existing guides
+- fleetdiff v0.14.0 in all fleetdiff guides
 - llm-sketchkit v0.4.0 on the home page; v0.3.0 in the existing Python guides
 - Collector configuration guidance: v0.6.2; Helm chart 0.6.2
 

@@ -4,15 +4,6 @@
   "method": "Mixed dated exact-command records: the collector v0.6.2 verification block executed October 23 unchanged using five parent-authenticated cached metadata assets, real anonymous Cosign and existing normal credentialed GitHub OCI provenance verification; no new release-asset download. Unchanged fleetdiff block retains its original dated verification record. No binary scanner is part of these two command blocks.",
   "results": [
     {
-      "block": "fleetdiff",
-      "pass": true,
-      "exit": 0,
-      "authentication": "anonymous verifier with fresh configuration and keychain-denying wrapper; release bytes supplied by verified local cache",
-      "command_sha256": "bcf5dc680eb06023e0c38d46ddd2e4328b433a2f0692fc94b74722bfdf3d49ec",
-      "stdout_sha256": "b5c88c00749f48c8a687eb2441a2f27e679b98d64bc551af4a2f5ee11fc92eb9",
-      "verification_run": "2026-10-22; cached release bytes, not fresh anonymous downloads"
-    },
-    {
       "block": "collector",
       "pass": true,
       "exit": 0,
@@ -20,6 +11,14 @@
       "command_sha256": "35b198156f4f5fec1df3f91c84dea32c597e1e737887484513f682f5396e2b12",
       "stdout_sha256": "af7d954d4cca55a9c840f2f5a78c6f3f7606b65656ce3402ea35b467893b9ef1",
       "verification_run": "2026-10-23T08:45:31.789189-04:00"
+    },
+    {
+      "block": "fleetdiff",
+      "pass": true,
+      "exit": 0,
+      "authentication": "anonymous",
+      "command_sha256": "9b3f8200574a2505dcb76647fe641c391881c42c8556ae112d0cd15bb05cdfe1",
+      "stdout_sha256": "2e0a703503ba66518dd79c4befcfea4d21be523fff87a9ee6d2df8d00e394642"
     }
   ],
   "verified_at_utc": "2026-10-19T00:57:08.237202+00:00",

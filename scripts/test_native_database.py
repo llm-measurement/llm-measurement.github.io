@@ -68,7 +68,7 @@ class NativeDatabaseTests(unittest.TestCase):
         self.assertNotIn("makes no network connections during analysis", security)
         for path in ("internal/cli/network_test.go", "internal/postgres/tls_test.go",
                      "examples/litellm-spend/test_native_export.py"):
-            self.assertIn("fleetdiff/blob/v0.12.1/" + path, security)
+            self.assertIn("fleetdiff/blob/v0.14.0/" + path, security)
 
     def test_secret_environment_does_not_leak_into_fixture(self):
         with patch.dict(os.environ, {"FLEETDIFF_LITELLM_DATABASE_URL": "not-a-real-secret",
@@ -235,6 +235,7 @@ class RealPostgresFixtureTests(unittest.TestCase):
                 self.assertEqual(evidence["column_select_privileges"]["messages"], "f")
                 self.assertEqual(evidence["column_select_privileges"]["response"], "f")
                 self.assertEqual(evidence["column_select_privileges"]["proxy_server_request"], "f")
+                self.assertEqual(evidence["column_select_privileges"]["request_tags"], "f")
                 self.assertEqual(evidence["role_restrictions"], "litellm|" + "|".join(["f"] * 12))
                 if slug in {"litellm-spend", "row-coverage"}:
                     self.assertEqual(evidence["daily_readonly_identity"], "t|t|t|t|f|f")
