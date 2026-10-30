@@ -28,12 +28,15 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: llm-measurement/fleetdiff
-          ref: 0d7db95c5bb3013f8c564c91fbb07b6235a2664e
+          ref: 78c6448de2f11e96ca63fb5d6ecff2ad2364304a
           path: release-source
           persist-credentials: false
       - name: Deliberately seed exactly the reviewed published assets
         id: prepare
-        run: python3 scripts/seed_release_cache.py --source release-source --work "$RUNNER_TEMP/seed-evidence" --output "$RUNNER_TEMP/release-cache"
+        run: |
+          # Stage the next cache without changing the live consumer pin.
+          cp scripts/release_cache_v014_manifest.json scripts/release_cache_manifest.json
+          python3 scripts/seed_release_cache.py --source release-source --work "$RUNNER_TEMP/seed-evidence" --output "$RUNNER_TEMP/release-cache"
       - name: Record cumulative counts alongside deliberate request events
         if: always()
         run: python3 scripts/download_log.py --seed-log "$RUNNER_TEMP/seed-evidence/deliberate-downloads.jsonl" --output "$RUNNER_TEMP/seed-evidence/download-counts.json"
@@ -76,7 +79,9 @@ jobs:
       - name: Verify actual restored bytes and original provenance
         env:
           MANIFEST_SHA256: ${{ needs.seed.outputs.manifest_sha256 }}
-        run: python3 scripts/release_cache.py --verify .site-release-cache --manifest-sha256 "$MANIFEST_SHA256"
+        run: |
+          cp scripts/release_cache_v014_manifest.json scripts/release_cache_manifest.json
+          python3 scripts/release_cache.py --verify .site-release-cache --manifest-sha256 "$MANIFEST_SHA256"
       - name: Bind cache key to actual site artifact and manifest
         id: identity
         env:
@@ -111,4 +116,5 @@ jobs:
           MANIFEST_SHA256: ${{ needs.seed.outputs.manifest_sha256 }}
         run: |
           test "$EXACT_HIT" = true
+          cp scripts/release_cache_v014_manifest.json scripts/release_cache_manifest.json
           python3 scripts/release_cache.py --verify .site-release-cache --manifest-sha256 "$MANIFEST_SHA256"
