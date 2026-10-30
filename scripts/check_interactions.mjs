@@ -74,7 +74,7 @@ try {
       const page = await context.newPage();
       const original = await context.newPage();
       const newPage = !(await fs.access(path.join(baseline, 'docs', slug + '.html')).then(() => true, () => false));
-      assert(!newPage || slug === 'langfuse-spend', 'unexpected missing baseline page');
+      assert(!newPage || ['langfuse-spend', 'agent-spend'].includes(slug), 'unexpected missing baseline page');
       await original.goto('https://baseline.invalid/' + (newPage ? 'litellm-spend.html' : slug === 'index' ? '' : slug + '.html'));
       await page.goto('https://llm-measurement.github.io/' + (slug === 'index' ? '' : slug + '.html') +
         '?email=private-email&userid=private-ID&command=private-command#private-fragment');
@@ -194,7 +194,7 @@ try {
       assert.equal(geometry.width, geometry.scroll, `${slug}/${width}: horizontal overflow`);
       assert(geometry.folded);
       if (slug === 'litellm-spend' && width === 1366) assert(geometry.indexBottom < 768);
-      if (['index', 'litellm-spend', 'langfuse-spend'].includes(slug)) {
+      if (['index', 'litellm-spend', 'langfuse-spend', 'agent-spend'].includes(slug)) {
         await page.screenshot({ path: path.join(out, `${slug}-${width}.png`) });
         await page.locator('footer').scrollIntoViewIfNeeded();
         await page.screenshot({ path: path.join(out, `${slug}-${width}-contact.png`) });
@@ -221,7 +221,7 @@ for (const name of ['assets/site.css', 'assets/site.js', 'docs/assets/site.css',
 }
 const report = { method: 'Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.',
   baselineCommit: execFileSync('git', ['-C', root, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
-  newPageMethod: 'Langfuse is new: verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical Langfuse intro comparison is claimed.', files, results };
+  newPageMethod: 'For a new Langfuse or agent guide, verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical intro comparison is claimed for a new page.', files, results };
 await fs.writeFile(path.join(root, 'evidence/contact-copy-visual-verified.json'), JSON.stringify(report, null, 2) + '\n');
 await fs.writeFile(path.join(out, 'results.json'), JSON.stringify(report, null, 2) + '\n');
 console.log(`PASS: ${results.length} page/viewports; ${results.reduce((n, r) => n + r.commandBlocks, 0)} exact keyboard copies; ${results.reduce((n, r) => n + r.eventsChecked, 0)} path-only events`);

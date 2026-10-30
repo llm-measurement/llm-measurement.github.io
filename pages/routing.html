@@ -5,8 +5,8 @@
 <aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Audit your LiteLLM database</h2>
 <p><strong>1. Install.</strong> Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="routing-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
-sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
+<pre data-own="routing-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin</code></pre>
 <p><strong>2. Run it</strong> with the connection file from the <a href="litellm-spend.html#run">LiteLLM spend guide</a>:</p>
 <pre data-own="routing-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --routing-audit</code></pre>
 <p>For each original route, you get each model's share of requests, tokens and recorded spend in both weeks, the classifier's calls and cost on a separate line, and the requests with no recorded agent or route. Add <code>--routing-by route-agent</code> to split each route by agent.</p>
@@ -39,7 +39,7 @@ sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
 umask 077
 # Set BEFORE and AFTER to RFC3339 UTC bounds covering both periods.
 # AFTER is exclusive; for example 2026-10-01T00:00:00Z to 2026-10-03T00:00:00Z.
-curl -fsSLo export.sql https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/litellm-spend/export.sql
+curl -fsSLo export.sql https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.14.0/examples/litellm-spend/export.sql
 mkdir ./routing-export
 psql 'service=litellm_readonly' -Xq -v ON_ERROR_STOP=1 \
   -v start_utc="$BEFORE" \
@@ -70,10 +70,10 @@ umask 077
 mkdir fleetdiff-routing-sample
 cd fleetdiff-routing-sample
 curl --proto '=https' --tlsv1.2 -fsSLo install-fleetdiff.sh \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
-sh install-fleetdiff.sh v0.12.1 ./release
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./release
 curl --proto '=https' --tlsv1.2 -fsSLo spend.csv \
-  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/routing/synthetic.csv
+  https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.14.0/examples/routing/synthetic.csv
 ./release/fleetdiff investigate --litellm-spend spend.csv \
   --before-period 2026-10-01 --after-period 2026-10-02 --routing-audit</code></pre>
 <h3>What you'll see</h3>
@@ -89,7 +89,7 @@ curl --proto '=https' --tlsv1.2 -fsSLo spend.csv \
 <p>Coverage is broken down by call type. Here the Responses rows have no recorded agent, so they cannot be assigned to a known agent.</p>
 <pre class="output" data-output="routing"><code>    aresponses:
       agent known: 0 -&gt; 0; unknown: 1 -&gt; 1 (column absent 0 -&gt; 0; null/empty 1 -&gt; 1; invalid 0 -&gt; 0).</code></pre>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/routing/synthetic.csv">eight-row synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/docs/ROUTING.md">released routing guide</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/examples/routing/synthetic.csv">eight-row synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/docs/ROUTING.md">released routing guide</a>.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p class="measurement-context">The model shown is the one the gateway recorded, not a confirmation from the provider.<br>

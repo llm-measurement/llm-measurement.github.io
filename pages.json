@@ -1,18 +1,96 @@
 [
-  {"slug":"index","title":"LLM Measurement","document_title":"LLM Measurement: open-source tools for LLM usage questions","description":"LLM Measurement provides open-source tools to answer questions about token spikes, distinct users, usage completeness and comparisons across teams and tools from existing telemetry, using keyed hashes instead of raw user or session IDs and no per-user metric labels."},
-  {"slug":"token-spike","title":"Which user is driving my LLM token spike?","description":"Usage jumped? Compare two periods and see which users and sessions account for the increase."},
-  {"slug":"tokenmaxxing","title":"Who is tokenmaxxing? Find your heaviest AI token users","description":"No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is."},
-  {"slug":"litellm-spend","title":"LiteLLM spend tracking: see who drove a spend increase","document_title":"LiteLLM spend tracking: see who drove a spend increase","description":"Spend tracking already on? A read-only command on your LiteLLM spend logs shows what changed, which model, team or key drove it, and what the logs missed."},
-  {"slug":"langfuse-spend","title":"What changed in your Langfuse costs?","description":"Compare two periods of a local Langfuse export to find model and trace contributors to recorded cost and token changes, with export coverage kept visible."},
-  {"slug":"row-coverage","title":"LiteLLM spend logs missing requests? Compare with daily counts","document_title":"LiteLLM spend logs missing requests? Compare with daily counts","description":"Compare LiteLLM spend-log rows with daily request counts to find requests that never reached the spend logs, with a real response-ID collision as the example."},
-  {"slug":"routing","title":"Which model actually served your LiteLLM route?","document_title":"Which model actually served your LiteLLM route?","description":"Audit LiteLLM Auto Routing and fallbacks: compare model shares, missing attribution and classifier overhead using recorded spend only."},
-  {"slug":"what-if","title":"What would switching models have cost?","description":"Re-price recorded usage under a proposed model mix, with measured workload factors and explicit assumptions."},
-  {"slug":"session-budget","title":"LiteLLM session over its budget? Check what the budget counts","document_title":"LiteLLM session over its budget? Check what the budget counts","description":"Review recorded session spend against a cap, shared session IDs and recorded rejections from a local LiteLLM spend export."},
-  {"slug":"cache-check","title":"Prompt cache hit rate dropped after an update? Find whose uncached input grew","document_title":"Prompt cache hit rate dropped after an update? Find whose uncached input grew","description":"Prompt cache hit rate dropped after an update? Compare recorded cache shares and find which keys or sessions added uncached input with fleetdiff."},
-  {"slug":"cardinality","title":"How do I see LLM usage per user without a metric label for every user?","description":"Check a collector configuration with fleetdiff diagnose and keep user rankings out of metric labels."},
-  {"slug":"anomalies","title":"How do I detect anomalies in LLM token consumption?","description":"Scan retained LLM summary windows for unusual token usage, session concentration, tool errors and missing usage."},
-  {"slug":"traces-usage","title":"Do my LLM traces record token usage and user IDs?","description":"Check a local OTLP capture for usage and identity fields that are present, missing or zero."},
-  {"slug":"distinct-users","title":"How do I count distinct LLM users without storing user IDs?","description":"Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers."},
-  {"slug":"summaries","title":"Why summaries instead of raw logs","description":"Measured sharing, retention and attribution properties of keyed summaries, with pinned coding-agent data and labeled synthetic workloads.","kind":"evidence"},
-  {"slug":"security","title":"For security reviewers","description":"Data paths, identity handling, manual release verification and repository controls for LLM Measurement tools.","kind":"reference"}
+  {
+    "slug": "index",
+    "title": "LLM Measurement",
+    "document_title": "LLM Measurement: open-source tools for LLM usage questions",
+    "description": "LLM Measurement provides open-source tools to answer questions about token spikes, distinct users, usage completeness and comparisons across teams and tools from existing telemetry, using keyed hashes instead of raw user or session IDs and no per-user metric labels."
+  },
+  {
+    "slug": "token-spike",
+    "title": "Which user is driving my LLM token spike?",
+    "description": "Usage jumped? Compare two periods and see which users and sessions account for the increase."
+  },
+  {
+    "slug": "tokenmaxxing",
+    "title": "Who is tokenmaxxing? Find your heaviest AI token users",
+    "description": "No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is."
+  },
+  {
+    "slug": "litellm-spend",
+    "title": "LiteLLM spend tracking: see who drove a spend increase",
+    "document_title": "LiteLLM spend tracking: see who drove a spend increase",
+    "description": "Spend tracking already on? A read-only command on your LiteLLM spend logs shows what changed, which model, team or key drove it, and what the logs missed."
+  },
+  {
+    "slug": "langfuse-spend",
+    "title": "What changed in your Langfuse costs?",
+    "description": "Compare two periods of a local Langfuse export to find model and trace contributors to recorded cost and token changes, with export coverage kept visible."
+  },
+  {
+    "slug": "agent-spend",
+    "title": "Which agent drove your LLM spend increase?",
+    "document_title": "Which agent drove your LLM spend increase?",
+    "description": "Compare recorded agent spend in LiteLLM logs or Langfuse exports, with missing and ambiguous identities kept visible."
+  },
+  {
+    "slug": "row-coverage",
+    "title": "LiteLLM spend logs missing requests? Compare with daily counts",
+    "document_title": "LiteLLM spend logs missing requests? Compare with daily counts",
+    "description": "Compare LiteLLM spend-log rows with daily request counts to find requests that never reached the spend logs, with a real response-ID collision as the example."
+  },
+  {
+    "slug": "routing",
+    "title": "Which model actually served your LiteLLM route?",
+    "document_title": "Which model actually served your LiteLLM route?",
+    "description": "Audit LiteLLM Auto Routing and fallbacks: compare model shares, missing attribution and classifier overhead using recorded spend only."
+  },
+  {
+    "slug": "what-if",
+    "title": "What would switching models have cost?",
+    "description": "Re-price recorded usage under a proposed model mix, with measured workload factors and explicit assumptions."
+  },
+  {
+    "slug": "session-budget",
+    "title": "LiteLLM session over its budget? Check what the budget counts",
+    "document_title": "LiteLLM session over its budget? Check what the budget counts",
+    "description": "Review recorded session spend against a cap, shared session IDs and recorded rejections from a local LiteLLM spend export."
+  },
+  {
+    "slug": "cache-check",
+    "title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
+    "document_title": "Prompt cache hit rate dropped after an update? Find whose uncached input grew",
+    "description": "Prompt cache hit rate dropped after an update? Compare recorded cache shares and find which keys or sessions added uncached input with fleetdiff."
+  },
+  {
+    "slug": "cardinality",
+    "title": "How do I see LLM usage per user without a metric label for every user?",
+    "description": "Check a collector configuration with fleetdiff diagnose and keep user rankings out of metric labels."
+  },
+  {
+    "slug": "anomalies",
+    "title": "How do I detect anomalies in LLM token consumption?",
+    "description": "Scan retained LLM summary windows for unusual token usage, session concentration, tool errors and missing usage."
+  },
+  {
+    "slug": "traces-usage",
+    "title": "Do my LLM traces record token usage and user IDs?",
+    "description": "Check a local OTLP capture for usage and identity fields that are present, missing or zero."
+  },
+  {
+    "slug": "distinct-users",
+    "title": "How do I count distinct LLM users without storing user IDs?",
+    "description": "Estimate distinct LLM users using keyed hashes and fixed-memory sketches in Python, then merge compatible measurements across workers."
+  },
+  {
+    "slug": "summaries",
+    "title": "Why summaries instead of raw logs",
+    "description": "Measured sharing, retention and attribution properties of keyed summaries, with pinned coding-agent data and labeled synthetic workloads.",
+    "kind": "evidence"
+  },
+  {
+    "slug": "security",
+    "title": "For security reviewers",
+    "description": "Data paths, identity handling, manual release verification and repository controls for LLM Measurement tools.",
+    "kind": "reference"
+  }
 ]

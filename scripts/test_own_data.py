@@ -20,6 +20,20 @@ from own_data import EXPECTED, PAGES, FIXTURE_COMMIT, FIXTURE_URL, refresh_histo
 
 
 class OwnDataTests(unittest.TestCase):
+    def test_agent_guide_uses_explicit_identity_and_recorded_spend_ranking(self):
+        blocks = own_data.page_blocks("agent-spend")
+        self.assertEqual([b["id"] for b in blocks.own], ["agent-install", "agent-own"])
+        self.assertIn("sh install-fleetdiff.sh " + own_data.FIXTURE_VERSION + " ./bin", blocks.own[0]["text"])
+        self.assertIn(own_data.FIXTURE_COMMIT, blocks.commands[0]["text"])
+        for command in (blocks.own[1]["text"], blocks.commands[0]["text"]):
+            self.assertIn("--group-by agent --agent-source request-tag --agent-tag-prefix 'agent:'", command)
+            self.assertIn("--rank-by recorded-spend-change", command)
+            self.assertNotIn("--show-labels", command)
+        source = (ROOT / "pages/agent-spend.html").read_text()
+        self.assertIn("--show-labels --acknowledge-sensitive-labels", source)
+        self.assertIn("50 unknown and 70 ambiguous tokens", source)
+        self.assertIn("project-scoped", source)
+
     def test_session_review_uses_the_released_binary_without_a_required_period(self):
         source = (ROOT / "pages/session-budget.html").read_text()
         blocks = Blocks()
@@ -27,7 +41,7 @@ class OwnDataTests(unittest.TestCase):
         self.assertEqual([block["id"] for block in blocks.own],
                          ["session-budget-install", "session-budget-native", "session-budget"])
         self.assertEqual(len(blocks.commands), 1)
-        self.assertIn("sh install-fleetdiff.sh v0.12.1 ./bin", blocks.own[0]["text"])
+        self.assertIn("sh install-fleetdiff.sh v0.14.0 ./bin", blocks.own[0]["text"])
         for command in (blocks.own[1]["text"], blocks.own[2]["text"], blocks.commands[0]["text"]):
             self.assertIn("--session-budget-usd 1.00", command)
             self.assertNotIn("--period", command)
@@ -42,13 +56,13 @@ class OwnDataTests(unittest.TestCase):
     def test_cache_and_token_spike_keep_install_and_file_commands_separate(self):
         cache = own_data.page_blocks("cache-check").own
         self.assertEqual([b["id"] for b in cache], ["cache-check-install", "cache-check-native", "cache-check"])
-        self.assertIn("sh install-fleetdiff.sh v0.12.1 ./bin", cache[0]["text"])
+        self.assertIn("sh install-fleetdiff.sh v0.14.0 ./bin", cache[0]["text"])
         self.assertEqual(cache[1]["text"], "./bin/fleetdiff investigate --litellm-db "
                          "--database-url-file ~/.config/litellm-db-url --group-by session")
         self.assertEqual(cache[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by session")
         spike = own_data.page_blocks("token-spike").own
         self.assertEqual([b["id"] for b in spike], ["token-spike-install", "token-spike-summaries", "token-spike"])
-        self.assertIn("sh install-fleetdiff.sh v0.12.1 ./bin", spike[0]["text"])
+        self.assertIn("sh install-fleetdiff.sh v0.14.0 ./bin", spike[0]["text"])
         self.assertEqual(spike[1]["text"], "./bin/fleetdiff investigate --before ./before --after ./after --expected app")
         self.assertEqual(spike[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user")
 
@@ -144,6 +158,45 @@ class OwnDataTests(unittest.TestCase):
             with self.assertRaises(AssertionError):
                 own_data.published_grants(root, list(reversed(blocks)))
 
+    def test_optional_tag_grant_does_not_change_default_grants(self):
+        first = 'CREATE ROLE fleetdiff_reader;\nGRANT CONNECT ON DATABASE litellm TO fleetdiff_reader;\n'
+        optional = 'GRANT SELECT (request_tags)\n  ON TABLE public."LiteLLM_SpendLogs" TO fleetdiff_reader;\n'
+        daily = 'GRANT SELECT (date) ON public."LiteLLM_DailyUserSpend" TO fleetdiff_reader;\n'
+        blocks = [{"id": key, "text": text, "exit": 0} for key, text in zip(
+            ("litellm-reader-grants", "litellm-daily-grants"), (first, daily))]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "docs").mkdir()
+            document = root / "docs/NATIVE_EXPORT.md"
+            document.write_text(''.join('```sql\n' + sql + '```\n' for sql in (first, optional, daily)))
+            self.assertIs(own_data.published_grants(root, blocks), blocks)
+            self.assertEqual([b["text"] for b in blocks], [first, daily])
+            for sqls in ((first, optional, optional, daily), (first, optional),
+                         (first, daily, optional), (first, optional.replace('SELECT', 'ALL'), daily),
+                         (first, optional.replace('request_tags', 'request_tags, messages'), daily),
+                         (first, optional, daily.replace('SELECT', 'ALL')),
+                         (first.replace('litellm', 'other_database'), optional, daily)):
+                with self.subTest(sqls=sqls):
+                    document.write_text(''.join('```sql\n' + sql + '```\n' for sql in sqls))
+                    with self.assertRaises(AssertionError):
+                        own_data.published_grants(root, blocks)
+
+    def test_native_default_grants_exclude_optional_tags(self):
+        defaults = own_data.page_native_grants("litellm-spend")
+        first, daily = (b["text"].rstrip('\n') + '\n' for b in defaults)
+        optional = 'GRANT SELECT (request_tags)\n  ON TABLE public."LiteLLM_SpendLogs" TO fleetdiff_reader;\n'
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'docs').mkdir()
+            document = root / 'docs/NATIVE_EXPORT.md'
+            document.write_text(''.join('```sql\n' + sql + '```\n' for sql in (first, optional, daily)))
+            self.assertEqual(own_data.native_grants(root), first)
+            self.assertEqual(own_data.native_grants(root, daily=True), first + daily)
+            self.assertNotIn('request_tags', own_data.native_grants(root, daily=True))
+            document.write_text(document.read_text().replace('SELECT (request_tags)', 'SELECT (request_tags, messages)'))
+            with self.assertRaises(AssertionError):
+                own_data.native_grants(root, daily=True)
+
     def test_all_real_data_commands_have_runtime_expectations(self):
         ids = []
         for slug in PAGES:
@@ -196,7 +249,7 @@ class OwnDataTests(unittest.TestCase):
             self.assertIn(FIXTURE_COMMIT, FIXTURE_URL)
             self.assertIn("not fresh anonymous", provenance["transport"])
             self.assertEqual(provenance["expected_commit"], FIXTURE_COMMIT)
-            self.assertEqual(provenance["version"], "v0.12.1")
+            self.assertEqual(provenance["version"], "v0.14.0")
             self.assertEqual(provenance["archive_sha256"], hashlib.sha256(data).hexdigest())
             self.assertEqual(set(provenance["files"]), {"go.mod", "examples/litellm-spend/export.sql"})
             self.assertFalse(provenance["git_operations"])
@@ -225,7 +278,7 @@ class OwnDataTests(unittest.TestCase):
                 own_data.fixture_source(Path("/not-created"))
 
     def test_public_manifest_keeps_full_source_inventory_private(self):
-        provenance = {"version": "v0.12.1", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
+        provenance = {"version": "v0.14.0", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
                       "archive_sha256": "a" * 64, "source_sha256": "b" * 64, "files": {"test": "c" * 64}}
         with tempfile.TemporaryDirectory() as directory, patch.object(own_data, "PAGES", ()), \
                 patch("langfuse_check.check"), \
@@ -240,8 +293,8 @@ class OwnDataTests(unittest.TestCase):
 
     def test_installed_binary_requires_exact_release_and_commit_with_build_metadata(self):
         for version, accepted in (
-            ("fleetdiff v0.12.1 (" + FIXTURE_COMMIT + ") go1.26.10 darwin/arm64", True),
-            ("fleetdiff v0.12.1 (" + "0" * 40 + ") go1.26.10 darwin/arm64", False),
+            ("fleetdiff v0.14.0 (" + FIXTURE_COMMIT + ") go1.26.10 darwin/arm64", True),
+            ("fleetdiff v0.14.0 (" + "0" * 40 + ") go1.26.10 darwin/arm64", False),
             ("fleetdiff v0.11.0 (" + FIXTURE_COMMIT + ") go1.26.10 darwin/arm64", False),
             ("fleetdiff dev (unknown) go1.26.10 darwin/arm64", False),
         ):
@@ -249,7 +302,7 @@ class OwnDataTests(unittest.TestCase):
                 root = Path(directory)
                 (root / "pages").mkdir()
                 (root / "pages/test.html").write_text(
-                    '<pre data-own="test-install" data-exit="0">sh install-fleetdiff.sh v0.12.1 ./bin</pre>')
+                    '<pre data-own="test-install" data-exit="0">sh install-fleetdiff.sh v0.14.0 ./bin</pre>')
                 provenance = {"files": {}}
                 result = subprocess.CompletedProcess([], 0, stdout="Verified", stderr="")
                 with patch.object(own_data, "ROOT", root), patch.object(own_data, "PAGES", ("test",)), \

@@ -5,8 +5,8 @@
 <aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Run it on your LiteLLM database</h2>
 <p><strong>1. Install.</strong> Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="litellm-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
-sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
+<pre data-own="litellm-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin</code></pre>
 <p><strong>2. Run.</strong> Save your read-only connection URL in a file only you can read, then point fleetdiff at it:</p>
 <pre data-own="litellm-native" data-exit="0"><code>chmod 600 ~/.config/litellm-db-url
 ./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --group-by key</code></pre>
@@ -43,7 +43,7 @@ umask 077
 # File analysis leaves out the potentially partial first and last days.
 BEFORE=2026-09-23T00:00:00Z
 AFTER=2026-10-09T00:00:00Z
-curl -fsSLo export.sql https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/litellm-spend/export.sql
+curl -fsSLo export.sql https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.14.0/examples/litellm-spend/export.sql
 mkdir ./litellm-export
 psql 'service=litellm_readonly' -Xq -v ON_ERROR_STOP=1 \
   -v start_utc="$BEFORE" \
@@ -66,10 +66,10 @@ printf 'Exported request-level rows to ./litellm-export/spend.csv\n'</code></pre
 <section id="sample">
 <h2>Try the sample</h2>
 <p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-run="litellm-spend" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.1.tar.gz
+<pre data-run="litellm-spend" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.14.0.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.1
-sh scripts/install.sh v0.12.1 ./release
+cd fleetdiff-0.14.0
+sh scripts/install.sh v0.14.0 ./release
 ./release/fleetdiff investigate --litellm-spend examples/litellm-spend/synthetic.csv \
   --before-period 2026-10-07 --after-period 2026-10-08</code></pre>
 <h3>What you'll see</h3>
@@ -91,7 +91,7 @@ Logged model requests: 8 -&gt; 12.</code></pre>
   Failed records (overlap usage categories): 1 -&gt; 2.</code></pre>
 <p>The completeness section points to zero-only and failed records worth checking in LiteLLM. To check usage and identity fields in your telemetry, see <a href="traces-usage.html">Do my LLM traces record token usage and user IDs?</a></p>
 <p>To compare the number of exported rows with LiteLLM's daily request counts, see <a href="row-coverage.html">Are all our requests actually in the spend log?</a>. To see the model mix behind an original route, use the <a href="routing.html">routing audit</a>. To re-price the recorded usage under another model mix, see <a href="what-if.html">What would switching models have cost?</a></p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/synthetic.csv">released synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/examples/litellm-spend/synthetic.csv">released synthetic CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/examples/litellm-spend/TESTING.md">accounting and privacy checks</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p class="measurement-context">these are the tokens and spend LiteLLM recorded, not your provider invoice. A change between periods shows what moved, not why.<br>

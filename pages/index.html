@@ -6,8 +6,8 @@
 <h3>Have LiteLLM spend logs?</h3>
 <p><a href="litellm-spend.html">Investigate directly from your LiteLLM database</a> using approved read-only access, or use an existing <code>spend.csv</code> below. The database path exports and cleans up a private snapshot automatically. For a file, include 16 days for the default comparison.</p>
 <p class="meta">Requires curl, gh, shasum and tar; Linux or macOS, amd64 or arm64. Install gh; it need not be signed in. <a href="security.html#verify-fleetdiff">Manual verification steps</a> are available.</p>
-<pre data-own="home-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
-sh install-fleetdiff.sh v0.12.1 ./bin
+<pre data-own="home-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin
 ./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user</code></pre>
 <h3>Have OpenTelemetry traces?</h3>
 <p>Make a short local <a href="traces-usage.html">OTLP capture</a>, save it as <code>traces.jsonl</code>, then use the same installed binary:</p>
@@ -35,6 +35,7 @@ go get github.com/llm-measurement/llm-sketchkit/go/sketchkit/...@v0.4.0</code></
 <li><a href="tokenmaxxing.html">Who is tokenmaxxing? Find your heaviest AI token users</a><p>No spike needed: rank who uses the most tokens in a period, and see how concentrated usage is.</p></li>
 <li><a href="litellm-spend.html">Why did our LiteLLM usage jump, and are the spend logs complete?</a><p>The same comparison straight from LiteLLM's spend logs, plus a check on whether the records are complete.</p></li>
 <li><a href="langfuse-spend.html">What changed in your Langfuse costs?</a><p>Compare a local export to find model and trace contributors to recorded cost and token changes.</p></li>
+<li><a href="agent-spend.html">Which agent drove your LLM spend increase?</a><p>Compare recorded agent spend, with unknown and ambiguous identities kept in the totals.</p></li>
 <li><a href="row-coverage.html">Are all our requests actually in the spend log?</a><p>Compare exported spend rows with LiteLLM's daily request counts and see any missing rows.</p></li>
 <li><a href="routing.html">Which models served each LiteLLM route?</a><p>Compare recorded model, token and spend shares by route or agent, with missing attribution and classifier overhead shown separately.</p></li>
 <li><a href="what-if.html">What would switching models have cost?</a><p>Re-price recorded usage under a proposed model mix, with measured workload factors and explicit assumptions.</p></li>

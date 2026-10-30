@@ -1,6 +1,24 @@
 # Guide Verification
 
-## Langfuse v0.13.1 Guide, October 27, 2026
+## Current v0.14.0 Guides, October 29, 2026
+
+All current fleetdiff guides, including LiteLLM, Langfuse and agent spend, use
+v0.14.0 at `78c6448de2f11e96ca63fb5d6ecff2ad2364304a`.
+Installer URLs pin `78c6448de2f11e96ca63fb5d6ecff2ad2364304a` and explicitly
+request v0.14.0. The new agent guide keeps unknown and ambiguous identities in
+totals and distinguishes token contribution from recorded-spend ranking.
+
+The current JSON evidence files record the new commands and their actual
+verification. Langfuse uses fresh anonymous downloads; the other guide samples
+use the verified protected-main release cache. That cache's reconstructed Git
+archives are not presented as anonymous codeload response bytes. The optional
+request_tags grant is separate from the unchanged default database grants;
+default fixtures require that column to remain unreadable.
+
+The dated sections below describe earlier checks, not the current release.
+Their version strings and measurement records are retained as history.
+
+## Historical Langfuse v0.13.1 Guide, October 27, 2026
 
 The Langfuse guide pins the released v0.13.1 commit
 `73df8c41de98e55758291d5282314d00347e4a27`. Both installer blocks and the

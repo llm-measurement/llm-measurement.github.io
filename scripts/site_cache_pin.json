@@ -1,19 +1,19 @@
 {
-  "repository": "llm-measurement/llm-measurement.github.io",
-  "seed_workflow": ".github/workflows/seed-release-cache.yml",
-  "seed_source_sha": "dd5a49ed5efc883dd6b40c82d530c2c59762e709",
-  "seed_run_id": 39883709543,
-  "seed_run_attempt": 1,
   "artifact": {
-    "id": 12471731808,
-    "name": "site-release-cache-39883709543-1",
-    "digest": "sha256:053ac508858e7b86eb22cc6eeeefa692f003c39717d5630f9893d7fbf5e8e08b",
-    "expires_at": "2027-01-21T01:23:23Z"
+    "digest": "sha256:a9221c71aa55e51c15d941c4e7ddd309fc0dde8ec0c256dfe56ffe81a18694f2",
+    "expires_at": "2027-01-28T00:54:29Z",
+    "id": 12944934095,
+    "name": "site-release-cache-40982598894-1"
   },
-  "member_manifest_sha256": "ec4cba42a4fe66cb23e7da861c0ca9a6b49455fa2657aeb3068feedb95dbd35e",
-  "cache_key": "site-release-cache-12471731808-ec4cba42a4fe66cb23e7da861c0ca9a6b49455fa2657aeb3068feedb95dbd35e",
-  "release_manifest_sha256": "56c9569b9de95864de91b4ca5159d1c9fe1cd4c817af5525c71df4003bfb0312",
-  "release_version": "v0.12.1",
-  "release_commit": "0d7db95c5bb3013f8c564c91fbb07b6235a2664e",
-  "repository_id": 1412683546
+  "cache_key": "site-release-cache-12944934095-671ea1847dac46064e591f14429ef8ef909188325316f467aa96c6e4241438df",
+  "member_manifest_sha256": "671ea1847dac46064e591f14429ef8ef909188325316f467aa96c6e4241438df",
+  "release_commit": "78c6448de2f11e96ca63fb5d6ecff2ad2364304a",
+  "release_manifest_sha256": "ec3166956e9cb6eb672dfce5306cda154d813fac8d69634732912d965c86d792",
+  "release_version": "v0.14.0",
+  "repository": "llm-measurement/llm-measurement.github.io",
+  "repository_id": 1412683546,
+  "seed_run_attempt": 1,
+  "seed_run_id": 40982598894,
+  "seed_source_sha": "4584515bf0a311866fce6a2d3ad6b2936f0409ff",
+  "seed_workflow": ".github/workflows/seed-release-cache.yml"
 }

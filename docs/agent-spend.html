@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which agent drove your LLM spend increase?</title><meta name="description" content="Compare recorded agent spend in LiteLLM logs or Langfuse exports, with missing and ambiguous identities kept visible.">
+<link rel="canonical" href="https://llm-measurement.github.io/agent-spend.html"><link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="Which agent drove your LLM spend increase?"><meta property="og:description" content="Compare recorded agent spend in LiteLLM logs or Langfuse exports, with missing and ambiguous identities kept visible.">
+<meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/agent-spend.html">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<script defer src="assets/site.js"></script>
+</head><body><a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
+<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="agent-spend.html" aria-current="page">Agent spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="agent-spend.html" aria-current="page">Agent spend</a><a href="row-coverage.html">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>Which agent drove your LLM spend increase?</h1><p class="lead">Compare recorded agent spend in LiteLLM logs or Langfuse exports to find who contributed to an increase.</p>
+<nav class="path-index" aria-label="Choose your starting point"><ul>
+<li><a href="#run">Your spend logs</a></li>
+<li><a href="#source">Choose an identity</a></li>
+<li><a href="#sample">Try the sample</a></li>
+</ul></nav>
+<aside id="run" class="own-data" aria-labelledby="own-data-title">
+<h2 id="own-data-title">Your spend logs</h2>
+<p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
+<pre data-own="agent-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin
+./bin/fleetdiff --version</code></pre>
+<p>Use your local LiteLLM export. Set <code>BEFORE</code> and <code>AFTER</code> to comparison dates.</p>
+<pre data-own="agent-own" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./spend.csv \
+  --before-period "$BEFORE" --after-period "$AFTER" \
+  --group-by agent --agent-source request-tag --agent-tag-prefix 'agent:' \
+  --rank-by recorded-spend-change</code></pre>
+</aside>
+<section id="source"><h2>Choose an identity</h2>
+<p>Use <code>--agent-source agent_id</code> for LiteLLM's recorded IDs instead of tags. For native database access, use the <a href="litellm-spend.html#run">read-only LiteLLM connection</a> with the same agent options.</p>
+<p>Request-tag database reads also need the separate <code>request_tags</code> column grant in the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/docs/NATIVE_EXPORT.md#administrator-setup">released setup</a>. It is not part of default access.</p>
+<p><a href="langfuse-spend.html#run">Langfuse exports</a> support tag identities with the same prefix options. Identities remain project-scoped.</p>
+<p>Aliases are the default. Add both <code>--show-labels --acknowledge-sensitive-labels</code> only for a private report with escaped labels.</p>
+</section>
+<details class="security-note"><summary>Security</summary>
+<p>Keep exports private: tags can contain identifiers. Analysis reads local records without provider calls. Missing and conflicting identities remain visible, not guessed.</p>
+</details>
+<section id="sample"><h2>Try the sample</h2>
+<p>This synthetic fixture includes two agents, an untagged request and conflicting tags.</p>
+<pre data-run="agent-spend" data-exit="0"><code>set -eu
+umask 077
+curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin
+curl -fsSLo spend.csv https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/examples/litellm-spend/agent-tags.csv
+printf '%s  %s\n' 'aed879a4b423f850f221f9d934f42b52f7d0f293906275488017cbb6c277d5f4' spend.csv | shasum -a 256 -c -
+./bin/fleetdiff investigate --litellm-spend spend.csv \
+  --before-period 2026-10-07 --after-period 2026-10-08 \
+  --group-by agent --agent-source request-tag --agent-tag-prefix 'agent:' \
+  --rank-by recorded-spend-change</code></pre>
+<h3>What you'll see</h3>
+<p>These excerpts come from the released binary. The answer measures token contribution; the contributor table is ranked by signed recorded-USD change.</p>
+<pre class="output" data-output="agent-spend"><code>Recorded tokens rose by 106.67% (300 -&gt; 620).</code></pre>
+<pre class="output" data-output="agent-spend"><code>Who drove the increase?
+  agent-1 accounts for 62.5% of the net recorded increase (+200 of +320 tokens).</code></pre>
+<p>The later period includes 50 unknown and 70 ambiguous tokens. Both stay in the 620-token total. Known agents account for 500 tokens, not all recorded work.</p>
+<details class="measurement-details"><summary>What the numbers mean</summary>
+<p class="measurement-context">Recorded spend is source accounting, not an invoice. Missing and ambiguous identities stay in the totals; attribution does not establish why usage changed.<br>
+<a href="summaries.html#measurement-notes">Measurement notes</a></p>
+<ul>
+<li>Agent tags are supplied by your application. One matching nonempty tag identifies an agent; multiple distinct matching tags are ambiguous.</li>
+<li>Recorded-spend ranking uses signed changes, not absolute movement. Missing costs remain missing, never zero.</li>
+<li>Langfuse agents with identical labels in different projects remain separate. Neither source establishes a causal explanation or cross-provider identity.</li>
+</ul>
+</details></section>
+<p class="guide-contact"><a href="mailto:evijay+fleetdiff@gmail.com" data-contact="email">evijay+fleetdiff@gmail.com</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/q-a" data-contact="questions">Questions</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/show-and-tell" data-contact="show-and-tell">Ran it on your data? Tell us what it found</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/security/advisories/new">Security issues (private)</a></p></main></div>
+<footer>Local tools. Open source. <a href="https://github.com/llm-measurement/fleetdiff">fleetdiff</a> · <a href="https://github.com/llm-measurement/otelcol-genai-sketches">Collector</a> · <a href="https://github.com/llm-measurement/llm-sketchkit">llm-sketchkit</a><br>
+<a href="llms.txt">Text index</a> · <a href="sitemap.xml">Sitemap</a> · <a href="security.html#verify-fleetdiff">Manual release verification</a><br>
+<p class="contact-links"><a href="mailto:evijay+fleetdiff@gmail.com" data-contact="email">evijay+fleetdiff@gmail.com</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/q-a" data-contact="questions">Questions</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/discussions/categories/show-and-tell" data-contact="show-and-tell">Ran it on your data? Tell us what it found</a> ·
+<a href="https://github.com/llm-measurement/fleetdiff/security/advisories/new">Security issues (private)</a></p>
+Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>: no cookies, no personal data</footer></body></html>

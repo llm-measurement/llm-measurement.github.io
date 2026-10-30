@@ -16,7 +16,7 @@
 <script defer src="assets/site.js"></script>
 </head><body><a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true" width="20" height="20"><rect x="2" y="2" width="2" height="16" fill="#202624" /><rect x="2" y="16" width="17" height="2" fill="#202624" /><rect x="5" y="9" width="2" height="2" fill="#148355" /><rect x="8" y="9" width="4" height="2" fill="#148355" /><rect x="13" y="9" width="2" height="2" fill="#148355" /><rect x="16" y="9" width="2" height="2" fill="#148355" /></svg> LLM Measurement</a><a href="https://github.com/llm-measurement">GitHub</a></header>
-<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="row-coverage.html" aria-current="page">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="row-coverage.html" aria-current="page">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>LiteLLM spend logs missing requests? Compare with daily counts</h1><p class="lead">fleetdiff checks, day by day, whether every request in LiteLLM's daily totals also reached the spend log, so you know which days' usage and spend reports are short before you rely on them.</p>
+<div class="layout"><div class="desktop-guides"><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="agent-spend.html">Agent spend</a><a href="row-coverage.html" aria-current="page">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></div><details class="mobile-guides"><summary>Guides</summary><nav aria-label="Guides"><a href="index.html">All guides</a><a href="token-spike.html">A token spike</a><a href="tokenmaxxing.html">Tokenmaxxing</a><a href="litellm-spend.html">LiteLLM spend</a><a href="langfuse-spend.html">Langfuse costs</a><a href="agent-spend.html">Agent spend</a><a href="row-coverage.html" aria-current="page">Row coverage</a><a href="routing.html">Routing audit</a><a href="what-if.html">Model what-if</a><a href="session-budget.html">Session budget</a><a href="cache-check.html">Cache check</a><a href="cardinality.html">Per-user metrics</a><a href="anomalies.html">Unusual windows</a><a href="traces-usage.html">Trace check</a><a href="distinct-users.html">Distinct users</a><a href="summaries.html">Why summaries</a><a href="security.html">Security review</a></nav></details><main id="main"><h1>LiteLLM spend logs missing requests? Compare with daily counts</h1><p class="lead">fleetdiff checks, day by day, whether every request in LiteLLM's daily totals also reached the spend log, so you know which days' usage and spend reports are short before you rely on them.</p>
 <nav class="path-index" aria-label="Choose your starting point"><ul>
 <li><a href="#run">Your database</a></li><li><a href="#access">Getting access</a></li><li><a href="#file">Paired export files</a></li><li><a href="#sample">Sample data</a></li>
 </ul></nav>
@@ -24,8 +24,8 @@
 <h2 id="own-data-title">Check your LiteLLM database</h2>
 <p><strong>1. Install.</strong> Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
 <pre data-own="row-coverage-install" data-exit="0"><code>set -eu
-curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
-sh install-fleetdiff.sh v0.12.1 ./bin
+curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin
 ./bin/fleetdiff --version</code></pre>
 <p><strong>2. Run it</strong> with the connection file from the <a href="litellm-spend.html#run">LiteLLM spend guide</a>:</p>
 <pre data-own="row-coverage-native" data-exit="0"><code>./bin/fleetdiff investigate --litellm-db --database-url-file ~/.config/litellm-db-url --daily --group-by key</code></pre>
@@ -48,7 +48,7 @@ umask 077
 mkdir ./coverage-helper
 for file in export-coverage.sh export.sql daily-projection.sql; do
   curl -fsSLo "./coverage-helper/$file" \
-    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.12.1/examples/litellm-spend/$file"
+    "https://raw.githubusercontent.com/llm-measurement/fleetdiff/v0.14.0/examples/litellm-spend/$file"
 done
 sh ./coverage-helper/export-coverage.sh ./litellm-coverage-export \
   "$BEFORE" \
@@ -72,11 +72,11 @@ sh ./coverage-helper/export-coverage.sh ./litellm-coverage-export \
 <pre data-run="row-coverage" data-exit="0"><code>set -eu
 umask 077
 mkdir fleetdiff-row-coverage
-curl -fsSLo fleetdiff-v0.12.1.tar.gz \
-  https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/refs/tags/v0.12.1
-tar -xzf fleetdiff-v0.12.1.tar.gz --strip-components=1 -C fleetdiff-row-coverage
+curl -fsSLo fleetdiff-v0.14.0.tar.gz \
+  https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/refs/tags/v0.14.0
+tar -xzf fleetdiff-v0.14.0.tar.gz --strip-components=1 -C fleetdiff-row-coverage
 cd fleetdiff-row-coverage
-sh scripts/install.sh v0.12.1 ./release
+sh scripts/install.sh v0.14.0 ./release
 ./release/fleetdiff investigate \
   --litellm-spend examples/litellm-spend/coverage_runtime_spend.csv \
   --litellm-daily-spend examples/litellm-spend/coverage_runtime_daily.csv \
@@ -91,7 +91,7 @@ Token and spend totals below use exported rows only.</code></pre>
 <p>The first day has one fewer spend row than daily requests; the next day matches.</p>
 <p>Add <code>--format json</code> for per-day counts and status under <code>row_coverage.days</code>.</p>
 <p>The sample reproduces a real <a href="https://github.com/BerriAI/litellm/issues/46403">response-ID collision</a> through LiteLLM's own database writers.</p>
-<p class="meta">The released <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/coverage_runtime_spend.csv">spend CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/coverage_runtime_daily.csv">daily CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.12.1/examples/litellm-spend/TESTING.md">verification record</a> come from a synthetic workload through pinned LiteLLM v1.104.0's proxy and database writers.</p>
+<p class="meta">The released <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/examples/litellm-spend/coverage_runtime_spend.csv">spend CSV</a>, <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/examples/litellm-spend/coverage_runtime_daily.csv">daily CSV</a> and <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/examples/litellm-spend/TESTING.md">verification record</a> come from a synthetic workload through pinned LiteLLM v1.104.0's proxy and database writers.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p>All selected request rows count, including failed records and call types excluded from token analysis. Days follow request <code>startTime</code> in UTC. fleetdiff does not fill in missing tokens, spend or contributor totals.</p>

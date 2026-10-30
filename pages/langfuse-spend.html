@@ -7,8 +7,8 @@
 <aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Your Langfuse export</h2>
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="langfuse-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/73df8c41de98e55758291d5282314d00347e4a27/scripts/install.sh
-sh install-fleetdiff.sh v0.13.1 ./fleetdiff-install
+<pre data-own="langfuse-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./fleetdiff-install
 ./fleetdiff-install/fleetdiff --version</code></pre>
 <p>Copy your project directory, including <code>observations_v2/</code>, <code>manifests/</code> and every listed file.</p>
 <pre data-own="langfuse-own" data-exit="0"><code>./fleetdiff-install/fleetdiff investigate \
@@ -37,14 +37,14 @@ sh install-fleetdiff.sh v0.13.1 ./fleetdiff-install
 </details>
 <section id="sample"><h2>Try the sample</h2>
 <p>No Langfuse project is needed. This downloads the released source archive for its synthetic export.</p>
-<pre data-run="langfuse-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/73df8c41de98e55758291d5282314d00347e4a27/scripts/install.sh
-sh install-fleetdiff.sh v0.13.1 ./fleetdiff-install
-curl -fsSLo langfuse-sample.tar.gz 'https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/73df8c41de98e55758291d5282314d00347e4a27'
-printf '%s  %s\n' '8576c6323d568320c23b9a8595f274595e8da1bd9d45fa4ab7ee10a80261848d' langfuse-sample.tar.gz \
+<pre data-run="langfuse-spend" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./fleetdiff-install
+curl -fsSLo langfuse-sample.tar.gz 'https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/78c6448de2f11e96ca63fb5d6ecff2ad2364304a'
+printf '%s  %s\n' '7a00a92d3fd6539b451b3520b5949377cb4d1732e33b279dbd400ea8ef3ad52e' langfuse-sample.tar.gz \
   | shasum -a 256 -c -
 tar -xzf langfuse-sample.tar.gz
 ./fleetdiff-install/fleetdiff investigate \
-  --langfuse-export 'fleetdiff-73df8c41de98e55758291d5282314d00347e4a27/examples/langfuse-spend/export' \
+  --langfuse-export 'fleetdiff-78c6448de2f11e96ca63fb5d6ecff2ad2364304a/examples/langfuse-spend/export' \
   --before-period 2026-10-07T00:00:00Z/2026-10-07T01:00:00Z \
   --after-period 2026-10-08T00:00:00Z/2026-10-08T01:00:00Z \
   --group-by provided_model_name</code></pre>

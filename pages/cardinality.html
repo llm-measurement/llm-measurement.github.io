@@ -10,8 +10,8 @@
 <h2 id="own-data-title">Run it on your data</h2>
 <p>Save your collector configuration as <code>collector.yaml</code>.</p>
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="cardinality" data-exit="3"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
-sh install-fleetdiff.sh v0.12.1 ./bin
+<pre data-own="cardinality" data-exit="3"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin
 ./bin/fleetdiff diagnose ./collector.yaml</code></pre><p>Exit 0: no blocking findings. Exit 3: settings to fix. Exit 4: unsupported settings. Follow the reported YAML paths.</p>
 </aside>
 <section id="configure">
@@ -37,10 +37,10 @@ sh install-fleetdiff.sh v0.12.1 ./bin
 <section id="sample">
 <h2>Try the sample</h2>
 <p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-run="cardinality" data-exit="3"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.1.tar.gz
+<pre data-run="cardinality" data-exit="3"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.14.0.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.1
-sh scripts/install.sh v0.12.1 ./release
+cd fleetdiff-0.14.0
+sh scripts/install.sh v0.14.0 ./release
 ./release/fleetdiff diagnose - &lt; examples/diagnose/unsafe.yaml</code></pre>
 <h3>What you'll see</h3>
 <p>Example output from this synthetic sample; your values will reflect your input.</p>
@@ -59,7 +59,7 @@ sh scripts/install.sh v0.12.1 ./release
 </ul>
 <h3>Keep the answers without identity labels</h3>
 <p>Use aggregate counters for token usage and model attempts, with a small, capped set of model or route labels. Keep the top token-consuming users in a fixed-capacity ranking outside metric labels. Track the number of distinct users as a scalar estimate, also without a user label. This preserves both questions: how many users were active, and which users accounted for most tokens.</p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.1/examples/diagnose">released synthetic diagnosis fixtures</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.14.0/examples/diagnose">released synthetic diagnosis fixtures</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p class="measurement-context">diagnose reads your collector configuration; your metrics backend reports live series counts.<br>

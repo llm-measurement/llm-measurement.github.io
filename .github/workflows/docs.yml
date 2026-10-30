@@ -72,7 +72,7 @@ jobs:
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: '1.26.10'
-      # https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/examples/litellm-spend/images.json
+      # https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/examples/litellm-spend/images.json
       - run: docker pull postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
       # Published collector v0.6.2 and the Contrib 0.161.0 capture-recipe pin.
       - run: docker pull ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:c2573a74714249c2e407477997903da5cc367e3d7405bccf0d7cfc049c5fe289

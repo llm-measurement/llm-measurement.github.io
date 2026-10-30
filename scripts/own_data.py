@@ -24,15 +24,17 @@ from outsider import Blocks, ROOT
 from postgres_transport import postgres_transport
 from release_cache import consumer_pin, read_url
 
-PAGES = ("index", "token-spike", "litellm-spend", "session-budget", "cache-check", "cardinality",
+PAGES = ("index", "token-spike", "litellm-spend", "agent-spend", "session-budget", "cache-check", "cardinality",
          "traces-usage", "anomalies", "distinct-users", "tokenmaxxing", "row-coverage", "routing", "what-if", "security")
-FIXTURE_VERSION = "v0.12.1"
+FIXTURE_VERSION = "v0.14.0"
 # Must match the release source commit; installed binaries are checked against it.
-FIXTURE_COMMIT = "0d7db95c5bb3013f8c564c91fbb07b6235a2664e"
+FIXTURE_COMMIT = "78c6448de2f11e96ca63fb5d6ecff2ad2364304a"
 FIXTURE_URL = "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/" + FIXTURE_COMMIT
 EXPORT_START = "2026-09-23T00:00:00Z"
 EXPORT_END = "2026-10-09T00:00:00Z"
 EXPECTED = {
+    "agent-install": ("Verified", "fleetdiff v0.14.0 (" + FIXTURE_COMMIT + ")"),
+    "agent-own": ("agent-1 accounts for 62.5% of the net recorded increase (+200 of +320 tokens).",),
     "home-spend": ("Logged model requests:", "Who drove", "user-1:"),
     "home-traces": ("Your traces can fully answer 2 of 7 questions.",),
     "home-python": ("Successfully installed",),
@@ -65,7 +67,7 @@ EXPECTED = {
     "tokenmaxxing": ("Estimated distinct users: 3", "Recorded tokens: 4,800",
                      "user-1: [3,600, 3,600] tokens", "100.0% to 100.0%"),
     "row-coverage-export": ("Exported spend.csv and daily.csv in the new private output directory.",),
-    "row-coverage-install": ("Verified", "fleetdiff v0.12.1 (" + FIXTURE_COMMIT + ")"),
+    "row-coverage-install": ("Verified", "fleetdiff v0.14.0 (" + FIXTURE_COMMIT + ")"),
     "row-coverage-native": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
                             "8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
     "row-coverage": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
@@ -178,6 +180,9 @@ def prepare(fresh, source, env, slug):
     for name in ("before", "after"):
         shutil.copytree(source / "examples/sessions/data" / name, fresh / name)
     (fresh / "usage.csv").write_text("user_id,tokens\nprivate-ana,1200\nprivate-ben,300\nprivate-ana,2400\nprivate-cy,900\n")
+    if slug == "agent-spend":
+        shutil.copyfile(source / "examples/litellm-spend/agent-tags.csv", fresh / "spend.csv")
+        env.update(BEFORE="2026-10-07", AFTER="2026-10-08")
     if slug == "session-budget":
         shutil.copyfile(source / "examples/litellm-spend/session-budget.csv", fresh / "spend.csv")
     if slug == "what-if":
@@ -324,7 +329,11 @@ def refresh_database_dates(fresh, env, slug, now):
 def native_grants(source, daily=False):
     document = (source / "docs/NATIVE_EXPORT.md").read_text()
     blocks = re.findall(r"```sql\n(.*?)```", document, re.DOTALL)
-    assert len(blocks) == 2 and "CREATE ROLE fleetdiff_reader" in blocks[0]
+    assert len(blocks) in (2, 3) and "CREATE ROLE fleetdiff_reader" in blocks[0]
+    if len(blocks) == 3:
+        assert blocks[1] == ('GRANT SELECT (request_tags)\n'
+                             '  ON TABLE public."LiteLLM_SpendLogs" TO fleetdiff_reader;\n')
+        blocks = [blocks[0], blocks[2]]
     assert 'ON TABLE public."LiteLLM_SpendLogs"' in blocks[0]
     assert 'ON TABLE public."LiteLLM_DailyUserSpend"' in blocks[1]
     grants = blocks[0] + (blocks[1] if daily else "")
@@ -365,7 +374,12 @@ def page_native_grants(slug):
 def published_grants(source, blocks):
     """Match released SQL; execute the decoded page text, never a rewritten copy."""
     released = re.findall(r"```sql\n(.*?)```", (source / "docs/NATIVE_EXPORT.md").read_text(), re.DOTALL)
-    assert len(released) == 2
+    assert len(released) in (2, 3)
+    if len(released) == 3:
+        # Request-tag access is opt-in, not part of either default page grant.
+        assert released[1] == ('GRANT SELECT (request_tags)\n'
+                               '  ON TABLE public."LiteLLM_SpendLogs" TO fleetdiff_reader;\n')
+        released = [released[0], released[2]]
     assert [b["id"] for b in blocks] in (
         ["litellm-reader-grants", "litellm-daily-grants"],
         ["litellm-reader-grants", "row-coverage-daily-grants"])
@@ -508,7 +522,7 @@ def database(fresh, source, env, coverage=False, routing=False, native=False, sq
             allowed = set("request_id call_type api_key user team_id organization_id end_user model model_id model_group custom_llm_provider prompt_tokens completion_tokens total_tokens spend status session_id agent_id startTime endTime metadata".split())
             columns = dict(line.split("|") for line in privileges.splitlines())
             assert {k for k, v in columns.items() if v == "t"} == allowed, columns
-            assert {k for k, v in columns.items() if v == "f"} == {"messages", "response", "proxy_server_request"}, columns
+            assert {k for k, v in columns.items() if v == "f"} == {"messages", "response", "proxy_server_request", "request_tags"}, columns
             restrictions = run(reader + ['''SELECT current_database(), rolsuper, rolcreatedb,
                 rolcreaterole, rolinherit, rolreplication, rolbypassrls,
                 EXISTS(SELECT 1 FROM pg_auth_members WHERE member = r.oid),
@@ -730,7 +744,7 @@ def check(output, page=None):
                     assert result.returncode == block["exit"], (slug, block["id"], result.returncode, result.stderr)
                     for excerpt in EXPECTED[block["id"]]:
                         assert excerpt in result.stdout, (block["id"], excerpt, result.stdout)
-                    if "sh install-fleetdiff.sh v0.12.1" in block["text"]:
+                    if "sh install-fleetdiff.sh v0.14.0" in block["text"]:
                         record["installed_version"] = installed_version(fresh, env)
                     if block["id"] == "home-go":
                         assert "github.com/llm-measurement/llm-sketchkit v0.4.0" in (fresh / "measurement-go/go.mod").read_text()

@@ -1,45 +1,47 @@
 {
-  "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised. October29 approved exception: only the LiteLLM H1 changes to the exact approved snippet; its following paragraph/navigation and every other page introduction remain equal to baseline. Metadata-only source/HTML scope is independently checked.",
-  "baselineCommit": "148cb426f020486eefafff4193bd539ff6fd87ae",
-  "newPageMethod": "Langfuse is new: verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical Langfuse intro comparison is claimed.",
+  "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.",
+  "baselineCommit": "4584515bf0a311866fce6a2d3ad6b2936f0409ff",
+  "newPageMethod": "For a new Langfuse or agent guide, verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical intro comparison is claimed for a new page.",
   "files": {
     "assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
     "assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
     "docs/assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
     "docs/assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
-    "pages.json": "4d4f1e2a76bd125b988b10fe3ba7dcab6d7fe994c6ceb010aa34dc4d9ca9b8ae",
-    "pages/index.html": "676713e588b3f4b52ac6a40a6900481179f76a871abe71f18f930f547ffba9a1",
-    "docs/index.html": "fbaab397d963415f8493acdba31ded373f0ed1da1ef255b9c8017aeb16f438c6",
-    "pages/token-spike.html": "c9117cf7c4ca50b629e3b86392cc4349ccb27a517a2314736569d9b8789e9d8c",
-    "docs/token-spike.html": "5eddba15f9213f4111d70ec9dfa1be7ef2ea4bab8b35b70ea3c12950c7b04a77",
+    "pages.json": "842d2b9f3840acf116b0e4a4f27e0d52a13193e807041d0e44cef227698f9c16",
+    "pages/index.html": "22b7c6996bc6777540b2cb445c43b6509a46e0af47bc4907c4714d9737db2177",
+    "docs/index.html": "0070916b7279058ada1892840a3c50b005b3ca4b9d8649dcad914ea984ad8361",
+    "pages/token-spike.html": "ba0047b49b57b163f54c5e5870886476f3180d61a0274af621e0aa38d376cb5d",
+    "docs/token-spike.html": "54f7b1c5064d4a447fed1780efee92a41cf7069c8032eb6755918534f03426c9",
     "pages/tokenmaxxing.html": "f31c982435e0c38cb05f7081e378820b3f553f22f8dbf7ec632200ca9868022d",
-    "docs/tokenmaxxing.html": "d547501ce2da59eb07b25bd64094ad07fcd3e151bcb533423a7be7a84aa89cf2",
-    "pages/litellm-spend.html": "2889093b380879de5dfe001ee1d85fb79a4aaa2582dc733cf0585f43ef1d71c4",
-    "docs/litellm-spend.html": "9f6b8772bcb5402525ac9eb46fcb85a33aecf18e7a70f26b3228fcdc3c30525c",
-    "pages/langfuse-spend.html": "ac50bf2378f03df29a767c2eda4894fc5848d05072594037f0e7cf1bf881d592",
-    "docs/langfuse-spend.html": "02569aa705356b3c676e93b04e06e6fb13d86b2c54087002ba51e7ad37f91104",
-    "pages/row-coverage.html": "83ec64d469b21c124a4358122898676fb79c18cc4ebf5e17503e17b1a43040a4",
-    "docs/row-coverage.html": "11eb6488efa2268e85c196a05c838d3a131719851063c25c9a7100684b74cee3",
-    "pages/routing.html": "8be79c89e1d76985fb8c09d50b65fedb815f5ea3e40b1bd61112db6cde32cacc",
-    "docs/routing.html": "8488a2cd7d9dea1d22ddf28757999b8793705f9910b5809522cbd4ce40e86cea",
-    "pages/what-if.html": "f572bbda95599e77ea824910c1dcb55289e4b721497ae2d5317423f727762038",
-    "docs/what-if.html": "9dae4ac9ec1c222f9ee4c6531a78ccc9fec073e4814d77569ffefa1bf88bd4e2",
-    "pages/session-budget.html": "f479718c28be29157d2c70ae09e5f8575d190ed4f4394739659a1c1cc75b8d84",
-    "docs/session-budget.html": "51ef6c09eb20845e81de46447d250c392228936038456d8732a5b8ad156d83e2",
-    "pages/cache-check.html": "307ea1f97605cd468ee3238e2844b5a698ed3628727e190d46203f979e54a2f9",
-    "docs/cache-check.html": "41b330f75372d3e31fe46296f246fc1dbae439c44f3f8472ba436c4407e67d8e",
-    "pages/cardinality.html": "440f67fa8ca7cdfd61b66f44ff9e5f59ab3c00951d773f54c42471d150213f9e",
-    "docs/cardinality.html": "c6a6ebf1fb713f08dfe38253bb134ba0d05b03656f44fdbef3903188df9fd44b",
-    "pages/anomalies.html": "ef744bceb9cc1965bfa239c0e2c3720e88531249f6a12962937559e15133ff01",
-    "docs/anomalies.html": "22b245109b73ac5f77949fa97892afb76e3503f8854431657af3ed895cfdfb04",
-    "pages/traces-usage.html": "9f771bcf45211cc88bda24f83c501bc43ba593c305321584f8ee390dc024a56d",
-    "docs/traces-usage.html": "fba635ded19926ffc301c27dfd0776d0bc58bb172f3c2d2263188d2f1bf887d5",
+    "docs/tokenmaxxing.html": "52877e645dcc690d5b2b5a9be818a780099242014a0027a0d3111ae4b1915a77",
+    "pages/litellm-spend.html": "774ac3630aa799902e95bc23ae517fd58e941c6c26089cc109d541401faa87d3",
+    "docs/litellm-spend.html": "e5d799e0c90c68123fc2314d745f00c97a6a126e4cea6a6aac42c62efe5970b4",
+    "pages/langfuse-spend.html": "9a127199c8351cae2172aa403834f86fc3d0bcd6cfafa7d325a9e1714344a9a1",
+    "docs/langfuse-spend.html": "aa0b24d06bc98e664802ac15cdf50e01a50aaf2d9b9ba55320f9784b57b3080f",
+    "pages/agent-spend.html": "1068983753923713f2f7fc1bf921db504b907a5de41944c6a8e96e79f5f1c24a",
+    "docs/agent-spend.html": "507bc10edc5b3a4d486c7876065476fb423f075e9845b1a29d0272124b8a7453",
+    "pages/row-coverage.html": "b3ce87125799b7ee91de2d1a811f705a3589d840e8121e9735ca42d4d7ff8c73",
+    "docs/row-coverage.html": "1140da342c81d2ada095f78b7f3bef313992877306773785da6e4162a4ccbf19",
+    "pages/routing.html": "4778f2fcccba8dd893786d23bf11946e8c395bcabeb3fff26acc459d8e1383f0",
+    "docs/routing.html": "a78b4fd1ae8f28a17230c8c64303a4c92f20a5e04a4458a04ccd9059a90348ab",
+    "pages/what-if.html": "8e298e80cf1f6fad01028010f8d6bccc833e6d334d8713bad0795710170d08ba",
+    "docs/what-if.html": "95eb10da29a6c3be3547a1294fe4b6baae9c69cc4d593c8a4d9214b392806cfc",
+    "pages/session-budget.html": "b02d9daa1e43a051b01865fe4e16c79c8a6c87c7665bff364f0f1a9be5b512df",
+    "docs/session-budget.html": "1a826236bb52b3e4a74e10aaf7d6eda4d06a461faef7ad69e86708fa2e0e9de8",
+    "pages/cache-check.html": "9b642c3f16070ce9906c39ee2fe8ff94211d530ab6a5291acb9df7c376f286d9",
+    "docs/cache-check.html": "2f9547638fd650591eb48b40cdf48b2e1212b2c0b1e431ac3349dc2a15ad0046",
+    "pages/cardinality.html": "4f317dee904a31d713c3e0e07e01de6b096d04b4a613937de33f8e07f4ce3818",
+    "docs/cardinality.html": "0b8d00a576260ae76c64eadc2c9481b9d7b8c9fbab4a1e063697c65389409aaa",
+    "pages/anomalies.html": "519fb5cab2c2a79af81dbcba5103ced50c8418b85fe499dddc7e84814133d390",
+    "docs/anomalies.html": "57b0b79b96f88e48b39167900758ac4e01e03b0bd670a9a72b2f49947f1f915a",
+    "pages/traces-usage.html": "0e5b03e7828d1798a8992772a13ebf9fa7c424da568024679e4520812337dea4",
+    "docs/traces-usage.html": "1db45b5b2406ae0ed7d87d3a80abdaa3d70ba1757e998551f0092ce56ca4f2f0",
     "pages/distinct-users.html": "cd018843e28458d2a6d5d7d40bb0ff66be97d483bb1effeb53f4e90f32318dc7",
-    "docs/distinct-users.html": "8bb15e6f73f2bdc7080e4a2885d6557b7312047a04278279ad6d511bae261388",
+    "docs/distinct-users.html": "625cbbf13e015bd31801f2e4f53ceded077bb480b952be34b9f93e8a9adfa5d6",
     "pages/summaries.html": "694a4c55261eaeb73b28ffc1381b7338432373326f37118a37a9a9837e85a23f",
-    "docs/summaries.html": "68ef810798840315639f58b0343a7ce65ccb92fda03bf6a70807d76ee041a89b",
-    "pages/security.html": "425b94aa1d800210042d978962c2eebbc334b784ef890ffa580131e18b34198a",
-    "docs/security.html": "9b7220d0a993639fd82a07bdb5b644da1a900d8174ad103d7249b7747f952e74"
+    "docs/summaries.html": "43b3ccb127b1c9caabe8f77a3f3e2a135044571c9070a2185e783041973ab47a",
+    "pages/security.html": "a36d9ca7ecacd9109b1548f7d94a0b23e8a9eaf1410c68444ece71098acbbd47",
+    "docs/security.html": "ce7758ede1855b5e9e663453f2e886d30632938f2f7a488b1d0b5597d4fbd246"
   },
   "results": [
     {
@@ -322,6 +324,64 @@
       "contactPass": true,
       "commandBlocks": 4,
       "eventsChecked": 10,
+      "qaTrackerStubbed": true,
+      "externalRequestsSent": 0,
+      "pass": true
+    },
+    {
+      "slug": "agent-spend",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "indexBottom": 305.5625,
+        "title": "Which agent drove your LLM spend increase?",
+        "folded": true
+      },
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 5.115384650945418
+        }
+      ],
+      "inputFirstUnchanged": null,
+      "inputFirstVerified": true,
+      "newPage": true,
+      "paletteUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "keyboardPass": true,
+      "clipboardPass": true,
+      "contactPass": true,
+      "commandBlocks": 3,
+      "eventsChecked": 9,
       "qaTrackerStubbed": true,
       "externalRequestsSent": 0,
       "pass": true
@@ -1237,6 +1297,64 @@
       "pass": true
     },
     {
+      "slug": "agent-spend",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "indexBottom": 423.53125,
+        "title": "Which agent drove your LLM spend increase?",
+        "folded": true
+      },
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 5.115384650945418
+        }
+      ],
+      "inputFirstUnchanged": null,
+      "inputFirstVerified": true,
+      "newPage": true,
+      "paletteUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "keyboardPass": true,
+      "clipboardPass": true,
+      "contactPass": true,
+      "commandBlocks": 3,
+      "eventsChecked": 9,
+      "qaTrackerStubbed": true,
+      "externalRequestsSent": 0,
+      "pass": true
+    },
+    {
       "slug": "row-coverage",
       "width": 390,
       "colorScheme": "light",
@@ -2142,6 +2260,64 @@
       "contactPass": true,
       "commandBlocks": 4,
       "eventsChecked": 10,
+      "qaTrackerStubbed": true,
+      "externalRequestsSent": 0,
+      "pass": true
+    },
+    {
+      "slug": "agent-spend",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "indexBottom": 522.015625,
+        "title": "Which agent drove your LLM spend increase?",
+        "folded": true
+      },
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 5.115384650945418
+        }
+      ],
+      "inputFirstUnchanged": null,
+      "inputFirstVerified": true,
+      "newPage": true,
+      "paletteUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "keyboardPass": true,
+      "clipboardPass": true,
+      "contactPass": true,
+      "commandBlocks": 3,
+      "eventsChecked": 9,
       "qaTrackerStubbed": true,
       "externalRequestsSent": 0,
       "pass": true

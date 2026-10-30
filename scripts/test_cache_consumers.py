@@ -26,13 +26,13 @@ class ConsumerTests(unittest.TestCase):
 
     def test_pin_uses_actual_site_seed_and_public_metadata_only(self):
         pin = self.pin()
-        self.assertEqual(pin['artifact']['id'], 12471731808)
-        self.assertEqual(pin['seed_run_id'], 39883709543)
-        self.assertEqual(pin['seed_source_sha'], 'dd5a49ed5efc883dd6b40c82d530c2c59762e709')
-        self.assertEqual(pin['member_manifest_sha256'], 'ec4cba42a4fe66cb23e7da861c0ca9a6b49455fa2657aeb3068feedb95dbd35e')
+        self.assertEqual(pin['artifact']['id'], 12944934095)
+        self.assertEqual(pin['seed_run_id'], 40982598894)
+        self.assertEqual(pin['seed_source_sha'], '4584515bf0a311866fce6a2d3ad6b2936f0409ff')
+        self.assertEqual(pin['member_manifest_sha256'], '671ea1847dac46064e591f14429ef8ef909188325316f467aa96c6e4241438df')
         with patch.object(download_log, 'fetch_json', return_value=self.metadata(pin)) as fetch:
             self.assertEqual(cache.consumer_pin(check_metadata=True, now=self.now()), pin)
-            fetch.assert_called_once_with('https://api.github.com/repos/llm-measurement/llm-measurement.github.io/actions/artifacts/12471731808')
+            fetch.assert_called_once_with('https://api.github.com/repos/llm-measurement/llm-measurement.github.io/actions/artifacts/12944934095')
 
     def test_bad_unknown_or_expired_pin_never_requests_or_falls_back(self):
         for change in ('repository', 'source', 'release', 'hash', 'key', 'id', 'expired'):
@@ -79,7 +79,7 @@ class ConsumerTests(unittest.TestCase):
     def events(self):
         records = []
         for name, checksum in cache.spec()['assets'].items():
-            item = {'asset': name, 'url': 'https://github.com/llm-measurement/fleetdiff/releases/download/v0.12.1/' + name,
+            item = {'asset': name, 'url': 'https://github.com/llm-measurement/fleetdiff/releases/download/v0.14.0/' + name,
                 'purpose': 'deliberate protected-main cache seed', 'run_id': 39883709543, 'run_attempt': 1,
                 'started_at': '2026-10-23T01:23:30+00:00', 'status': 'started'}
             records.append(item)

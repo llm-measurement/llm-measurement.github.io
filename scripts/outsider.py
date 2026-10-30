@@ -58,7 +58,7 @@ def normalize(text):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--page", choices=["cardinality", "token-spike", "tokenmaxxing", "litellm-spend", "langfuse-spend", "row-coverage", "routing", "what-if", "session-budget", "cache-check", "anomalies", "traces-usage", "distinct-users"])
+    parser.add_argument("--page", choices=["cardinality", "token-spike", "tokenmaxxing", "litellm-spend", "langfuse-spend", "agent-spend", "row-coverage", "routing", "what-if", "session-budget", "cache-check", "anomalies", "traces-usage", "distinct-users"])
     args = parser.parse_args()
     from release_cache import consumer_pin
     from release_cache import cache_root

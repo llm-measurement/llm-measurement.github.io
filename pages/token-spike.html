@@ -11,8 +11,8 @@
 <h2 id="own-data-title">Run it on your data</h2>
 <p>Save token-weighted user/session summaries in <code>./before</code> and <code>./after</code>. Use one hashing key and replace <code>app</code> with your producer name.</p>
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="token-spike-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/0d7db95c5bb3013f8c564c91fbb07b6235a2664e/scripts/install.sh
-sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
+<pre data-own="token-spike-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
+sh install-fleetdiff.sh v0.14.0 ./bin</code></pre>
 <pre data-own="token-spike-summaries" data-exit="0"><code>./bin/fleetdiff investigate --before ./before --after ./after --expected app</code></pre>
 <p>See changes in attempts, tokens per attempt and contributors.</p>
 </aside>
@@ -29,10 +29,10 @@ sh install-fleetdiff.sh v0.12.1 ./bin</code></pre>
 <section id="sample">
 <h2>Try the sample</h2>
 <p class="meta">Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-run="token-spike" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.12.1.tar.gz
+<pre data-run="token-spike" data-exit="0"><code>curl -fsSLo fleetdiff-source.tar.gz https://github.com/llm-measurement/fleetdiff/archive/refs/tags/v0.14.0.tar.gz
 tar -xzf fleetdiff-source.tar.gz
-cd fleetdiff-0.12.1
-sh scripts/install.sh v0.12.1 ./release
+cd fleetdiff-0.14.0
+sh scripts/install.sh v0.14.0 ./release
 ./release/fleetdiff investigate --before examples/sessions/data/before \
   --after examples/sessions/data/after --expected app</code></pre>
 <h3>What you'll see</h3>
@@ -47,7 +47,7 @@ Reported tokens: 400 -&gt; 3300; model attempts: 4 -&gt; 13.
   key / measurement   before -&gt; after  after share  review
   user-1 / top_users  0 -&gt; 3000        90.91%</code></pre>
 <p>To see who uses the most overall, rather than who changed, see <a href="tokenmaxxing.html">Who is tokenmaxxing?</a></p>
-<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.12.1/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
+<p class="meta">Source and reproduction: <a href="https://github.com/llm-measurement/fleetdiff/tree/v0.14.0/examples/sessions">released session fixtures and generator</a>. <a href="https://github.com/llm-measurement/llm-measurement.github.io/blob/main/evidence/README.md">Verification record</a>.</p>
 <details class="measurement-details">
 <summary>What the numbers mean</summary>
 <p class="measurement-context">A flag marks a session worth a look. With real data, the report shows ranges wherever bounds differ.<br>
