@@ -7,12 +7,13 @@ import json
 import os
 from pathlib import Path
 import platform
+import secrets
 import subprocess
 import tempfile
 import uuid
 
 CONFIG_IMAGES = {
-    "cardinality": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:c2573a74714249c2e407477997903da5cc367e3d7405bccf0d7cfc049c5fe289",
+    "cardinality": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:0bae7fb80c4bd28db7c1a5746961a0f9907eb97975f69c35a866fd2ae0af5e8e",
     "traces-usage": "otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
 }
 RECEIVER = """receivers:
@@ -62,7 +63,7 @@ def platform_image(name, architecture):
     image = CONFIG_IMAGES[name]
     if name != "cardinality":
         return image
-    raw = Path(__file__).with_name("collector-v062-index.json").read_bytes().removesuffix(b"\n")
+    raw = Path(__file__).with_name("collector-v071-index.json").read_bytes().removesuffix(b"\n")
     assert digest(raw) == image.split("@sha256:", 1)[1], "release index bytes changed"
     index = json.loads(raw)
     entries = [item for item in index["manifests"]
@@ -96,6 +97,7 @@ def validate(block, fresh, env, output):
     (output / (name + ".composed.yaml")).write_bytes(complete)
     (fresh / "capture").mkdir(mode=0o700, exist_ok=True)
     name_prefix = "site-config-" + uuid.uuid4().hex[:12]
+    secret = secrets.token_hex(32)
     results = []
     for negative in (False, True):
         current = complete
@@ -115,7 +117,7 @@ def validate(block, fresh, env, output):
             "--user", str(os.getuid()) + ":" + str(os.getgid()),
             "--mount", f"type=bind,src={config},dst=/fixture/config.yaml,readonly",
             "--mount", f"type=bind,src={fresh / 'capture'},dst=/private-capture",
-            "-e", "GENAI_SKETCH_SECRET=site-synthetic-only-not-a-production-secret",
+            "-e", "GENAI_SKETCH_SECRET=" + secret,
             runtime_image, "validate", "--config=file:/fixture/config.yaml"]
         try:
             result = subprocess.run(command, env=env, capture_output=True, text=True, timeout=60)

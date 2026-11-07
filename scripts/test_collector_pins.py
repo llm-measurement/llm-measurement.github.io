@@ -72,6 +72,29 @@ class CollectorPinTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "latest stable"):
             pins.check_source("page", "collector v0.2.9", self.record)
 
+    def test_separate_chart_assignment_is_checked_against_chart_release(self):
+        record = pins.policy([release("v0.7.1"), release("chart-v0.7.2")], [])
+        source = '<pre data-review="collector"><code>release=v0.7.1\nchart_release=chart-v0.7.2\nchart-release.yml\n</code></pre>'
+        self.assertGreater(pins.check_source("page", source, record), 0)
+        with self.assertRaisesRegex(ValueError, "latest stable"):
+            pins.check_source("page", source.replace("chart_release=chart-v0.7.2", "chart_release=chart-v0.7.1"), record)
+        for assignment in ("", "chart_release=0.7.2\n", "chart_release=chart-v0.7.2-rc.1\n",
+                           "chart_release=chart-v0.7.2\nchart_release=chart-v0.7.2\n"):
+            with self.subTest(assignment=assignment), self.assertRaises(ValueError):
+                pins.source_pins(source.replace("chart_release=chart-v0.7.2\n", assignment))
+
+    def test_reviewed_documentation_revision_is_scoped_and_tracks_runtime(self):
+        record = pins.policy([release("v0.7.1"), release("chart-v0.7.2")], [])
+        for name in pins.DOCS_PATHS:
+            source = "https://github.com/" + pins.REPO + "/blob/" + pins.DOCS_REVISION + "/" + name
+            self.assertEqual(pins.check_source("page", source, record), 1)
+            with self.assertRaisesRegex(ValueError, "unreviewed"):
+                pins.source_pins(source.replace(pins.DOCS_REVISION, "a" * 40))
+            with self.assertRaisesRegex(ValueError, "latest stable"):
+                pins.check_source("page", source, pins.policy([release("v0.7.2")], []))
+        with self.assertRaisesRegex(ValueError, "unreviewed"):
+            pins.source_pins("https://github.com/" + pins.REPO + "/blob/" + pins.DOCS_REVISION + "/builder.yaml")
+
     def test_historical_evidence_keeps_its_actual_measured_version(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

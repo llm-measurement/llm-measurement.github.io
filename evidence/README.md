@@ -18,6 +18,42 @@ default fixtures require that column to remain unreadable.
 The dated sections below describe earlier checks, not the current release.
 Their version strings and measurement records are retained as history.
 
+## Collector v0.7.1 And Chart 0.7.2, November 7, 2026
+
+Current collector guidance selects runtime v0.7.1 and stable chart 0.7.2,
+with separate runtime and chart signing identities. The stable chart pins the
+published multi-architecture image index. The runtime's bundled intermediate
+chart is not substituted for the separate stable chart release.
+
+Upgrading from 0.6.x requires a private random hashing key of at least 32 bytes;
+published example keys are rejected. NetworkPolicy stays enabled by default.
+Cross-namespace metrics scraping needs the actual Prometheus namespace and pod
+selectors in one metricsFrom peer. The security reference documents these
+requirements and authenticates OpenVEX alongside the checksum and SBOM metadata.
+
+Fresh November 7 checks covered all 14 samples, all 46 own-data blocks, three
+configuration records and both release-verification command blocks. Fleetdiff
+samples used the exact verified release cache; Langfuse and Python examples
+used their normal anonymous downloads. The own-data checks used real synthetic
+PostgreSQL fixtures and the released digest-pinned collector, including its
+negative configuration control. No provider or model calls were made.
+Browser checks covered 51 page/viewports, 219 exact keyboard clipboard copies
+and 498 path-only events, with external requests blocked.
+The Python suite discovered 171 tests: 168 passed in its full invocation, and
+the three optional released-binary checks passed in a separate native/PostgreSQL
+invocation. No tests remain unexecuted across those two invocations.
+
+Deployment and Summary Export links pin signed Collector documentation commit
+`e9ba24eb3a7979dcd94ed1fb12cb39fe3691afd9`, which corrects the released tag's
+old install instructions. Collector PR #140 must merge before this site change.
+Both PRs require Claude's pre-merge diff and hosted-CI review. Artifact downloads
+and signing identities still pin runtime v0.7.1 and chart-v0.7.2; the documentation
+commit does not substitute a different runtime build or module version.
+
+The dated records below retain their original versions and results; they are
+history, not validation of these refreshed commands.
+
+<!-- historical-verification:start -->
 ## Historical Langfuse v0.13.1 Guide, October 27, 2026
 
 The Langfuse guide pins the released v0.13.1 commit
@@ -112,7 +148,6 @@ chart 0.6.2/app 0.6.2 template passed against the authenticated image digest.
 The records below remain dated history; they are not relabeled as these checks.
 
 
-<!-- historical-verification:start -->
 ## October 22 fleetdiff pin verification
 
 Current fleetdiff commands pin v0.12.1 and source
