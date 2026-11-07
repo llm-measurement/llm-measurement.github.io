@@ -14,7 +14,7 @@ REPO = "llm-measurement/otelcol-genai-sketches"
 API = "https://api.github.com/repos/" + REPO
 VERSION = r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)"
 # Reviewed documentation-only commit, not an image or connector-module release.
-DOCS_REVISION = "e9ba24eb3a7979dcd94ed1fb12cb39fe3691afd9"
+DOCS_REVISION = "4ca5e632dda2ff515c05677678a62751ad9bc7bd"
 DOCS_RUNTIME = "v0.7.1"
 DOCS_PATHS = {"docs/DEPLOYMENT.md", "docs/SUMMARY_EXPORT_HELM.md"}
 DOCS_PIN = re.compile(r"https://github\.com/" + re.escape(REPO)

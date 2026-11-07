@@ -43,10 +43,9 @@ The Python suite discovered 171 tests: 168 passed in its full invocation, and
 the three optional released-binary checks passed in a separate native/PostgreSQL
 invocation. No tests remain unexecuted across those two invocations.
 
-Deployment and Summary Export links pin signed Collector documentation commit
-`e9ba24eb3a7979dcd94ed1fb12cb39fe3691afd9`, which corrects the released tag's
-old install instructions. Collector PR #140 must merge before this site change.
-Both PRs require Claude's pre-merge diff and hosted-CI review. Artifact downloads
+Deployment and Summary Export links pin Collector documentation commit
+`4ca5e632dda2ff515c05677678a62751ad9bc7bd` on `main`, which corrects the released
+tag's old install instructions. Artifact downloads
 and signing identities still pin runtime v0.7.1 and chart-v0.7.2; the documentation
 commit does not substitute a different runtime build or module version.
 

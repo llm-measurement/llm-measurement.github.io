@@ -82,7 +82,7 @@ class ReleasePairTests(unittest.TestCase):
                       (ROOT / "pages/security.html").read_text())
 
     def test_install_guides_pin_the_matching_release_documentation(self):
-        revision = "e9ba24eb3a7979dcd94ed1fb12cb39fe3691afd9"
+        revision = "4ca5e632dda2ff515c05677678a62751ad9bc7bd"
         for name in ("anomalies", "token-spike", "index", "security"):
             source = (ROOT / "pages" / (name + ".html")).read_text()
             self.assertIn("otelcol-genai-sketches/blob/" + revision + "/docs/", source)

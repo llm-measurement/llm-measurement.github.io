@@ -1,6 +1,6 @@
 {
   "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.",
-  "baselineCommit": "1e8e0d18bb1ed0e3c9e30069d6f016df998215a2",
+  "baselineCommit": "72a977700a35a896fd2358b44c9710bc96f49075",
   "newPageMethod": "For a new Langfuse or agent guide, verify input-first ordering and match shared palette/typography against the existing LiteLLM guide; no historical intro comparison is claimed for a new page.",
   "files": {
     "assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
@@ -8,12 +8,12 @@
     "docs/assets/site.css": "602e4d4d8aec80c8a9f3f7947bb17b2cddf69d901a5def9c4440193be3314c7f",
     "docs/assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
     "pages.json": "842d2b9f3840acf116b0e4a4f27e0d52a13193e807041d0e44cef227698f9c16",
-    "pages/index.html": "3fbb74063064256a846126c25bde9901e1bd35747aa0a7cdc1180ebafe73070f",
-    "docs/index.html": "503e611862d0e145c741701a807122e6252885a08c56c04e57cfaf37f47995db",
-    "pages/token-spike.html": "d3d7c14f9c57ad3d4b0c14685153068b1f718f81b60c6197b12770fb308ba3d4",
-    "docs/token-spike.html": "1add8f154ad9bbf14a621e00fa81a4a126c979291b28a5ed4e4f3886a555e81b",
-    "pages/tokenmaxxing.html": "f3d1834c9ba170d6b236367138f08b7819924fca58ba3b2896b08cae5409053f",
-    "docs/tokenmaxxing.html": "dba9b3c1397f550137a36d90838783a8284afd552cf2168e63aadc28d545d46e",
+    "pages/index.html": "3aff94b6d6449bc2f3923af9af8b86aa358e514b94b45be4aea36bbd5cc25eb6",
+    "docs/index.html": "a37b65f2d74ed605594145fa878002ac7a07b52b10db7291c294ff94e930e0c3",
+    "pages/token-spike.html": "00f387928ea49f3a592cdf85680907051f6149f0fa22033a5b1baf4d37b8d24e",
+    "docs/token-spike.html": "4b8a660e3dc670b9b89962a0b0438b91fce13751439bf1f09fc12606f7d95fcc",
+    "pages/tokenmaxxing.html": "43961e2dfcd6a4c1de835c8255185725b7c51638760ef595d3f399ff4aa47c99",
+    "docs/tokenmaxxing.html": "bd622e4208938f799ec7d35e84fa873476d3e9ed738e659a53443716af332109",
     "pages/litellm-spend.html": "774ac3630aa799902e95bc23ae517fd58e941c6c26089cc109d541401faa87d3",
     "docs/litellm-spend.html": "e5d799e0c90c68123fc2314d745f00c97a6a126e4cea6a6aac42c62efe5970b4",
     "pages/langfuse-spend.html": "9a127199c8351cae2172aa403834f86fc3d0bcd6cfafa7d325a9e1714344a9a1",
@@ -32,16 +32,16 @@
     "docs/cache-check.html": "2f9547638fd650591eb48b40cdf48b2e1212b2c0b1e431ac3349dc2a15ad0046",
     "pages/cardinality.html": "cc9382929da9f35f9723cf475e05d50155ed29d723f72eb80a1ccd648dc2e5c5",
     "docs/cardinality.html": "ea373a2e29241abb982f65cb28ae89837cd34862ea7abf02673ad2fae2d81e57",
-    "pages/anomalies.html": "9740dc1d3714229488cb99032cef4575b710b4d65ebd22cfb9ee2c789b258818",
-    "docs/anomalies.html": "2c55ed6c6bd9a3f9b3cfa4dd047ecb3d10d05bc5106390a10fc70b4ba92412d7",
+    "pages/anomalies.html": "3325ec5d324153519a4fc44a63eeea9dd1739ffc3bc63373d44e8142eb8f7616",
+    "docs/anomalies.html": "67097e0092e016e62461b90c15f85519d0b0266a406742d653dbe8eeb90fa221",
     "pages/traces-usage.html": "0e5b03e7828d1798a8992772a13ebf9fa7c424da568024679e4520812337dea4",
     "docs/traces-usage.html": "1db45b5b2406ae0ed7d87d3a80abdaa3d70ba1757e998551f0092ce56ca4f2f0",
     "pages/distinct-users.html": "0de1d9917c01e04c6d957dd80b5d98410273ebb0943b86213a384feac25a54e9",
     "docs/distinct-users.html": "ba0f6ab8946b2b0dd1c4e556057a0fb7289c854a2847fcdbec43362fcc376054",
     "pages/summaries.html": "694a4c55261eaeb73b28ffc1381b7338432373326f37118a37a9a9837e85a23f",
     "docs/summaries.html": "43b3ccb127b1c9caabe8f77a3f3e2a135044571c9070a2185e783041973ab47a",
-    "pages/security.html": "17581bf3a526e650e71751daee79f0183f6f93c924bdeac23062fbb600a1daa4",
-    "docs/security.html": "f6ef7f8a5e50417c19f0f89e0402afb9c6ff26a4d08819b26bf6b372998f556a"
+    "pages/security.html": "414ab4af199715a2efaa8a072fb5a71250c3e270c32bfd602d0a74beea58d0e2",
+    "docs/security.html": "890602a27ea16efe2eacbe0aa8cc1502c637a54881e3fafe2482a9ccac1f23f6"
   },
   "results": [
     {

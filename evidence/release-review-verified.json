@@ -1,6 +1,8 @@
 {
   "system": "Darwin",
   "machine": "arm64",
+  "verified_at_utc": "2026-11-07T12:41:32.060609Z",
+  "verification_time_basis": "Final raw health sample after both original verification commands exited successfully.",
   "method": "Exact published commands; fresh working directories, caches and Docker credential configuration; anonymous downloads and Cosign checks; collector GitHub API verification uses existing gh credentials; trusted verification tools supplied on PATH.",
   "results": [
     {
