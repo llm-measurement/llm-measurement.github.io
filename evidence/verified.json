@@ -1,7 +1,7 @@
 {
   "system": "Darwin",
   "machine": "arm64",
-  "python": "3.14.2",
+  "python": "3.12.14",
   "transport": "Langfuse: fresh anonymous public downloads; other guides: pinned cache-only curl, not fresh downloads",
   "release_cache": {
     "mode": "verified-cache, not fresh anonymous downloads",
@@ -52,7 +52,7 @@
       "page": "token-spike",
       "exit": 0,
       "pass": true,
-      "seconds": 1.61,
+      "seconds": 16.24,
       "command_sha256": "b73cc47d16ea721441a401f109a012651ec298ce8198dfb70c86da62c2419b0d",
       "stdout_sha256": "4910289bb8b4267db44e63a5250f9200a71ef82318fd00d28a36550b3ae746f4"
     },
@@ -60,7 +60,7 @@
       "page": "tokenmaxxing",
       "exit": 0,
       "pass": true,
-      "seconds": 3.84,
+      "seconds": 10.09,
       "command_sha256": "c1e8ee059b44e9ed9b3dcae4b4b6e5f0963415b02e455b4960870fa0e9778a00",
       "stdout_sha256": "c358b3761063238539484747ac0233fd495c8585b8e99cf9fca43a7c9dbb48f4"
     },
@@ -68,7 +68,7 @@
       "page": "litellm-spend",
       "exit": 0,
       "pass": true,
-      "seconds": 1.28,
+      "seconds": 12.25,
       "command_sha256": "7533e2a2512d8a1eca4ba3190dfe1aa5ba1b69d0a87b1c7f5ada8cd7e72282fa",
       "stdout_sha256": "ef523d210c97d4bb44dfc60979667f924503c32657b93ad0ee979d6e7585fd22"
     },
@@ -76,7 +76,7 @@
       "page": "agent-spend",
       "exit": 0,
       "pass": true,
-      "seconds": 1.62,
+      "seconds": 11.47,
       "command_sha256": "717014a2c344ad72b6463eef1c3fc7a8021380e2b0e7fed1b5618bb323ce997c",
       "stdout_sha256": "69c2d4973a80992bff88ab1113d2a6c36d1c9efc17365808e77d8b68279fd1de"
     },
@@ -84,7 +84,7 @@
       "page": "row-coverage",
       "exit": 0,
       "pass": true,
-      "seconds": 1.25,
+      "seconds": 24.09,
       "command_sha256": "bcb14f5da6029ae1ed30c74e5d956acf3c0dce161852c698a66904f03788d3c8",
       "stdout_sha256": "3c06d1f6bc6a6fd4f4a43c5da071ea6241faeafc7d8650b4693d0e4e49a3820e"
     },
@@ -92,7 +92,7 @@
       "page": "routing",
       "exit": 0,
       "pass": true,
-      "seconds": 1.32,
+      "seconds": 11.77,
       "command_sha256": "111bb65e9d13e079fcec21ce83e680c24eea36e6d7e1dc28e1db07cdd3e7779e",
       "stdout_sha256": "2648b336b2259934646b73ac51df886a670953619f8336d725b5aa72a6a27caf"
     },
@@ -100,7 +100,7 @@
       "page": "what-if",
       "exit": 0,
       "pass": true,
-      "seconds": 1.28,
+      "seconds": 10.95,
       "command_sha256": "1ac41176265c283201779c995b228f608f0a6fb9a0b68b5b2dd8d5fa1408a28a",
       "stdout_sha256": "8ab6957e10f612b671b2d1c687ed34193283eb7fc614f3beb32c94249bd29dc4"
     },
@@ -108,7 +108,7 @@
       "page": "session-budget",
       "exit": 0,
       "pass": true,
-      "seconds": 1.45,
+      "seconds": 12.46,
       "command_sha256": "eec1decf437e66beb2198feb300528169f28b9895be4163878d744afc3030b5b",
       "stdout_sha256": "c55de8eef7315734e4ff5e063c442fcdb4c4a05748e9f0732829f2c2adad10ff"
     },
@@ -116,7 +116,7 @@
       "page": "cache-check",
       "exit": 0,
       "pass": true,
-      "seconds": 1.51,
+      "seconds": 16.65,
       "command_sha256": "8293d53b3ffdbf1d4ac593e8d01dbdb97f96eb7c3ff558e2e572e03633e7d230",
       "stdout_sha256": "78d0ca52a575cf831b5d08ce3f9cd7a77c9642d04eb7bae02d51bdefd6e17cd2"
     },
@@ -124,7 +124,7 @@
       "page": "cardinality",
       "exit": 3,
       "pass": true,
-      "seconds": 1.35,
+      "seconds": 10.42,
       "command_sha256": "b9084e43b1996f502f4b39fac97e917bc75b48311e2c6d4ae54835ee5a924de8",
       "stdout_sha256": "df8089a377bbed138b628af7514b299bba6399fe23e9aa3900bc4146cb7084fc"
     },
@@ -132,7 +132,7 @@
       "page": "anomalies",
       "exit": 3,
       "pass": true,
-      "seconds": 10.98,
+      "seconds": 27.63,
       "command_sha256": "e58c0892b1dc4dfd9144755cd3185fb614916dd4efae7f6425b6bb43992c9c8f",
       "stdout_sha256": "d82344a56936786a97b58b2f1da5c64b45319ff71bc8670846795b7c237d8099"
     },
@@ -140,15 +140,15 @@
       "page": "traces-usage",
       "exit": 0,
       "pass": true,
-      "seconds": 1.41,
+      "seconds": 11.46,
       "command_sha256": "a8634b9f97a6c830efdf1623717ced41f232e6525e263d5056cf91a088d281bf",
-      "stdout_sha256": "62342a0fb2f99a566773af09eb3f471ed09b5daafec70eb1336650b1ca6bd038"
+      "stdout_sha256": "938a37ff0e16113d24bef4a6012d69e8d889b81da31e32b27c6ec1d573b87a1b"
     },
     {
       "page": "distinct-users",
       "exit": 0,
       "pass": true,
-      "seconds": 3.49,
+      "seconds": 9.36,
       "command_sha256": "026a82c0ce2de554f8207536246fc177e247590ace955c778771c323b34c2de2",
       "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475"
     }

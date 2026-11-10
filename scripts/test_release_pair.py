@@ -23,26 +23,42 @@ class ReleasePairTests(unittest.TestCase):
                 self.assertNotIn("chart 0.3.4", source)
                 self.assertNotIn("chart-v0.3.5", source)
         home = (ROOT / "pages/index.html").read_text()
-        self.assertIn("Helm chart 0.6.2 and collector v0.6.2", home)
+        self.assertIn("Helm chart 0.7.2 and collector v0.7.1", home)
 
-    def test_collector_review_uses_combined_release_metadata(self):
+    def test_collector_review_uses_separate_release_metadata_and_identities(self):
         blocks = Blocks()
         blocks.feed((ROOT / "pages/security.html").read_text())
         command = next(block["text"] for block in blocks.review if block["id"] == "collector")
-        self.assertIn("\nrelease=v0.6.2\n", command)
+        self.assertIn("\nrelease=v0.7.1\n", command)
+        self.assertIn("\nchart_release=chart-v0.7.2\n", command)
         self.assertIn(".github/workflows/release.yml@refs/tags/$release", command)
-        self.assertNotIn("chart-release.yml", command)
+        self.assertIn(".github/workflows/chart-release.yml@refs/tags/$chart_release", command)
         self.assertIn('image="$(cat image-digest.txt)"', command)
-        self.assertIn('chart="$(cat chart-digest.txt)"', command)
-        self.assertIn("for subject in SHA256SUMS sbom-index.json; do", command)
+        self.assertIn('chart="$(cat chart/chart-digest.txt)"', command)
+        self.assertIn("for subject in SHA256SUMS sbom-index.json openvex.json; do", command)
         self.assertIn("--bundle provenance.jsonl", command)
-        self.assertIn('gh attestation verify "oci://$artifact"', command)
+        self.assertIn('gh attestation verify "oci://$image"', command)
+        self.assertIn('gh attestation verify "oci://$chart"', command)
         self.assertIn('--source-ref "refs/tags/$release"', command)
-        self.assertEqual(command.count("--deny-self-hosted-runners"), 2)
+        self.assertIn('--source-ref "refs/tags/$chart_release"', command)
+        self.assertIn('--source-digest "$runtime_commit"', command)
+        self.assertIn('--source-digest "$chart_commit"', command)
+        self.assertEqual(command.count("--deny-self-hosted-runners"), 4)
         self.assertLess(command.index('gh attestation verify "$subject"'),
                         command.index("shasum -a 256 --ignore-missing -c SHA256SUMS"))
         self.assertLess(command.index("shasum -a 256 --ignore-missing -c SHA256SUMS"),
                         command.index('image="$(cat image-digest.txt)"'))
+        self.assertLess(command.index('gh attestation verify chart/SHA256SUMS'),
+                        command.index('chart="$(cat chart/chart-digest.txt)"'))
+
+    def test_private_key_and_cross_namespace_metrics_requirements_are_visible(self):
+        source = (ROOT / "pages/security.html").read_text()
+        for text in ("private random hashing key of at least 32 bytes", "openssl rand -hex 32",
+                     "Published example keys are rejected", "NetworkPolicy on by default",
+                     "networkPolicy.metricsFrom", "namespaceSelector", "podSelector",
+                     "ServiceMonitor alone does not grant network access"):
+            self.assertIn(text, source)
+        self.assertIn("published example keys are rejected", (ROOT / "pages/cardinality.html").read_text())
 
     def test_review_authentication_is_scoped_to_collector(self):
         fresh = Path("/test/fresh")
@@ -66,7 +82,7 @@ class ReleasePairTests(unittest.TestCase):
                       (ROOT / "pages/security.html").read_text())
 
     def test_install_guides_pin_the_matching_release_documentation(self):
-        revision = "v0.6.2"
+        revision = "4ca5e632dda2ff515c05677678a62751ad9bc7bd"
         for name in ("anomalies", "token-spike", "index", "security"):
             source = (ROOT / "pages" / (name + ".html")).read_text()
             self.assertIn("otelcol-genai-sketches/blob/" + revision + "/docs/", source)

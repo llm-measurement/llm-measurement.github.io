@@ -74,8 +74,8 @@ jobs:
           go-version: '1.26.10'
       # https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/examples/litellm-spend/images.json
       - run: docker pull postgres@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
-      # Published collector v0.6.2 and the Contrib 0.161.0 capture-recipe pin.
-      - run: docker pull ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:c2573a74714249c2e407477997903da5cc367e3d7405bccf0d7cfc049c5fe289
+      # Published collector v0.7.1 and the Contrib 0.161.0 capture-recipe pin.
+      - run: docker pull ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:0bae7fb80c4bd28db7c1a5746961a0f9907eb97975f69c35a866fd2ae0af5e8e
       - run: docker pull otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1
       - name: Validate pinned site artifact metadata
         id: pin

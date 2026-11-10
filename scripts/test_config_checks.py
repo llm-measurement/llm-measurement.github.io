@@ -35,9 +35,9 @@ class ConfigChecksTests(unittest.TestCase):
 
     def test_child_images_are_bound_to_exact_published_index(self):
         self.assertTrue(config_checks.platform_image("cardinality", "arm64").endswith(
-            "@sha256:e26262c16484ca62e1618077facf614940dbe8c11c3d05689b570b33f387c152"))
+            "@sha256:053700dc46df24fcd41929514453a32ecdc663dd761b4491313e3b0fc3ed1a1c"))
         self.assertTrue(config_checks.platform_image("cardinality", "amd64").endswith(
-            "@sha256:7c53d876885df4f0a141e9e9ec9334364e382853edf0472ba2f7695b396fbbd2"))
+            "@sha256:5856683f2516ec6a0505fa3c241f0a781832327f01d12c8a65774a698b05be7b"))
         with self.assertRaises(AssertionError):
             config_checks.platform_image("cardinality", "unsupported")
         with patch.object(Path, "read_bytes", return_value=b"{}"), self.assertRaisesRegex(AssertionError, "index bytes"):
@@ -58,6 +58,8 @@ class ConfigChecksTests(unittest.TestCase):
             self.assertEqual(command[command.index("--network") + 1], "none")
             self.assertIn("--read-only", command)
             self.assertIn("--cap-drop=ALL", command)
+            material = command[command.index("-e") + 1]
+            self.assertRegex(material, r"^GENAI_SKETCH_SECRET=[0-9a-f]{64}$")
             self.assertEqual(command[-2:], ["validate", "--config=file:/fixture/config.yaml"])
             mount = next(v for v in command if v.startswith("type=bind,src=") and "dst=/fixture/config.yaml" in v)
             path = Path(mount.split("src=", 1)[1].split(",dst=", 1)[0])

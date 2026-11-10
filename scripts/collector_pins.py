@@ -13,6 +13,12 @@ from urllib.parse import parse_qsl, urlsplit
 REPO = "llm-measurement/otelcol-genai-sketches"
 API = "https://api.github.com/repos/" + REPO
 VERSION = r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)"
+# Reviewed documentation-only commit, not an image or connector-module release.
+DOCS_REVISION = "4ca5e632dda2ff515c05677678a62751ad9bc7bd"
+DOCS_RUNTIME = "v0.7.1"
+DOCS_PATHS = {"docs/DEPLOYMENT.md", "docs/SUMMARY_EXPORT_HELM.md"}
+DOCS_PIN = re.compile(r"https://github\.com/" + re.escape(REPO)
+                     + r"/blob/([0-9a-f]{40})/([^#\s\"'<>`)]*)")
 PACKAGES = {
     "ghcr.io/" + REPO: "runtime",
     "github.com/" + REPO: "runtime",
@@ -146,6 +152,9 @@ def policy(releases, advisories):
     if not stable:
         raise ValueError("no published stable collector release")
     latest = max(stable, key=lambda r: version(r["tag_name"]))
+    charts = [r for r in releases if not r['draft'] and not r['prerelease']
+              and r.get('published_at') and re.fullmatch('chart-v' + VERSION, r['tag_name'])]
+    chart = max(charts, key=lambda r: version(r['tag_name'].removeprefix('chart-'))) if charts else latest
     published = []
     for advisory in advisories:
         if (not isinstance(advisory, dict) or advisory.get("state") not in {"triage", "draft", "published", "closed"}
@@ -162,6 +171,7 @@ def policy(releases, advisories):
                                 for item in advisory["vulnerabilities"]]})
     record = {"schema": 1, "repository": REPO, "checked_at": datetime.now(timezone.utc).isoformat(),
             "latest_stable": latest["tag_name"], "release_url": latest["html_url"],
+            "latest_chart": chart['tag_name'].removeprefix('chart-'), "chart_release_url": chart['html_url'],
             "sources": [API + "/releases", API + "/security-advisories"],
             "advisories": published}
     validate_policy(record)
@@ -173,6 +183,7 @@ def validate_policy(record):
             or not isinstance(record.get("advisories"), list)):
         raise ValueError("unexpected collector policy snapshot")
     version(record.get("latest_stable"))
+    version(record.get("latest_chart", record['latest_stable']))
     for advisory in record["advisories"]:
         if (not isinstance(advisory, dict) or not isinstance(advisory.get("ghsa_id"), str)
                 or not re.fullmatch(r"GHSA-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}", advisory["ghsa_id"])
@@ -192,6 +203,10 @@ def live_policy():
 
 def source_pins(source):
     pins = []
+    for revision, path in DOCS_PIN.findall(source):
+        if revision != DOCS_REVISION or path not in DOCS_PATHS:
+            raise ValueError("unreviewed collector documentation commit or path")
+        pins.append(("runtime", DOCS_RUNTIME))
     for match in SOURCE_PIN.finditer(source):
         ref = match.group(1).removesuffix(".tar.gz")
         version(ref)
@@ -214,14 +229,22 @@ def source_pins(source):
                 raise ValueError("collector verification needs one exact release assignment")
             version(assignments[0])
             pins.append(("runtime", assignments[0]))
+            charts = re.findall(r'(?m)^chart_release=(\S+)$', block['text'])
+            if len(charts) > 1 or ('chart-release.yml' in block['text'] and len(charts) != 1):
+                raise ValueError('collector verification needs one exact chart release assignment')
+            for chart in charts:
+                if not chart.startswith('chart-v'):
+                    raise ValueError('collector verification needs a chart-v release tag')
+                version(chart.removeprefix('chart-'))
+                pins.append(('chart', chart.removeprefix('chart-')))
     return pins
 
 
 def check_source(name, source, record):
     validate_policy(record)
     pins = source_pins(source)
-    latest = record["latest_stable"]
     for kind, pin in pins:
+        latest = record.get('latest_chart', record['latest_stable']) if kind == 'chart' else record['latest_stable']
         for advisory in record["advisories"]:
             for item in advisory["vulnerabilities"]:
                 if PACKAGES.get(item["package"]) == kind and affected(pin, item["affected"]):
@@ -254,7 +277,7 @@ def check(root, live=False):
     if not count:
         raise ValueError("no collector version pins found")
     mode = "live anonymous release/advisory lookup" if live else "recorded release/advisory snapshot (offline)"
-    print(f"PASS: {count} collector pins match {record['latest_stable']}; no published affected range matches; {mode}")
+    print(f"PASS: {count} collector pins match runtime {record['latest_stable']} / chart {record.get('latest_chart', record['latest_stable'])}; no published affected range matches; {mode}")
 
 
 if __name__ == "__main__":
