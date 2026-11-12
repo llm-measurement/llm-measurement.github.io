@@ -18,6 +18,22 @@ default fixtures require that column to remain unreadable.
 The dated sections below describe earlier checks, not the current release.
 Their version strings and measurement records are retained as history.
 
+## Collector v0.7.3 And Chart 0.7.4, November 12, 2026
+
+Current guidance selects collector v0.7.3 and stable chart 0.7.4 with separate
+signing identities. The chart pins the published image index. Independent
+release verification confirmed both Linux SBOMs record x/crypto v0.59.0. The
+outsider kind install used that signed index and reported 55 input and 35 output
+tokens at collector scope v0.7.3. This was a synthetic release check.
+
+The current site collector verification recipe checks the two published
+artifacts. The configuration check uses the exact published collector image.
+Deployment and Summary Export links pin the documentation-only revision
+`104b59a861f03db890ea7a37518dff9f93a58c35`, not a replacement runtime.
+Other guide command and measurement records are retained at the versions
+actually used.
+
+<!-- historical-verification:start -->
 ## Collector v0.7.1 And Chart 0.7.2, November 7, 2026
 
 Current collector guidance selects runtime v0.7.1 and stable chart 0.7.2,
@@ -52,7 +68,6 @@ commit does not substitute a different runtime build or module version.
 The dated records below retain their original versions and results; they are
 history, not validation of these refreshed commands.
 
-<!-- historical-verification:start -->
 ## Historical Langfuse v0.13.1 Guide, October 27, 2026
 
 The Langfuse guide pins the released v0.13.1 commit

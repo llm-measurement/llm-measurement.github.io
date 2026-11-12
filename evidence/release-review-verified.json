@@ -1,8 +1,6 @@
 {
   "system": "Darwin",
   "machine": "arm64",
-  "verified_at_utc": "2026-11-07T12:41:32.060609Z",
-  "verification_time_basis": "Final raw health sample after both original verification commands exited successfully.",
   "method": "Exact published commands; fresh working directories, caches and Docker credential configuration; anonymous downloads and Cosign checks; collector GitHub API verification uses existing gh credentials; trusted verification tools supplied on PATH.",
   "results": [
     {
@@ -11,15 +9,19 @@
       "exit": 0,
       "authentication": "anonymous",
       "command_sha256": "9b3f8200574a2505dcb76647fe641c391881c42c8556ae112d0cd15bb05cdfe1",
-      "stdout_sha256": "2e0a703503ba66518dd79c4befcfea4d21be523fff87a9ee6d2df8d00e394642"
+      "stdout_sha256": "2e0a703503ba66518dd79c4befcfea4d21be523fff87a9ee6d2df8d00e394642",
+      "verified_at_utc": "2026-11-07T12:41:32.060609Z",
+      "verification_time_basis": "Final raw health sample after both original verification commands exited successfully."
     },
     {
       "block": "collector",
       "pass": true,
       "exit": 0,
       "authentication": "credentialed GitHub API",
-      "command_sha256": "3255096ae2c16453bebf4f8956513b303c262f98fb5727e0f9ff378dcc1b351c",
-      "stdout_sha256": "61183719a8567f51a3431a42308ab67d46d2e589a95d3331885e836f601af448"
+      "command_sha256": "e86557fe532e6599f4dc9cb5ace2d1db893171ab97ad050c86e199675674c50c",
+      "stdout_sha256": "f62ddbb2018483750ef250c04696ab7cab623791d309d660b5cafb40488d019b",
+      "verified_at_utc": "2026-11-12T17:17:36.794633+00:00",
+      "verification_time_basis": "Completion manifest file timestamp after the collector command passed."
     }
   ]
 }

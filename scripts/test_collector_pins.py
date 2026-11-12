@@ -84,7 +84,7 @@ class CollectorPinTests(unittest.TestCase):
                 pins.source_pins(source.replace("chart_release=chart-v0.7.2\n", assignment))
 
     def test_reviewed_documentation_revision_is_scoped_and_tracks_runtime(self):
-        record = pins.policy([release("v0.7.1"), release("chart-v0.7.2")], [])
+        record = pins.policy([release(pins.DOCS_RUNTIME), release("chart-v0.7.4")], [])
         for name in pins.DOCS_PATHS:
             source = "https://github.com/" + pins.REPO + "/blob/" + pins.DOCS_REVISION + "/" + name
             self.assertEqual(pins.check_source("page", source, record), 1)
