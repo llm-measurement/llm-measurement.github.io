@@ -3,7 +3,8 @@
 Fourteen guides to LLM usage, with commands and output from released tools.
 An evidence page explains what can be shared and retained with summaries.
 
-All fleetdiff guides pin v0.14.0. The home-page library installs
+For new installations, use the [fleetdiff v0.14.1 release](https://github.com/llm-measurement/fleetdiff/releases/tag/v0.14.1).
+All fleetdiff guides pin v0.14.0 for reproducibility. The home-page library installs
 pin llm-sketchkit v0.4.0; the existing Python guides retain v0.3.0. Collector
 configuration pins v0.7.1 and Helm chart 0.7.2. Historical evidence
 retains the versions and source revisions used for those measurements.
