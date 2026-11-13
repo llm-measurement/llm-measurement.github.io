@@ -164,10 +164,20 @@ def main():
                 assert source in page.links, source
         if entry["slug"] in {"token-spike", "cardinality", "anomalies", "litellm-spend", "traces-usage", "cache-check"}:
             source = (ROOT / "pages" / (entry["slug"] + ".html")).read_text()
-            assert "/archive/refs/tags/v0.14.0.tar.gz" in source and "sh scripts/install.sh v0.14.0 ./release" in source
+            assert "/archive/refs/tags/v0.14.1.tar.gz" in source and "sh scripts/install.sh v0.14.1 ./release" in source
             assert "fleetdiff/v0.6.0" not in source
             if entry["slug"] == "traces-usage":
-                assert "./release/fleetdiff inspect examples/inspect/synthetic-traces.json" in source
+                traces = Blocks()
+                traces.feed(source)
+                assert len(traces.commands) == 1 and len(traces.own) == 1
+                sample = traces.commands[0]["text"]
+                assert "Public synthetic sample only" in sample
+                assert ("./release/fleetdiff inspect --secret-env FLEETDIFF_PUBLIC_SAMPLE_KEY "
+                        "examples/inspect/synthetic-traces.json") in sample
+                assert "FLEETDIFF_PUBLIC_SAMPLE_KEY=" in sample
+                assert "./bin/fleetdiff inspect ./traces.jsonl" in traces.own[0]["text"]
+                assert "FLEETDIFF_PUBLIC_SAMPLE_KEY" not in traces.own[0]["text"]
+                assert "--secret-env" not in traces.own[0]["text"]
                 assert "go run" not in source and "Go 1.26" not in source
             if entry["slug"] == "cache-check":
                 assert entry["title"] == "Prompt cache hit rate dropped after an update? Find whose uncached input grew"
@@ -180,7 +190,7 @@ def main():
                 assert "key-1: 80 -&gt; 700 uncached input tokens; change +620." in source
         if entry["slug"] == "session-budget":
             source = (ROOT / "pages/session-budget.html").read_text()
-            assert "/archive/refs/tags/v0.14.0.tar.gz" in source and "sh scripts/install.sh v0.14.0 ./release" in source
+            assert "/archive/refs/tags/v0.14.1.tar.gz" in source and "sh scripts/install.sh v0.14.1 ./release" in source
             assert "--session-budget-usd 1.00" in source and "Redis" not in source
             for url in ("https://docs.litellm.ai/docs/a2a_iteration_budgets",
                         "https://github.com/BerriAI/litellm/issues/34732",
@@ -201,7 +211,7 @@ def main():
                                     (context if isinstance(context, list) else [context]))
             notes_link = '<a href="summaries.html#measurement-notes">Measurement notes</a>'
             if entry["slug"] == "cache-check":
-                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/docs/CACHE.md">Cache measurements and limits</a>.'
+                notes_link += '. <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.1/docs/CACHE.md">Cache measurements and limits</a>.'
             expected = (f'<p class="measurement-context">{context}<br>\n'
                         f'{notes_link}</p>')
             assert expected in path.read_text(), (path.name, "guide context must precede its notes link")
@@ -284,6 +294,7 @@ def main():
         assert record["pass"] and record["exit"] == command["exit"], record["page"]
         assert record["command_sha256"] == hashlib.sha256(command["text"].encode()).hexdigest(), record["page"]
     own_document = json.loads((ROOT / "evidence/own-data-verified.json").read_text())
+    from own_data import evidence_command, evidence_flags
     own_verified = own_document["results"] + langfuse["own"]
     actual = {}
     for slug in guide_slugs | {"index", "security"}:
@@ -298,6 +309,10 @@ def main():
         slug, block = actual[record["block"]]
         assert record["pass"] and record["page"] == slug and record["exit"] == block["exit"]
         assert record["command_sha256"] == hashlib.sha256(block["text"].encode()).hexdigest(), block["id"]
+        flags = evidence_flags(block["id"])
+        assert record.get("evidence_flags", []) == list(flags), block["id"]
+        if flags:
+            assert record["executed_command_sha256"] == hashlib.sha256(evidence_command(block).encode()).hexdigest(), block["id"]
     sql_blocks = {}
     for path in (ROOT / "pages").glob("*.html"):
         grants = Blocks()

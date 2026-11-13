@@ -8,10 +8,8 @@
       "pass": true,
       "exit": 0,
       "authentication": "anonymous",
-      "command_sha256": "9b3f8200574a2505dcb76647fe641c391881c42c8556ae112d0cd15bb05cdfe1",
-      "stdout_sha256": "2e0a703503ba66518dd79c4befcfea4d21be523fff87a9ee6d2df8d00e394642",
-      "verified_at_utc": "2026-11-07T12:41:32.060609Z",
-      "verification_time_basis": "Final raw health sample after both original verification commands exited successfully."
+      "command_sha256": "22faa263d90920132408c4d4bf03dfcf7eb077d154b89bdf9736af76849eb576",
+      "stdout_sha256": "b9f337ea70bdc31f4f30ca24620143cd3563ea4e19f55e98a34fe69ad97a3b15"
     },
     {
       "block": "collector",

@@ -25,8 +25,8 @@
 <aside id="run" class="own-data" aria-labelledby="own-data-title">
 <h2 id="own-data-title">Your spend logs</h2>
 <p>Linux or macOS; needs curl, gh, shasum and tar. The installer checks the release before unpacking it.</p>
-<pre data-own="agent-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
-sh install-fleetdiff.sh v0.14.0 ./bin
+<pre data-own="agent-install" data-exit="0"><code>curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/45f8d7aef43a88e1c24033a9f80c4a667f8dbad7/scripts/install.sh
+sh install-fleetdiff.sh v0.14.1 ./bin
 ./bin/fleetdiff --version</code></pre>
 <p>Use your local LiteLLM export. Set <code>BEFORE</code> and <code>AFTER</code> to comparison dates.</p>
 <pre data-own="agent-own" data-exit="0"><code>./bin/fleetdiff investigate --litellm-spend ./spend.csv \
@@ -36,7 +36,7 @@ sh install-fleetdiff.sh v0.14.0 ./bin
 </aside>
 <section id="source"><h2>Choose an identity</h2>
 <p>Use <code>--agent-source agent_id</code> for LiteLLM's recorded IDs instead of tags. For native database access, use the <a href="litellm-spend.html#run">read-only LiteLLM connection</a> with the same agent options.</p>
-<p>Request-tag database reads also need the separate <code>request_tags</code> column grant in the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.0/docs/NATIVE_EXPORT.md#administrator-setup">released setup</a>. It is not part of default access.</p>
+<p>Request-tag database reads also need the separate <code>request_tags</code> column grant in the <a href="https://github.com/llm-measurement/fleetdiff/blob/v0.14.1/docs/NATIVE_EXPORT.md#administrator-setup">released setup</a>. It is not part of default access.</p>
 <p><a href="langfuse-spend.html#run">Langfuse exports</a> support tag identities with the same prefix options. Identities remain project-scoped.</p>
 <p>Aliases are the default. Add both <code>--show-labels --acknowledge-sensitive-labels</code> only for a private report with escaped labels.</p>
 </section>
@@ -47,9 +47,9 @@ sh install-fleetdiff.sh v0.14.0 ./bin
 <p>This synthetic fixture includes two agents, an untagged request and conflicting tags.</p>
 <pre data-run="agent-spend" data-exit="0"><code>set -eu
 umask 077
-curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/scripts/install.sh
-sh install-fleetdiff.sh v0.14.0 ./bin
-curl -fsSLo spend.csv https://raw.githubusercontent.com/llm-measurement/fleetdiff/78c6448de2f11e96ca63fb5d6ecff2ad2364304a/examples/litellm-spend/agent-tags.csv
+curl -fsSLo install-fleetdiff.sh https://raw.githubusercontent.com/llm-measurement/fleetdiff/45f8d7aef43a88e1c24033a9f80c4a667f8dbad7/scripts/install.sh
+sh install-fleetdiff.sh v0.14.1 ./bin
+curl -fsSLo spend.csv https://raw.githubusercontent.com/llm-measurement/fleetdiff/45f8d7aef43a88e1c24033a9f80c4a667f8dbad7/examples/litellm-spend/agent-tags.csv
 printf '%s  %s\n' 'aed879a4b423f850f221f9d934f42b52f7d0f293906275488017cbb6c277d5f4' spend.csv | shasum -a 256 -c -
 ./bin/fleetdiff investigate --litellm-spend spend.csv \
   --before-period 2026-10-07 --after-period 2026-10-08 \

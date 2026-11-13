@@ -1,14 +1,35 @@
 # Guide Verification
 
-## Current v0.14.0 Guides, October 29, 2026
+## Fleetdiff v0.14.1, November 13, 2026
 
-All current fleetdiff guides, including LiteLLM, Langfuse and agent spend, use
+The guide commands and verification recipe use the signed v0.14.1 release.
+Installer URLs pin `45f8d7aef43a88e1c24033a9f80c4a667f8dbad7`.
+For native own-data evidence, the checker fixes the synthetic UTC windows
+and records the actual flags and executed command hash separately from the
+published command hash. The guide itself still uses relative defaults for
+your data. The same read-only Postgres fixture and explicit windows
+(Oct 24 to Oct 31, and Oct 31 to Nov 7, end exclusive) produced byte-identical
+`litellm-native` reports on v0.14.0 and v0.14.1. The output also matched the
+Nov 7 capture (SHA-256 `1883847235080897852862b2d2c6b88760b68626aae5ac73af9bff38575a27ee`).
+The old capture and the separate clock-relative comparison remain historical
+evidence. The [previous site evidence](https://github.com/llm-measurement/llm-measurement.github.io/tree/22c9fdd08deb15b1e2c464c5c0b62e14fed5ff57/evidence)
+still records the v0.14.0 commands.
+
+The public synthetic trace sample uses a sample-only fixed key; its
+analytical output matched byte for byte across the two releases. Real
+captures still use a fresh key per run. In fresh-key trace comparisons only,
+rows with identical attempt counts and shares may change order within their
+contiguous tie group; the full rows and all other analytical bytes must match.
+
+## Previous v0.14.0 Guides, October 29, 2026
+
+The previous fleetdiff guides, including LiteLLM, Langfuse and agent spend, used
 v0.14.0 at `78c6448de2f11e96ca63fb5d6ecff2ad2364304a`.
 Installer URLs pin `78c6448de2f11e96ca63fb5d6ecff2ad2364304a` and explicitly
 request v0.14.0. The new agent guide keeps unknown and ambiguous identities in
 totals and distinguishes token contribution from recorded-spend ranking.
 
-The current JSON evidence files record the new commands and their actual
+The earlier JSON evidence files record those commands and their actual
 verification. Langfuse uses fresh anonymous downloads; the other guide samples
 use the verified protected-main release cache. That cache's reconstructed Git
 archives are not presented as anonymous codeload response bytes. The optional

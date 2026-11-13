@@ -41,7 +41,7 @@ class OwnDataTests(unittest.TestCase):
         self.assertEqual([block["id"] for block in blocks.own],
                          ["session-budget-install", "session-budget-native", "session-budget"])
         self.assertEqual(len(blocks.commands), 1)
-        self.assertIn("sh install-fleetdiff.sh v0.14.0 ./bin", blocks.own[0]["text"])
+        self.assertIn("sh install-fleetdiff.sh v0.14.1 ./bin", blocks.own[0]["text"])
         for command in (blocks.own[1]["text"], blocks.own[2]["text"], blocks.commands[0]["text"]):
             self.assertIn("--session-budget-usd 1.00", command)
             self.assertNotIn("--period", command)
@@ -56,13 +56,13 @@ class OwnDataTests(unittest.TestCase):
     def test_cache_and_token_spike_keep_install_and_file_commands_separate(self):
         cache = own_data.page_blocks("cache-check").own
         self.assertEqual([b["id"] for b in cache], ["cache-check-install", "cache-check-native", "cache-check"])
-        self.assertIn("sh install-fleetdiff.sh v0.14.0 ./bin", cache[0]["text"])
+        self.assertIn("sh install-fleetdiff.sh v0.14.1 ./bin", cache[0]["text"])
         self.assertEqual(cache[1]["text"], "./bin/fleetdiff investigate --litellm-db "
                          "--database-url-file ~/.config/litellm-db-url --group-by session")
         self.assertEqual(cache[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by session")
         spike = own_data.page_blocks("token-spike").own
         self.assertEqual([b["id"] for b in spike], ["token-spike-install", "token-spike-summaries", "token-spike"])
-        self.assertIn("sh install-fleetdiff.sh v0.14.0 ./bin", spike[0]["text"])
+        self.assertIn("sh install-fleetdiff.sh v0.14.1 ./bin", spike[0]["text"])
         self.assertEqual(spike[1]["text"], "./bin/fleetdiff investigate --before ./before --after ./after --expected app")
         self.assertEqual(spike[2]["text"], "./bin/fleetdiff investigate --litellm-spend ./spend.csv --group-by user")
 
@@ -100,6 +100,31 @@ class OwnDataTests(unittest.TestCase):
         native = next(b["text"] for b in blocks.own if b["id"] == "litellm-native")
         self.assertNotIn("--before-period", native)
         self.assertNotIn("--after-period", native)
+
+    def test_recorded_native_windows_do_not_change_guide_defaults(self):
+        before = "2026-10-24T00:00:00Z/2026-10-31T00:00:00Z"
+        after = "2026-10-31T00:00:00Z/2026-11-07T00:00:00Z"
+        for page in ("litellm-spend", "security", "cache-check", "row-coverage", "routing"):
+            for block in own_data.page_blocks(page).own:
+                if block["id"] in own_data.NATIVE_COMPARISONS:
+                    self.assertNotIn("--before-period", block["text"])
+                    self.assertEqual(own_data.evidence_command(block),
+                                     block["text"] + f" --before-period {before} --after-period {after}")
+                elif block["id"] in {"routing-scope", "routing-agents"}:
+                    self.assertEqual(own_data.evidence_command(block), block["text"])
+
+    def test_other_relative_checks_record_fixed_time_without_changing_guide(self):
+        session = next(b for b in own_data.page_blocks("session-budget").own
+                       if b["id"] == "session-budget-native")
+        scan = next(b for b in own_data.page_blocks("anomalies").own if b["id"] == "anomalies")
+        self.assertEqual(own_data.evidence_command(session),
+                         session["text"] + " --period 2026-10-24T00:00:00Z/2026-11-07T00:00:00Z")
+        self.assertEqual(own_data.evidence_command(scan), scan["text"] + " --as-of 2026-11-07T14:27:00Z")
+
+    def test_evidence_flags_refuse_duplicate_period_options(self):
+        block = {"id": "litellm-native", "text": "./bin/fleetdiff investigate --before-period 2026-11-01"}
+        with self.assertRaises(AssertionError):
+            own_data.evidence_command(block)
 
     def test_slow_install_does_not_expire_the_scan_standin(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -249,7 +274,7 @@ class OwnDataTests(unittest.TestCase):
             self.assertIn(FIXTURE_COMMIT, FIXTURE_URL)
             self.assertIn("not fresh anonymous", provenance["transport"])
             self.assertEqual(provenance["expected_commit"], FIXTURE_COMMIT)
-            self.assertEqual(provenance["version"], "v0.14.0")
+            self.assertEqual(provenance["version"], "v0.14.1")
             self.assertEqual(provenance["archive_sha256"], hashlib.sha256(data).hexdigest())
             self.assertEqual(set(provenance["files"]), {"go.mod", "examples/litellm-spend/export.sql"})
             self.assertFalse(provenance["git_operations"])
@@ -278,7 +303,7 @@ class OwnDataTests(unittest.TestCase):
                 own_data.fixture_source(Path("/not-created"))
 
     def test_public_manifest_keeps_full_source_inventory_private(self):
-        provenance = {"version": "v0.14.0", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
+        provenance = {"version": "v0.14.1", "expected_commit": FIXTURE_COMMIT, "url": FIXTURE_URL,
                       "archive_sha256": "a" * 64, "source_sha256": "b" * 64, "files": {"test": "c" * 64}}
         with tempfile.TemporaryDirectory() as directory, patch.object(own_data, "PAGES", ()), \
                 patch("langfuse_check.check"), \
@@ -293,8 +318,8 @@ class OwnDataTests(unittest.TestCase):
 
     def test_installed_binary_requires_exact_release_and_commit_with_build_metadata(self):
         for version, accepted in (
-            ("fleetdiff v0.14.0 (" + FIXTURE_COMMIT + ") go1.26.10 darwin/arm64", True),
-            ("fleetdiff v0.14.0 (" + "0" * 40 + ") go1.26.10 darwin/arm64", False),
+            ("fleetdiff v0.14.1 (" + FIXTURE_COMMIT + ") go1.26.10 darwin/arm64", True),
+            ("fleetdiff v0.14.1 (" + "0" * 40 + ") go1.26.10 darwin/arm64", False),
             ("fleetdiff v0.11.0 (" + FIXTURE_COMMIT + ") go1.26.10 darwin/arm64", False),
             ("fleetdiff dev (unknown) go1.26.10 darwin/arm64", False),
         ):
@@ -302,7 +327,7 @@ class OwnDataTests(unittest.TestCase):
                 root = Path(directory)
                 (root / "pages").mkdir()
                 (root / "pages/test.html").write_text(
-                    '<pre data-own="test-install" data-exit="0">sh install-fleetdiff.sh v0.14.0 ./bin</pre>')
+                    '<pre data-own="test-install" data-exit="0">sh install-fleetdiff.sh v0.14.1 ./bin</pre>')
                 provenance = {"files": {}}
                 result = subprocess.CompletedProcess([], 0, stdout="Verified", stderr="")
                 with patch.object(own_data, "ROOT", root), patch.object(own_data, "PAGES", ("test",)), \

@@ -68,7 +68,7 @@ class NativeDatabaseTests(unittest.TestCase):
         self.assertNotIn("makes no network connections during analysis", security)
         for path in ("internal/cli/network_test.go", "internal/postgres/tls_test.go",
                      "examples/litellm-spend/test_native_export.py"):
-            self.assertIn("fleetdiff/blob/v0.14.0/" + path, security)
+            self.assertIn("fleetdiff/blob/v0.14.1/" + path, security)
 
     def test_secret_environment_does_not_leak_into_fixture(self):
         with patch.dict(os.environ, {"FLEETDIFF_LITELLM_DATABASE_URL": "not-a-real-secret",
@@ -107,10 +107,8 @@ class NativeDatabaseTests(unittest.TestCase):
                     (fresh / "daily.csv").write_bytes(daily)
                 env = {"HOME": str(fresh), "ROUTE": "SENTINEL_route"}
                 original_env = dict(env)
-                end, variants = own_data.database_fixture_variants(
-                    fresh, env, slug, datetime(2030, 2, 15, 23, 59, tzinfo=timezone.utc))
+                variants = own_data.database_fixture_variants(fresh, env, slug)
                 self.assertEqual(env, original_env)
-                self.assertEqual(end.date().isoformat(), "2030-02-15")
                 for mode in ("native", "file", "native", "file"):
                     files, selected_env = variants[mode]
                     for name, data in files.items():
@@ -127,11 +125,13 @@ class NativeDatabaseTests(unittest.TestCase):
                             self.assertEqual(selected_env["EXPORT_BEFORE"], own_data.EXPORT_START)
                             self.assertEqual(selected_env["EXPORT_AFTER"], own_data.EXPORT_END)
                     else:
-                        self.assertNotIn(b"2026-10-", (fresh / "spend.csv").read_bytes())
-                        self.assertEqual(selected_env["BEFORE"], "2030-02-01")
-                        self.assertEqual(selected_env["AFTER"], "2030-02-08")
+                        moved = b"2026-10-24" if slug == "routing" else b"2026-11-05"
+                        self.assertIn(moved + b"T12:00:00Z", (fresh / "spend.csv").read_bytes())
+                        self.assertEqual(selected_env["BEFORE"], "2026-10-24")
+                        self.assertEqual(selected_env["AFTER"], "2026-10-31")
+                        self.assertEqual(selected_env["EXPORT_AFTER"], "2026-11-07T00:00:00+00:00")
                         if slug == "row-coverage":
-                            self.assertIn(b"2030-02-13,9,8,1", (fresh / "daily.csv").read_bytes())
+                            self.assertIn(b"2026-11-05,9,8,1", (fresh / "daily.csv").read_bytes())
 
     def test_daily_dates_move_with_spend_without_changing_counts(self):
         with tempfile.TemporaryDirectory() as directory:
