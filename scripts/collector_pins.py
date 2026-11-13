@@ -13,9 +13,9 @@ from urllib.parse import parse_qsl, urlsplit
 REPO = "llm-measurement/otelcol-genai-sketches"
 API = "https://api.github.com/repos/" + REPO
 VERSION = r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)"
-# Reviewed documentation-only commit, not an image or connector-module release.
-DOCS_REVISION = "4ca5e632dda2ff515c05677678a62751ad9bc7bd"
-DOCS_RUNTIME = "v0.7.1"
+# Pinned documentation-only commit, not an image or connector-module release.
+DOCS_REVISION = "a7b27a31965ef299cf3fee4b71a21d34d862b78e"
+DOCS_RUNTIME = "v0.7.3"
 DOCS_PATHS = {"docs/DEPLOYMENT.md", "docs/SUMMARY_EXPORT_HELM.md"}
 DOCS_PIN = re.compile(r"https://github\.com/" + re.escape(REPO)
                      + r"/blob/([0-9a-f]{40})/([^#\s\"'<>`)]*)")
