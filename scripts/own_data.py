@@ -26,14 +26,16 @@ from release_cache import consumer_pin, read_url
 
 PAGES = ("index", "token-spike", "litellm-spend", "agent-spend", "session-budget", "cache-check", "cardinality",
          "traces-usage", "anomalies", "distinct-users", "tokenmaxxing", "row-coverage", "routing", "what-if", "security")
-FIXTURE_VERSION = "v0.14.0"
+FIXTURE_VERSION = "v0.14.1"
 # Must match the release source commit; installed binaries are checked against it.
-FIXTURE_COMMIT = "78c6448de2f11e96ca63fb5d6ecff2ad2364304a"
+FIXTURE_COMMIT = "45f8d7aef43a88e1c24033a9f80c4a667f8dbad7"
 FIXTURE_URL = "https://codeload.github.com/llm-measurement/fleetdiff/tar.gz/" + FIXTURE_COMMIT
 EXPORT_START = "2026-09-23T00:00:00Z"
 EXPORT_END = "2026-10-09T00:00:00Z"
+NATIVE_FIXTURE_END = datetime(2026, 11, 7, tzinfo=timezone.utc)
+SCAN_FIXTURE_AS_OF = datetime(2026, 11, 7, 14, 27, tzinfo=timezone.utc)
 EXPECTED = {
-    "agent-install": ("Verified", "fleetdiff v0.14.0 (" + FIXTURE_COMMIT + ")"),
+    "agent-install": ("Verified", "fleetdiff v0.14.1 (" + FIXTURE_COMMIT + ")"),
     "agent-own": ("agent-1 accounts for 62.5% of the net recorded increase (+200 of +320 tokens).",),
     "home-spend": ("Logged model requests:", "Who drove", "user-1:"),
     "home-traces": ("Your traces can fully answer 2 of 7 questions.",),
@@ -67,7 +69,7 @@ EXPECTED = {
     "tokenmaxxing": ("Estimated distinct users: 3", "Recorded tokens: 4,800",
                      "user-1: [3,600, 3,600] tokens", "100.0% to 100.0%"),
     "row-coverage-export": ("Exported spend.csv and daily.csv in the new private output directory.",),
-    "row-coverage-install": ("Verified", "fleetdiff v0.14.0 (" + FIXTURE_COMMIT + ")"),
+    "row-coverage-install": ("Verified", "fleetdiff v0.14.1 (" + FIXTURE_COMMIT + ")"),
     "row-coverage-native": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
                             "8 exported rows; 9 daily requests (8 successful, 1 failed); 1 missing row."),
     "row-coverage": ("Spend-log row coverage (relative to LiteLLM daily request counts):",
@@ -93,6 +95,35 @@ EXPECTED = {
 }
 NATIVE_BLOCKS = {"litellm-native", "litellm-native-env", "routing-native", "routing-agents", "routing-scope",
                  "row-coverage-native", "session-budget-native", "cache-check-native", "what-if-native"}
+NATIVE_COMPARISONS = {"litellm-native", "litellm-native-env", "routing-native",
+                      "row-coverage-native", "cache-check-native"}
+
+
+def evidence_flags(block_id):
+    def utc(moment):
+        return moment.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    end = NATIVE_FIXTURE_END
+    start, midpoint = (utc(end - timedelta(days=days)) for days in (14, 7))
+    if block_id in NATIVE_COMPARISONS:
+        return ("--before-period", start + "/" + midpoint, "--after-period", midpoint + "/" + utc(end))
+    if block_id == "session-budget-native":
+        return ("--period", start + "/" + utc(end))
+    if block_id == "anomalies":
+        return ("--as-of", utc(SCAN_FIXTURE_AS_OF))
+    return ()
+
+
+def evidence_command(block):
+    flags = evidence_flags(block["id"])
+    if not flags:
+        return block["text"]
+    text = block["text"]
+    verb = "scan" if block["id"] == "anomalies" else "investigate"
+    command = text.splitlines()[-1]
+    assert command.startswith("./bin/fleetdiff " + verb + " ")
+    assert not any(flag.startswith("--") and flag in shlex.split(command) for flag in flags)
+    return text + " " + shlex.join(flags)
 
 
 def page_blocks(slug):
@@ -340,8 +371,8 @@ def native_grants(source, daily=False):
     return grants
 
 
-def database_fixture_variants(fresh, env, slug, now):
-    """Keep historical file examples separate from clock-relative native inputs."""
+def database_fixture_variants(fresh, env, slug):
+    """Keep historical file examples separate from the pinned native fixture."""
     names = ("spend.csv", "daily.csv") if slug == "row-coverage" else ("spend.csv",)
     file_env = dict(env, EXPORT_BEFORE=EXPORT_START, EXPORT_AFTER=EXPORT_END)
     if slug == "routing":
@@ -349,13 +380,10 @@ def database_fixture_variants(fresh, env, slug, now):
                         BEFORE="2026-10-01", AFTER="2026-10-02")
     historical = ({name: (fresh / name).read_bytes() for name in names}, file_env)
     native_env = dict(env)
-    if slug == "what-if":
-        # This page selects an explicit historical period, not a clock-relative default.
-        day = now.astimezone(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
-    else:
-        day = refresh_database_dates(fresh, native_env, slug, now)
+    if slug != "what-if":
+        refresh_database_dates(fresh, native_env, slug, NATIVE_FIXTURE_END)
     native = ({name: (fresh / name).read_bytes() for name in names}, native_env)
-    return day, {"file": historical, "native": native}
+    return {"file": historical, "native": native}
 
 
 def page_native_grants(slug):
@@ -622,7 +650,7 @@ def check(output, page=None):
     records = []
     manifest = {"system": platform.system(), "machine": platform.machine(), "python": platform.python_version(),
                 "fixture_source": FIXTURE_COMMIT, "site_cache_pin": consumer_pin(),
-                "method": "Exact published commands with pinned cache-only curl transport; fresh HOME/directories; original release archive, installer and provenance, not fresh anonymous downloads. Synthetic data is seeded into real read-only Postgres using cached digest-pinned network-none Docker. Native commands use the unchanged installed host binary through a loopback byte transport, not a database mock. The paired psql helper executes unmodified inside the container to retain its inherited descriptors.",
+                "method": "Published commands with pinned cache-only curl transport; fresh HOME/directories; original release archive, installer and provenance, not fresh anonymous downloads. The evidence checker adds recorded UTC flags where published commands use relative time. Synthetic data is seeded into real read-only Postgres using cached digest-pinned network-none Docker. Native commands use the unchanged installed host binary through a loopback byte transport, not a database mock. The paired psql helper executes unmodified inside the container to retain its inherited descriptors.",
                 "independent_guide_evidence": independent_evidence,
                 "dependencies": [], "config_records": [], "results": records}
     with tempfile.TemporaryDirectory(prefix="site-own-source-") as directory:
@@ -662,12 +690,11 @@ def check(output, page=None):
                         "command_sha256": hashlib.sha256(dependency["text"].encode()).hexdigest(),
                         "stdout_sha256": hashlib.sha256(result.stdout.encode()).hexdigest(),
                         "installed_version": installed_version(fresh, env)})
-                database_day = None
                 variants = None
                 file_reports = {}
                 if slug in {"litellm-spend", "routing", "row-coverage", "security",
                             "session-budget", "cache-check", "what-if"}:
-                    database_day, variants = database_fixture_variants(fresh, env, slug, datetime.now(timezone.utc))
+                    variants = database_fixture_variants(fresh, env, slug)
                 for block in blocks.own:
                     begin = time.monotonic()
                     if variants is not None:
@@ -676,12 +703,12 @@ def check(output, page=None):
                         for name, data in files.items():
                             (fresh / name).write_bytes(data)
                     if block["id"] == "anomalies":
-                        refresh_history(fresh / "summary-history", time.time())
+                        refresh_history(fresh / "summary-history", SCAN_FIXTURE_AS_OF.timestamp())
+                    command = evidence_command(block)
                     def execute(selected_env):
-                        return subprocess.run(["bash", "-e", "-c", block["text"]], cwd=fresh,
+                        return subprocess.run(["bash", "-e", "-c", command], cwd=fresh,
                             env=selected_env, text=True, capture_output=True, timeout=1800)
                     if block["id"] in NATIVE_BLOCKS:
-                        assert datetime.now(timezone.utc).date() == database_day.date(), "UTC day changed; rerun with fresh fixtures"
                         with database(fresh, source, env, coverage=slug == "row-coverage", routing=slug == "routing",
                                       native=True, sql_blocks=page_native_grants(slug),
                                       details=slug in {"session-budget", "cache-check", "what-if"}) as db_env:
@@ -692,7 +719,8 @@ def check(output, page=None):
                                 file_env = dict(db_env)
                                 file_env.pop("FLEETDIFF_LITELLM_DATABASE_URL")
                                 before_files = set(fresh.iterdir())
-                                file_result = subprocess.run(["bash", "-e", "-c", file_block["text"]], cwd=fresh,
+                                file_command = evidence_command(file_block)
+                                file_result = subprocess.run(["bash", "-e", "-c", file_command], cwd=fresh,
                                     env=file_env, text=True, capture_output=True, timeout=1800)
                                 assert file_result.returncode == file_block["exit"], file_result.stderr
                                 assert set(fresh.iterdir()) == before_files, "native temporary export was not cleaned up"
@@ -730,21 +758,26 @@ def check(output, page=None):
                         "exit": result.returncode, "seconds": round(time.monotonic() - begin, 2),
                         "command_sha256": hashlib.sha256(block["text"].encode()).hexdigest(),
                         "stdout_sha256": hashlib.sha256(result.stdout.encode()).hexdigest()}
+                    if command != block["text"]:
+                        record["evidence_flags"] = list(evidence_flags(block["id"]))
+                        record["executed_command_sha256"] = hashlib.sha256(command.encode()).hexdigest()
                     if block["id"] in NATIVE_BLOCKS:
                         record["database"] = json.loads((fresh / "database-evidence.json").read_text())
-                        record["fixture_utc_midnight"] = database_day.isoformat()
                         if slug == "what-if":
                             record["synthetic_recorded_spend_per_row_usd"] = "1"
+                        else:
+                            record["fixture_utc_midnight"] = NATIVE_FIXTURE_END.isoformat()
                         if block["id"] == "litellm-native-env":
                             record["file_source_comparison"] = {"pass": True,
                                 "command_sha256": hashlib.sha256(file_block["text"].encode()).hexdigest(),
+                                "executed_command_sha256": hashlib.sha256(file_command.encode()).hexdigest(),
                                 "stdout_sha256": hashlib.sha256(file_result.stdout.encode()).hexdigest()}
                     records.append(record)
                     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
                     assert result.returncode == block["exit"], (slug, block["id"], result.returncode, result.stderr)
                     for excerpt in EXPECTED[block["id"]]:
                         assert excerpt in result.stdout, (block["id"], excerpt, result.stdout)
-                    if "sh install-fleetdiff.sh v0.14.0" in block["text"]:
+                    if "sh install-fleetdiff.sh v0.14.1" in block["text"]:
                         record["installed_version"] = installed_version(fresh, env)
                     if block["id"] == "home-go":
                         assert "github.com/llm-measurement/llm-sketchkit v0.4.0" in (fresh / "measurement-go/go.mod").read_text()

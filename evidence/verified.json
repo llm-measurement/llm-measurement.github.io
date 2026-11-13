@@ -2,65 +2,47 @@
   "system": "Darwin",
   "machine": "arm64",
   "python": "3.12.14",
-  "transport": "Langfuse: fresh anonymous public downloads; other guides: pinned cache-only curl, not fresh downloads",
+  "transport": "Local qualification using verified release bytes; the hosted cache pin is checked separately.",
   "release_cache": {
     "mode": "verified-cache, not fresh anonymous downloads",
-    "version": "v0.14.0",
-    "source_commit": "78c6448de2f11e96ca63fb5d6ecff2ad2364304a",
-    "source_tree": "9244694578e1a97f6cc41e061947e4dfbc36530b",
+    "version": "v0.14.1",
+    "source_commit": "45f8d7aef43a88e1c24033a9f80c4a667f8dbad7",
+    "source_tree": "af00a1966787ae0db50b95e54538deb9cb26ddb7",
     "artifact": {
-      "id": 12944010808,
+      "id": 13953201186,
       "name": "release-files",
-      "run_id": 40978251401,
+      "run_id": 43236074525,
       "repository": "llm-measurement/fleetdiff",
-      "digest": "sha256:f397b1229aa7724157e2773b09155dca3b59fd7540ec2b3d80d458fa18a6818d"
+      "digest": "sha256:b157646684b80bdd0837ad5a77c4d6eafcbcab2c31b6d3379d79b3ec7bc01cd2"
     },
-    "spec_sha256": "ec3166956e9cb6eb672dfce5306cda154d813fac8d69634732912d965c86d792",
+    "spec_sha256": "42984cc99eb411dc31bc4c9bd1e8b5713a86a98b7d4029393c275d7ce6cc764d",
     "attested_subjects_verified": [
       "SHA256SUMS",
       "build.txt",
-      "fleetdiff_v0.14.0_darwin_amd64.tar.gz",
-      "fleetdiff_v0.14.0_darwin_arm64.tar.gz",
-      "fleetdiff_v0.14.0_linux_amd64.tar.gz",
-      "fleetdiff_v0.14.0_linux_arm64.tar.gz",
+      "fleetdiff_v0.14.1_darwin_amd64.tar.gz",
+      "fleetdiff_v0.14.1_darwin_arm64.tar.gz",
+      "fleetdiff_v0.14.1_linux_amd64.tar.gz",
+      "fleetdiff_v0.14.1_linux_arm64.tar.gz",
       "sbom.spdx.json"
     ],
     "source_archives": "deterministic git archive of the pinned commit; not original codeload bytes",
     "provenance": "original published bundle; consumers still run real gh verification"
   },
-  "site_cache_pin": {
-    "artifact": {
-      "digest": "sha256:a9221c71aa55e51c15d941c4e7ddd309fc0dde8ec0c256dfe56ffe81a18694f2",
-      "expires_at": "2027-01-28T00:54:29Z",
-      "id": 12944934095,
-      "name": "site-release-cache-40982598894-1"
-    },
-    "cache_key": "site-release-cache-12944934095-671ea1847dac46064e591f14429ef8ef909188325316f467aa96c6e4241438df",
-    "member_manifest_sha256": "671ea1847dac46064e591f14429ef8ef909188325316f467aa96c6e4241438df",
-    "release_commit": "78c6448de2f11e96ca63fb5d6ecff2ad2364304a",
-    "release_manifest_sha256": "ec3166956e9cb6eb672dfce5306cda154d813fac8d69634732912d965c86d792",
-    "release_version": "v0.14.0",
-    "repository": "llm-measurement/llm-measurement.github.io",
-    "repository_id": 1412683546,
-    "seed_run_attempt": 1,
-    "seed_run_id": 40982598894,
-    "seed_source_sha": "4584515bf0a311866fce6a2d3ad6b2936f0409ff",
-    "seed_workflow": ".github/workflows/seed-release-cache.yml"
-  },
+  "site_cache_pin": null,
   "results": [
     {
       "page": "token-spike",
       "exit": 0,
       "pass": true,
-      "seconds": 16.24,
-      "command_sha256": "b73cc47d16ea721441a401f109a012651ec298ce8198dfb70c86da62c2419b0d",
-      "stdout_sha256": "4910289bb8b4267db44e63a5250f9200a71ef82318fd00d28a36550b3ae746f4"
+      "seconds": 12.15,
+      "command_sha256": "16fafa024a64d2c753ac169223cd65073c894b7d1433a8f78d2594c9aefc3e79",
+      "stdout_sha256": "fe8e7c9e170d42d54ea0b86a42e7dc9a0b4e0d7f4d095c5699504ef8be850625"
     },
     {
       "page": "tokenmaxxing",
       "exit": 0,
       "pass": true,
-      "seconds": 10.09,
+      "seconds": 3.53,
       "command_sha256": "c1e8ee059b44e9ed9b3dcae4b4b6e5f0963415b02e455b4960870fa0e9778a00",
       "stdout_sha256": "c358b3761063238539484747ac0233fd495c8585b8e99cf9fca43a7c9dbb48f4"
     },
@@ -68,87 +50,86 @@
       "page": "litellm-spend",
       "exit": 0,
       "pass": true,
-      "seconds": 12.25,
-      "command_sha256": "7533e2a2512d8a1eca4ba3190dfe1aa5ba1b69d0a87b1c7f5ada8cd7e72282fa",
-      "stdout_sha256": "ef523d210c97d4bb44dfc60979667f924503c32657b93ad0ee979d6e7585fd22"
+      "seconds": 8.32,
+      "command_sha256": "1e50b4c454219d976342bd78f5248cf1614ff1010fcb19505fdf397a0ff7ed53",
+      "stdout_sha256": "7de861ece28f4d1af03aca48dba3add37ca8dc64f0dc73074c909465b335f0f8"
     },
     {
       "page": "agent-spend",
       "exit": 0,
       "pass": true,
-      "seconds": 11.47,
-      "command_sha256": "717014a2c344ad72b6463eef1c3fc7a8021380e2b0e7fed1b5618bb323ce997c",
-      "stdout_sha256": "69c2d4973a80992bff88ab1113d2a6c36d1c9efc17365808e77d8b68279fd1de"
+      "seconds": 7.0,
+      "command_sha256": "d34250ec4e502009a0b9458cbd49fd8f8afae6f7f094a1d5231b90d5f86ef8f4",
+      "stdout_sha256": "8f4fa3c80787c6d42f98ceded957642e1b07a155b4b81bc3e307be7fa9883333"
     },
     {
       "page": "row-coverage",
       "exit": 0,
       "pass": true,
-      "seconds": 24.09,
-      "command_sha256": "bcb14f5da6029ae1ed30c74e5d956acf3c0dce161852c698a66904f03788d3c8",
-      "stdout_sha256": "3c06d1f6bc6a6fd4f4a43c5da071ea6241faeafc7d8650b4693d0e4e49a3820e"
+      "seconds": 8.1,
+      "command_sha256": "e9aea7aa7a54259e812e339f64e75e26a296ddffe78b2a28dcb4cb643b1487a8",
+      "stdout_sha256": "ca2fabbe45374669d8dbce2a1fbe4d6440d04fd7c6d19e6c5e23ad431516f0ca"
     },
     {
       "page": "routing",
       "exit": 0,
       "pass": true,
-      "seconds": 11.77,
-      "command_sha256": "111bb65e9d13e079fcec21ce83e680c24eea36e6d7e1dc28e1db07cdd3e7779e",
-      "stdout_sha256": "2648b336b2259934646b73ac51df886a670953619f8336d725b5aa72a6a27caf"
+      "seconds": 6.62,
+      "command_sha256": "882a7672f89bfbd32d0ba20f2ed02a52ca158a7df47fa78845fe9939fac7a313",
+      "stdout_sha256": "218999724e3d92c7cc1be659a0dbacf9b5d0a2f19195206898319d8c965eeae1"
     },
     {
       "page": "what-if",
       "exit": 0,
       "pass": true,
-      "seconds": 10.95,
-      "command_sha256": "1ac41176265c283201779c995b228f608f0a6fb9a0b68b5b2dd8d5fa1408a28a",
-      "stdout_sha256": "8ab6957e10f612b671b2d1c687ed34193283eb7fc614f3beb32c94249bd29dc4"
+      "seconds": 6.83,
+      "command_sha256": "5a7acb53ddf6c7dd7c02f3667823a93d972dad1ddedc3367d21c379aa00cebdd",
+      "stdout_sha256": "c60ca7698eaed54bf7c59fd6602202f02dffefa34bd2a9df65f7f8c65caf3dc2"
     },
     {
       "page": "session-budget",
       "exit": 0,
       "pass": true,
-      "seconds": 12.46,
-      "command_sha256": "eec1decf437e66beb2198feb300528169f28b9895be4163878d744afc3030b5b",
-      "stdout_sha256": "c55de8eef7315734e4ff5e063c442fcdb4c4a05748e9f0732829f2c2adad10ff"
+      "seconds": 7.75,
+      "command_sha256": "1463155771ac1ca8a8829763fcbb7a896f8499a0ccf07b053c05b8180120d6ac",
+      "stdout_sha256": "b18a2bad105407dfef0f32d697bf06f854ed05af8e61bd5f169c60e81f439c33"
     },
     {
       "page": "cache-check",
       "exit": 0,
       "pass": true,
-      "seconds": 16.65,
-      "command_sha256": "8293d53b3ffdbf1d4ac593e8d01dbdb97f96eb7c3ff558e2e572e03633e7d230",
-      "stdout_sha256": "78d0ca52a575cf831b5d08ce3f9cd7a77c9642d04eb7bae02d51bdefd6e17cd2"
+      "seconds": 6.03,
+      "command_sha256": "138c06efb3228832199500466db196ee097b3920f3441e9df8978ff0073b803a",
+      "stdout_sha256": "bad0aeb8c0820fa61db308fc42da5b961eaab325bc297dd6233d5763d0552ddf"
     },
     {
       "page": "cardinality",
       "exit": 3,
       "pass": true,
-      "seconds": 10.42,
-      "command_sha256": "b9084e43b1996f502f4b39fac97e917bc75b48311e2c6d4ae54835ee5a924de8",
-      "stdout_sha256": "df8089a377bbed138b628af7514b299bba6399fe23e9aa3900bc4146cb7084fc"
+      "seconds": 8.17,
+      "command_sha256": "e335bc3e2655280859afdc069c0f64784c889b646867fc717895ee2240fb6f79",
+      "stdout_sha256": "e70e05404d9f73f9f18af5f53c404d97b7690886955a1bec12d1c3a73a7c996a"
     },
     {
       "page": "anomalies",
       "exit": 3,
       "pass": true,
-      "seconds": 27.63,
-      "command_sha256": "e58c0892b1dc4dfd9144755cd3185fb614916dd4efae7f6425b6bb43992c9c8f",
-      "stdout_sha256": "d82344a56936786a97b58b2f1da5c64b45319ff71bc8670846795b7c237d8099"
+      "seconds": 90.55,
+      "command_sha256": "207938f1c7e61478e138383d9d051005e2872df89fb98ec21a581ca9ffa9db3b",
+      "stdout_sha256": "87ae03ddb000ec56b12d5bd617ed0f0911ed63a60ba24a5debaa41fcf6415ef3"
     },
     {
       "page": "traces-usage",
       "exit": 0,
       "pass": true,
-      "seconds": 11.46,
-      "command_sha256": "a8634b9f97a6c830efdf1623717ced41f232e6525e263d5056cf91a088d281bf",
-      "stdout_sha256": "938a37ff0e16113d24bef4a6012d69e8d889b81da31e32b27c6ec1d573b87a1b"
+      "command_sha256": "3f614a1492d4b588f8487a143d37d893366cf298be9e0cfb9df8310563b2bd67",
+      "stdout_sha256": "23226d614cd7a9b5381cc035a53240b7c823d31b96d02981f8c3ae224fc1a376"
     },
     {
       "page": "distinct-users",
       "exit": 0,
       "pass": true,
-      "seconds": 9.36,
+      "seconds": 4.23,
       "command_sha256": "026a82c0ce2de554f8207536246fc177e247590ace955c778771c323b34c2de2",
       "stdout_sha256": "37c94f6ebd3f0268e058029c913ebd995cfe5eb4a1205f645d29f2ab90c2a475"
     }
