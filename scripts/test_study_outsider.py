@@ -2,6 +2,7 @@
 # Code authors: Vijay and Codex
 """Live-study gate tests use synthetic responses and never make network calls."""
 from pathlib import Path
+import json
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -90,7 +91,8 @@ class StudyOutsiderTests(unittest.TestCase):
 
     def test_credentials_and_non_https_are_refused_before_network(self):
         with patch.object(outsider, "urlopen", side_effect=AssertionError("network forbidden")):
-            for url in ("http://example.com", "https://user:secret@example.com"):
+            for url in ("http://example.com", "https://user:secret@example.com",
+                        "https://@example.com", "https://:@example.com"):
                 with self.subTest(url=url), self.assertRaisesRegex(ValueError, "anonymous HTTPS"):
                     outsider.fetch(url)
 
@@ -123,9 +125,16 @@ class StudyOutsiderTests(unittest.TestCase):
                     PLAUSIBLE_INIT + '</script><script defer src="assets/site.js"></script></head>'
                     '<body><article><h2 id="method">Method</h2><a href="#method">Method</a>'
                     '<a href="assets/cache-evidence/">Evidence</a>'
-                    '<a href="https://example.org/source">Source</a></article></body>').encode()
+                    '<a href="https://example.org/source">Source</a>'
+                    '<a href="https://doi.org/10.1109/JSAC.2002.801752">Paper</a>'
+                    '<a href="https://doi.org/10.1109/JSAC.2002.801752#citation">Paper again</a>'
+                    '</article></body>').encode()
             article_url = outsider.BASE + outsider.SLUG + ".html"
             replies = {article_url: html, "https://example.org/source": b"primary source"}
+            registry_url = 'https://doi.org/api/handles/10.1109/JSAC.2002.801752'
+            replies[registry_url] = json.dumps({'responseCode': 1, 'handle': '10.1109/JSAC.2002.801752',
+                'values': [{'type': 'URL', 'data': {'format': 'string',
+                            'value': 'http://ieeexplore.ieee.org/document/1031903/'}}]}).encode()
             replies.update({outsider.BASE + name: (docs / name).read_bytes() for name in
                             ("assets/site.css", "assets/site.js", "assets/cache-evidence/index.html",
                              "assets/cache-evidence/sample.txt")})
@@ -142,6 +151,16 @@ class StudyOutsiderTests(unittest.TestCase):
                 self.assertTrue(result["pass"])
                 self.assertEqual(set(calls), set(replies))
                 self.assertEqual(len(calls), len(set(calls)))
+                self.assertEqual(result['doi_registry_checks'], {
+                    'https://doi.org/10.1109/JSAC.2002.801752': {
+                        'registry_url': registry_url, 'expected_target': 'ieeexplore.ieee.org/document/1031903',
+                        'publisher_reachability': 'not_asserted'}})
+                stylesheet_url = outsider.BASE + 'assets/site.css'
+                stylesheet = replies[stylesheet_url]
+                replies[stylesheet_url] = None
+                with self.assertRaisesRegex(ValueError, 'local study link differs'):
+                    outsider.check_live(root, fetch)
+                replies[stylesheet_url] = stylesheet
                 replies[outsider.BASE + "assets/cache-evidence/sample.txt"] = b"changed"
                 with self.assertRaisesRegex(ValueError, "local study link differs"):
                     outsider.check_live(root, fetch)
