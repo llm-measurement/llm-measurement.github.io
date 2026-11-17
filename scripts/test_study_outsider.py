@@ -11,6 +11,21 @@ from study_checks import PLAUSIBLE_INIT, PLAUSIBLE_SRC
 
 
 class StudyOutsiderTests(unittest.TestCase):
+    def bounded_response(self, size, status=200):
+        class Response:
+            def __init__(self):
+                self.status = status
+                self.closed = False
+                self.count = None
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                self.closed = True
+            def read(self, count):
+                self.count = count
+                return b'x' * min(size, count)
+        return Response()
+
     def test_gets_are_anonymous_bounded_and_uncached(self):
         class Response:
             status = 200
@@ -30,6 +45,48 @@ class StudyOutsiderTests(unittest.TestCase):
         self.assertIsNone(request.get_header("Authorization"))
         self.assertEqual(response.count, outsider.MAX_RESPONSE + 1)
         self.assertEqual(opened.call_args.kwargs["timeout"], 30)
+
+    def test_site_limit_remains_two_mib_at_every_boundary(self):
+        self.assertEqual(outsider.MAX_RESPONSE, 2 * 1024 * 1024)
+        for url in (outsider.BASE, outsider.BASE.upper().replace('HTTPS:', 'https:'),
+                    outsider.BASE.removesuffix('/') + ':443/prompt-cache-bills.html'):
+            for size in (outsider.MAX_RESPONSE - 1, outsider.MAX_RESPONSE, outsider.MAX_RESPONSE + 1):
+                response = self.bounded_response(size)
+                with self.subTest(url=url, size=size), patch.object(outsider, 'urlopen', return_value=response):
+                    if size > outsider.MAX_RESPONSE:
+                        with self.assertRaisesRegex(ValueError, 'bounded check size'):
+                            outsider.fetch(url)
+                    else:
+                        self.assertEqual(len(outsider.fetch(url)), size)
+                self.assertEqual(response.count, outsider.MAX_RESPONSE + 1)
+                self.assertTrue(response.closed)
+
+    def test_external_html_larger_than_site_limit_is_still_bounded(self):
+        self.assertEqual(outsider.MAX_CITATION_RESPONSE, 8 * 1024 * 1024)
+        for size in (outsider.MAX_RESPONSE + 1, outsider.MAX_CITATION_RESPONSE - 1,
+                     outsider.MAX_CITATION_RESPONSE, outsider.MAX_CITATION_RESPONSE + 1):
+            response = self.bounded_response(size)
+            with self.subTest(size=size), patch.object(outsider, 'urlopen', return_value=response) as opened:
+                if size > outsider.MAX_CITATION_RESPONSE:
+                    with self.assertRaisesRegex(ValueError, 'bounded check size'):
+                        outsider.fetch('https://example.org/documentation')
+                else:
+                    self.assertEqual(len(outsider.fetch('https://example.org/documentation')), size)
+            self.assertEqual(response.count, outsider.MAX_CITATION_RESPONSE + 1)
+            self.assertTrue(response.closed)
+            self.assertEqual(opened.call_args.kwargs['timeout'], 30)
+
+    def test_unavailable_or_failed_citation_does_not_pass(self):
+        for status in (202, 403, 503):
+            response = self.bounded_response(0 if status == 202 else 1, status=status)
+            with self.subTest(status=status), patch.object(outsider, 'urlopen', return_value=response), \
+                 self.assertRaisesRegex(ValueError, 'HTTP 200'):
+                outsider.fetch('https://example.org/documentation')
+            self.assertIsNone(response.count)
+            self.assertTrue(response.closed)
+        with patch.object(outsider, 'urlopen', side_effect=TimeoutError('timed out')), \
+             self.assertRaises(TimeoutError):
+            outsider.fetch('https://example.org/documentation')
 
     def test_credentials_and_non_https_are_refused_before_network(self):
         with patch.object(outsider, "urlopen", side_effect=AssertionError("network forbidden")):

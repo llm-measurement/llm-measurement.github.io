@@ -13,19 +13,23 @@ from sitemap import staged_articles
 from study_checks import Document, EVIDENCE_DIR, SLUG, check, resource_surfaces
 
 MAX_RESPONSE = 2 * 1024 * 1024
+MAX_CITATION_RESPONSE = 8 * 1024 * 1024
 
 
 def fetch(url):
     parsed = urlsplit(url)
     if parsed.scheme != "https" or parsed.username or parsed.password:
         raise ValueError("outsider links must use anonymous HTTPS")
+    same_origin = (parsed.hostname, parsed.port or 443) == (urlsplit(BASE).hostname, 443)
+    # Vendor documentation includes hydration data larger than our own assets.
+    limit = MAX_RESPONSE if same_origin else MAX_CITATION_RESPONSE
     request = Request(url, headers={"User-Agent": "LLM-Measurement-Study-Check/1",
                                    "Cache-Control": "no-cache"}, method="GET")
     with urlopen(request, timeout=30) as response:
         if response.status != 200:
             raise ValueError("study link did not return HTTP 200")
-        data = response.read(MAX_RESPONSE + 1)
-    if len(data) > MAX_RESPONSE:
+        data = response.read(limit + 1)
+    if len(data) > limit:
         raise ValueError("study response exceeds the bounded check size")
     return data
 
