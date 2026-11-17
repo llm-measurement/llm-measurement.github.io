@@ -1,0 +1,135 @@
+{
+  "sessions": 233,
+  "model_requests": 60996,
+  "gaps": {
+    "count": 59689,
+    "median_s": 11.276000000000067,
+    "p90_s": 73.50699999999779,
+    "under_5min": 0.9754728676975657,
+    "under_60min": 0.9953425254234448
+  },
+  "totals": {
+    "300": {
+      "read": 11923621504,
+      "written": 707523712,
+      "written_split": {
+        "first": 209180864,
+        "expired": 485735360,
+        "concurrent": 12607488
+      },
+      "cost_ratio": 0.1644163498151647,
+      "rw": 16.85261045215683
+    },
+    "3600": {
+      "read": 12342419776,
+      "written": 288725440,
+      "written_split": {
+        "first": 209180864,
+        "expired": 71172416,
+        "concurrent": 8372160
+      },
+      "cost_ratio": 0.14343060954640205,
+      "rw": 42.7479468937687
+    }
+  },
+  "sessions_where_5min_pays": 233,
+  "sessions_where_1h_pays": 233,
+  "sessions_1h_cheaper_than_5min": 115,
+  "sessions_5min_cheaper_than_1h": 118,
+  "cost_ratio_5min_quartiles": [
+    0.15285064643559584,
+    0.1787950184416685,
+    0.2198939906812475
+  ],
+  "cost_ratio_1h_quartiles": [
+    0.1472519231667366,
+    0.1830590694332557,
+    0.2157938947206072
+  ],
+  "read_price_sensitivity": {
+    "0.1": {
+      "aggregate_saving_5min": 0.8355836501848353,
+      "aggregate_saving_1h": 0.8565693904535979,
+      "sessions_pay_5min": 233,
+      "sessions_pay_1h": 233,
+      "sessions_1h_cheaper": 115,
+      "sessions_5min_cheaper": 118
+    },
+    "0.05": {
+      "aggregate_saving_5min": 0.8827829393233064,
+      "aggregate_saving_1h": 0.905426479676061,
+      "sessions_pay_5min": 233,
+      "sessions_pay_1h": 233,
+      "sessions_1h_cheaper": 120,
+      "sessions_5min_cheaper": 113
+    },
+    "0.025": {
+      "aggregate_saving_5min": 0.906382583892542,
+      "aggregate_saving_1h": 0.9298550242872926,
+      "sessions_pay_5min": 233,
+      "sessions_pay_1h": 233,
+      "sessions_1h_cheaper": 121,
+      "sessions_5min_cheaper": 112
+    }
+  },
+  "fanout": {
+    "sibling_start_offset_s": {
+      "n": 90,
+      "median": 0.10350000000107684,
+      "max": 0.9929999999994834,
+      "share_under_0.2s": 0.6666666666666666,
+      "share_under_0.5s": 0.8444444444444444
+    },
+    "parallel_launches": 45,
+    "siblings_same_model": 90,
+    "siblings_started_before_lead_ready_with_shared_prefix": 90,
+    "shared_tokens_rewritten": 2716928,
+    "launch_sizes": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      7
+    ]
+  }
+}

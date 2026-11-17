@@ -21,6 +21,11 @@
 - [Why summaries instead of raw logs](https://llm-measurement.github.io/summaries.html): Measured sharing, retention and attribution properties of keyed summaries, with pinned coding-agent data and labeled synthetic workloads.
 - [For security reviewers](https://llm-measurement.github.io/security.html): Data paths, identity handling, manual release verification and repository controls for LLM Measurement tools.
 
+## Studies
+
+- [Studies](https://llm-measurement.github.io/studies.html): Studies of LLM usage, with methods, measurements and reproducible evidence.
+- [Same Prompt, Same Cache, Opposite Bills](https://llm-measurement.github.io/prompt-cache-bills.html): Prompt caching can raise an LLM bill. The break-even math, why parallel sub-agents miss the cache, and how to check reads versus writes in your logs.
+
 ## Released tools used in these examples
 
 - fleetdiff v0.14.1 in all fleetdiff guides

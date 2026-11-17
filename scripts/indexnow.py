@@ -12,6 +12,7 @@ from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 
 from build import BASE, ROOT
+from sitemap import staged_articles
 
 KEY_FILE = "1fcb3191597647daa6285898dc9171b1.txt"
 ENDPOINT = "https://api.indexnow.org/indexnow"
@@ -42,9 +43,11 @@ def previous_bytes(revision, path):
 
 def changes(previous):
     current = pages((ROOT / "docs/sitemap.xml").read_bytes())
+    staged = staged_articles(ROOT)
     # The first deployment verifies the key and registers this small site.
     if previous_bytes(previous, "docs/" + KEY_FILE) is None:
-        return {url: (ROOT / path).read_bytes() for url, path in current.items()}
+        return {url: staged[path] if path in staged else (ROOT / path).read_bytes()
+                for url, path in current.items()}
     old_sitemap = previous_bytes(previous, "docs/sitemap.xml")
     if old_sitemap is None:
         raise ValueError("previous sitemap is unavailable")
@@ -53,7 +56,7 @@ def changes(previous):
     for url, path in current.items():
         content = (ROOT / path).read_bytes()
         if previous_bytes(previous, path) != content:
-            result[url] = content
+            result[url] = staged.get(path, content)
     return dict(sorted(result.items()))
 
 

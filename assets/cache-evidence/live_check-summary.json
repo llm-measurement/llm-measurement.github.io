@@ -1,0 +1,1466 @@
+{
+  "api_version": "2023-06-01",
+  "calls": [
+    {
+      "arm": "1h refresh",
+      "cost_usd": 0.004126,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 3205.5,
+      "ms_headers": 3205.3,
+      "offset_s": 0.0,
+      "planned_offset_s": 0,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "1h",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 20610,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 20610,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "1h control",
+      "cost_usd": 0.003992,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2004.7,
+      "ms_headers": 2004.5,
+      "offset_s": 0.0,
+      "planned_offset_s": 0,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "1h",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 19940,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 19940,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "5m refresh",
+      "cost_usd": 0.002496,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2375.2,
+      "ms_headers": 2374.9,
+      "offset_s": 0.0,
+      "planned_offset_s": 0,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 19942
+        },
+        "cache_creation_input_tokens": 19942,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "5m control",
+      "cost_usd": 0.002552,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2586.5,
+      "ms_headers": 2586.3,
+      "offset_s": 0.0,
+      "planned_offset_s": 0,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20385
+        },
+        "cache_creation_input_tokens": 20385,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002608,
+      "idx": 5,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.0,
+      "ms_done": 1943.7,
+      "ms_headers": 1943.5,
+      "rep": 1,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20835
+        },
+        "cache_creation_input_tokens": 20835,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002608,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.1,
+      "ms_done": 1837.8,
+      "ms_headers": 1837.6,
+      "rep": 1,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20835
+        },
+        "cache_creation_input_tokens": 20835,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002608,
+      "idx": 2,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.2,
+      "ms_done": 1876.8,
+      "ms_headers": 1876.6,
+      "rep": 1,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20835
+        },
+        "cache_creation_input_tokens": 20835,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002608,
+      "idx": 4,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.3,
+      "ms_done": 2391.7,
+      "ms_headers": 2146.0,
+      "rep": 1,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20835
+        },
+        "cache_creation_input_tokens": 20835,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002608,
+      "idx": 3,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.5,
+      "ms_done": 2007.1,
+      "ms_headers": 2006.9,
+      "rep": 1,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20835
+        },
+        "cache_creation_input_tokens": 20835,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.00258,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2193.3,
+      "ms_first_delta": 1957.8,
+      "ms_headers": 1957.4,
+      "ms_message_start": 1957.6,
+      "ms_trigger": 1957.8,
+      "rep": 1,
+      "role": "leader",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "trigger": "content_block_delta",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20609
+        },
+        "cache_creation_input_tokens": 20609,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.00021,
+      "idx": 2,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1957.9,
+      "ms_done": 1701.5,
+      "ms_headers": 1453.7,
+      "rep": 1,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20609,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.00021,
+      "idx": 4,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1958.1,
+      "ms_done": 1866.9,
+      "ms_headers": 1612.8,
+      "rep": 1,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20609,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.00021,
+      "idx": 5,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1958.2,
+      "ms_done": 1717.5,
+      "ms_headers": 1470.1,
+      "rep": 1,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20609,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.00021,
+      "idx": 3,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1958.4,
+      "ms_done": 1584.2,
+      "ms_headers": 1584.1,
+      "rep": 1,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20609,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.00258,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 1788.6,
+      "ms_first_delta": 1535.5,
+      "ms_headers": 1535.4,
+      "ms_message_start": 1535.4,
+      "ms_trigger": 1535.4,
+      "rep": 1,
+      "role": "leader",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "trigger": "message_start",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20611
+        },
+        "cache_creation_input_tokens": 20611,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.00021,
+      "idx": 2,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1535.5,
+      "ms_done": 1654.0,
+      "ms_headers": 1653.8,
+      "rep": 1,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20611,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.00021,
+      "idx": 4,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1535.6,
+      "ms_done": 1871.5,
+      "ms_headers": 1871.3,
+      "rep": 1,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20611,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.00021,
+      "idx": 3,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1535.6,
+      "ms_done": 1714.3,
+      "ms_headers": 1714.2,
+      "rep": 1,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20611,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.00021,
+      "idx": 5,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1535.6,
+      "ms_done": 1467.2,
+      "ms_headers": 1467.0,
+      "rep": 1,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20611,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002552,
+      "idx": 5,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.0,
+      "ms_done": 2552.2,
+      "ms_headers": 2552.0,
+      "rep": 2,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20386
+        },
+        "cache_creation_input_tokens": 20386,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002552,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.1,
+      "ms_done": 2622.5,
+      "ms_headers": 2622.4,
+      "rep": 2,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20386
+        },
+        "cache_creation_input_tokens": 20386,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002552,
+      "idx": 4,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.2,
+      "ms_done": 2099.8,
+      "ms_headers": 2099.7,
+      "rep": 2,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20386
+        },
+        "cache_creation_input_tokens": 20386,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002552,
+      "idx": 2,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.3,
+      "ms_done": 2346.3,
+      "ms_headers": 2346.1,
+      "rep": 2,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20386
+        },
+        "cache_creation_input_tokens": 20386,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002552,
+      "idx": 3,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.3,
+      "ms_done": 2629.3,
+      "ms_headers": 2380.3,
+      "rep": 2,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20386
+        },
+        "cache_creation_input_tokens": 20386,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.002552,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 1769.3,
+      "ms_first_delta": 1531.7,
+      "ms_headers": 1531.6,
+      "ms_message_start": 1531.6,
+      "ms_trigger": 1531.7,
+      "rep": 2,
+      "role": "leader",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "trigger": "content_block_delta",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20386
+        },
+        "cache_creation_input_tokens": 20386,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.000207,
+      "idx": 2,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1531.8,
+      "ms_done": 1760.6,
+      "ms_headers": 1517.0,
+      "rep": 2,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20386,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.000207,
+      "idx": 3,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1531.8,
+      "ms_done": 1467.7,
+      "ms_headers": 1467.6,
+      "rep": 2,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20386,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.000207,
+      "idx": 5,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1531.9,
+      "ms_done": 1706.1,
+      "ms_headers": 1460.7,
+      "rep": 2,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20386,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.000207,
+      "idx": 4,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1532.1,
+      "ms_done": 2129.3,
+      "ms_headers": 2129.2,
+      "rep": 2,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20386,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.002552,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 1826.5,
+      "ms_first_delta": 1580.5,
+      "ms_headers": 1580.2,
+      "ms_message_start": 1580.4,
+      "ms_trigger": 1580.4,
+      "rep": 2,
+      "role": "leader",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "trigger": "message_start",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20387
+        },
+        "cache_creation_input_tokens": 20387,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.000207,
+      "idx": 2,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1580.6,
+      "ms_done": 1800.6,
+      "ms_headers": 1800.3,
+      "rep": 2,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20387,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.000207,
+      "idx": 5,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1580.7,
+      "ms_done": 1760.3,
+      "ms_headers": 1503.7,
+      "rep": 2,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20387,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.000207,
+      "idx": 3,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1580.8,
+      "ms_done": 1643.1,
+      "ms_headers": 1396.4,
+      "rep": 2,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20387,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.000207,
+      "idx": 4,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1581.3,
+      "ms_done": 1759.9,
+      "ms_headers": 1759.6,
+      "rep": 2,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20387,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "5m refresh",
+      "cost_usd": 0.000203,
+      "idx": 2,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2268.3,
+      "ms_headers": 2268.3,
+      "offset_s": 240.0,
+      "planned_offset_s": 240,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 19942,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002524,
+      "idx": 5,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.0,
+      "ms_done": 2122.5,
+      "ms_headers": 2122.2,
+      "rep": 3,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20165
+        },
+        "cache_creation_input_tokens": 20165,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002524,
+      "idx": 2,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.1,
+      "ms_done": 2455.6,
+      "ms_headers": 2210.2,
+      "rep": 3,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20165
+        },
+        "cache_creation_input_tokens": 20165,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002524,
+      "idx": 3,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.2,
+      "ms_done": 2543.0,
+      "ms_headers": 2542.8,
+      "rep": 3,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20165
+        },
+        "cache_creation_input_tokens": 20165,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002524,
+      "idx": 4,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.2,
+      "ms_done": 2318.3,
+      "ms_headers": 2318.2,
+      "rep": 3,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20165
+        },
+        "cache_creation_input_tokens": 20165,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "together",
+      "cost_usd": 0.002524,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_after_first_send": 0.3,
+      "ms_done": 2245.8,
+      "ms_headers": 2245.5,
+      "rep": 3,
+      "role": "peer",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20165
+        },
+        "cache_creation_input_tokens": 20165,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.002552,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 1446.5,
+      "ms_first_delta": 1445.7,
+      "ms_headers": 1436.0,
+      "ms_message_start": 1445.6,
+      "ms_trigger": 1445.7,
+      "rep": 3,
+      "role": "leader",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "trigger": "content_block_delta",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20386
+        },
+        "cache_creation_input_tokens": 20386,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.000207,
+      "idx": 2,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1445.8,
+      "ms_done": 1504.2,
+      "ms_headers": 1504.1,
+      "rep": 3,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20386,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.000207,
+      "idx": 3,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1446.0,
+      "ms_done": 1779.5,
+      "ms_headers": 1530.4,
+      "rep": 3,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20386,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.000207,
+      "idx": 5,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1446.1,
+      "ms_done": 1837.5,
+      "ms_headers": 1837.2,
+      "rep": 3,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20386,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "first token",
+      "cost_usd": 0.000207,
+      "idx": 4,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1446.3,
+      "ms_done": 1459.8,
+      "ms_headers": 1459.7,
+      "rep": 3,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20386,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.002552,
+      "idx": 1,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 1889.2,
+      "ms_first_delta": 1654.2,
+      "ms_headers": 1641.0,
+      "ms_message_start": 1654.1,
+      "ms_trigger": 1654.1,
+      "rep": 3,
+      "role": "leader",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "trigger": "message_start",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20384
+        },
+        "cache_creation_input_tokens": 20384,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.000207,
+      "idx": 2,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1654.3,
+      "ms_done": 2196.9,
+      "ms_headers": 2196.5,
+      "rep": 3,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20384,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.000207,
+      "idx": 3,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1654.4,
+      "ms_done": 1632.1,
+      "ms_headers": 1631.9,
+      "rep": 3,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20384,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.000207,
+      "idx": 4,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1654.6,
+      "ms_done": 1520.9,
+      "ms_headers": 1520.8,
+      "rep": 3,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20384,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "message start",
+      "cost_usd": 0.000207,
+      "idx": 5,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_after_leader_send": 1655.1,
+      "ms_done": 1516.8,
+      "ms_headers": 1516.5,
+      "rep": 3,
+      "role": "follower",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20384,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "5m refresh",
+      "cost_usd": 0.000203,
+      "idx": 3,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2149.9,
+      "ms_headers": 2149.8,
+      "offset_s": 480.0,
+      "planned_offset_s": 480,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 19942,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "5m refresh",
+      "cost_usd": 0.000203,
+      "idx": 4,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2416.6,
+      "ms_headers": 2416.4,
+      "offset_s": 720.0,
+      "planned_offset_s": 720,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 19942,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "5m control",
+      "cost_usd": 0.002552,
+      "idx": 2,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 4771.8,
+      "ms_headers": 4526.0,
+      "offset_s": 720.1,
+      "planned_offset_s": 720,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "5m",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 20385
+        },
+        "cache_creation_input_tokens": 20385,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "1h refresh",
+      "cost_usd": 0.00021,
+      "idx": 2,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2323.8,
+      "ms_headers": 2077.9,
+      "offset_s": 3000.0,
+      "planned_offset_s": 3000,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "1h",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20610,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "1h refresh",
+      "cost_usd": 0.00021,
+      "idx": 3,
+      "kind": "read",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2770.9,
+      "ms_headers": 2770.6,
+      "offset_s": 6000.0,
+      "planned_offset_s": 6000,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "1h",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 20610,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    },
+    {
+      "arm": "1h control",
+      "cost_usd": 0.003992,
+      "idx": 2,
+      "kind": "write",
+      "model": "claude-haiku-5-5",
+      "ms_done": 2228.9,
+      "ms_headers": 2228.7,
+      "offset_s": 6000.0,
+      "planned_offset_s": 6000,
+      "rep": 1,
+      "role": "single",
+      "status": 200,
+      "stop_reason": "end_turn",
+      "ttl": "1h",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 19940,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 19940,
+        "cache_read_input_tokens": 0,
+        "input_tokens": 16,
+        "output_tokens": 4
+      }
+    }
+  ],
+  "counted_input_tokens": 19955,
+  "fanout": {
+    "first token": {
+      "calls": 15,
+      "other": 0,
+      "reads": 12,
+      "writes": 3
+    },
+    "message start": {
+      "calls": 15,
+      "other": 0,
+      "reads": 12,
+      "writes": 3
+    },
+    "together": {
+      "calls": 15,
+      "other": 0,
+      "reads": 0,
+      "writes": 15
+    }
+  },
+  "machine": "arm64 Darwin 27.0.0",
+  "max_tokens": 8,
+  "model": "claude-haiku-5-5",
+  "prefix_sections": 222,
+  "python": "3.14.2",
+  "spent_usd_estimate": 0.079521,
+  "started_utc": "2026-11-05T08:53:42Z",
+  "verdicts": {
+    "1h refresh": "reads refresh the entry",
+    "5m refresh": "reads refresh the entry"
+  }
+}

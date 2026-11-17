@@ -2,6 +2,7 @@
 
 Fourteen guides to LLM usage, with commands and output from released tools.
 An evidence page explains what can be shared and retained with summaries.
+A Studies section presents longer investigations with their reproducible evidence.
 
 All fleetdiff guides pin v0.14.1 for reproducibility. The home-page library installs
 pin llm-sketchkit v0.4.0; the existing Python guides retain v0.3.0. Collector
@@ -25,6 +26,16 @@ retains the versions and source revisions used for those measurements.
 | Do my LLM traces record token usage and user IDs? | [Trace check](docs/traces-usage.html) |
 | How do I count distinct LLM users without storing user IDs? | [Distinct users](docs/distinct-users.html) |
 | Why summaries instead of raw logs | [Summaries](docs/summaries.html) |
+
+## Studies
+
+| Study | Page |
+| --- | --- |
+| Same Prompt, Same Cache, Opposite Bills | [Prompt caching](docs/prompt-cache-bills.html) |
+
+The [Studies index](docs/studies.html) lists the studies. Article metadata and
+publication sitemap dates are stamped from committed page history when the
+publication artifact is prepared, rather than from the time a build runs.
 
 ## Build And Check
 

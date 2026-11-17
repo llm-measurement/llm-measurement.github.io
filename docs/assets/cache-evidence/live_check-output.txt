@@ -1,0 +1,65 @@
+prefix: 222 sections, 19955 counted input tokens; spend backstop $0.6
+14:23:45 1h refresh     rep 1 call 1 single   write write 20610 read 0 input 16 status 200 
+14:23:47 1h control     rep 1 call 1 single   write write 19940 read 0 input 16 status 200 
+14:23:49 5m refresh     rep 1 call 1 single   write write 19942 read 0 input 16 status 200 
+14:23:52 5m control     rep 1 call 1 single   write write 20385 read 0 input 16 status 200 
+14:24:58 together       rep 1 call 1 peer     write write 20835 read 0 input 16 status 200 
+14:24:58 together       rep 1 call 2 peer     write write 20835 read 0 input 16 status 200 
+14:24:58 together       rep 1 call 3 peer     write write 20835 read 0 input 16 status 200 
+14:24:58 together       rep 1 call 4 peer     write write 20835 read 0 input 16 status 200 
+14:24:58 together       rep 1 call 5 peer     write write 20835 read 0 input 16 status 200 
+14:25:06 first token    rep 1 call 1 leader   write write 20609 read 0 input 16 status 200 
+14:25:06 first token    rep 1 call 2 follower read  write 0 read 20609 input 16 status 200 
+14:25:06 first token    rep 1 call 3 follower read  write 0 read 20609 input 16 status 200 
+14:25:06 first token    rep 1 call 4 follower read  write 0 read 20609 input 16 status 200 
+14:25:06 first token    rep 1 call 5 follower read  write 0 read 20609 input 16 status 200 
+14:25:12 message start  rep 1 call 1 leader   write write 20611 read 0 input 16 status 200 
+14:25:12 message start  rep 1 call 2 follower read  write 0 read 20611 input 16 status 200 
+14:25:12 message start  rep 1 call 3 follower read  write 0 read 20611 input 16 status 200 
+14:25:12 message start  rep 1 call 4 follower read  write 0 read 20611 input 16 status 200 
+14:25:12 message start  rep 1 call 5 follower read  write 0 read 20611 input 16 status 200 
+14:26:58 together       rep 2 call 1 peer     write write 20386 read 0 input 16 status 200 
+14:26:58 together       rep 2 call 2 peer     write write 20386 read 0 input 16 status 200 
+14:26:58 together       rep 2 call 3 peer     write write 20386 read 0 input 16 status 200 
+14:26:58 together       rep 2 call 4 peer     write write 20386 read 0 input 16 status 200 
+14:26:58 together       rep 2 call 5 peer     write write 20386 read 0 input 16 status 200 
+14:27:06 first token    rep 2 call 1 leader   write write 20386 read 0 input 16 status 200 
+14:27:06 first token    rep 2 call 2 follower read  write 0 read 20386 input 16 status 200 
+14:27:06 first token    rep 2 call 3 follower read  write 0 read 20386 input 16 status 200 
+14:27:06 first token    rep 2 call 4 follower read  write 0 read 20386 input 16 status 200 
+14:27:06 first token    rep 2 call 5 follower read  write 0 read 20386 input 16 status 200 
+14:27:12 message start  rep 2 call 1 leader   write write 20387 read 0 input 16 status 200 
+14:27:12 message start  rep 2 call 2 follower read  write 0 read 20387 input 16 status 200 
+14:27:12 message start  rep 2 call 3 follower read  write 0 read 20387 input 16 status 200 
+14:27:12 message start  rep 2 call 4 follower read  write 0 read 20387 input 16 status 200 
+14:27:12 message start  rep 2 call 5 follower read  write 0 read 20387 input 16 status 200 
+14:27:49 5m refresh     rep 1 call 2 single   read  write 0 read 19942 input 16 status 200 
+14:28:58 together       rep 3 call 1 peer     write write 20165 read 0 input 16 status 200 
+14:28:58 together       rep 3 call 2 peer     write write 20165 read 0 input 16 status 200 
+14:28:58 together       rep 3 call 3 peer     write write 20165 read 0 input 16 status 200 
+14:28:58 together       rep 3 call 4 peer     write write 20165 read 0 input 16 status 200 
+14:28:58 together       rep 3 call 5 peer     write write 20165 read 0 input 16 status 200 
+14:29:06 first token    rep 3 call 1 leader   write write 20386 read 0 input 16 status 200 
+14:29:06 first token    rep 3 call 2 follower read  write 0 read 20386 input 16 status 200 
+14:29:06 first token    rep 3 call 3 follower read  write 0 read 20386 input 16 status 200 
+14:29:06 first token    rep 3 call 4 follower read  write 0 read 20386 input 16 status 200 
+14:29:06 first token    rep 3 call 5 follower read  write 0 read 20386 input 16 status 200 
+14:29:13 message start  rep 3 call 1 leader   write write 20384 read 0 input 16 status 200 
+14:29:13 message start  rep 3 call 2 follower read  write 0 read 20384 input 16 status 200 
+14:29:13 message start  rep 3 call 3 follower read  write 0 read 20384 input 16 status 200 
+14:29:13 message start  rep 3 call 4 follower read  write 0 read 20384 input 16 status 200 
+14:29:13 message start  rep 3 call 5 follower read  write 0 read 20384 input 16 status 200 
+14:31:49 5m refresh     rep 1 call 3 single   read  write 0 read 19942 input 16 status 200 
+14:35:49 5m refresh     rep 1 call 4 single   read  write 0 read 19942 input 16 status 200 
+14:35:54 5m control     rep 1 call 2 single   write write 20385 read 0 input 16 status 200 
+15:13:44 1h refresh     rep 1 call 2 single   read  write 0 read 20610 input 16 status 200 
+16:03:45 1h refresh     rep 1 call 3 single   read  write 0 read 20610 input 16 status 200 
+16:03:47 1h control     rep 1 call 2 single   write write 19940 read 0 input 16 status 200 
+
+Verdicts:
+  1h refresh: reads refresh the entry
+  5m refresh: reads refresh the entry
+  fan-out, together: 15 writes, 0 reads, 0 other, of 15 calls
+  fan-out, first token: 3 writes, 12 reads, 0 other, of 15 calls
+  fan-out, message start: 3 writes, 12 reads, 0 other, of 15 calls
+Estimated spend: $0.0795

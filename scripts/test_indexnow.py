@@ -49,6 +49,37 @@ class IndexNowTests(unittest.TestCase):
             self.assertEqual(indexnow.changes('HEAD^'), {indexnow.BASE: b'home',
                 indexnow.BASE + 'routing.html': b'route', indexnow.BASE + 'removed.html': None})
 
+    def test_article_changes_expect_staged_bytes_not_preview(self):
+        url = indexnow.BASE + 'routing.html'
+        staged = {'docs/routing.html': b'published article with Git dates'}
+        old = {'docs/' + indexnow.KEY_FILE: b'key',
+               'docs/sitemap.xml': sitemap(indexnow.BASE, url), 'docs/index.html': b'home'}
+        with patch.object(indexnow, 'staged_articles', return_value=staged), \
+                patch.object(indexnow, 'previous_bytes', side_effect=lambda _, path: old.get(path)):
+            changed = indexnow.changes('HEAD^')
+        self.assertEqual(changed, {url: staged['docs/routing.html']})
+        key = (self.root / 'docs' / indexnow.KEY_FILE).read_bytes()
+        with patch.object(indexnow, 'fetch', side_effect=[key, b'route']), self.assertRaises(RuntimeError):
+            indexnow.wait_live(changed, 0)
+        with patch.object(indexnow, 'fetch', side_effect=[key, staged['docs/routing.html']]):
+            indexnow.wait_live(changed, 0)
+
+    def test_first_registration_also_uses_staged_article_bytes(self):
+        with patch.object(indexnow, 'previous_bytes', return_value=None), \
+                patch.object(indexnow, 'staged_articles', return_value={'docs/routing.html': b'staged'}):
+            self.assertEqual(indexnow.changes('HEAD^'), {indexnow.BASE: b'home',
+                             indexnow.BASE + 'routing.html': b'staged'})
+
+    def test_unchanged_article_source_is_not_resubmitted_for_provisional_dates(self):
+        with patch.object(indexnow, 'previous_bytes', side_effect=lambda _, path: (self.root / path).read_bytes()), \
+                patch.object(indexnow, 'staged_articles', return_value={'docs/routing.html': b'staged'}):
+            self.assertEqual(indexnow.changes('HEAD^'), {})
+
+    def test_article_history_failure_is_not_silently_replaced_by_preview(self):
+        with patch.object(indexnow, 'staged_articles', side_effect=ValueError('full Git history')), \
+                self.assertRaisesRegex(ValueError, 'full Git history'):
+            indexnow.changes('HEAD^')
+
     def test_bad_sitemap_refused(self):
         for urls in [[], ['https://elsewhere.example/'], [indexnow.BASE + 'x.html?q=1'],
                      [indexnow.BASE + 'x.html#x'], [indexnow.BASE + 'a/x.html'],
@@ -127,7 +158,7 @@ class IndexNowTests(unittest.TestCase):
         self.assertIn('needs: [build, examples, own-data]', deployment)
         self.assertIn('fetch-depth: 0', deployment)
         self.assertIn('scripts/sitemap.py --check', deployment)
-        self.assertIn('fetch-depth: 2', job)
+        self.assertIn('fetch-depth: 0', job)
         self.assertIn('persist-credentials: false', job)
         self.assertIn('python3 scripts/indexnow.py --submit', job)
 

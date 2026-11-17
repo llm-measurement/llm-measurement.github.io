@@ -1,0 +1,6430 @@
+{
+ "sessions": [
+  {
+   "300": {
+    "cost_ratio": 0.30238413690859867,
+    "read": 3272640,
+    "rw": 4.6822635289808625,
+    "written": 698944,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 405504,
+     "first": 293440
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.24038126853164885,
+    "read": 3678144,
+    "rw": 12.534569247546347,
+    "written": 293440,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 293440
+    }
+   },
+   "gap_median_s": 16.216,
+   "requests": 35,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2114875818688801,
+    "read": 10695168,
+    "rw": 9.315050167224081,
+    "written": 1148160,
+    "written_split": {
+     "concurrent": 59648,
+     "expired": 438016,
+     "first": 650496
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21175021075157255,
+    "read": 11146752,
+    "rw": 16.00220507166483,
+    "written": 696576,
+    "written_split": {
+     "concurrent": 46080,
+     "expired": 0,
+     "first": 650496
+    }
+   },
+   "gap_median_s": 14.41800000000012,
+   "requests": 107,
+   "subagents": 7
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20113474896154712,
+    "read": 169333184,
+    "rw": 10.370968058043502,
+    "written": 16327616,
+    "written_split": {
+     "concurrent": 104512,
+     "expired": 13411840,
+     "first": 2811264
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14388152157052,
+    "read": 181372864,
+    "rw": 42.298407438916996,
+    "written": 4287936,
+    "written_split": {
+     "concurrent": 104512,
+     "expired": 1372160,
+     "first": 2811264
+    }
+   },
+   "gap_median_s": 13.804000000003725,
+   "requests": 795,
+   "subagents": 7
+  },
+  {
+   "300": {
+    "cost_ratio": 0.49684303514971173,
+    "read": 450752,
+    "rw": 1.897871193748316,
+    "written": 237504,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 49088,
+     "first": 188416
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.7556537102473498,
+    "read": 450752,
+    "rw": 1.897871193748316,
+    "written": 237504,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 49088,
+     "first": 188416
+    }
+   },
+   "gap_median_s": 4.503000000000014,
+   "requests": 25,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16426437219004128,
+    "read": 4287232,
+    "rw": 16.894829760403532,
+    "written": 253760,
+    "written_split": {
+     "concurrent": 2560,
+     "expired": 58240,
+     "first": 192960
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1818076755035023,
+    "read": 4345472,
+    "rw": 22.22520458265139,
+    "written": 195520,
+    "written_split": {
+     "concurrent": 2560,
+     "expired": 0,
+     "first": 192960
+    }
+   },
+   "gap_median_s": 3.8880000000000337,
+   "requests": 73,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15413094390206733,
+    "read": 98045632,
+    "rw": 20.24478010360503,
+    "written": 4843008,
+    "written_split": {
+     "concurrent": 2624,
+     "expired": 3571776,
+     "first": 1268608
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1491925716969337,
+    "read": 100224768,
+    "rw": 37.623717656103594,
+    "written": 2663872,
+    "written_split": {
+     "concurrent": 2624,
+     "expired": 1392640,
+     "first": 1268608
+    }
+   },
+   "gap_median_s": 11.07300000000032,
+   "requests": 352,
+   "subagents": 8
+  },
+  {
+   "300": {
+    "cost_ratio": 0.3186470208150644,
+    "read": 2246080,
+    "rw": 4.25961888578711,
+    "written": 527296,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 414848,
+     "first": 112448
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.31887663266718974,
+    "read": 2453888,
+    "rw": 7.680689102564102,
+    "written": 319488,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 207040,
+     "first": 112448
+    }
+   },
+   "gap_median_s": 29.51200000000017,
+   "requests": 35,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14485112183524884,
+    "read": 9520256,
+    "rw": 24.640384296836178,
+    "written": 386368,
+    "written_split": {
+     "concurrent": 384,
+     "expired": 61248,
+     "first": 324736
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1623550464820306,
+    "read": 9581504,
+    "rw": 29.470669291338584,
+    "written": 325120,
+    "written_split": {
+     "concurrent": 384,
+     "expired": 0,
+     "first": 324736
+    }
+   },
+   "gap_median_s": 5.4909999999999854,
+   "requests": 119,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1517758910248446,
+    "read": 285314880,
+    "rw": 21.21110978946116,
+    "written": 13451200,
+    "written_split": {
+     "concurrent": 5952,
+     "expired": 9596864,
+     "first": 3848384
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14792389818817453,
+    "read": 291230272,
+    "rw": 38.64619056111833,
+    "written": 7535808,
+    "written_split": {
+     "concurrent": 5952,
+     "expired": 3681472,
+     "first": 3848384
+    }
+   },
+   "gap_median_s": 13.953499999995984,
+   "requests": 1180,
+   "subagents": 15
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2085126537537113,
+    "read": 2049792,
+    "rw": 9.597842373389271,
+    "written": 213568,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 90304,
+     "first": 123264
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.203475187332108,
+    "read": 2140096,
+    "rw": 17.36188992731049,
+    "written": 123264,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 123264
+    }
+   },
+   "gap_median_s": 31.36899999999997,
+   "requests": 31,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.21732765941691948,
+    "read": 24836032,
+    "rw": 8.801610342481288,
+    "written": 2821760,
+    "written_split": {
+     "concurrent": 320,
+     "expired": 2516416,
+     "first": 305024
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12097613576673077,
+    "read": 27352448,
+    "rw": 89.5791238734018,
+    "written": 305344,
+    "written_split": {
+     "concurrent": 320,
+     "expired": 0,
+     "first": 305024
+    }
+   },
+   "gap_median_s": 14.420999999999822,
+   "requests": 172,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18990255254163332,
+    "read": 4056320,
+    "rw": 11.791627906976744,
+    "written": 344000,
+    "written_split": {
+     "concurrent": 640,
+     "expired": 129408,
+     "first": 213952
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19265798850992655,
+    "read": 4185728,
+    "rw": 19.50551744706233,
+    "written": 214592,
+    "written_split": {
+     "concurrent": 640,
+     "expired": 0,
+     "first": 213952
+    }
+   },
+   "gap_median_s": 16.84950000000015,
+   "requests": 53,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19928191060190414,
+    "read": 2898944,
+    "rw": 10.583177570093458,
+    "written": 273920,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 113792,
+     "first": 160128
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.22317653703404874,
+    "read": 2967168,
+    "rw": 14.425015556938394,
+    "written": 205696,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 45568,
+     "first": 160128
+    }
+   },
+   "gap_median_s": 18.82000000000128,
+   "requests": 33,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.259539773197583,
+    "read": 2663680,
+    "rw": 6.208233890214797,
+    "written": 429056,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 266048,
+     "first": 163008
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.27268438043208343,
+    "read": 2811648,
+    "rw": 10.002732240437158,
+    "written": 281088,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 118080,
+     "first": 163008
+    }
+   },
+   "gap_median_s": 29.565999999999804,
+   "requests": 28,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.22649988898649495,
+    "read": 5900544,
+    "rw": 8.090917068889864,
+    "written": 729280,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 495552,
+     "first": 233728
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16698265293316988,
+    "read": 6396096,
+    "rw": 27.365553121577218,
+    "written": 233728,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 233728
+    }
+   },
+   "gap_median_s": 14.708999999999833,
+   "requests": 44,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15347296518805037,
+    "read": 3707520,
+    "rw": 20.506194690265488,
+    "written": 180800,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 180800
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18834663813677888,
+    "read": 3707520,
+    "rw": 20.506194690265488,
+    "written": 180800,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 180800
+    }
+   },
+   "gap_median_s": 5.859999999999999,
+   "requests": 27,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16585595776772247,
+    "read": 3680192,
+    "rw": 16.46235327798454,
+    "written": 223552,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 93248,
+     "first": 130304
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.20880549544232407,
+    "read": 3680192,
+    "rw": 16.46235327798454,
+    "written": 223552,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 93248,
+     "first": 130304
+    }
+   },
+   "gap_median_s": 12.190499999999986,
+   "requests": 49,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14017776753558567,
+    "read": 11524672,
+    "rw": 27.622794907194354,
+    "written": 417216,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 131584,
+     "first": 285632
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14544514234265135,
+    "read": 11656256,
+    "rw": 40.808648890880576,
+    "written": 285632,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 285632
+    }
+   },
+   "gap_median_s": 10.411000000000001,
+   "requests": 133,
+   "subagents": 2
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16716556502228558,
+    "read": 23850048,
+    "rw": 16.121868916288125,
+    "written": 1479360,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 543872,
+     "first": 935488
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.17017247304003316,
+    "read": 24393920,
+    "rw": 26.076144215639324,
+    "written": 935488,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 935488
+    }
+   },
+   "gap_median_s": 6.2330000000000005,
+   "requests": 282,
+   "subagents": 16
+  },
+  {
+   "300": {
+    "cost_ratio": 0.23554966508999714,
+    "read": 1778432,
+    "rw": 7.4839752221922975,
+    "written": 237632,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 237632
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.32395162058347354,
+    "read": 1778432,
+    "rw": 7.4839752221922975,
+    "written": 237632,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 237632
+    }
+   },
+   "gap_median_s": 4.761500000000012,
+   "requests": 40,
+   "subagents": 2
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16998342197969196,
+    "read": 1740288,
+    "rw": 15.432463110102157,
+    "written": 112768,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 112768
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2156247841403606,
+    "read": 1740288,
+    "rw": 15.432463110102157,
+    "written": 112768,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 112768
+    }
+   },
+   "gap_median_s": 5.728,
+   "requests": 20,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2061767251554017,
+    "read": 16980416,
+    "rw": 9.830998962501853,
+    "written": 1727232,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1461440,
+     "first": 265792
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14669611059605142,
+    "read": 18247872,
+    "rw": 39.688613585746104,
+    "written": 459776,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 193984,
+     "first": 265792
+    }
+   },
+   "gap_median_s": 11.52599999999984,
+   "requests": 94,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14941991063012616,
+    "read": 33075008,
+    "rw": 22.269973282771698,
+    "written": 1485184,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 585728,
+     "first": 899456
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14944898454267846,
+    "read": 33660736,
+    "rw": 37.423438167069875,
+    "written": 899456,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 899456
+    }
+   },
+   "gap_median_s": 8.067999999999984,
+   "requests": 167,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16455783637998203,
+    "read": 60473664,
+    "rw": 16.813484225697966,
+    "written": 3596736,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 2525504,
+     "first": 1071232
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15169913095594845,
+    "read": 62327040,
+    "rw": 35.75110132158591,
+    "written": 1743360,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 672128,
+     "first": 1071232
+    }
+   },
+   "gap_median_s": 17.105999999999767,
+   "requests": 241,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1555614645780958,
+    "read": 1889728,
+    "rw": 19.697798532354902,
+    "written": 95936,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 95936
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19179720234641914,
+    "read": 1889728,
+    "rw": 19.697798532354902,
+    "written": 95936,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 95936
+    }
+   },
+   "gap_median_s": 6.263499999999993,
+   "requests": 27,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17818540117551357,
+    "read": 10412416,
+    "rw": 13.708628244017525,
+    "written": 759552,
+    "written_split": {
+     "concurrent": 384,
+     "expired": 284032,
+     "first": 475136
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1810886676367136,
+    "read": 10695168,
+    "rw": 22.431140939597316,
+    "written": 476800,
+    "written_split": {
+     "concurrent": 384,
+     "expired": 1280,
+     "first": 475136
+    }
+   },
+   "gap_median_s": 4.480999999999767,
+   "requests": 140,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16066794758606626,
+    "read": 22591360,
+    "rw": 17.95564372552012,
+    "written": 1258176,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 965824,
+     "first": 292352
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18007910929587898,
+    "read": 22844352,
+    "rw": 22.72653762893162,
+    "written": 1005184,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 712832,
+     "first": 292352
+    }
+   },
+   "gap_median_s": 6.730999999999767,
+   "requests": 140,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1330132686388178,
+    "read": 258716288,
+    "rw": 33.834478602576226,
+    "written": 7646528,
+    "written_split": {
+     "concurrent": 1338624,
+     "expired": 4361344,
+     "first": 1946560
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13212212923894004,
+    "read": 261859584,
+    "rw": 58.14925457982178,
+    "written": 4503232,
+    "written_split": {
+     "concurrent": 1338624,
+     "expired": 1218048,
+     "first": 1946560
+    }
+   },
+   "gap_median_s": 11.718500000000631,
+   "requests": 615,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20162599257545238,
+    "read": 28038400,
+    "rw": 10.316002637279833,
+    "written": 2717952,
+    "written_split": {
+     "concurrent": 230272,
+     "expired": 1337792,
+     "first": 1149888
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19913394150255528,
+    "read": 29151616,
+    "rw": 18.16598867352636,
+    "written": 1604736,
+    "written_split": {
+     "concurrent": 132480,
+     "expired": 322368,
+     "first": 1149888
+    }
+   },
+   "gap_median_s": 14.276000000000067,
+   "requests": 269,
+   "subagents": 12
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18155128869674547,
+    "read": 5391552,
+    "rw": 13.101555209953343,
+    "written": 411520,
+    "written_split": {
+     "concurrent": 43968,
+     "expired": 0,
+     "first": 367552
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.23473691175984035,
+    "read": 5391552,
+    "rw": 13.101555209953343,
+    "written": 411520,
+    "written_split": {
+     "concurrent": 43968,
+     "expired": 0,
+     "first": 367552
+    }
+   },
+   "gap_median_s": 21.535000000000082,
+   "requests": 55,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1751895484877655,
+    "read": 36724288,
+    "rw": 14.29467888994071,
+    "written": 2569088,
+    "written_split": {
+     "concurrent": 203648,
+     "expired": 2036544,
+     "first": 328896
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14663975933246357,
+    "read": 38328832,
+    "rw": 39.737774533873,
+    "written": 964544,
+    "written_split": {
+     "concurrent": 203648,
+     "expired": 432000,
+     "first": 328896
+    }
+   },
+   "gap_median_s": 32.457000000000335,
+   "requests": 176,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2755374570208037,
+    "read": 1561472,
+    "rw": 5.551308304891923,
+    "written": 281280,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 185344,
+     "first": 95936
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.39001840725176257,
+    "read": 1561472,
+    "rw": 5.551308304891923,
+    "written": 281280,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 185344,
+     "first": 95936
+    }
+   },
+   "gap_median_s": 10.821499999999986,
+   "requests": 27,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14473154574249633,
+    "read": 16564864,
+    "rw": 24.708926014319808,
+    "written": 670400,
+    "written_split": {
+     "concurrent": 384,
+     "expired": 183168,
+     "first": 486848
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15371201740803042,
+    "read": 16748032,
+    "rw": 34.37383423092079,
+    "written": 487232,
+    "written_split": {
+     "concurrent": 384,
+     "expired": 0,
+     "first": 486848
+    }
+   },
+   "gap_median_s": 7.390999999999963,
+   "requests": 162,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20211776185915165,
+    "read": 12968576,
+    "rw": 10.26150807717628,
+    "written": 1263808,
+    "written_split": {
+     "concurrent": 576,
+     "expired": 1038208,
+     "first": 225024
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15762857438360295,
+    "read": 13800704,
+    "rw": 31.969755374351372,
+    "written": 431680,
+    "written_split": {
+     "concurrent": 576,
+     "expired": 206080,
+     "first": 225024
+    }
+   },
+   "gap_median_s": 19.0365,
+   "requests": 72,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2656653500182561,
+    "read": 1650368,
+    "rw": 5.941705069124424,
+    "written": 277760,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 277760
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.3737079695953796,
+    "read": 1650368,
+    "rw": 5.941705069124424,
+    "written": 277760,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 277760
+    }
+   },
+   "gap_median_s": 28.175499999999985,
+   "requests": 31,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.21680456320048277,
+    "read": 22106688,
+    "rw": 8.845505761843791,
+    "written": 2499200,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 2103296,
+     "first": 395904
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19225057027001016,
+    "read": 23411200,
+    "rw": 19.59607864145283,
+    "written": 1194688,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 798784,
+     "first": 395904
+    }
+   },
+   "gap_median_s": 25.120999999999185,
+   "requests": 119,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1783881030329236,
+    "read": 1930944,
+    "rw": 13.670593565926596,
+    "written": 141248,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 57664,
+     "first": 83584
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2295107789239607,
+    "read": 1930944,
+    "rw": 13.670593565926596,
+    "written": 141248,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 57664,
+     "first": 83584
+    }
+   },
+   "gap_median_s": 26.675999999999476,
+   "requests": 34,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20466211390823066,
+    "read": 1303360,
+    "rw": 9.987739087788132,
+    "written": 130496,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 130496
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2729200142831637,
+    "read": 1303360,
+    "rw": 9.987739087788132,
+    "written": 130496,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 130496
+    }
+   },
+   "gap_median_s": 9.54400000000004,
+   "requests": 22,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2646156936261382,
+    "read": 1228608,
+    "rw": 5.985968194574369,
+    "written": 205248,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 90560,
+     "first": 114688
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2519728619889306,
+    "read": 1319168,
+    "rw": 11.502232142857142,
+    "written": 114688,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 114688
+    }
+   },
+   "gap_median_s": 7.22300000000007,
+   "requests": 20,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2412840641767769,
+    "read": 2123840,
+    "rw": 7.139629948364888,
+    "written": 297472,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 82880,
+     "first": 214592
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.26839002986810456,
+    "read": 2206720,
+    "rw": 10.283328362660304,
+    "written": 214592,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 214592
+    }
+   },
+   "gap_median_s": 18.8615,
+   "requests": 34,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.25710891863942537,
+    "read": 7908096,
+    "rw": 6.319762684124386,
+    "written": 1251328,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 975168,
+     "first": 276160
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15728569831465383,
+    "read": 8883264,
+    "rw": 32.16709154113558,
+    "written": 276160,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 276160
+    }
+   },
+   "gap_median_s": 28.69799999999998,
+   "requests": 47,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16932901852126034,
+    "read": 85303168,
+    "rw": 15.587570753613697,
+    "written": 5472512,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 4525696,
+     "first": 946816
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.131076587914296,
+    "read": 89290944,
+    "rw": 60.139273244536405,
+    "written": 1484736,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 537920,
+     "first": 946816
+    }
+   },
+   "gap_median_s": 16.34400000000096,
+   "requests": 287,
+   "subagents": 2
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15889874694428774,
+    "read": 3552064,
+    "rw": 18.525033377837115,
+    "written": 191744,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 191744
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19731097321230148,
+    "read": 3552064,
+    "rw": 18.525033377837115,
+    "written": 191744,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 191744
+    }
+   },
+   "gap_median_s": 7.899500000000007,
+   "requests": 31,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.4233089988081049,
+    "read": 617600,
+    "rw": 2.5569687334393216,
+    "written": 241536,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 34368,
+     "first": 207168
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.5581570321811681,
+    "read": 651968,
+    "rw": 3.147049737411183,
+    "written": 207168,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 207168
+    }
+   },
+   "gap_median_s": 5.411000000000001,
+   "requests": 30,
+   "subagents": 6
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16943373567369532,
+    "read": 6910272,
+    "rw": 15.562554050158548,
+    "written": 444032,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 252288,
+     "first": 191744
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14953746812750737,
+    "read": 7162560,
+    "rw": 37.354806408544725,
+    "written": 191744,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 191744
+    }
+   },
+   "gap_median_s": 8.240000000000009,
+   "requests": 57,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2290791896869245,
+    "read": 3547904,
+    "rw": 7.909259523469824,
+    "written": 448576,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 296896,
+     "first": 151680
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2433709664504764,
+    "read": 3694912,
+    "rw": 12.252334465195247,
+    "written": 301568,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 149888,
+     "first": 151680
+    }
+   },
+   "gap_median_s": 17.58850000000001,
+   "requests": 31,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1528844321885184,
+    "read": 6088896,
+    "rw": 20.745529873528127,
+    "written": 293504,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 293504
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18737427926798697,
+    "read": 6088896,
+    "rw": 20.745529873528127,
+    "written": 293504,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 293504
+    }
+   },
+   "gap_median_s": 8.425000000000011,
+   "requests": 55,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.11393376724741477,
+    "read": 113243904,
+    "rw": 81.53331490185236,
+    "written": 1388928,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 523968,
+     "first": 864960
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.11538870818440568,
+    "read": 113704384,
+    "rw": 122.46715378782656,
+    "written": 928448,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 63488,
+     "first": 864960
+    }
+   },
+   "gap_median_s": 10.489999999997963,
+   "requests": 436,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1249436093617482,
+    "read": 3469760,
+    "rw": 45.10399334442596,
+    "written": 76928,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 76928
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14121118068462746,
+    "read": 3469760,
+    "rw": 45.10399334442596,
+    "written": 76928,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 76928
+    }
+   },
+   "gap_median_s": 4.4480000000000075,
+   "requests": 60,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15374240121580546,
+    "read": 1445184,
+    "rw": 20.398373983739837,
+    "written": 70848,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 70848
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18879179331306992,
+    "read": 1445184,
+    "rw": 20.398373983739837,
+    "written": 70848,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 70848
+    }
+   },
+   "gap_median_s": 19.764999999999986,
+   "requests": 27,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.12601032043900634,
+    "read": 108916672,
+    "rw": 43.21321923721497,
+    "written": 2520448,
+    "written_split": {
+     "concurrent": 46080,
+     "expired": 758656,
+     "first": 1715712
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13105877825988324,
+    "read": 109615488,
+    "rw": 60.174331588377896,
+    "written": 1821632,
+    "written_split": {
+     "concurrent": 46080,
+     "expired": 59840,
+     "first": 1715712
+    }
+   },
+   "gap_median_s": 17.130999999999403,
+   "requests": 381,
+   "subagents": 5
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15155307030778517,
+    "read": 3241408,
+    "rw": 21.30710980227177,
+    "written": 152128,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 152128
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18517463789981897,
+    "read": 3241408,
+    "rw": 21.30710980227177,
+    "written": 152128,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 152128
+    }
+   },
+   "gap_median_s": 7.218999999999994,
+   "requests": 43,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14862352718198188,
+    "read": 3880768,
+    "rw": 22.651101979828166,
+    "written": 171328,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 171328
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18033452317023094,
+    "read": 3880768,
+    "rw": 22.651101979828166,
+    "written": 171328,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 171328
+    }
+   },
+   "gap_median_s": 14.441999999999993,
+   "requests": 34,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20014271096989605,
+    "read": 2169856,
+    "rw": 10.48361162646877,
+    "written": 206976,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 98944,
+     "first": 108032
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18635898540578383,
+    "read": 2268800,
+    "rw": 21.001184834123222,
+    "written": 108032,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 108032
+    }
+   },
+   "gap_median_s": 8.362000000000005,
+   "requests": 34,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20686323876388327,
+    "read": 24210816,
+    "rw": 9.761418176188265,
+    "written": 2480256,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 2106880,
+     "first": 373376
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12657871515988567,
+    "read": 26317696,
+    "rw": 70.48577305450806,
+    "written": 373376,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 373376
+    }
+   },
+   "gap_median_s": 16.889999999999986,
+   "requests": 101,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.3542732037841984,
+    "read": 779840,
+    "rw": 3.5226944203527033,
+    "written": 221376,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 221376
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.5201035540782408,
+    "read": 779840,
+    "rw": 3.5226944203527033,
+    "written": 221376,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 221376
+    }
+   },
+   "gap_median_s": 10.988,
+   "requests": 39,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15381378221988426,
+    "read": 5334656,
+    "rw": 20.369990224828936,
+    "written": 261888,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 122688,
+     "first": 139200
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1472577362029138,
+    "read": 5457344,
+    "rw": 39.20505747126437,
+    "written": 139200,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 139200
+    }
+   },
+   "gap_median_s": 14.204500000000003,
+   "requests": 59,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.21861454851542553,
+    "read": 32867840,
+    "rw": 8.695269377941823,
+    "written": 3779968,
+    "written_split": {
+     "concurrent": 125888,
+     "expired": 393600,
+     "first": 3260480
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.27424182095693145,
+    "read": 33286976,
+    "rw": 9.904385580713347,
+    "written": 3360832,
+    "written_split": {
+     "concurrent": 100352,
+     "expired": 0,
+     "first": 3260480
+    }
+   },
+   "gap_median_s": 11.855000000000018,
+   "requests": 1177,
+   "subagents": 100
+  },
+  {
+   "300": {
+    "cost_ratio": 0.21948838597538498,
+    "read": 3266496,
+    "rw": 8.624366339979723,
+    "written": 378752,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 185152,
+     "first": 193600
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.20090945801218466,
+    "read": 3451648,
+    "rw": 17.82876033057851,
+    "written": 193600,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 193600
+    }
+   },
+   "gap_median_s": 6.07,
+   "requests": 41,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1741991276883742,
+    "read": 1194240,
+    "rw": 14.4988344988345,
+    "written": 82368,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 82368
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.22258986313731388,
+    "read": 1194240,
+    "rw": 14.4988344988345,
+    "written": 82368,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 82368
+    }
+   },
+   "gap_median_s": 6.282000000000004,
+   "requests": 20,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2567265868189408,
+    "read": 5362944,
+    "rw": 6.337619119649069,
+    "written": 846208,
+    "written_split": {
+     "concurrent": 159104,
+     "expired": 180992,
+     "first": 506112
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.3035560411470037,
+    "read": 5543936,
+    "rw": 8.334038868578025,
+    "written": 665216,
+    "written_split": {
+     "concurrent": 159104,
+     "expired": 0,
+     "first": 506112
+    }
+   },
+   "gap_median_s": 6.134499999999996,
+   "requests": 80,
+   "subagents": 5
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15227360117588762,
+    "read": 91354112,
+    "rw": 20.999632206905684,
+    "written": 4350272,
+    "written_split": {
+     "concurrent": 148096,
+     "expired": 2584320,
+     "first": 1617856
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14733415764945523,
+    "read": 93320128,
+    "rw": 39.14014602458796,
+    "written": 2384256,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 766400,
+     "first": 1617856
+    }
+   },
+   "gap_median_s": 6.8360000000102445,
+   "requests": 893,
+   "subagents": 5
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1728842186918699,
+    "read": 189322112,
+    "rw": 14.778449994254798,
+    "written": 12810688,
+    "written_split": {
+     "concurrent": 835456,
+     "expired": 10578560,
+     "first": 1396672
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13415136187694426,
+    "read": 198499584,
+    "rw": 54.6346773767373,
+    "written": 3633216,
+    "written_split": {
+     "concurrent": 835456,
+     "expired": 1401088,
+     "first": 1396672
+    }
+   },
+   "gap_median_s": 14.15150000000017,
+   "requests": 499,
+   "subagents": 2
+  },
+  {
+   "300": {
+    "cost_ratio": 0.13722304956994805,
+    "read": 4075264,
+    "rw": 29.894835680751175,
+    "written": 136320,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 136320
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1614989514633924,
+    "read": 4075264,
+    "rw": 29.894835680751175,
+    "written": 136320,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 136320
+    }
+   },
+   "gap_median_s": 10.519000000000005,
+   "requests": 46,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1280050795844848,
+    "read": 187560960,
+    "rw": 40.06397900176352,
+    "written": 4681536,
+    "written_split": {
+     "concurrent": 576,
+     "expired": 1813376,
+     "first": 2867584
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1283470310331385,
+    "read": 189374336,
+    "rw": 66.02641972553832,
+    "written": 2868160,
+    "written_split": {
+     "concurrent": 576,
+     "expired": 0,
+     "first": 2867584
+    }
+   },
+   "gap_median_s": 21.264999999999418,
+   "requests": 594,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.13040800777780895,
+    "read": 26660480,
+    "rw": 36.81898532791232,
+    "written": 724096,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 341376,
+     "first": 382720
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1298265417730039,
+    "read": 26954688,
+    "rw": 62.70165252344797,
+    "written": 429888,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 47168,
+     "first": 382720
+    }
+   },
+   "gap_median_s": 9.225999999999658,
+   "requests": 158,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.27284331787006416,
+    "read": 12250112,
+    "rw": 5.653424697994506,
+    "written": 2166848,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1765440,
+     "first": 401408
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1958497769293943,
+    "read": 13689664,
+    "rw": 18.82268567405843,
+    "written": 727296,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 325888,
+     "first": 401408
+    }
+   },
+   "gap_median_s": 22.986000000000786,
+   "requests": 51,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1392429152439157,
+    "read": 2842240,
+    "rw": 28.304652644996814,
+    "written": 100416,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 100416
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16483612083777377,
+    "read": 2842240,
+    "rw": 28.304652644996814,
+    "written": 100416,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 100416
+    }
+   },
+   "gap_median_s": 11.414999999999992,
+   "requests": 39,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.22933740191804708,
+    "read": 651520,
+    "rw": 7.891472868217054,
+    "written": 82560,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 37696,
+     "first": 44864
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21612031386224936,
+    "read": 689216,
+    "rw": 15.362339514978602,
+    "written": 44864,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 44864
+    }
+   },
+   "gap_median_s": 38.499000000000024,
+   "requests": 24,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.174580601986342,
+    "read": 3935040,
+    "rw": 14.419559099437148,
+    "written": 272896,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 272896
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.22322012502091287,
+    "read": 3935040,
+    "rw": 14.419559099437148,
+    "written": 272896,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 272896
+    }
+   },
+   "gap_median_s": 10.5685,
+   "requests": 37,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17096372472585059,
+    "read": 75175808,
+    "rw": 15.205462783171521,
+    "written": 4944000,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 3612736,
+     "first": 1331264
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14045653229723168,
+    "read": 78413824,
+    "rw": 45.9639855942377,
+    "written": 1705984,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 374720,
+     "first": 1331264
+    }
+   },
+   "gap_median_s": 20.605000000000018,
+   "requests": 201,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18407695685542255,
+    "read": 149950272,
+    "rw": 12.677945099482162,
+    "written": 11827648,
+    "written_split": {
+     "concurrent": 220352,
+     "expired": 8722688,
+     "first": 2884608
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14988610559463245,
+    "read": 157530304,
+    "rw": 37.08675737166448,
+    "written": 4247616,
+    "written_split": {
+     "concurrent": 220352,
+     "expired": 1142656,
+     "first": 2884608
+    }
+   },
+   "gap_median_s": 21.949000000000524,
+   "requests": 523,
+   "subagents": 6
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16507601949944842,
+    "read": 19594112,
+    "rw": 16.671640165541277,
+    "written": 1175296,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 829952,
+     "first": 345344
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16127596896358337,
+    "read": 20099584,
+    "rw": 30.007261609019682,
+    "written": 669824,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 324480,
+     "first": 345344
+    }
+   },
+   "gap_median_s": 31.674000000000206,
+   "requests": 107,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1838478656686223,
+    "read": 1466432,
+    "rw": 12.715316315205328,
+    "written": 115328,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 115328
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.23853125632207162,
+    "read": 1466432,
+    "rw": 12.715316315205328,
+    "written": 115328,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 115328
+    }
+   },
+   "gap_median_s": 8.947999999999993,
+   "requests": 20,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17269661404250466,
+    "read": 291286528,
+    "rw": 14.819168679955459,
+    "written": 19656064,
+    "written_split": {
+     "concurrent": 4864,
+     "expired": 17287552,
+     "first": 2363648
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12129957159423178,
+    "read": 307456832,
+    "rw": 88.20367208298907,
+    "written": 3485760,
+    "written_split": {
+     "concurrent": 4864,
+     "expired": 1117248,
+     "first": 2363648
+    }
+   },
+   "gap_median_s": 12.51699999999255,
+   "requests": 798,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1608198762896144,
+    "read": 377066688,
+    "rw": 17.90829232410613,
+    "written": 21055424,
+    "written_split": {
+     "concurrent": 14784,
+     "expired": 16346624,
+     "first": 4694016
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1341835542156473,
+    "read": 390959360,
+    "rw": 54.58228345753141,
+    "written": 7162752,
+    "written_split": {
+     "concurrent": 14784,
+     "expired": 2453952,
+     "first": 4694016
+    }
+   },
+   "gap_median_s": 25.948000000003958,
+   "requests": 794,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1727419766522178,
+    "read": 1203996864,
+    "rw": 14.80930369129498,
+    "written": 81300032,
+    "written_split": {
+     "concurrent": 759360,
+     "expired": 68868224,
+     "first": 11672448
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1217028094340002,
+    "read": 1270615552,
+    "rw": 86.54626933337983,
+    "written": 14681344,
+    "written_split": {
+     "concurrent": 331648,
+     "expired": 2677248,
+     "first": 11672448
+    }
+   },
+   "gap_median_s": 18.272000000000844,
+   "requests": 3453,
+   "subagents": 63
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20831593871844356,
+    "read": 33855232,
+    "rw": 9.617089355513135,
+    "written": 3520320,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 2622464,
+     "first": 897856
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16607784682350646,
+    "read": 36075712,
+    "rw": 27.75396356474643,
+    "written": 1299840,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 401984,
+     "first": 897856
+    }
+   },
+   "gap_median_s": 26.61700000000019,
+   "requests": 174,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16885350318471337,
+    "read": 1464192,
+    "rw": 15.702127659574469,
+    "written": 93248,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 93248
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2137579617834395,
+    "read": 1464192,
+    "rw": 15.702127659574469,
+    "written": 93248,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 93248
+    }
+   },
+   "gap_median_s": 8.425000000000004,
+   "requests": 24,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14359090861613344,
+    "read": 5895040,
+    "rw": 25.38164783686966,
+    "written": 232256,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 21888,
+     "first": 210368
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16523255935407724,
+    "read": 5916928,
+    "rw": 28.126559172497718,
+    "written": 210368,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 210368
+    }
+   },
+   "gap_median_s": 12.179000000000013,
+   "requests": 67,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17222382166652958,
+    "read": 10208576,
+    "rw": 14.922724296005239,
+    "written": 684096,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 438208,
+     "first": 245888
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1428900457114655,
+    "read": 10646784,
+    "rw": 43.29932326913066,
+    "written": 245888,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 245888
+    }
+   },
+   "gap_median_s": 10.061999999999898,
+   "requests": 62,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2477996531445334,
+    "read": 59721408,
+    "rw": 6.780803104290198,
+    "written": 8807424,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 7680064,
+     "first": 1127360
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16973709401613618,
+    "read": 66013568,
+    "rw": 26.24518460090074,
+    "written": 2515264,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1387904,
+     "first": 1127360
+    }
+   },
+   "gap_median_s": 11.0625,
+   "requests": 456,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.31792652133235416,
+    "read": 10312448,
+    "rw": 4.277008016138451,
+    "written": 2411136,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 690816,
+     "first": 1720320
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.35689365512107285,
+    "read": 11003264,
+    "rw": 6.396056547619048,
+    "written": 1720320,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 1720320
+    }
+   },
+   "gap_median_s": 45.53399999999998,
+   "requests": 26,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1925077839658374,
+    "read": 306281408,
+    "rw": 11.431386319065739,
+    "written": 26793024,
+    "written_split": {
+     "concurrent": 1017216,
+     "expired": 11428096,
+     "first": 14347712
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19956376357342254,
+    "read": 315620672,
+    "rw": 18.08324807949691,
+    "written": 17453760,
+    "written_split": {
+     "concurrent": 823296,
+     "expired": 2282752,
+     "first": 14347712
+    }
+   },
+   "gap_median_s": 2.631999999997788,
+   "requests": 3225,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.27849000392904316,
+    "read": 51740480,
+    "rw": 5.442937837892426,
+    "written": 9505984,
+    "written_split": {
+     "concurrent": 49152,
+     "expired": 4937088,
+     "first": 4519744
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.26127969771446724,
+    "read": 56047616,
+    "rw": 10.780776048847745,
+    "written": 5198848,
+    "written_split": {
+     "concurrent": 23168,
+     "expired": 655936,
+     "first": 4519744
+    }
+   },
+   "gap_median_s": 5.942999999999984,
+   "requests": 979,
+   "subagents": 25
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16893753981292117,
+    "read": 3588992,
+    "rw": 15.681767337807607,
+    "written": 228864,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 228864
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21389680490830454,
+    "read": 3588992,
+    "rw": 15.681767337807607,
+    "written": 228864,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 228864
+    }
+   },
+   "gap_median_s": 7.7690000000000055,
+   "requests": 24,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1634735023364617,
+    "read": 10779008,
+    "rw": 17.117796524036997,
+    "written": 629696,
+    "written_split": {
+     "concurrent": 11520,
+     "expired": 93440,
+     "first": 524736
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18930781270160044,
+    "read": 10872448,
+    "rw": 20.274734455185584,
+    "written": 536256,
+    "written_split": {
+     "concurrent": 11520,
+     "expired": 0,
+     "first": 524736
+    }
+   },
+   "gap_median_s": 14.33499999999998,
+   "requests": 144,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18832593521424693,
+    "read": 275744384,
+    "rw": 12.019958375878096,
+    "written": 22940544,
+    "written_split": {
+     "concurrent": 448,
+     "expired": 19410368,
+     "first": 3529728
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13129067965558677,
+    "read": 293765952,
+    "rw": 59.72095655681182,
+    "written": 4918976,
+    "written_split": {
+     "concurrent": 448,
+     "expired": 1388800,
+     "first": 3529728
+    }
+   },
+   "gap_median_s": 26.576999999932013,
+   "requests": 777,
+   "subagents": 6
+  },
+  {
+   "300": {
+    "cost_ratio": 0.38225405801414863,
+    "read": 4218688,
+    "rw": 3.0743435474091694,
+    "written": 1372224,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 673856,
+     "first": 698368
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.4167391652739303,
+    "read": 4658880,
+    "rw": 4.998626656595482,
+    "written": 932032,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 233664,
+     "first": 698368
+    }
+   },
+   "gap_median_s": 16.77199999999999,
+   "requests": 32,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15487131086555153,
+    "read": 4423360,
+    "rw": 19.958128790066418,
+    "written": 221632,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 112128,
+     "first": 109504
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14479181019041584,
+    "read": 4535488,
+    "rw": 41.41846873173583,
+    "written": 109504,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 109504
+    }
+   },
+   "gap_median_s": 10.332000000000107,
+   "requests": 61,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1402370057499723,
+    "read": 88055104,
+    "rw": 27.580655507667636,
+    "written": 3192640,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 2399040,
+     "first": 793600
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.11652468251708228,
+    "read": 90454144,
+    "rw": 113.97951612903226,
+    "written": 793600,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 793600
+    }
+   },
+   "gap_median_s": 10.494500000000016,
+   "requests": 359,
+   "subagents": 2
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17313497867623284,
+    "read": 19462528,
+    "rw": 14.724349973369486,
+    "written": 1321792,
+    "written_split": {
+     "concurrent": 14208,
+     "expired": 985408,
+     "first": 322176
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15355021477729364,
+    "read": 20198528,
+    "rw": 34.4807167049055,
+    "written": 585792,
+    "written_split": {
+     "concurrent": 14208,
+     "expired": 249408,
+     "first": 322176
+    }
+   },
+   "gap_median_s": 7.697999999999951,
+   "requests": 135,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.11899594591538167,
+    "read": 136362944,
+    "rw": 59.53923321969485,
+    "written": 2290304,
+    "written_split": {
+     "concurrent": 25664,
+     "expired": 771008,
+     "first": 1493632
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12081929158990924,
+    "read": 137133952,
+    "rw": 90.26151059438055,
+    "written": 1519296,
+    "written_split": {
+     "concurrent": 25664,
+     "expired": 0,
+     "first": 1493632
+    }
+   },
+   "gap_median_s": 11.979999999999563,
+   "requests": 432,
+   "subagents": 6
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19386898166800967,
+    "read": 37345792,
+    "rw": 11.25111830942465,
+    "written": 3319296,
+    "written_split": {
+     "concurrent": 384,
+     "expired": 2400768,
+     "first": 918144
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.17897927578565673,
+    "read": 38974720,
+    "rw": 23.056943813418144,
+    "written": 1690368,
+    "written_split": {
+     "concurrent": 384,
+     "expired": 771840,
+     "first": 918144
+    }
+   },
+   "gap_median_s": 36.69499999999971,
+   "requests": 157,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.12010610590101543,
+    "read": 40511872,
+    "rw": 56.19655539772727,
+    "written": 720896,
+    "written_split": {
+     "concurrent": 4544,
+     "expired": 366080,
+     "first": 350272
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.11634987008390997,
+    "read": 40877952,
+    "rw": 115.20887445887446,
+    "written": 354816,
+    "written_split": {
+     "concurrent": 4544,
+     "expired": 0,
+     "first": 350272
+    }
+   },
+   "gap_median_s": 17.712999999999738,
+   "requests": 233,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2104145286077519,
+    "read": 13811712,
+    "rw": 9.415296016753196,
+    "written": 1466944,
+    "written_split": {
+     "concurrent": 13504,
+     "expired": 564480,
+     "first": 888960
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21222725349664265,
+    "read": 14376192,
+    "rw": 15.929934047230693,
+    "written": 902464,
+    "written_split": {
+     "concurrent": 13504,
+     "expired": 0,
+     "first": 888960
+    }
+   },
+   "gap_median_s": 15.0625,
+   "requests": 218,
+   "subagents": 5
+  },
+  {
+   "300": {
+    "cost_ratio": 0.24923622945949753,
+    "read": 3562176,
+    "rw": 6.7059036144578315,
+    "written": 531200,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 217536,
+     "first": 313664
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.24559170718741694,
+    "read": 3779712,
+    "rw": 12.050193837992246,
+    "written": 313664,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 313664
+    }
+   },
+   "gap_median_s": 22.917999999999665,
+   "requests": 27,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1203073703647889,
+    "read": 32957696,
+    "rw": 55.629685643296966,
+    "written": 592448,
+    "written_split": {
+     "concurrent": 31680,
+     "expired": 0,
+     "first": 560768
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13355130755921643,
+    "read": 32957696,
+    "rw": 55.629685643296966,
+    "written": 592448,
+    "written_split": {
+     "concurrent": 31680,
+     "expired": 0,
+     "first": 560768
+    }
+   },
+   "gap_median_s": 9.107500000000073,
+   "requests": 150,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.13308225712784494,
+    "read": 17981824,
+    "rw": 33.76183609709204,
+    "written": 532608,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 127488,
+     "first": 405120
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15465764221122205,
+    "read": 17981824,
+    "rw": 33.76183609709204,
+    "written": 532608,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 127488,
+     "first": 405120
+    }
+   },
+   "gap_median_s": 11.437000000000012,
+   "requests": 110,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2132497566451466,
+    "read": 21278976,
+    "rw": 9.15454720669622,
+    "written": 2324416,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1270976,
+     "first": 1053440
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2634100047993102,
+    "read": 21573376,
+    "rw": 10.627195056590686,
+    "written": 2030016,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 976576,
+     "first": 1053440
+    }
+   },
+   "gap_median_s": 27.72899999998799,
+   "requests": 115,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15453438666055092,
+    "read": 48247552,
+    "rw": 20.08761224652935,
+    "written": 2401856,
+    "written_split": {
+     "concurrent": 1984,
+     "expired": 1891008,
+     "first": 508864
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.11916332763455004,
+    "read": 50138560,
+    "rw": 98.14770734151841,
+    "written": 510848,
+    "written_split": {
+     "concurrent": 1984,
+     "expired": 0,
+     "first": 508864
+    }
+   },
+   "gap_median_s": 29.01049999999941,
+   "requests": 163,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.22984241482632337,
+    "read": 2557952,
+    "rw": 7.8568901120503245,
+    "written": 325568,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 102592,
+     "first": 222976
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.25653756519809123,
+    "read": 2645952,
+    "rw": 11.137661637931034,
+    "written": 237568,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 14592,
+     "first": 222976
+    }
+   },
+   "gap_median_s": 6.577000000000153,
+   "requests": 61,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15422464711182302,
+    "read": 4873216,
+    "rw": 20.208067940552016,
+    "written": 241152,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 241152
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18958854740214237,
+    "read": 4873216,
+    "rw": 20.208067940552016,
+    "written": 241152,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 241152
+    }
+   },
+   "gap_median_s": 25.710999999999956,
+   "requests": 50,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18521674694331233,
+    "read": 25109952,
+    "rw": 12.495,
+    "written": 2009600,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 974912,
+     "first": 1034688
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1724904010213738,
+    "read": 26084864,
+    "rw": 25.210366796560894,
+    "written": 1034688,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 1034688
+    }
+   },
+   "gap_median_s": 19.73999999999978,
+   "requests": 201,
+   "subagents": 5
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15546161234838163,
+    "read": 2726912,
+    "rw": 19.73506252894859,
+    "written": 138176,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 138176
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19163222909732613,
+    "read": 2726912,
+    "rw": 19.73506252894859,
+    "written": 138176,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 138176
+    }
+   },
+   "gap_median_s": 9.23299999999999,
+   "requests": 30,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14541490890413727,
+    "read": 63911424,
+    "rw": 24.32208095864387,
+    "written": 2627712,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 2194944,
+     "first": 432768
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13110215317493754,
+    "read": 65449920,
+    "rw": 60.08901815617839,
+    "written": 1089216,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 656448,
+     "first": 432768
+    }
+   },
+   "gap_median_s": 6.402000000000044,
+   "requests": 281,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2605613715446305,
+    "read": 3687168,
+    "rw": 6.1623703069847044,
+    "written": 598336,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 433472,
+     "first": 164864
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.17309329311091531,
+    "read": 4120640,
+    "rw": 24.99417701863354,
+    "written": 164864,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 164864
+    }
+   },
+   "gap_median_s": 14.592999999999996,
+   "requests": 33,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.38681892496079545,
+    "read": 1439744,
+    "rw": 3.0094983277591973,
+    "written": 478400,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 188864,
+     "first": 289536
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.5738747455874011,
+    "read": 1439744,
+    "rw": 3.0094983277591973,
+    "written": 478400,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 188864,
+     "first": 289536
+    }
+   },
+   "gap_median_s": 13.38000000000011,
+   "requests": 21,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16052472508544813,
+    "read": 664426368,
+    "rw": 18.00049935586561,
+    "written": 36911552,
+    "written_split": {
+     "concurrent": 22656,
+     "expired": 31663872,
+     "first": 5225024
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1394107992905902,
+    "read": 686790400,
+    "rw": 47.210136160665186,
+    "written": 14547520,
+    "written_split": {
+     "concurrent": 22656,
+     "expired": 9299840,
+     "first": 5225024
+    }
+   },
+   "gap_median_s": 10.771000000007916,
+   "requests": 1896,
+   "subagents": 15
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17025873746952044,
+    "read": 4435840,
+    "rw": 15.368070953436806,
+    "written": 288640,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 288640
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21607965321051206,
+    "read": 4435840,
+    "rw": 15.368070953436806,
+    "written": 288640,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 288640
+    }
+   },
+   "gap_median_s": 8.177000000000007,
+   "requests": 42,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.4537957088887305,
+    "read": 621632,
+    "rw": 2.250463392029657,
+    "written": 276224,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 172416,
+     "first": 103808
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.41813386556418847,
+    "read": 747520,
+    "rw": 4.97232865048957,
+    "written": 150336,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 46528,
+     "first": 103808
+    }
+   },
+   "gap_median_s": 19.18500000000131,
+   "requests": 28,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.7472744927342128,
+    "read": 417792,
+    "rw": 0.7766805472932778,
+    "written": 537920,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 434368,
+     "first": 103552
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.30586620237058865,
+    "read": 852160,
+    "rw": 8.22929542645241,
+    "written": 103552,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 103552
+    }
+   },
+   "gap_median_s": 230.39499999999998,
+   "requests": 25,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1787950184416685,
+    "read": 14207360,
+    "rw": 13.594831281768633,
+    "written": 1045056,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 658048,
+     "first": 387008
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1962600548004985,
+    "read": 14479680,
+    "rw": 18.73819778035448,
+    "written": 772736,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 385728,
+     "first": 387008
+    }
+   },
+   "gap_median_s": 20.052500000000002,
+   "requests": 65,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16969849026965705,
+    "read": 1377856,
+    "rw": 15.499640028797696,
+    "written": 88896,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 88896
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21515402740204204,
+    "read": 1377856,
+    "rw": 15.499640028797696,
+    "written": 88896,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 88896
+    }
+   },
+   "gap_median_s": 6.359999999999999,
+   "requests": 22,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.150218642809861,
+    "read": 6102528,
+    "rw": 21.899862195682132,
+    "written": 278656,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 107904,
+     "first": 170752
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18296993159890076,
+    "read": 6102528,
+    "rw": 21.899862195682132,
+    "written": 278656,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 107904,
+     "first": 170752
+    }
+   },
+   "gap_median_s": 33.56750000000466,
+   "requests": 61,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18974844915390726,
+    "read": 21249344,
+    "rw": 11.81359188756449,
+    "written": 1798720,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1420224,
+     "first": 378496
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1645826738419331,
+    "read": 22264640,
+    "rw": 28.419655256923456,
+    "written": 783424,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 404928,
+     "first": 378496
+    }
+   },
+   "gap_median_s": 8.855999999997039,
+   "requests": 282,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1699370236572651,
+    "read": 8036480,
+    "rw": 15.443364899766326,
+    "written": 520384,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 330624,
+     "first": 189760
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14213506256497707,
+    "read": 8367104,
+    "rw": 44.09308600337268,
+    "written": 189760,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 189760
+    }
+   },
+   "gap_median_s": 21.509000000000015,
+   "requests": 70,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18363316474378588,
+    "read": 6594368,
+    "rw": 12.750525925009281,
+    "written": 517184,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 115008,
+     "first": 402176
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2074497381162368,
+    "read": 6709376,
+    "rw": 16.682686187141947,
+    "written": 402176,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 402176
+    }
+   },
+   "gap_median_s": 4.060000000000173,
+   "requests": 100,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14461485735293467,
+    "read": 111108224,
+    "rw": 24.776166690452406,
+    "written": 4484480,
+    "written_split": {
+     "concurrent": 624448,
+     "expired": 2098752,
+     "first": 1761280
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13734070966970371,
+    "read": 113320960,
+    "rw": 49.88280369619112,
+    "written": 2271744,
+    "written_split": {
+     "concurrent": 464960,
+     "expired": 45504,
+     "first": 1761280
+    }
+   },
+   "gap_median_s": 14.419499999998152,
+   "requests": 445,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1715641518500721,
+    "read": 1498752,
+    "rw": 15.069498069498069,
+    "written": 99456,
+    "written_split": {
+     "concurrent": 1152,
+     "expired": 0,
+     "first": 98304
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21823642479577127,
+    "read": 1498752,
+    "rw": 15.069498069498069,
+    "written": 99456,
+    "written_split": {
+     "concurrent": 1152,
+     "expired": 0,
+     "first": 98304
+    }
+   },
+   "gap_median_s": 17.163999999999994,
+   "requests": 25,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17033653846153848,
+    "read": 1437248,
+    "rw": 15.349965823650034,
+    "written": 93632,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 93632
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21620819397993313,
+    "read": 1437248,
+    "rw": 15.349965823650034,
+    "written": 93632,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 93632
+    }
+   },
+   "gap_median_s": 14.211499999999994,
+   "requests": 21,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19435316236270567,
+    "read": 63308672,
+    "rw": 11.188250729522474,
+    "written": 5658496,
+    "written_split": {
+     "concurrent": 101120,
+     "expired": 2967488,
+     "first": 2589888
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19153433703410877,
+    "read": 65644608,
+    "rw": 19.757237792545506,
+    "written": 3322560,
+    "written_split": {
+     "concurrent": 101120,
+     "expired": 631552,
+     "first": 2589888
+    }
+   },
+   "gap_median_s": 20.17899999999645,
+   "requests": 409,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19102446921714053,
+    "read": 153910848,
+    "rw": 11.633965458855402,
+    "written": 13229440,
+    "written_split": {
+     "concurrent": 10624,
+     "expired": 12005376,
+     "first": 1213440
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12459278280051786,
+    "read": 164976896,
+    "rw": 76.25843860012425,
+    "written": 2163392,
+    "written_split": {
+     "concurrent": 10624,
+     "expired": 939328,
+     "first": 1213440
+    }
+   },
+   "gap_median_s": 16.598999999987427,
+   "requests": 499,
+   "subagents": 7
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17585302095342978,
+    "read": 130712576,
+    "rw": 14.160899138164144,
+    "written": 9230528,
+    "written_split": {
+     "concurrent": 4672,
+     "expired": 6866688,
+     "first": 2359168
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15668429363979233,
+    "read": 135768064,
+    "rw": 32.518985207327354,
+    "written": 4175040,
+    "written_split": {
+     "concurrent": 4672,
+     "expired": 1811200,
+     "first": 2359168
+    }
+   },
+   "gap_median_s": 48.291499999999814,
+   "requests": 272,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1405999919974392,
+    "read": 141957760,
+    "rw": 27.325128735802103,
+    "written": 5195136,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 4280640,
+     "first": 914496
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.11501811014307187,
+    "read": 145989760,
+    "rw": 125.51392098602399,
+    "written": 1163136,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 248640,
+     "first": 914496
+    }
+   },
+   "gap_median_s": 12.622999999999593,
+   "requests": 447,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1219714723256002,
+    "read": 157701888,
+    "rw": 51.34059797895614,
+    "written": 3071680,
+    "written_split": {
+     "concurrent": 102464,
+     "expired": 1909440,
+     "first": 1059776
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.11373519308845594,
+    "read": 159611328,
+    "rw": 137.330781938326,
+    "written": 1162240,
+    "written_split": {
+     "concurrent": 102464,
+     "expired": 0,
+     "first": 1059776
+    }
+   },
+   "gap_median_s": 11.438000000000102,
+   "requests": 507,
+   "subagents": 7
+  },
+  {
+   "300": {
+    "cost_ratio": 0.12263975547939564,
+    "read": 131001472,
+    "rw": 49.79560161533596,
+    "written": 2630784,
+    "written_split": {
+     "concurrent": 192,
+     "expired": 743744,
+     "first": 1886848
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12715502460723255,
+    "read": 131722368,
+    "rw": 68.96863480999933,
+    "written": 1909888,
+    "written_split": {
+     "concurrent": 192,
+     "expired": 22848,
+     "first": 1886848
+    }
+   },
+   "gap_median_s": 8.365499999999429,
+   "requests": 1089,
+   "subagents": 2
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15178580391131954,
+    "read": 135167424,
+    "rw": 21.20685811828497,
+    "written": 6373760,
+    "written_split": {
+     "concurrent": 4160,
+     "expired": 5697600,
+     "first": 672000
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14392305775822817,
+    "read": 138269120,
+    "rw": 42.257461956734346,
+    "written": 3272064,
+    "written_split": {
+     "concurrent": 4160,
+     "expired": 2595904,
+     "first": 672000
+    }
+   },
+   "gap_median_s": 12.724500000000262,
+   "requests": 397,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19379190307670469,
+    "read": 11178304,
+    "rw": 11.261186331399097,
+    "written": 992640,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 457856,
+     "first": 534784
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18348486362273952,
+    "read": 11636160,
+    "rw": 21.75861656294878,
+    "written": 534784,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 534784
+    }
+   },
+   "gap_median_s": 3.855999999999881,
+   "requests": 202,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.12877751267650764,
+    "read": 14410240,
+    "rw": 38.961758089634884,
+    "written": 369856,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 152448,
+     "first": 217408
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12794807286772697,
+    "read": 14562688,
+    "rw": 66.98322048866648,
+    "written": 217408,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 217408
+    }
+   },
+   "gap_median_s": 18.786499999999933,
+   "requests": 101,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2469314777230115,
+    "read": 2888000,
+    "rw": 6.826777609682299,
+    "written": 423040,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 233216,
+     "first": 189824
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.20892819174639995,
+    "read": 3121216,
+    "rw": 16.442683749157116,
+    "written": 189824,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 189824
+    }
+   },
+   "gap_median_s": 16.004999999999995,
+   "requests": 40,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20844412430541262,
+    "read": 1408256,
+    "rw": 9.604539502400698,
+    "written": 146624,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 71104,
+     "first": 75520
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19228236262605475,
+    "read": 1479360,
+    "rw": 19.588983050847457,
+    "written": 75520,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 75520
+    }
+   },
+   "gap_median_s": 11.308,
+   "requests": 25,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.12615645114804494,
+    "read": 10416384,
+    "rw": 42.9662090813094,
+    "written": 242432,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 242432
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14321500624459602,
+    "read": 10416384,
+    "rw": 42.9662090813094,
+    "written": 242432,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 242432
+    }
+   },
+   "gap_median_s": 10.683499999999981,
+   "requests": 73,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.22029959538710997,
+    "read": 3781504,
+    "rw": 8.55946689844995,
+    "written": 441792,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 110400,
+     "first": 331392
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.24908848444437706,
+    "read": 3891904,
+    "rw": 11.744109694862882,
+    "written": 331392,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 331392
+    }
+   },
+   "gap_median_s": 11.166000000000054,
+   "requests": 80,
+   "subagents": 2
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17423042717054227,
+    "read": 25715136,
+    "rw": 14.49229936880072,
+    "written": 1774400,
+    "written_split": {
+     "concurrent": 832,
+     "expired": 1561088,
+     "first": 212480
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12075949190266436,
+    "read": 27189184,
+    "rw": 90.5243980396335,
+    "written": 300352,
+    "written_split": {
+     "concurrent": 832,
+     "expired": 87040,
+     "first": 212480
+    }
+   },
+   "gap_median_s": 25.623499999997875,
+   "requests": 177,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1505009592837348,
+    "read": 1148160,
+    "rw": 21.771844660194176,
+    "written": 52736,
+    "written_split": {
+     "concurrent": 896,
+     "expired": 0,
+     "first": 51840
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1834363675122575,
+    "read": 1148160,
+    "rw": 21.771844660194176,
+    "written": 52736,
+    "written_split": {
+     "concurrent": 896,
+     "expired": 0,
+     "first": 51840
+    }
+   },
+   "gap_median_s": 6.8260000000000005,
+   "requests": 29,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.3037870077608508,
+    "read": 3297600,
+    "rw": 4.643146796431468,
+    "written": 710208,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 346112,
+     "first": 364096
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.27260866788029764,
+    "read": 3643712,
+    "rw": 10.007558446124099,
+    "written": 364096,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 364096
+    }
+   },
+   "gap_median_s": 64.05049999999687,
+   "requests": 43,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19669403448614628,
+    "read": 73987904,
+    "rw": 10.893184580738172,
+    "written": 6792128,
+    "written_split": {
+     "concurrent": 1228544,
+     "expired": 2930048,
+     "first": 2633536
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16209605859032095,
+    "read": 78139968,
+    "rw": 29.5977552059344,
+    "written": 2640064,
+    "written_split": {
+     "concurrent": 6528,
+     "expired": 0,
+     "first": 2633536
+    }
+   },
+   "gap_median_s": 6.381000000000313,
+   "requests": 438,
+   "subagents": 18
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16027913583567588,
+    "read": 34496704,
+    "rw": 18.077911188623556,
+    "written": 1908224,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 969152,
+     "first": 939072
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1490108591891735,
+    "read": 35465856,
+    "rw": 37.76691883050501,
+    "written": 939072,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 939072
+    }
+   },
+   "gap_median_s": 13.086000000000013,
+   "requests": 202,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.28387794441251096,
+    "read": 9260416,
+    "rw": 5.2541486618976725,
+    "written": 1762496,
+    "written_split": {
+     "concurrent": 141760,
+     "expired": 775040,
+     "first": 845696
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.29769672478561016,
+    "read": 9875968,
+    "rw": 8.610680207577703,
+    "written": 1146944,
+    "written_split": {
+     "concurrent": 141760,
+     "expired": 159488,
+     "first": 845696
+    }
+   },
+   "gap_median_s": 15.028000000005704,
+   "requests": 86,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1885713433192099,
+    "read": 14847744,
+    "rw": 11.983883465055014,
+    "written": 1238976,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 886080,
+     "first": 352896
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2045187085993913,
+    "read": 15201792,
+    "rw": 17.178563679756998,
+    "written": 884928,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 532032,
+     "first": 352896
+    }
+   },
+   "gap_median_s": 10.625,
+   "requests": 100,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20675595652779713,
+    "read": 8333760,
+    "rw": 9.772232645403378,
+    "written": 852800,
+    "written_split": {
+     "concurrent": 2560,
+     "expired": 574720,
+     "first": 275520
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15751358506339697,
+    "read": 8908480,
+    "rw": 32.03567318757192,
+    "written": 278080,
+    "written_split": {
+     "concurrent": 2560,
+     "expired": 0,
+     "first": 275520
+    }
+   },
+   "gap_median_s": 13.193999999999505,
+   "requests": 125,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.24626704795424553,
+    "read": 11427264,
+    "rw": 6.862331373227257,
+    "written": 1665216,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1464256,
+     "first": 200960
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16915676785452413,
+    "read": 12615936,
+    "rw": 26.473811442385173,
+    "written": 476544,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 275584,
+     "first": 200960
+    }
+   },
+   "gap_median_s": 22.026499999999942,
+   "requests": 99,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1538489538039898,
+    "read": 18519104,
+    "rw": 20.356032360182905,
+    "written": 909760,
+    "written_split": {
+     "concurrent": 51584,
+     "expired": 104768,
+     "first": 753408
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.17903523335178012,
+    "read": 18620672,
+    "rw": 23.03991130820399,
+    "written": 808192,
+    "written_split": {
+     "concurrent": 51584,
+     "expired": 3200,
+     "first": 753408
+    }
+   },
+   "gap_median_s": 15.385999999999967,
+   "requests": 249,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1986421820791961,
+    "read": 978176,
+    "rw": 10.658298465829846,
+    "written": 91776,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 91776
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.26297403995693264,
+    "read": 978176,
+    "rw": 10.658298465829846,
+    "written": 91776,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 91776
+    }
+   },
+   "gap_median_s": 13.009500000000001,
+   "requests": 21,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15967731539098487,
+    "read": 36713664,
+    "rw": 18.27030384100898,
+    "written": 2009472,
+    "written_split": {
+     "concurrent": 95296,
+     "expired": 554112,
+     "first": 1360064
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1714090924867242,
+    "read": 37267776,
+    "rw": 25.60725593667546,
+    "written": 1455360,
+    "written_split": {
+     "concurrent": 95296,
+     "expired": 0,
+     "first": 1360064
+    }
+   },
+   "gap_median_s": 8.271499999999833,
+   "requests": 324,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1578252421823503,
+    "read": 35224448,
+    "rw": 18.887508579272478,
+    "written": 1864960,
+    "written_split": {
+     "concurrent": 192,
+     "expired": 1533184,
+     "first": 331584
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13330693226486656,
+    "read": 36439232,
+    "rw": 56.04518161236342,
+    "written": 650176,
+    "written_split": {
+     "concurrent": 192,
+     "expired": 318400,
+     "first": 331584
+    }
+   },
+   "gap_median_s": 28.645000000000664,
+   "requests": 172,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.3009963312608576,
+    "read": 9242048,
+    "rw": 4.721497466078143,
+    "written": 1957440,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1440192,
+     "first": 517248
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18775144006583158,
+    "read": 10682240,
+    "rw": 20.652066320217767,
+    "written": 517248,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 517248
+    }
+   },
+   "gap_median_s": 8.66700000000003,
+   "requests": 111,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15323644682930276,
+    "read": 82946240,
+    "rw": 20.601742199049422,
+    "written": 4026176,
+    "written_split": {
+     "concurrent": 618240,
+     "expired": 2779264,
+     "first": 628672
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1261425047684084,
+    "read": 85775744,
+    "rw": 71.6785752486897,
+    "written": 1196672,
+    "written_split": {
+     "concurrent": 1856,
+     "expired": 566144,
+     "first": 628672
+    }
+   },
+   "gap_median_s": 26.257999999997992,
+   "requests": 242,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1444829523798297,
+    "read": 15657536,
+    "rw": 24.85260056887444,
+    "written": 630016,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 241472,
+     "first": 388544
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14532501876279505,
+    "read": 15899008,
+    "rw": 40.91945313786856,
+    "written": 388544,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 388544
+    }
+   },
+   "gap_median_s": 18.298999999999978,
+   "requests": 121,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2426403920767817,
+    "read": 5490688,
+    "rw": 7.062232466249588,
+    "written": 777472,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 207808,
+     "first": 569664
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.33566673473555236,
+    "read": 5490688,
+    "rw": 7.062232466249588,
+    "written": 777472,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 207808,
+     "first": 569664
+    }
+   },
+   "gap_median_s": 12.195999999999913,
+   "requests": 29,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.21370206075579762,
+    "read": 41083392,
+    "rw": 9.11415265788278,
+    "written": 4507648,
+    "written_split": {
+     "concurrent": 320,
+     "expired": 4069184,
+     "first": 438144
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18693174799258802,
+    "read": 43505088,
+    "rw": 20.856226797165036,
+    "written": 2085952,
+    "written_split": {
+     "concurrent": 320,
+     "expired": 1647488,
+     "first": 438144
+    }
+   },
+   "gap_median_s": 22.729500000003554,
+   "requests": 190,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14565059640866662,
+    "read": 14313536,
+    "rw": 24.19134667387777,
+    "written": 591680,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 276928,
+     "first": 314752
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14012211564059188,
+    "read": 14590464,
+    "rw": 46.35542903619358,
+    "written": 314752,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 314752
+    }
+   },
+   "gap_median_s": 10.0,
+   "requests": 86,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.242794134976348,
+    "read": 3329728,
+    "rw": 7.053552060737527,
+    "written": 472064,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 129024,
+     "first": 343040
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2714391529047354,
+    "read": 3458752,
+    "rw": 10.082649253731343,
+    "written": 343040,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 343040
+    }
+   },
+   "gap_median_s": 25.841000000000122,
+   "requests": 42,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.17160456111489056,
+    "read": 32905472,
+    "rw": 15.060429420896922,
+    "written": 2184896,
+    "written_split": {
+     "concurrent": 29120,
+     "expired": 690048,
+     "first": 1465728
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1809399092081337,
+    "read": 33595520,
+    "rw": 22.47420473519716,
+    "written": 1494848,
+    "written_split": {
+     "concurrent": 29120,
+     "expired": 0,
+     "first": 1465728
+    }
+   },
+   "gap_median_s": 83.755,
+   "requests": 131,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.271503834138029,
+    "read": 1917376,
+    "rw": 5.705389449628642,
+    "written": 336064,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 220672,
+     "first": 115392
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19729338256177226,
+    "read": 2138048,
+    "rw": 18.528563505268995,
+    "written": 115392,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 115392
+    }
+   },
+   "gap_median_s": 12.821499999999968,
+   "requests": 25,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.22804314224821773,
+    "read": 8352704,
+    "rw": 7.981347847358121,
+    "written": 1046528,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 785536,
+     "first": 260992
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1937690228308015,
+    "read": 8935360,
+    "rw": 19.262555187637968,
+    "written": 463872,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 202880,
+     "first": 260992
+    }
+   },
+   "gap_median_s": 27.93949999999998,
+   "requests": 72,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2123531305327539,
+    "read": 30137856,
+    "rw": 9.235584843492587,
+    "written": 3263232,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 2733824,
+     "first": 529408
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1845747779234018,
+    "read": 31914304,
+    "rw": 21.465326503379107,
+    "written": 1486784,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 957376,
+     "first": 529408
+    }
+   },
+   "gap_median_s": 41.94399999999996,
+   "requests": 141,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18576281710927728,
+    "read": 6581376,
+    "rw": 12.40907445396404,
+    "written": 530368,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 184768,
+     "first": 345600
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19233178247136004,
+    "read": 6766144,
+    "rw": 19.577962962962964,
+    "written": 345600,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 345600
+    }
+   },
+   "gap_median_s": 4.097000000000008,
+   "requests": 112,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2384395430706229,
+    "read": 3917888,
+    "rw": 7.306875149200287,
+    "written": 536192,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 424512,
+     "first": 111680
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1847963215748258,
+    "read": 4255296,
+    "rw": 21.406632324533163,
+    "written": 198784,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 87104,
+     "first": 111680
+    }
+   },
+   "gap_median_s": 13.337000000000216,
+   "requests": 69,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.174198363279963,
+    "read": 35979776,
+    "rw": 14.498994171351937,
+    "written": 2481536,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1593920,
+     "first": 887616
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14384848857990074,
+    "read": 37573696,
+    "rw": 42.33102602927392,
+    "written": 887616,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 887616
+    }
+   },
+   "gap_median_s": 13.141999999999825,
+   "requests": 169,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1250261491646677,
+    "read": 36931072,
+    "rw": 44.95193581054764,
+    "written": 821568,
+    "written_split": {
+     "concurrent": 1920,
+     "expired": 404864,
+     "first": 414784
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12097171482577111,
+    "read": 37335936,
+    "rw": 89.59821839963139,
+    "written": 416704,
+    "written_split": {
+     "concurrent": 1920,
+     "expired": 0,
+     "first": 414784
+    }
+   },
+   "gap_median_s": 6.505499999999973,
+   "requests": 167,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15693760334940013,
+    "read": 48412224,
+    "rw": 19.197548410019543,
+    "written": 2521792,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1782848,
+     "first": 738944
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13077600635300385,
+    "read": 50108992,
+    "rw": 60.73640524396866,
+    "written": 825024,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 86080,
+     "first": 738944
+    }
+   },
+   "gap_median_s": 17.6075000000003,
+   "requests": 251,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1797991862700638,
+    "read": 18649472,
+    "rw": 13.411174521354933,
+    "written": 1390592,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 436736,
+     "first": 953856
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19043516028691324,
+    "read": 19086208,
+    "rw": 20.009527643585614,
+    "written": 953856,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 953856
+    }
+   },
+   "gap_median_s": 10.163,
+   "requests": 105,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.22312370450211425,
+    "read": 6892608,
+    "rw": 8.34019979865252,
+    "written": 826432,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 578752,
+     "first": 247680
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2481436033496393,
+    "read": 7117184,
+    "rw": 11.825393449595916,
+    "written": 601856,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 354176,
+     "first": 247680
+    }
+   },
+   "gap_median_s": 10.784999999999854,
+   "requests": 48,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20075425562057034,
+    "read": 86351808,
+    "rw": 10.413909942730122,
+    "written": 8291968,
+    "written_split": {
+     "concurrent": 667264,
+     "expired": 6488896,
+     "first": 1135808
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13269732602384757,
+    "read": 93015040,
+    "rw": 57.10872725843844,
+    "written": 1628736,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 492928,
+     "first": 1135808
+    }
+   },
+   "gap_median_s": 14.565000000002328,
+   "requests": 257,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.29573598649729055,
+    "read": 2391296,
+    "rw": 4.875260960334029,
+    "written": 490496,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 354880,
+     "first": 135616
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18941325397530429,
+    "read": 2746176,
+    "rw": 20.24964605946201,
+    "written": 135616,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 135616
+    }
+   },
+   "gap_median_s": 30.169000000000096,
+   "requests": 42,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.3159909040461312,
+    "read": 4308800,
+    "rw": 4.324298285053632,
+    "written": 996416,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 800768,
+     "first": 195648
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.3469032740608488,
+    "read": 4615808,
+    "rw": 6.695321203119198,
+    "written": 689408,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 493760,
+     "first": 195648
+    }
+   },
+   "gap_median_s": 29.3179999999993,
+   "requests": 39,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18041912844326732,
+    "read": 16945792,
+    "rw": 13.300080369700623,
+    "written": 1274112,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 884672,
+     "first": 389440
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19627940959513288,
+    "read": 17296640,
+    "rw": 18.734229862747817,
+    "written": 923264,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 533824,
+     "first": 389440
+    }
+   },
+   "gap_median_s": 11.325500000000147,
+   "requests": 97,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19475685203746584,
+    "read": 1699136,
+    "rw": 11.136325503355705,
+    "written": 152576,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 74880,
+     "first": 77696
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2565547990184219,
+    "read": 1699136,
+    "rw": 11.136325503355705,
+    "written": 152576,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 74880,
+     "first": 77696
+    }
+   },
+   "gap_median_s": 11.333999999999989,
+   "requests": 28,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15059446341725952,
+    "read": 6252608,
+    "rw": 21.72975978647687,
+    "written": 287744,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 66304,
+     "first": 221440
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18359085260242874,
+    "read": 6252608,
+    "rw": 21.72975978647687,
+    "written": 287744,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 66304,
+     "first": 221440
+    }
+   },
+   "gap_median_s": 20.562999999999647,
+   "requests": 47,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14248353120696713,
+    "read": 8280448,
+    "rw": 26.069312915575257,
+    "written": 317632,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 317632
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.17019018199411962,
+    "read": 8280448,
+    "rw": 26.069312915575257,
+    "written": 317632,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 317632
+    }
+   },
+   "gap_median_s": 3.5449999999999875,
+   "requests": 133,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2090432430320905,
+    "read": 59320704,
+    "rw": 9.546274744062455,
+    "written": 6214016,
+    "written_split": {
+     "concurrent": 81472,
+     "expired": 2596032,
+     "first": 3536512
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21297798785132524,
+    "read": 61637888,
+    "rw": 15.817435291026147,
+    "written": 3896832,
+    "written_split": {
+     "concurrent": 54208,
+     "expired": 306112,
+     "first": 3536512
+    }
+   },
+   "gap_median_s": 7.686999999999898,
+   "requests": 768,
+   "subagents": 14
+  },
+  {
+   "300": {
+    "cost_ratio": 0.24906848784631141,
+    "read": 8919104,
+    "rw": 6.71457480125271,
+    "written": 1328320,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1093120,
+     "first": 235200
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.20971670538859327,
+    "read": 9655680,
+    "rw": 16.317326411421156,
+    "written": 591744,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 356544,
+     "first": 235200
+    }
+   },
+   "gap_median_s": 48.909000000000106,
+   "requests": 71,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.12940763957730608,
+    "read": 656962944,
+    "rw": 38.10548471518459,
+    "written": 17240640,
+    "written_split": {
+     "concurrent": 667008,
+     "expired": 11596736,
+     "first": 4976896
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12000473494961428,
+    "read": 667105024,
+    "rw": 93.97751431276203,
+    "written": 7098560,
+    "written_split": {
+     "concurrent": 667008,
+     "expired": 1454656,
+     "first": 4976896
+    }
+   },
+   "gap_median_s": 12.003999999998996,
+   "requests": 2347,
+   "subagents": 9
+  },
+  {
+   "300": {
+    "cost_ratio": 0.12921674361470115,
+    "read": 11983360,
+    "rw": 38.36099160008195,
+    "written": 312384,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 312384
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14827114162428887,
+    "read": 11983360,
+    "rw": 38.36099160008195,
+    "written": 312384,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 312384
+    }
+   },
+   "gap_median_s": 11.380999999999972,
+   "requests": 81,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.22836151424830778,
+    "read": 4082176,
+    "rw": 7.9590716246568505,
+    "written": 512896,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 131584,
+     "first": 381312
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2576673444942756,
+    "read": 4213760,
+    "rw": 11.050688150386035,
+    "written": 381312,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 381312
+    }
+   },
+   "gap_median_s": 7.015999999999963,
+   "requests": 76,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2779349951410273,
+    "read": 4620416,
+    "rw": 5.46303443057132,
+    "written": 845760,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 558528,
+     "first": 287232
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1998395953588029,
+    "read": 5178944,
+    "rw": 18.030525846702318,
+    "written": 287232,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 287232
+    }
+   },
+   "gap_median_s": 31.251000000000204,
+   "requests": 47,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.21767053900130512,
+    "read": 24079424,
+    "rw": 8.77304948001679,
+    "written": 2744704,
+    "written_split": {
+     "concurrent": 320,
+     "expired": 2267584,
+     "first": 476800
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15707792626101397,
+    "read": 26018304,
+    "rw": 32.287824636645226,
+    "written": 805824,
+    "written_split": {
+     "concurrent": 320,
+     "expired": 328704,
+     "first": 476800
+    }
+   },
+   "gap_median_s": 19.229999999999563,
+   "requests": 140,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1426901725809091,
+    "read": 4895488,
+    "rw": 25.93828416412343,
+    "written": 188736,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 188736
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.17053158948150202,
+    "read": 4895488,
+    "rw": 25.93828416412343,
+    "written": 188736,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 188736
+    }
+   },
+   "gap_median_s": 11.62749999999999,
+   "requests": 41,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.23380367522970186,
+    "read": 1809600,
+    "rw": 7.594681708299758,
+    "written": 238272,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 133760,
+     "first": 104512
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19696543533970873,
+    "read": 1943360,
+    "rw": 18.59461114513166,
+    "written": 104512,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 104512
+    }
+   },
+   "gap_median_s": 19.81449999999984,
+   "requests": 32,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15229390143275076,
+    "read": 4071936,
+    "rw": 20.99109204882877,
+    "written": 193984,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 100608,
+     "first": 93376
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14158877803615633,
+    "read": 4172544,
+    "rw": 44.68540095956134,
+    "written": 93376,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 93376
+    }
+   },
+   "gap_median_s": 9.544000000000324,
+   "requests": 70,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2471190781049936,
+    "read": 5012800,
+    "rw": 6.816797214969538,
+    "written": 735360,
+    "written_split": {
+     "concurrent": 1984,
+     "expired": 421696,
+     "first": 311680
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.20367867282747873,
+    "read": 5434496,
+    "rw": 17.325851866965927,
+    "written": 313664,
+    "written_split": {
+     "concurrent": 1984,
+     "expired": 0,
+     "first": 311680
+    }
+   },
+   "gap_median_s": 20.694500000000012,
+   "requests": 47,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1438553832288107,
+    "read": 9835584,
+    "rw": 25.222550467749876,
+    "written": 389952,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 135680,
+     "first": 254272
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1472461101305594,
+    "read": 9971264,
+    "rw": 39.214950918701234,
+    "written": 254272,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 254272
+    }
+   },
+   "gap_median_s": 10.217499999999973,
+   "requests": 75,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.12920044674131306,
+    "read": 37307008,
+    "rw": 38.38295910976493,
+    "written": 971968,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 584064,
+     "first": 387904
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.11925384837880722,
+    "read": 37891072,
+    "rw": 97.68157069790463,
+    "written": 387904,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 387904
+    }
+   },
+   "gap_median_s": 15.372999999999934,
+   "requests": 136,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2708394580787954,
+    "read": 38998912,
+    "rw": 5.73146597942023,
+    "written": 6804352,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 5068544,
+     "first": 1735808
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.20773841794331516,
+    "read": 43206016,
+    "rw": 16.635306293430585,
+    "written": 2597248,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 861440,
+     "first": 1735808
+    }
+   },
+   "gap_median_s": 55.88250000000369,
+   "requests": 52,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.31721347646751563,
+    "read": 5764160,
+    "rw": 4.2943308062747345,
+    "written": 1342272,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 817408,
+     "first": 524864
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.24032943676939428,
+    "read": 6581568,
+    "rw": 12.53956834532374,
+    "written": 524864,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 524864
+    }
+   },
+   "gap_median_s": 14.692999999999984,
+   "requests": 73,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1231884885050505,
+    "read": 637880448,
+    "rw": 48.59357311062031,
+    "written": 13126848,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 9205056,
+     "first": 3921792
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.112972015600882,
+    "read": 646562624,
+    "rw": 145.46914237991015,
+    "written": 4444672,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 522880,
+     "first": 3921792
+    }
+   },
+   "gap_median_s": 8.965000000000146,
+   "requests": 2866,
+   "subagents": 8
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1848751544026822,
+    "read": 1343680,
+    "rw": 12.549312612074118,
+    "written": 107072,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 52864,
+     "first": 54208
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.17099435327333687,
+    "read": 1396544,
+    "rw": 25.762691853600945,
+    "written": 54208,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 54208
+    }
+   },
+   "gap_median_s": 20.313499999999976,
+   "requests": 31,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19914554182367564,
+    "read": 133160768,
+    "rw": 10.599109539844017,
+    "written": 12563392,
+    "written_split": {
+     "concurrent": 829248,
+     "expired": 3745984,
+     "first": 7988160
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.22358085852064613,
+    "read": 136245888,
+    "rw": 14.37454928493295,
+    "written": 9478272,
+    "written_split": {
+     "concurrent": 731456,
+     "expired": 758656,
+     "first": 7988160
+    }
+   },
+   "gap_median_s": 11.937000000000126,
+   "requests": 2569,
+   "subagents": 153
+  },
+  {
+   "300": {
+    "cost_ratio": 0.21428821077247656,
+    "read": 9070400,
+    "rw": 9.062280196943538,
+    "written": 1000896,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 766016,
+     "first": 234880
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.17499110342899268,
+    "read": 9673792,
+    "rw": 24.33633875382386,
+    "written": 397504,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 162624,
+     "first": 234880
+    }
+   },
+   "gap_median_s": 31.23849999999944,
+   "requests": 65,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15027259465697057,
+    "read": 14054784,
+    "rw": 21.875286383105887,
+    "written": 642496,
+    "written_split": {
+     "concurrent": 9600,
+     "expired": 0,
+     "first": 632896
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1830590694332557,
+    "read": 14054784,
+    "rw": 21.875286383105887,
+    "written": 642496,
+    "written_split": {
+     "concurrent": 9600,
+     "expired": 0,
+     "first": 632896
+    }
+   },
+   "gap_median_s": 10.093000000000018,
+   "requests": 99,
+   "subagents": 7
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2527043269230769,
+    "read": 2124160,
+    "rw": 6.530893349075167,
+    "written": 325248,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 169792,
+     "first": 155456
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.22058685200668895,
+    "read": 2293952,
+    "rw": 14.756278303828736,
+    "written": 155456,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 155456
+    }
+   },
+   "gap_median_s": 12.371499999999997,
+   "requests": 27,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2036442555959908,
+    "read": 14321280,
+    "rw": 10.095646289194676,
+    "written": 1418560,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 247680,
+     "first": 1170880
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.26725964177526584,
+    "read": 14354240,
+    "rw": 10.35958429561201,
+    "written": 1385600,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 214720,
+     "first": 1170880
+    }
+   },
+   "gap_median_s": 27.166999999999916,
+   "requests": 162,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1758027901601453,
+    "read": 7241920,
+    "rw": 14.170945522855353,
+    "written": 511040,
+    "written_split": {
+     "concurrent": 84288,
+     "expired": 0,
+     "first": 426752
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2252393924385009,
+    "read": 7241920,
+    "rw": 14.170945522855353,
+    "written": 511040,
+    "written_split": {
+     "concurrent": 84288,
+     "expired": 0,
+     "first": 426752
+    }
+   },
+   "gap_median_s": 25.089999999999975,
+   "requests": 58,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.3484297797370023,
+    "read": 46904832,
+    "rw": 3.6290746673665133,
+    "written": 12924736,
+    "written_split": {
+     "concurrent": 479168,
+     "expired": 10760512,
+     "first": 1685056
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1546990544875738,
+    "read": 58107136,
+    "rw": 33.735518151079404,
+    "written": 1722432,
+    "written_split": {
+     "concurrent": 448,
+     "expired": 36928,
+     "first": 1685056
+    }
+   },
+   "gap_median_s": 31.598499999994033,
+   "requests": 210,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.13101208273602294,
+    "read": 7602112,
+    "rw": 36.08232077764277,
+    "written": 210688,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 210688
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15123735408560313,
+    "read": 7602112,
+    "rw": 36.08232077764277,
+    "written": 210688,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 210688
+    }
+   },
+   "gap_median_s": 8.625999999999976,
+   "requests": 66,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19378380971800746,
+    "read": 4900608,
+    "rw": 11.262244447712899,
+    "written": 435136,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 275136,
+     "first": 160000
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1569742476400667,
+    "read": 5175744,
+    "rw": 32.3484,
+    "written": 160000,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 160000
+    }
+   },
+   "gap_median_s": 11.023000000000025,
+   "requests": 44,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14072749929608516,
+    "read": 743697152,
+    "rw": 27.236450061409514,
+    "written": 27305216,
+    "written_split": {
+     "concurrent": 502528,
+     "expired": 19432128,
+     "first": 7370560
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12489385661653377,
+    "read": 760900672,
+    "rw": 75.32405172359177,
+    "written": 10101696,
+    "written_split": {
+     "concurrent": 502528,
+     "expired": 2228608,
+     "first": 7370560
+    }
+   },
+   "gap_median_s": 8.740999999999985,
+   "requests": 4095,
+   "subagents": 39
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20361675126903553,
+    "read": 9957696,
+    "rw": 10.098591549295774,
+    "written": 986048,
+    "written_split": {
+     "concurrent": 14976,
+     "expired": 638272,
+     "first": 332800
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18950209361622494,
+    "read": 10428224,
+    "rw": 20.228553693358162,
+    "written": 515520,
+    "written_split": {
+     "concurrent": 14976,
+     "expired": 167744,
+     "first": 332800
+    }
+   },
+   "gap_median_s": 6.237999999999829,
+   "requests": 82,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.21054912924158098,
+    "read": 4510848,
+    "rw": 9.402614727854855,
+    "written": 479744,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 121984,
+     "first": 357760
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.23620508348508554,
+    "read": 4632832,
+    "rw": 12.949552772808588,
+    "written": 357760,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 357760
+    }
+   },
+   "gap_median_s": 6.675000000000011,
+   "requests": 69,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2460654560377552,
+    "read": 1089152,
+    "rw": 6.873182552504039,
+    "written": 158464,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 9984,
+     "first": 148480
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.3413255360623782,
+    "read": 1089152,
+    "rw": 6.873182552504039,
+    "written": 158464,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 9984,
+     "first": 148480
+    }
+   },
+   "gap_median_s": 2.8945000000000007,
+   "requests": 30,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1660390923388003,
+    "read": 2685056,
+    "rw": 16.413928012519563,
+    "written": 163584,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 57024,
+     "first": 106560
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.17107391597393845,
+    "read": 2742080,
+    "rw": 25.73273273273273,
+    "written": 106560,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 106560
+    }
+   },
+   "gap_median_s": 14.86700000000019,
+   "requests": 40,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15136128036937146,
+    "read": 5508800,
+    "rw": 21.390407554671967,
+    "written": 257536,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 257536
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.18485776756678765,
+    "read": 5508800,
+    "rw": 21.390407554671967,
+    "written": 257536,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 257536
+    }
+   },
+   "gap_median_s": 15.977999999999952,
+   "requests": 40,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16534910075161438,
+    "read": 71163904,
+    "rw": 16.59779379935217,
+    "written": 4287552,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 3070336,
+     "first": 1217216
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14372519464700587,
+    "read": 73715072,
+    "rw": 42.453208506874056,
+    "written": 1736384,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 519168,
+     "first": 1217216
+    }
+   },
+   "gap_median_s": 10.474499999999807,
+   "requests": 392,
+   "subagents": 7
+  },
+  {
+   "300": {
+    "cost_ratio": 0.13959031920275788,
+    "read": 5252288,
+    "rw": 28.047505126452496,
+    "written": 187264,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 187264
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16541009259586084,
+    "read": 5252288,
+    "rw": 28.047505126452496,
+    "written": 187264,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 187264
+    }
+   },
+   "gap_median_s": 15.760500000000002,
+   "requests": 45,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16994121636898032,
+    "read": 1595136,
+    "rw": 15.442379182156134,
+    "written": 103296,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 103296
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21555505313135878,
+    "read": 1595136,
+    "rw": 15.442379182156134,
+    "written": 103296,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 103296
+    }
+   },
+   "gap_median_s": 7.319999999999993,
+   "requests": 21,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.21498875466623385,
+    "read": 57137920,
+    "rw": 9.000977950739513,
+    "written": 6347968,
+    "written_split": {
+     "concurrent": 142912,
+     "expired": 4115072,
+     "first": 2089984
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2007952885529458,
+    "read": 60117952,
+    "rw": 17.850087412587413,
+    "written": 3367936,
+    "written_split": {
+     "concurrent": 142912,
+     "expired": 1135040,
+     "first": 2089984
+    }
+   },
+   "gap_median_s": 29.198000000003958,
+   "requests": 240,
+   "subagents": 6
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1442616060519822,
+    "read": 107683520,
+    "rw": 24.98188594081751,
+    "written": 4310464,
+    "written_split": {
+     "concurrent": 64,
+     "expired": 2762752,
+     "first": 1547648
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13840377711717086,
+    "read": 109730304,
+    "rw": 48.47430025445293,
+    "written": 2263680,
+    "written_split": {
+     "concurrent": 64,
+     "expired": 715968,
+     "first": 1547648
+    }
+   },
+   "gap_median_s": 9.442499999990105,
+   "requests": 737,
+   "subagents": 2
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18021311586640518,
+    "read": 18426560,
+    "rw": 13.33680748564017,
+    "written": 1381632,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 350848,
+     "first": 1030784
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1988727088267319,
+    "read": 18777408,
+    "rw": 18.216627343847012,
+    "written": 1030784,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 1030784
+    }
+   },
+   "gap_median_s": 21.751000000000005,
+   "requests": 197,
+   "subagents": 3
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14517332060787116,
+    "read": 65840384,
+    "rw": 24.457504219860684,
+    "written": 2692032,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1723200,
+     "first": 968832
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.12686000155021532,
+    "read": 67563584,
+    "rw": 69.73715153917294,
+    "written": 968832,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 968832
+    }
+   },
+   "gap_median_s": 15.17050000000063,
+   "requests": 266,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.4863014271962499,
+    "read": 3046464,
+    "rw": 1.9769499127834538,
+    "written": 1540992,
+    "written_split": {
+     "concurrent": 38464,
+     "expired": 885696,
+     "first": 616832
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.47610876267805075,
+    "read": 3679360,
+    "rw": 4.051730213545705,
+    "written": 908096,
+    "written_split": {
+     "concurrent": 38464,
+     "expired": 252800,
+     "first": 616832
+    }
+   },
+   "gap_median_s": 55.905000000000015,
+   "requests": 45,
+   "subagents": 2
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19077375107290828,
+    "read": 286044288,
+    "rw": 11.668860616725366,
+    "written": 24513472,
+    "written_split": {
+     "concurrent": 191872,
+     "expired": 19128448,
+     "first": 5193152
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13548219307094436,
+    "read": 304758144,
+    "rw": 52.5479866253214,
+    "written": 5799616,
+    "written_split": {
+     "concurrent": 172544,
+     "expired": 433920,
+     "first": 5193152
+    }
+   },
+   "gap_median_s": 4.677999999999884,
+   "requests": 2405,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.16462518936840184,
+    "read": 15230976,
+    "rw": 16.794918842625265,
+    "written": 906880,
+    "written_split": {
+     "concurrent": 41088,
+     "expired": 124992,
+     "first": 740800
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1959064698557231,
+    "read": 15323264,
+    "rw": 18.810967944688876,
+    "written": 814592,
+    "written_split": {
+     "concurrent": 41088,
+     "expired": 32704,
+     "first": 740800
+    }
+   },
+   "gap_median_s": 7.612000000000023,
+   "requests": 157,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14400213126722086,
+    "read": 31363776,
+    "rw": 25.13509770733959,
+    "written": 1247808,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 383872,
+     "first": 863936
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15207180368791656,
+    "read": 31717824,
+    "rw": 35.488077336197634,
+    "written": 893760,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 29824,
+     "first": 863936
+    }
+   },
+   "gap_median_s": 11.188999999999965,
+   "requests": 287,
+   "subagents": 4
+  },
+  {
+   "300": {
+    "cost_ratio": 0.23564144042762697,
+    "read": 1605248,
+    "rw": 7.4782349433512225,
+    "written": 214656,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 100864,
+     "first": 113792
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.21880011253340836,
+    "read": 1706112,
+    "rw": 14.993250843644544,
+    "written": 113792,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 113792
+    }
+   },
+   "gap_median_s": 18.930000000000007,
+   "requests": 20,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.23856695636944766,
+    "read": 2571200,
+    "rw": 7.2992369186046515,
+    "written": 352256,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 209536,
+     "first": 142720
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.19275597101512734,
+    "read": 2780736,
+    "rw": 19.48385650224215,
+    "written": 142720,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 142720
+    }
+   },
+   "gap_median_s": 8.41199999999992,
+   "requests": 30,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18909332607360899,
+    "read": 10193088,
+    "rw": 11.90781308411215,
+    "written": 856000,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 620288,
+     "first": 235712
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14053301050729256,
+    "read": 10813376,
+    "rw": 45.87537333695357,
+    "written": 235712,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 235712
+    }
+   },
+   "gap_median_s": 17.320999999999913,
+   "requests": 90,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1488710798350386,
+    "read": 113658688,
+    "rw": 22.531299162649074,
+    "written": 5044480,
+    "written_split": {
+     "concurrent": 34432,
+     "expired": 2334272,
+     "first": 2675776
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.151177174984917,
+    "read": 115505856,
+    "rw": 36.12592577765323,
+    "written": 3197312,
+    "written_split": {
+     "concurrent": 19968,
+     "expired": 501568,
+     "first": 2675776
+    }
+   },
+   "gap_median_s": 14.953500000000531,
+   "requests": 769,
+   "subagents": 13
+  },
+  {
+   "300": {
+    "cost_ratio": 0.161145228412318,
+    "read": 158629120,
+    "rw": 17.8076818070783,
+    "written": 8907904,
+    "written_split": {
+     "concurrent": 100608,
+     "expired": 5283200,
+     "first": 3524096
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.15664872261309834,
+    "read": 162541888,
+    "rw": 32.54003254365847,
+    "written": 4995136,
+    "written_split": {
+     "concurrent": 100608,
+     "expired": 1370432,
+     "first": 3524096
+    }
+   },
+   "gap_median_s": 10.183999999999742,
+   "requests": 886,
+   "subagents": 19
+  },
+  {
+   "300": {
+    "cost_ratio": 0.18470390078096546,
+    "read": 23442176,
+    "rw": 12.57670649636039,
+    "written": 1863936,
+    "written_split": {
+     "concurrent": 124544,
+     "expired": 773824,
+     "first": 965568
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2159630053008538,
+    "read": 23761600,
+    "rw": 15.384535698006879,
+    "written": 1544512,
+    "written_split": {
+     "concurrent": 124544,
+     "expired": 454400,
+     "first": 965568
+    }
+   },
+   "gap_median_s": 8.794999999999998,
+   "requests": 260,
+   "subagents": 11
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1311524638771194,
+    "read": 78813504,
+    "rw": 35.915218152123195,
+    "written": 2194432,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 826880,
+     "first": 1367552
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.13274622377738401,
+    "read": 79611776,
+    "rw": 57.02195736878295,
+    "written": 1396160,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 28608,
+     "first": 1367552
+    }
+   },
+   "gap_median_s": 19.00800000000001,
+   "requests": 293,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.14872135944930331,
+    "read": 12901056,
+    "rw": 22.603610675039246,
+    "written": 570752,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 231040,
+     "first": 339712
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14791137165850346,
+    "read": 13132096,
+    "rw": 38.656556141672944,
+    "written": 339712,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 339712
+    }
+   },
+   "gap_median_s": 7.938000000000002,
+   "requests": 95,
+   "subagents": 1
+  },
+  {
+   "300": {
+    "cost_ratio": 0.13953793478452212,
+    "read": 63191232,
+    "rw": 28.085990612999574,
+    "written": 2249920,
+    "written_split": {
+     "concurrent": 73536,
+     "expired": 832448,
+     "first": 1343936
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1537639435198207,
+    "read": 63589376,
+    "rw": 34.33966959286652,
+    "written": 1851776,
+    "written_split": {
+     "concurrent": 73536,
+     "expired": 434304,
+     "first": 1343936
+    }
+   },
+   "gap_median_s": 3.3049999999998363,
+   "requests": 416,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.1622914692919224,
+    "read": 4408704,
+    "rw": 17.461596958174905,
+    "written": 252480,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 252480
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.20291634056926308,
+    "read": 4408704,
+    "rw": 17.461596958174905,
+    "written": 252480,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 252480
+    }
+   },
+   "gap_median_s": 30.30850000000001,
+   "requests": 35,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.150010917427854,
+    "read": 1682176,
+    "rw": 21.99497907949791,
+    "written": 76480,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 76480
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1826267331416718,
+    "read": 1682176,
+    "rw": 21.99497907949791,
+    "written": 76480,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 76480
+    }
+   },
+   "gap_median_s": 11.523000000000003,
+   "requests": 33,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.2785706811761013,
+    "read": 2066688,
+    "rw": 5.440026954177897,
+    "written": 379904,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 243136,
+     "first": 136768
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2062127236580517,
+    "read": 2309824,
+    "rw": 16.88862891904539,
+    "written": 136768,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 136768
+    }
+   },
+   "gap_median_s": 15.788000000000011,
+   "requests": 26,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.20327904392834883,
+    "read": 2149568,
+    "rw": 10.134882317441159,
+    "written": 212096,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 103360,
+     "first": 108736
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.2706349421424894,
+    "read": 2149568,
+    "rw": 10.134882317441159,
+    "written": 212096,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 103360,
+     "first": 108736
+    }
+   },
+   "gap_median_s": 15.804999999999978,
+   "requests": 26,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.36307001445890336,
+    "read": 1775168,
+    "rw": 3.3714598273975933,
+    "written": 526528,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 433152,
+     "first": 93376
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.1770798576354132,
+    "read": 2208320,
+    "rw": 23.649760109664154,
+    "written": 93376,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 93376
+    }
+   },
+   "gap_median_s": 15.18899999999978,
+   "requests": 40,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.23211005523454786,
+    "read": 3558784,
+    "rw": 7.704863516696689,
+    "written": 461888,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 305664,
+     "first": 156224
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.318268786909253,
+    "read": 3558784,
+    "rw": 7.704863516696689,
+    "written": 461888,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 305664,
+     "first": 156224
+    }
+   },
+   "gap_median_s": 7.84599999999773,
+   "requests": 36,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.19236705024387935,
+    "read": 12429376,
+    "rw": 11.45032722127233,
+    "written": 1085504,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 663872,
+     "first": 421632
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.22534403561111901,
+    "read": 12623296,
+    "rw": 14.15828009475271,
+    "written": 891584,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 469952,
+     "first": 421632
+    }
+   },
+   "gap_median_s": 36.89599999999973,
+   "requests": 61,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.22172944341684883,
+    "read": 13612800,
+    "rw": 8.447180301826847,
+    "written": 1611520,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 1240832,
+     "first": 370688
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.23994408945686901,
+    "read": 14102976,
+    "rw": 12.576850636379202,
+    "written": 1121344,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 750656,
+     "first": 370688
+    }
+   },
+   "gap_median_s": 32.26499999999942,
+   "requests": 75,
+   "subagents": 0
+  },
+  {
+   "300": {
+    "cost_ratio": 0.15281686068267328,
+    "read": 17949504,
+    "rw": 20.77335012221317,
+    "written": 864064,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 225664,
+     "first": 638400
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.16447261890992712,
+    "read": 18175168,
+    "rw": 28.469874686716793,
+    "written": 638400,
+    "written_split": {
+     "concurrent": 0,
+     "expired": 0,
+     "first": 638400
+    }
+   },
+   "gap_median_s": 11.107499999999952,
+   "requests": 150,
+   "subagents": 1
+  }
+ ],
+ "summary": {
+  "cost_ratio_1h_quartiles": [
+   0.1472519231667366,
+   0.1830590694332557,
+   0.2157938947206072
+  ],
+  "cost_ratio_5min_quartiles": [
+   0.15285064643559584,
+   0.1787950184416685,
+   0.2198939906812475
+  ],
+  "fanout": {
+   "launch_sizes": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    4,
+    5,
+    5,
+    5,
+    5,
+    5,
+    6,
+    6,
+    7
+   ],
+   "parallel_launches": 45,
+   "shared_tokens_rewritten": 2716928,
+   "sibling_start_offset_s": {
+    "max": 0.9929999999994834,
+    "median": 0.10350000000107684,
+    "n": 90,
+    "share_under_0.2s": 0.6666666666666666,
+    "share_under_0.5s": 0.8444444444444444
+   },
+   "siblings_same_model": 90,
+   "siblings_started_before_lead_ready_with_shared_prefix": 90
+  },
+  "gaps": {
+   "count": 59689,
+   "median_s": 11.276000000000067,
+   "p90_s": 73.50699999999779,
+   "under_5min": 0.9754728676975657,
+   "under_60min": 0.9953425254234448
+  },
+  "model_requests": 60996,
+  "read_price_sensitivity": {
+   "0.025": {
+    "aggregate_saving_1h": 0.9298550242872926,
+    "aggregate_saving_5min": 0.906382583892542,
+    "sessions_1h_cheaper": 121,
+    "sessions_5min_cheaper": 112,
+    "sessions_pay_1h": 233,
+    "sessions_pay_5min": 233
+   },
+   "0.05": {
+    "aggregate_saving_1h": 0.905426479676061,
+    "aggregate_saving_5min": 0.8827829393233064,
+    "sessions_1h_cheaper": 120,
+    "sessions_5min_cheaper": 113,
+    "sessions_pay_1h": 233,
+    "sessions_pay_5min": 233
+   },
+   "0.1": {
+    "aggregate_saving_1h": 0.8565693904535979,
+    "aggregate_saving_5min": 0.8355836501848353,
+    "sessions_1h_cheaper": 115,
+    "sessions_5min_cheaper": 118,
+    "sessions_pay_1h": 233,
+    "sessions_pay_5min": 233
+   }
+  },
+  "sessions": 233,
+  "sessions_1h_cheaper_than_5min": 115,
+  "sessions_5min_cheaper_than_1h": 118,
+  "sessions_where_1h_pays": 233,
+  "sessions_where_5min_pays": 233,
+  "totals": {
+   "300": {
+    "cost_ratio": 0.1644163498151647,
+    "read": 11923621504,
+    "rw": 16.85261045215683,
+    "written": 707523712,
+    "written_split": {
+     "concurrent": 12607488,
+     "expired": 485735360,
+     "first": 209180864
+    }
+   },
+   "3600": {
+    "cost_ratio": 0.14343060954640205,
+    "read": 12342419776,
+    "rw": 42.7479468937687,
+    "written": 288725440,
+    "written_split": {
+     "concurrent": 8372160,
+     "expired": 71172416,
+     "first": 209180864
+    }
+   }
+  }
+ }
+}
