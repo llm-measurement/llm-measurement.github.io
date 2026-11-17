@@ -78,13 +78,17 @@ class Page(HTMLParser):
 
 class ReadingFlow(HTMLParser):
     """Track block order while treating links and emphasis as inline text."""
-    def __init__(self):
+    def __init__(self, study=False):
         super().__init__()
         self.blocks = []
         self.text_block = None
+        self.study = study
 
     def handle_starttag(self, tag, attrs):
-        if tag in {"h1", "h2", "h3", "h4", "h5", "h6", "p", "pre", "ul", "ol"}:
+        if self.study and tag == "div" and "equation" in dict(attrs).get("class", "").split():
+            tag = "equation"
+        blocks = {"h1", "h2", "h3", "h4", "h5", "h6", "p", "pre", "ul", "ol"}
+        if tag in blocks or self.study and tag in {"table", "equation"}:
             self.blocks.append([tag, ""])
             self.text_block = self.blocks[-1] if tag == "p" or tag.startswith("h") else None
 
@@ -97,14 +101,15 @@ class ReadingFlow(HTMLParser):
             self.text_block[1] += data
 
 
-def check_reading_flow(source):
-    flow = ReadingFlow()
+def check_reading_flow(source, *, study=False):
+    flow = ReadingFlow(study=study)
     flow.feed(source)
     for index, (tag, text) in enumerate(flow.blocks):
         following = flow.blocks[index + 1][0] if index + 1 < len(flow.blocks) else None
         if tag.startswith("h") and following and following.startswith("h"):
             raise AssertionError(f"heading followed directly by a heading: {text.strip()}")
-        if tag == "p" and text.rstrip().endswith(":") and following not in {"pre", "ul", "ol"}:
+        examples = {"pre", "ul", "ol"} | ({"table", "equation"} if study else set())
+        if tag == "p" and text.rstrip().endswith(":") and following not in examples:
             raise AssertionError(f"colon introduction needs a code block or list: {text.strip()}")
 
 
@@ -120,7 +125,7 @@ def main():
         footer = path.read_text().split('<footer>', 1)[1].split('</footer>', 1)[0]
         assert footer.count('Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>: no cookies, no personal data') == 1, path.name
         assert footer.count('<a href="security.html#verify-fleetdiff">Manual release verification</a>') == 1, path.name
-        check_reading_flow((ROOT / "pages" / (entry["slug"] + ".html")).read_text())
+        check_reading_flow((ROOT / "pages" / (entry["slug"] + ".html")).read_text(), study=entry.get("kind") == "study")
         nav = path.read_text().split('<nav aria-label="Guides">', 1)[1].split('</nav>', 1)[0]
         assert nav.index('href="token-spike.html"') < nav.index('href="tokenmaxxing.html"') < nav.index('href="cardinality.html"'), path.name
         assert '>A token spike</a>' in nav and '>Tokenmaxxing</a>' in nav and '>Per-user metrics</a>' in nav, path.name
@@ -202,7 +207,7 @@ def main():
         if entry.get("kind") == "evidence":
             assert page.commands == 0, path.name
             assert 'id="reproduce"' in path.read_text(), path.name
-        elif entry["slug"] != "index" and entry.get("kind") != "reference":
+        elif entry["slug"] != "index" and entry.get("kind") not in {"reference", "study"}:
             assert page.commands == 1, path.name
             if entry["slug"] != "litellm-spend":
                 assert "?" in entry["title"], path.name
@@ -229,6 +234,8 @@ def main():
             target = urlsplit(link)
             if not target.scheme and (target.path or target.fragment):
                 linked_path = path.parent / target.path if target.path else path
+                if linked_path.is_dir():
+                    linked_path = linked_path / "index.html"
                 assert linked_path.is_file(), (path.name, link)
                 if target.fragment:
                     linked_page = Page()
@@ -384,6 +391,8 @@ def main():
     for name, digest in visual["files"].items():
         assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, (name, "stale visual evidence")
     assert all(r["pass"] and r["geometry"]["width"] == r["geometry"]["scroll"] for r in visual["results"])
+    from study_checks import check as check_studies
+    check_studies(ROOT)
     assert any(r["slug"] == "litellm-spend" and r["width"] == 1366 and r["geometry"]["indexBottom"] < 768 for r in visual["results"])
     print(f"PASS: {len(pages)} pages, {guides} runnable guides, local links, sitemap, llms.txt and static root files")
 

@@ -1,0 +1,39 @@
+{
+  "article_body_sha256": "b7fae161dcdfe08fb12281675dfffd8bff22b9f084598b357fe42ab7704ec499",
+  "converter_pass": "PASS: approved text, equations and all three code blocks unchanged",
+  "deterministic_evidence_reproduced": true,
+  "evidence": {
+    "RUN.md": "64ff3352832500a816c9635bff0b68ca6d2106ac04dc9bafb7ebe92cf57154b6",
+    "cache_puzzle-output.txt": "6491730a71be9733f6d421452e1d7f64d2de59dcb88bb3f6486f8ee46a7a58ee",
+    "cache_puzzle.py": "208cb3e1be2d310e8ff1cb0b6c8b26610d3a985f23456e0f3d864d6672c029a7",
+    "fleetdiff-output.txt": "0e539d6ad7eae025669cf532bda9ee87ce00a1b41e34d9e369b33cf906f27015",
+    "live_check-output.txt": "1b78dc9dbd9cdf1ad996b392754344fd8f3a3766006489e4dc9e8659585aae91",
+    "live_check-summary.json": "1fa3f57b04ab2617ee257b3226afc5002e384c714d321e6eb6610569b3df5205",
+    "live_check.py": "294ae3c37ac31e4ef80223317c4bf92de26dbaab20335586e05d1a24d89bab03",
+    "make_fixture.py": "31131d8dfde571820e9b929568a64c3ab35703657f8443b3eb4b7dcb6609f70d",
+    "results.json": "ee5040bdf0e3ad1fb5523867af43e59e08d35cbb1ad8517151308d206ea1b02d",
+    "scheduled-job.csv": "66956c74b547ab24d7695500c4afd5ee7a5430c0d30c37e7b79bfda2b200a0ec",
+    "trace_replay-output.txt": "3bf93651e8b0404a7497180b8ba9a115ca23d21d87b632188e8a0cf258cb275a",
+    "trace_replay-results.json": "69cd657a0831bf8ac863b89622b696933c3a56c0d97e5e5cf70fa22a94f9a9cf",
+    "trace_replay.py": "a2562fb6534f1255e45bd6e46b1a80a618383ea49d288e29d35662d1e0b2f395"
+  },
+  "rerun": {
+    "archive_sha256": "6ee560da587959c41767f87e0c072a7551e6bd5ee5cd51fdc34220672047f19a",
+    "binary_sha256": "c904c11713c0cf2ad2620b999a24e3f25ddeb3dbd1e49b71c3d5d2bd9e199a61",
+    "fixture_sha256": "66956c74b547ab24d7695500c4afd5ee7a5430c0d30c37e7b79bfda2b200a0ec",
+    "full_stdout_byte_equal": true,
+    "quoted_lines": [
+      "Cache reuse rose: cache-read share 0% -> 93.5% (uncached input -460,000).",
+      "      Cache reads: 0 of 492,000 input tokens -> 460,000 of 492,000 (all requests report cache detail).",
+      "      Cache writes: 480,000 of 492,000 input tokens -> 20,000 of 492,000 (all requests report cache detail).",
+      "  Recorded spend (USD, analyzed calls): 1.944 -> 0.402."
+    ],
+    "sample_csv_sha256": "66956c74b547ab24d7695500c4afd5ee7a5430c0d30c37e7b79bfda2b200a0ec",
+    "spend_after": "0.402",
+    "spend_before": "1.944",
+    "stdout_sha256": "0e539d6ad7eae025669cf532bda9ee87ce00a1b41e34d9e369b33cf906f27015",
+    "version": "fleetdiff v0.14.1 (45f8d7aef43a88e1c24033a9f80c4a667f8dbad7) go1.26.11 darwin/arm64"
+  },
+  "schema": 1,
+  "source_sha256": "720056d5f16cafaa7f8cf7b41b70b1d95c706dd9fc310e4114c2dbd75c56c0bd"
+}

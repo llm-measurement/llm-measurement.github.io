@@ -55,4 +55,19 @@ details > summary { cursor: pointer; font-weight: 600; padding: 12px 0; }
 .copy-command:hover { color: var(--link-hover); border-color: var(--link-hover); }
 .copy-command:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .copy-status { color: var(--muted); font-size: 12px; text-align: right; }
+.study { min-width: 0; }
+body:has(.study, .studies-index) header > a:last-child { flex-shrink: 0; white-space: nowrap; }
+.study > p:first-child { font-size: 18px; }
+.study h2 { margin-top: 40px; }
+.study .equation { overflow-x: auto; max-width: 100%; padding: 12px 0; }
+.study .equation math { min-width: max-content; margin: 0 auto; }
+.study math { font-size: 1.05em; }
+.study .study-table { overflow-x: auto; max-width: 100%; margin: 24px 0; }
+.study table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 14px; }
+.study th, .study td { text-align: left; vertical-align: top; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.study th { font-weight: 650; }
+.study th:first-child, .study td:first-child { padding-left: 0; }
+.study details { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 24px 0; }
+.study details > summary { padding: 16px 0; }
+.evidence-downloads { margin: 40px auto 64px; padding: 0 20px; }
 @media (max-width: 767px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 20px 20px 40px; } .desktop-guides { display: none; } .mobile-guides { display: block; } nav { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 12px; } nav a { border-left: none; border-bottom: 2px solid transparent; padding: 6px 10px; } h1 { font-size: 26px; } header { padding: 18px 20px; } }

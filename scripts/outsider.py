@@ -68,7 +68,7 @@ def main():
     pages = json.loads((ROOT / "pages.json").read_text())
     for page in pages:
         slug = page["slug"]
-        if slug == "index" or page.get("kind") in {"evidence", "reference"} or (args.page and slug != args.page):
+        if slug == "index" or page.get("kind") in {"evidence", "reference", "study"} or (args.page and slug != args.page):
             continue
         if slug == "langfuse-spend":
             from langfuse_check import check

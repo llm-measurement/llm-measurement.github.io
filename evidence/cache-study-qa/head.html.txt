@@ -1,0 +1,21 @@
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When Prompt Caching Costs More: Same Prompt, Opposite Bills</title><meta name="description" content="Prompt caching can raise an LLM bill. The break-even math, why parallel sub-agents miss the cache, and how to check reads versus writes in your logs.">
+<link rel="canonical" href="https://llm-measurement.github.io/prompt-cache-bills.html"><link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="When Prompt Caching Costs More: Same Prompt, Opposite Bills"><meta property="og:description" content="Prompt caching can raise an LLM bill. The break-even math, why parallel sub-agents miss the cache, and how to check reads versus writes in your logs.">
+<meta property="og:type" content="article"><meta property="og:url" content="https://llm-measurement.github.io/prompt-cache-bills.html">
+<meta property="og:site_name" content="LLM Measurement">
+<meta property="article:published_time" content="2026-11-17T00:00:00Z"><meta property="article:modified_time" content="2026-11-17T00:00:00Z">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="When Prompt Caching Costs More: Same Prompt, Opposite Bills">
+<meta name="twitter:description" content="Prompt caching can raise an LLM bill. The break-even math, why parallel sub-agents miss the cache, and how to check reads versus writes in your logs."><meta name="twitter:url" content="https://llm-measurement.github.io/prompt-cache-bills.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Same Prompt, Same Cache, Opposite Bills", "description": "Prompt caching can raise an LLM bill. The break-even math, why parallel sub-agents miss the cache, and how to check reads versus writes in your logs.", "datePublished": "2026-11-17T00:00:00Z", "dateModified": "2026-11-17T00:00:00Z", "author": {"@type": "Person", "name": "Vijay"}, "publisher": {"@type": "Organization", "name": "LLM Measurement"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://llm-measurement.github.io/prompt-cache-bills.html"}}</script>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<script defer src="assets/site.js"></script>
+</head>

@@ -146,9 +146,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-          fetch-depth: 2
+          fetch-depth: 0
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.13'
+      - name: Verify the live study and evidence before indexing
+        run: python3 scripts/study_outsider.py --live
       - name: Verify live pages and notify IndexNow
         run: python3 scripts/indexnow.py --submit

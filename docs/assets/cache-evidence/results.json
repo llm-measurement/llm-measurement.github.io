@@ -1,0 +1,167 @@
+{
+  "breakeven": {
+    "1h": {
+      "0.025x models": {
+        "poisson_mean_gap_min": 84.99953598940745,
+        "reads_per_write": 1.0256410256410258,
+        "short_gap_share": 0.5063291139240507
+      },
+      "0.05x models": {
+        "poisson_mean_gap_min": 83.4350003920401,
+        "reads_per_write": 1.0526315789473684,
+        "short_gap_share": 0.5128205128205129
+      },
+      "default": {
+        "poisson_mean_gap_min": 80.29823816703274,
+        "poisson_mean_gap_min_no_refresh": 54.0,
+        "reads_per_write": 1.1111111111111112,
+        "short_gap_share": 0.5263157894736842
+      }
+    },
+    "5m": {
+      "0.025x models": {
+        "poisson_mean_gap_min": 21.90497471445958,
+        "reads_per_write": 0.25641025641025644,
+        "short_gap_share": 0.20408163265306126
+      },
+      "0.05x models": {
+        "poisson_mean_gap_min": 21.402748903644365,
+        "reads_per_write": 0.2631578947368421,
+        "short_gap_share": 0.20833333333333334
+      },
+      "default": {
+        "poisson_mean_gap_min": 20.39796777546664,
+        "poisson_mean_gap_min_no_refresh": 18.0,
+        "reads_per_write": 0.2777777777777778,
+        "short_gap_share": 0.2173913043478261
+      }
+    }
+  },
+  "calls_per_day": 24,
+  "days": 30,
+  "first_token_s": 2.0,
+  "machine": "arm64 Darwin 27.0.0",
+  "poisson_1h_cheaper_than_5m_when_mean_gap_below_min": 109.54168988262265,
+  "poisson_closed_form_mean_gap_60": {
+    "1h": 0.7989709382257404,
+    "5m": 1.1580510768237218
+  },
+  "prices": {
+    "read": 0.1,
+    "write_1h": 2.0,
+    "write_5m": 1.25
+  },
+  "python": "3.14.2",
+  "services": {
+    "agent loop, one burst a day": {
+      "1h": {
+        "calls": 720,
+        "cost_ratio": 0.17916666666666667,
+        "reads": 690,
+        "writes": 30
+      },
+      "1h_no_refresh": {
+        "calls": 720,
+        "cost_ratio": 0.17916666666666667,
+        "reads": 690,
+        "writes": 30
+      },
+      "5m": {
+        "calls": 720,
+        "cost_ratio": 0.14791666666666667,
+        "reads": 690,
+        "writes": 30
+      },
+      "share_of_gaps_under_1h": 0.9596662030598053,
+      "share_of_gaps_under_5m": 0.9596662030598053
+    },
+    "fan-out, 24 at once": {
+      "1h": {
+        "calls": 720,
+        "cost_ratio": 2.0,
+        "reads": 0,
+        "writes": 720
+      },
+      "1h_no_refresh": {
+        "calls": 720,
+        "cost_ratio": 2.0,
+        "reads": 0,
+        "writes": 720
+      },
+      "5m": {
+        "calls": 720,
+        "cost_ratio": 1.25,
+        "reads": 0,
+        "writes": 720
+      },
+      "share_of_gaps_under_1h": 0.9596662030598053,
+      "share_of_gaps_under_5m": 0.9596662030598053
+    },
+    "fan-out, one call first": {
+      "1h": {
+        "calls": 720,
+        "cost_ratio": 0.17916666666666667,
+        "reads": 690,
+        "writes": 30
+      },
+      "1h_no_refresh": {
+        "calls": 720,
+        "cost_ratio": 0.17916666666666667,
+        "reads": 690,
+        "writes": 30
+      },
+      "5m": {
+        "calls": 720,
+        "cost_ratio": 0.14791666666666667,
+        "reads": 690,
+        "writes": 30
+      },
+      "share_of_gaps_under_1h": 0.9596662030598053,
+      "share_of_gaps_under_5m": 0.9596662030598053
+    },
+    "people, random times": {
+      "1h": {
+        "calls": 729,
+        "cost_ratio": 0.8037037037037037,
+        "reads": 459,
+        "writes": 270
+      },
+      "1h_no_refresh": {
+        "calls": 729,
+        "cost_ratio": 1.0513031550068588,
+        "reads": 364,
+        "writes": 365
+      },
+      "5m": {
+        "calls": 729,
+        "cost_ratio": 1.1632373113854595,
+        "reads": 55,
+        "writes": 674
+      },
+      "share_of_gaps_under_1h": 0.6304945054945055,
+      "share_of_gaps_under_5m": 0.07554945054945054
+    },
+    "scheduled job, every 30 min": {
+      "1h": {
+        "calls": 720,
+        "cost_ratio": 0.17916666666666667,
+        "reads": 690,
+        "writes": 30
+      },
+      "1h_no_refresh": {
+        "calls": 720,
+        "cost_ratio": 1.05,
+        "reads": 360,
+        "writes": 360
+      },
+      "5m": {
+        "calls": 720,
+        "cost_ratio": 1.25,
+        "reads": 0,
+        "writes": 720
+      },
+      "share_of_gaps_under_1h": 0.9596662030598053,
+      "share_of_gaps_under_5m": 0.0
+    }
+  }
+}

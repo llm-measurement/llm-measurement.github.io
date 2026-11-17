@@ -1,0 +1,22 @@
+Machine: arm64 Darwin 27.0.0; Python 3.14.2
+Break-even (default read price 0.1x):
+  5m: reads/writes > 0.278; short-gap share > 21.7%; random arrivals: mean gap < 20.4 min (no refresh: 18.0 min)
+     0.05x models: reads/writes > 0.263
+     0.025x models: reads/writes > 0.256
+  1h: reads/writes > 1.111; short-gap share > 52.6%; random arrivals: mean gap < 80.3 min (no refresh: 54.0 min)
+     0.05x models: reads/writes > 1.053
+     0.025x models: reads/writes > 1.026
+Random arrivals: the 1-hour cache is cheaper than the 5-minute cache when the mean gap is below 109.5 min
+Closed form, random arrivals every 60 min on average: 5m +15.8%, 1h -20.1%
+Services (30 days, prefix cost change versus no caching):
+  scheduled job, every 30 min    calls  720  5m  +25.0% (W 720, R   0, gaps<5m  0.0%)  1h  -82.1% (W  30, R 690, gaps<1h 96.0%)
+  people, random times           calls  729  5m  +16.3% (W 674, R  55, gaps<5m  7.6%)  1h  -19.6% (W 270, R 459, gaps<1h 63.0%)
+  agent loop, one burst a day    calls  720  5m  -85.2% (W  30, R 690, gaps<5m 96.0%)  1h  -82.1% (W  30, R 690, gaps<1h 96.0%)
+  fan-out, 24 at once            calls  720  5m  +25.0% (W 720, R   0, gaps<5m 96.0%)  1h +100.0% (W 720, R   0, gaps<1h 96.0%)
+  fan-out, one call first        calls  720  5m  -85.2% (W  30, R 690, gaps<5m 96.0%)  1h  -82.1% (W  30, R 690, gaps<1h 96.0%)
+If reads did not refresh the 1-hour cache (prefix cost change versus no caching):
+  scheduled job, every 30 min    1h   +5.0% (W 360, R 360)
+  people, random times           1h   +5.1% (W 365, R 364)
+  agent loop, one burst a day    1h  -82.1% (W  30, R 690)
+  fan-out, 24 at once            1h +100.0% (W 720, R   0)
+  fan-out, one call first        1h  -82.1% (W  30, R 690)

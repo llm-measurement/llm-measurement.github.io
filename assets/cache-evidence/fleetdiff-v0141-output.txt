@@ -1,0 +1,32 @@
+Recorded tokens were unchanged (499,200 -> 499,200).
+Cache reuse rose: cache-read share 0% -> 93.5% (uncached input -460,000).
+Logged model requests: 24 -> 24.
+Before: Mon 2026-11-02 00:00:00 UTC to Tue 2026-11-03 00:00:00 UTC (end exclusive).
+After: Tue 2026-11-03 00:00:00 UTC to Wed 2026-11-04 00:00:00 UTC (end exclusive).
+
+What changed?
+  model-1: 499,200 -> 499,200 recorded tokens; 24 -> 24 requests.
+    20,800.00 -> 20,800.00 recorded tokens per request; +0 from request count, +0 from request size.
+    Cache-read share of recorded input: 0% -> 93.5%.
+      Cache reads: 0 of 492,000 input tokens -> 460,000 of 492,000 (all requests report cache detail).
+      Recorded zero detail, origin unknown: 24 -> 1 requests.
+    Cache-write share of recorded input: 97.56% -> 4.07%.
+      Cache writes: 480,000 of 492,000 input tokens -> 20,000 of 492,000 (all requests report cache detail).
+      Recorded zero detail, origin unknown: 0 -> 23 requests.
+
+Who drove the change?
+  key-1: 499,200 -> 499,200 tokens; change +0.
+  Attributed tokens: 499,200 -> 499,200.
+
+Whose uncached input grew?
+  Ranked by recorded uncached-input growth on read-covered requests; volume and workload mix can also change it.
+  No tracked candidates with possible uncached-input growth.
+  Cache-read coverage: all requests report cache detail.
+
+How complete is the export?
+  Zero-filled: cannot determine from this export. Provider origin: not declared by the supported SQL projection.
+  Recorded spend (USD, analyzed calls): 1.944 -> 0.402.
+  No usage problems found.
+  Rows read: 48.
+
+Next: review the leading contributors in your local LiteLLM logs.

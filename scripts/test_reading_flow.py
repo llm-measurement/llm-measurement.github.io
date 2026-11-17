@@ -25,6 +25,21 @@ class ReadingFlowTests(unittest.TestCase):
         check_reading_flow('<h2>Results</h2><p>Run <code>inspect</code>.</p>'
                            '<h3>Output</h3><pre>&lt;h2&gt;not a heading&lt;/h2&gt;</pre>')
 
+    def test_studies_allow_colons_before_tables_or_display_equations_only(self):
+        for example in ('<table><tr><td>result</td></tr></table>',
+                        '<div class="equation"><math><mn>1</mn></math></div>'):
+            with self.subTest(example=example):
+                source = '<p>Compare:</p>' + example
+                check_reading_flow(source, study=True)
+                with self.assertRaisesRegex(AssertionError, "colon introduction"):
+                    check_reading_flow(source)
+        with self.assertRaisesRegex(AssertionError, "colon introduction"):
+            check_reading_flow('<p>Compare:</p><h2>Not an example</h2>', study=True)
+
+    def test_inline_math_does_not_hide_a_study_colon(self):
+        with self.assertRaisesRegex(AssertionError, "colon introduction"):
+            check_reading_flow('<p>For <math><mi>x</mi></math>:</p><p>No example.</p>', study=True)
+
 
 if __name__ == "__main__":
     unittest.main()

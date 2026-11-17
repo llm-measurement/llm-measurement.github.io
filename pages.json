@@ -92,5 +92,23 @@
     "title": "For security reviewers",
     "description": "Data paths, identity handling, manual release verification and repository controls for LLM Measurement tools.",
     "kind": "reference"
+  },
+  {
+    "slug": "studies",
+    "title": "Studies",
+    "description": "Studies of LLM usage, with methods, measurements and reproducible evidence.",
+    "kind": "reference",
+    "nav_label": "Studies"
+  },
+  {
+    "slug": "prompt-cache-bills",
+    "title": "Same Prompt, Same Cache, Opposite Bills",
+    "document_title": "When Prompt Caching Costs More: Same Prompt, Opposite Bills",
+    "description": "Prompt caching can raise an LLM bill. The break-even math, why parallel sub-agents miss the cache, and how to check reads versus writes in your logs.",
+    "kind": "study",
+    "article": true,
+    "published": "2026-11-17T00:00:00Z",
+    "modified": "2026-11-17T00:00:00Z",
+    "navigation": false
   }
 ]
