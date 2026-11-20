@@ -25,10 +25,11 @@
 
 - [Studies](https://llm-measurement.github.io/studies.html): Studies of LLM usage, with methods, measurements and reproducible evidence.
 - [Same Prompt, Same Cache, Opposite Bills](https://llm-measurement.github.io/prompt-cache-bills.html): Prompt caching can raise an LLM bill. The break-even math, why parallel sub-agents miss the cache, and how to check reads versus writes in your logs.
+- [Haiku 5.5 is 20× cheaper than Sonnet on paper, 3.4× on a Claude Code trace](https://llm-measurement.github.io/haiku-sonnet-100k-cliff.html): A 233-session Claude Code trace priced at Haiku 5.5 and Sonnet 5.5 rates: the 100,000-token tier and cache-read discounts turn 20× into 3.4×.
 
 ## Released tools used in these examples
 
-- fleetdiff v0.14.1 in all fleetdiff guides
+- fleetdiff v0.14.1 in all fleetdiff guides; v0.15.0 in the Haiku and Sonnet study
 - llm-sketchkit v0.4.0 on the home page; v0.3.0 in the existing Python guides
 - Collector configuration guidance: v0.7.3; Helm chart 0.7.4
 

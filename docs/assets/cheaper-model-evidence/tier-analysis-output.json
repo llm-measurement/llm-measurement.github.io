@@ -1,0 +1,99 @@
+{
+ "breakdown_share": {
+  "fable-5.2": {
+   "output": 0.2017126479304546,
+   "read": 0.20123710476406287,
+   "write": 0.5970502473054825
+  },
+  "haiku-5.5": {
+   "output": 0.11369634056312715,
+   "read": 0.5201865661654312,
+   "write": 0.36611709327144176
+  },
+  "haiku-5.5-all-short": {
+   "output": 0.12577865238762231,
+   "read": 0.50192850289363,
+   "write": 0.37229284471874763
+  },
+  "sonnet-5.5": {
+   "output": 0.1679207602982538,
+   "read": 0.3350497648898187,
+   "write": 0.49702947481192755
+  }
+ },
+ "breakdown_usd": {
+  "fable-5.2": {
+   "output": 2390.3596399999988,
+   "read": 2384.7243007999873,
+   "write": 7075.23712
+  },
+  "haiku-5.5": {
+   "output": 120.63056149999998,
+   "read": 551.9122009599968,
+   "write": 388.44619200000005
+  },
+  "haiku-5.5-all-short": {
+   "output": 29.87949550000001,
+   "read": 119.23621504000015,
+   "write": 88.44046399999998
+  },
+  "sonnet-5.5": {
+   "output": 597.5899099999997,
+   "read": 1192.3621503999937,
+   "write": 1768.80928
+  }
+ },
+ "by_session_size_quartile": [
+  {
+   "median_share_calls_over_100k": 0.10882352941176471,
+   "sessions": 58,
+   "sonnet_usd_max": 1.5359588,
+   "sonnet_usd_min": 0.285406,
+   "times_cheaper": 6.844418311232592
+  },
+  {
+   "median_share_calls_over_100k": 0.5586885245901639,
+   "sessions": 58,
+   "sonnet_usd_max": 4.155848799999999,
+   "sonnet_usd_min": 1.6254284,
+   "times_cheaper": 4.634653186909314
+  },
+  {
+   "median_share_calls_over_100k": 0.7493355481727575,
+   "sessions": 58,
+   "sonnet_usd_max": 12.699268799999995,
+   "sonnet_usd_min": 4.202938800000001,
+   "times_cheaper": 3.676965066283123
+  },
+  {
+   "median_share_calls_over_100k": 0.7816455696202531,
+   "sessions": 59,
+   "sonnet_usd_max": 364.7483463999994,
+   "sonnet_usd_min": 13.281595199999996,
+   "times_cheaper": 3.236751997354302
+  }
+ ],
+ "calls": 60996,
+ "calls_over_100k_share": 0.6296150567250312,
+ "largest_session_over_median": 86.7841202922106,
+ "prompt_tokens_quartiles": [
+  71104.0,
+  140800.0,
+  275200.0
+ ],
+ "ratio_to_sonnet": {
+  "fable-5.2": 3.329900470220363,
+  "haiku-5.5": 0.29813433747730467,
+  "haiku-5.5-all-short": 0.06675248824449116,
+  "sonnet-5.5": 1.0
+ },
+ "sonnet_spend_over_100k_share": 0.8529579942157128,
+ "times_cheaper_than_sonnet": {
+  "fable-5.2": 0.3003092761910157,
+  "haiku-5.5": 3.354192638330781,
+  "haiku-5.5-all-short": 14.980714971063664,
+  "sonnet-5.5": 1.0
+ },
+ "tokenizer_sensitivity_times_cheaper": 3.3421134705356783,
+ "top10_share_of_sonnet_spend": 0.40933941556088155
+}

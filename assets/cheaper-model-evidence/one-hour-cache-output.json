@@ -1,0 +1,36 @@
+{
+  "5min": {
+    "sonnet": {
+      "writes": 1768.81,
+      "reads": 1192.36,
+      "output": 597.59,
+      "total": 3558.76
+    },
+    "haiku": {
+      "writes": 388.45,
+      "reads": 551.91,
+      "output": 120.63,
+      "total": 1060.99
+    },
+    "times_cheaper": 3.3542,
+    "written_tokens": 707523712,
+    "read_tokens": 11923621504
+  },
+  "1h": {
+    "sonnet": {
+      "writes": 1154.9,
+      "reads": 1234.24,
+      "output": 597.59,
+      "total": 2986.73
+    },
+    "haiku": {
+      "writes": 215.33,
+      "reads": 572.22,
+      "output": 120.63,
+      "total": 908.18
+    },
+    "times_cheaper": 3.2887,
+    "written_tokens": 288725440,
+    "read_tokens": 12342419776
+  }
+}

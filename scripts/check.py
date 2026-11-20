@@ -144,7 +144,7 @@ def main():
         if entry["slug"] != "index" and not entry.get("kind"):
             assert path.read_text().count('<summary>What the numbers mean</summary>') == 1, path.name
         else:
-            assert "What the numbers mean" not in path.read_text(), path.name
+            assert '<summary>What the numbers mean</summary>' not in path.read_text(), path.name
         assert page.links.count("summaries.html#measurement-notes") == 1, path.name
         assert page.h1 == 1 and page.has_description, path.name
         title = entry.get("document_title", entry["title"] + " | LLM Measurement")

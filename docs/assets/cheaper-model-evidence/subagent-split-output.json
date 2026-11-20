@@ -1,0 +1,12 @@
+{
+  "main_sonnet": 2932.3890300000153,
+  "sub_sonnet": 626.3723103999964,
+  "sub_haiku": 155.24482023999965,
+  "main": 38529,
+  "sub": 22467,
+  "sub_over_100k": 9615,
+  "main_over_100k": 28789,
+  "subagent_share_of_sonnet_bill": 0.17600851826989639,
+  "subagent_times_cheaper_on_haiku": 4.034738868785834,
+  "bill_with_subagents_on_haiku_vs_all_sonnet": 0.8676147555016878
+}

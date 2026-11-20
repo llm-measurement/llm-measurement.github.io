@@ -266,6 +266,22 @@ class BuildTests(unittest.TestCase):
                 self.assert_analytics((build.ROOT / 'docs' / (page['slug'] + '.html')).read_text(),
                                       article=page.get('article') is True)
 
+    def test_haiku_study_analytics_and_discovery(self):
+        slug = 'haiku-sonnet-100k-cliff'
+        page, = [page for page in build.PAGES if page['slug'] == slug]
+        rendered = (build.ROOT / 'docs' / (slug + '.html')).read_text()
+        self.assert_analytics(rendered, article=True)
+        self.assertIn('Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>', rendered)
+        self.assertEqual(rendered.count('<h1>'), 1)
+        self.assertIn('<h1>' + html.escape(page['title']) + '</h1>', rendered)
+        self.assertIn('<h3 id="what-the-numbers-mean">What the numbers mean</h3>', rendered)
+        self.assertIn(build.canonical(page), (build.ROOT / 'docs/sitemap.xml').read_text())
+        self.assertIn(build.canonical(page), (build.ROOT / 'docs/llms.txt').read_text())
+        for name in ('index', 'studies'):
+            listing = (build.ROOT / 'docs' / (name + '.html')).read_text()
+            self.assertLess(listing.index('href="prompt-cache-bills.html"'),
+                            listing.index('href="' + slug + '.html"'))
+
     def test_verification_survives_rebuild_and_stale_asset_cleanup(self):
         source = build.ROOT
         name = "googled831a5845f87080c.html"

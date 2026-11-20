@@ -152,5 +152,7 @@ jobs:
           python-version: '3.13'
       - name: Verify the live study and evidence before indexing
         run: python3 scripts/study_outsider.py --live
+      - name: Verify the live Haiku and Sonnet study before indexing
+        run: python3 scripts/cheaper_study_outsider.py --live
       - name: Verify live pages and notify IndexNow
         run: python3 scripts/indexnow.py --submit

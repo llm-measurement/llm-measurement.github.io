@@ -17,5 +17,6 @@
   "summaries": "9527b8718288ba657e2dc85cae4626510cd3449726606a002eacb78f6a0cdefe",
   "security": "86fbd7b08c8c43233937000a6d24b186cbf4bb676293019452952b8fb9863463",
   "studies": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-  "prompt-cache-bills": "487a60214692626f8fae8f90c0f0f420a2b37103e2840aa75d609ffca93dbdef"
+  "prompt-cache-bills": "487a60214692626f8fae8f90c0f0f420a2b37103e2840aa75d609ffca93dbdef",
+  "haiku-sonnet-100k-cliff": "e066e7f2dc232e6bab7eb5697bf7a2fb6cb308238cdff5d8bac8a06abfe92c60"
 }

@@ -1,0 +1,49 @@
+{
+  "pass": true,
+  "anonymous_get_only": true,
+  "bounded_fetch": "same-origin 2 MiB; external 8 MiB",
+  "citations": [
+    {
+      "url": "https://github.com/llm-measurement/fleetdiff",
+      "status": 200,
+      "bytes": 299863,
+      "sha256": "eee9ea388cd8a18058e2bff9773e084a489ecb3331fe12f5d4f82d5b10d21969"
+    },
+    {
+      "url": "https://github.com/llm-measurement/fleetdiff/blob/main/docs/WHAT_IF_CALIBRATION.md",
+      "status": 200,
+      "bytes": 212125,
+      "sha256": "e1374e2a6ed86805539eb662d518a04f384960cecd2b6243296150be3346683b"
+    },
+    {
+      "url": "https://huggingface.co/datasets/semianalysisai/cc-traces-weka-061526",
+      "status": 200,
+      "bytes": 219637,
+      "sha256": "c0cce9449c073d3e4d28082ff620f89bc5761870fa27b06356864c007a7a04f0"
+    },
+    {
+      "url": "https://llm-measurement.github.io/prompt-cache-bills.html",
+      "status": 200,
+      "bytes": 39714,
+      "sha256": "7be17062d37ebc21ce93db9228e94426fc485df9fffefc455a8ae949b348ce8d"
+    },
+    {
+      "url": "https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence",
+      "status": 200,
+      "bytes": 2867903,
+      "sha256": "55a8fc66a1804f108446322fcfb0ce01ce02874066eacb2c8832257b6400a21a"
+    },
+    {
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "status": 200,
+      "bytes": 798160,
+      "sha256": "c352e307770479965af23cfd99707b855753cb74890ef0d2ac48980e8ba58860"
+    },
+    {
+      "url": "https://www.anthropic.com/claude-haiku-5-5",
+      "status": 200,
+      "bytes": 231689,
+      "sha256": "f53aef8a90e04a699ae8b7a0b756e9d2f6455ee315aa2da47c331e1c6ec78a08"
+    }
+  ]
+}

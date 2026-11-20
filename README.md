@@ -32,6 +32,7 @@ retains the versions and source revisions used for those measurements.
 | Study | Page |
 | --- | --- |
 | Same Prompt, Same Cache, Opposite Bills | [Prompt caching](docs/prompt-cache-bills.html) |
+| Haiku 5.5 is 20× cheaper than Sonnet on paper, 3.4× on a Claude Code trace | [Haiku and Sonnet](docs/haiku-sonnet-100k-cliff.html) |
 
 The [Studies index](docs/studies.html) lists the studies. Article metadata and
 publication sitemap dates are stamped from committed page history when the
