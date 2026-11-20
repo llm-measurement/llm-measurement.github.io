@@ -74,8 +74,9 @@ try {
       const page = await context.newPage();
       const original = await context.newPage();
       const newPage = !(await fs.access(path.join(baseline, 'docs', slug + '.html')).then(() => true, () => false));
-      assert(!newPage || ['langfuse-spend', 'agent-spend', 'studies', 'prompt-cache-bills'].includes(slug), 'unexpected missing baseline page');
-      const baselinePage = newPage ? (['studies', 'prompt-cache-bills'].includes(slug) ? 'index.html' : 'litellm-spend.html')
+      assert(!newPage || ['langfuse-spend', 'agent-spend', 'studies', 'prompt-cache-bills', 'haiku-sonnet-100k-cliff'].includes(slug), 'unexpected missing baseline page');
+      const baselinePage = newPage ? (slug === 'haiku-sonnet-100k-cliff' ? 'prompt-cache-bills.html'
+        : ['studies', 'prompt-cache-bills'].includes(slug) ? 'index.html' : 'litellm-spend.html')
         : slug === 'index' ? '' : slug + '.html';
       await original.goto('https://baseline.invalid/' + baselinePage);
       await page.goto('https://llm-measurement.github.io/' + (slug === 'index' ? '' : slug + '.html') +
@@ -89,16 +90,35 @@ try {
       if (newPage && kind === 'study') {
         assert.equal(after.intro[0][1], title);
         assert.equal(await page.locator('main article.study').count(), 1);
-        assert.equal(await page.locator('main pre').count(), 3);
-        assert.equal(await page.locator('main details > summary').textContent(),
-          'SQL: cache reads and writes per API key, last seven days');
-        assert(await page.locator('main math').count() > 0);
+        if (slug === 'prompt-cache-bills') {
+          assert.equal(await page.locator('main pre').count(), 3);
+          assert.equal(await page.locator('main details > summary').textContent(),
+            'SQL: cache reads and writes per API key, last seven days');
+          assert(await page.locator('main math').count() > 0);
+        } else {
+          assert.equal(slug, 'haiku-sonnet-100k-cliff');
+          assert.equal(await page.locator('main pre.output').count(), 2);
+          assert.equal(await page.locator('main .study-table').count(), 2);
+          assert.equal(await page.locator('main hr + h3#what-the-numbers-mean').textContent(), 'What the numbers mean');
+          assert.equal(await page.locator('.study-chart svg[role="img"]').count(), 1);
+          assert.equal(await page.locator('.study-chart .s').evaluate(e => getComputedStyle(e).fill), 'rgb(252, 252, 251)');
+          for (const scroller of await page.locator('.study-chart, .study-table, main pre').all()) {
+            assert(await scroller.evaluate(e => getComputedStyle(e).overflowX === 'auto' && e.clientWidth <= innerWidth));
+          }
+          const chart = page.locator('.study-chart');
+          await chart.focus();
+          await page.keyboard.press('End');
+          assert(await chart.evaluate(e => document.activeElement === e));
+        }
         const ids = await page.locator('main h2').evaluateAll(nodes => nodes.map(node => node.id));
         assert(ids.every(Boolean) && new Set(ids).size === ids.length);
-      } else if (newPage && slug === 'studies') {
+      } else if (slug === 'studies') {
         assert.equal(after.intro[0][1], title);
         assert.equal(after.intro[1][0], 'P');
         assert.equal(await page.locator('main a[href="prompt-cache-bills.html"]').count(), 1);
+        assert.equal(await page.locator('main a[href="haiku-sonnet-100k-cliff.html"]').count(), 1);
+        assert.deepEqual(await page.locator('main .questions > li > a').evaluateAll(nodes => nodes.map(e => e.getAttribute('href'))),
+          ['prompt-cache-bills.html', 'haiku-sonnet-100k-cliff.html']);
       } else if (newPage) {
         assert.equal(after.intro[0][1], title);
         assert.equal(after.intro[1][0], 'P');
@@ -201,6 +221,12 @@ try {
       assert.deepEqual(await page.evaluate(() => {
         const s = getComputedStyle(document.documentElement); return [s.colorScheme, s.backgroundColor, s.color];
       }), ['light', 'rgb(251, 252, 250)', 'rgb(23, 33, 43)']);
+      if (slug === 'haiku-sonnet-100k-cliff') {
+        assert.equal(await page.locator('.study-chart .s').evaluate(e => getComputedStyle(e).fill), 'rgb(252, 252, 251)');
+        await page.locator('.study-chart').evaluate(e => { e.scrollLeft = 0; });
+        await page.screenshot({ path: path.join(out, `${slug}-${width}-dark-system.png`), fullPage: true });
+        await page.locator('.study-chart').screenshot({ path: path.join(out, `${slug}-${width}-chart-dark-system.png`) });
+      }
       await page.emulateMedia({ colorScheme: 'light' });
       await page.evaluate(() => window.scrollTo(0, 0));
       const geometry = await page.evaluate(() => ({ width: innerWidth, scroll: document.documentElement.scrollWidth,
@@ -210,10 +236,15 @@ try {
       assert.equal(geometry.width, geometry.scroll, `${slug}/${width}: horizontal overflow`);
       assert(geometry.folded);
       if (slug === 'litellm-spend' && width === 1366) assert(geometry.indexBottom < 768);
-      if (['index', 'litellm-spend', 'langfuse-spend', 'agent-spend', 'studies', 'prompt-cache-bills'].includes(slug)) {
+      if (['index', 'litellm-spend', 'langfuse-spend', 'agent-spend', 'studies', 'prompt-cache-bills', 'haiku-sonnet-100k-cliff'].includes(slug)) {
         await page.screenshot({ path: path.join(out, `${slug}-${width}.png`) });
         await page.locator('footer').scrollIntoViewIfNeeded();
         await page.screenshot({ path: path.join(out, `${slug}-${width}-contact.png`) });
+      }
+      if (slug === 'haiku-sonnet-100k-cliff') {
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await page.screenshot({ path: path.join(out, `${slug}-${width}-light.png`), fullPage: true });
+        await page.locator('.study-chart').screenshot({ path: path.join(out, `${slug}-${width}-chart-light.png`) });
       }
       results.push({ slug, width, colorScheme: 'light', geometry, contrastPairs,
         inputFirstUnchanged: newPage ? null : true, inputFirstVerified: true, newPage,

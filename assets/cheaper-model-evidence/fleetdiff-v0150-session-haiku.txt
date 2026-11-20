@@ -1,0 +1,99 @@
+233 sessions with model calls; 233 have complete recorded spend.
+Grouped by session ID alone (LiteLLM v1.104.0 counter unit). Wed 2026-10-07 00:00:00 UTC to Thu 2026-10-08 00:00:00 UTC (end exclusive).
+
+Observed session totals
+Recorded USD: p50 $1.08; p95 $19.35; max $116.90 (n=233, exact nearest-rank).
+Logged model calls: p50 81; p95 979; max 4095 (n=233, exact nearest-rank).
+
+Largest sessions by recorded spend
+  session-1: $116.90; calls=3,453.
+    agents: unknown; agent attribution: 0 known, 3,453 missing rows.
+  session-2: $60.54; calls=1,896.
+    agents: unknown; agent attribution: 0 known, 1,896 missing rows.
+  session-3: $55.95; calls=4,095.
+    agents: unknown; agent attribution: 0 known, 4,095 missing rows.
+  session-4: $44.80; calls=2,347.
+    agents: unknown; agent attribution: 0 known, 2,347 missing rows.
+  session-5: $41.34; calls=2,866.
+    agents: unknown; agent attribution: 0 known, 2,866 missing rows.
+  session-6: $33.99; calls=794.
+    agents: unknown; agent attribution: 0 known, 794 missing rows.
+  session-7: $29.57; calls=777.
+    agents: unknown; agent attribution: 0 known, 777 missing rows.
+  session-8: $27.50; calls=798.
+    agents: unknown; agent attribution: 0 known, 798 missing rows.
+  session-9: $27.32; calls=2,405.
+    agents: unknown; agent attribution: 0 known, 2,405 missing rows.
+  session-10: $25.62; calls=3,225.
+    agents: unknown; agent attribution: 0 known, 3,225 missing rows.
+  session-11: $25.05; calls=1,180.
+    agents: unknown; agent attribution: 0 known, 1,180 missing rows.
+  session-12: $19.35; calls=499.
+    agents: unknown; agent attribution: 0 known, 499 missing rows.
+  session-13: $19.31; calls=795.
+    agents: unknown; agent attribution: 0 known, 795 missing rows.
+  session-14: $19.30; calls=615.
+    agents: unknown; agent attribution: 0 known, 615 missing rows.
+  session-15: $16.42; calls=499.
+    agents: unknown; agent attribution: 0 known, 499 missing rows.
+  session-16: $15.38; calls=523.
+    agents: unknown; agent attribution: 0 known, 523 missing rows.
+  session-17: $14.66; calls=594.
+    agents: unknown; agent attribution: 0 known, 594 missing rows.
+  session-18: $14.15; calls=886.
+    agents: unknown; agent attribution: 0 known, 886 missing rows.
+  session-19: $13.36; calls=272.
+    agents: unknown; agent attribution: 0 known, 272 missing rows.
+  session-20: $11.89; calls=397.
+    agents: unknown; agent attribution: 0 known, 397 missing rows.
+
+Sessions spanning more than 3600 seconds between first and last positive-spend request starts: 150.
+  session-1: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 3,453 missing rows.
+  session-2: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 1,896 missing rows.
+  session-3: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 4,095 missing rows.
+  session-4: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 2,347 missing rows.
+  session-5: 45875.661 seconds.
+    agents: unknown; agent attribution: 0 known, 2,866 missing rows.
+  session-6: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 794 missing rows.
+  session-7: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 777 missing rows.
+  session-8: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 798 missing rows.
+  session-9: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 2,405 missing rows.
+  session-10: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 3,225 missing rows.
+  session-11: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 1,180 missing rows.
+  session-12: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 499 missing rows.
+  session-13: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 795 missing rows.
+  session-14: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 615 missing rows.
+  session-15: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 499 missing rows.
+  session-16: 47958.686 seconds.
+    agents: unknown; agent attribution: 0 known, 523 missing rows.
+  session-17: 24734.479 seconds.
+    agents: unknown; agent attribution: 0 known, 594 missing rows.
+  session-18: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 886 missing rows.
+  session-19: 32164.44 seconds.
+    agents: unknown; agent attribution: 0 known, 272 missing rows.
+  session-20: 64800 seconds.
+    agents: unknown; agent attribution: 0 known, 397 missing rows.
+This is a recorded duration, not evidence that a counter reset.
+
+Identity and usage coverage
+60,996 logged model calls in the selected period.
+Agent attribution: 0 known, 60,996 missing of 60,996 selected rows.
+  acompletion: agent attribution 0 known, 60,996 missing rows.
+Missing agent IDs cannot rule out sharing; known distinct identities still establish observed sharing.
+0 of 233 identified sessions contain one model call.
+Rejection classification: 0 of 60,996 selected rows include the derived column; failure logging completeness is unknown.

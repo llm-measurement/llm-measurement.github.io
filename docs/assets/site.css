@@ -59,6 +59,18 @@ details > summary { cursor: pointer; font-weight: 600; padding: 12px 0; }
 body:has(.study, .studies-index) header > a:last-child { flex-shrink: 0; white-space: nowrap; }
 .study > p:first-child { font-size: 18px; }
 .study h2 { margin-top: 40px; }
+.study h3 { font-size: 17px; line-height: 1.4; margin: 24px 0 12px; }
+.study hr { border: 0; border-top: 1px solid var(--line); margin: 40px 0 24px; }
+.study .study-chart { max-width: 100%; overflow-x: auto; }
+.study .study-chart svg { display: block; width: 100%; min-width: 680px; height: auto; }
+.study .study-chart:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.study-chart .s { fill: #fcfcfb; }
+.study-chart .p { fill: #2a78d6; }
+.study-chart .r { fill: #eb6834; }
+.study-chart .t1 { fill: #1f1f1e; }
+.study-chart .t2 { fill: #5b5a55; }
+.study-chart .g { stroke: #e4e3de; }
+.study-chart .a { stroke: #bdbcb5; }
 .study .equation { overflow-x: auto; max-width: 100%; padding: 12px 0; }
 .study .equation math { min-width: max-content; margin: 0 auto; }
 .study math { font-size: 1.05em; }

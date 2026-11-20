@@ -1,0 +1,33 @@
+Moving 100% of claude-sonnet-5-5 traffic to claude-haiku-5-5 (covered usage): $3,558.76 -> $1,060.99 at the same work and output length, on 2026-11-19 prices.
+Target price tiers: 22,592 requests at or under 100,000 prompt tokens; 38,404 over.
+Period: Wed 2026-10-07 00:00:00 UTC -> Thu 2026-10-08 00:00:00 UTC (end exclusive). Prices: 2026-11-19 (bundled); measured factors: 2026-10-14.
+
+Level 1, same work and output verbosity: $1,060.99
+
+Output-length sensitivity (benchmark verbosity ratios; a canary on your own traffic measures yours):
+  Output share of moved target cost at level 1: 11.37%
+  qa: $1,008.29 (propagated mean-interval endpoints $990.08 to $1,033.17)
+  extraction: $1,092.02 (propagated mean-interval endpoints $1,059.06 to $1,134.13)
+  coding: $1,243.65 (propagated mean-interval endpoints $1,176.46 to $1,329.96)
+
+move-1: 100% of claude-sonnet-5-5 -> claude-haiku-5-5
+  Moved traffic, level 1: $3,558.76 -> $1,060.99; input tokenizer factor 1.000000000
+  qa: $1,008.29 ($990.08 to $1,033.17)
+  extraction: $1,092.02 ($1,059.06 to $1,134.13)
+  coding: $1,243.65 ($1,176.46 to $1,329.96)
+
+Coverage: 60996 observations priced; missing splits are excluded, never zero.
+  60996 moved observations have no workload mapping; all three workload assumptions are shown where measured.
+Dominant uncertainty: How output verbosity on your traffic differs from the measured workload averages.
+
+Assumptions
+- Fractions move a uniform share of original covered token volume, with the same work and observed cache-read/write shares. Moves do not cascade.
+- Level 1 keeps output tokens unchanged, including billed reasoning. Level 2 uses the study's geometric mean paired output ratios.
+- Baseline and scenarios use the dated price table, not recorded spend. Cache reads and writes are disjoint input subsets; cache-write pricing assumes the measured short-lived cache class.
+- Level 2 endpoints propagate approximate 95% log-mean intervals for geometric mean ratios; combined endpoints and the workload envelope are not joint confidence or prediction intervals.
+
+Limits
+- Factors are averages on public benchmark tasks; customer traffic may differ.
+- Individual requests vary widely; the per-request range test failed.
+- This re-pricing is not a forecast or an invoice.
+- No quality equivalence is claimed.

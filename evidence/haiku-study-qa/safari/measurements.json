@@ -1,0 +1,261 @@
+[
+  {
+    "preference": "light",
+    "width": 320,
+    "scrollWidth": 320,
+    "dark": false,
+    "chart": [
+      [
+        280,
+        680,
+        0,
+        "auto",
+        "rgb(252, 252, 251)"
+      ]
+    ],
+    "scrollers": [
+      [
+        280,
+        520,
+        "auto"
+      ],
+      [
+        280,
+        520,
+        "auto"
+      ],
+      [
+        276,
+        1306,
+        "auto"
+      ],
+      [
+        276,
+        655,
+        "auto"
+      ]
+    ]
+  },
+  {
+    "preference": "light",
+    "width": 1366,
+    "scrollWidth": 1366,
+    "dark": false,
+    "chart": [
+      [
+        760,
+        760,
+        0,
+        "auto",
+        "rgb(252, 252, 251)"
+      ]
+    ],
+    "scrollers": [
+      [
+        760,
+        760,
+        "auto"
+      ],
+      [
+        760,
+        760,
+        "auto"
+      ],
+      [
+        756,
+        1306,
+        "auto"
+      ],
+      [
+        756,
+        756,
+        "auto"
+      ]
+    ]
+  },
+  {
+    "preference": "light",
+    "width": 390,
+    "scrollWidth": 390,
+    "dark": false,
+    "chart": [
+      [
+        350,
+        680,
+        0,
+        "auto",
+        "rgb(252, 252, 251)"
+      ]
+    ],
+    "scrollers": [
+      [
+        350,
+        520,
+        "auto"
+      ],
+      [
+        350,
+        520,
+        "auto"
+      ],
+      [
+        346,
+        1306,
+        "auto"
+      ],
+      [
+        346,
+        655,
+        "auto"
+      ]
+    ]
+  },
+  {
+    "preference": "light",
+    "width": 320,
+    "scrollWidth": 320,
+    "dark": false,
+    "chart": [
+      [
+        280,
+        680,
+        0,
+        "auto",
+        "rgb(252, 252, 251)"
+      ]
+    ],
+    "scrollers": [
+      [
+        280,
+        520,
+        "auto"
+      ],
+      [
+        280,
+        520,
+        "auto"
+      ],
+      [
+        276,
+        1306,
+        "auto"
+      ],
+      [
+        276,
+        655,
+        "auto"
+      ]
+    ]
+  },
+  {
+    "preference": "dark",
+    "width": 1366,
+    "scrollWidth": 1366,
+    "dark": true,
+    "chart": [
+      [
+        760,
+        760,
+        0,
+        "auto",
+        "rgb(252, 252, 251)"
+      ]
+    ],
+    "scrollers": [
+      [
+        760,
+        760,
+        "auto"
+      ],
+      [
+        760,
+        760,
+        "auto"
+      ],
+      [
+        756,
+        1306,
+        "auto"
+      ],
+      [
+        756,
+        756,
+        "auto"
+      ]
+    ]
+  },
+  {
+    "preference": "dark",
+    "width": 390,
+    "scrollWidth": 390,
+    "dark": true,
+    "chart": [
+      [
+        350,
+        680,
+        0,
+        "auto",
+        "rgb(252, 252, 251)"
+      ]
+    ],
+    "scrollers": [
+      [
+        350,
+        520,
+        "auto"
+      ],
+      [
+        350,
+        520,
+        "auto"
+      ],
+      [
+        346,
+        1306,
+        "auto"
+      ],
+      [
+        346,
+        655,
+        "auto"
+      ]
+    ]
+  },
+  {
+    "preference": "dark",
+    "width": 320,
+    "scrollWidth": 320,
+    "dark": true,
+    "chart": [
+      [
+        280,
+        680,
+        0,
+        "auto",
+        "rgb(252, 252, 251)"
+      ]
+    ],
+    "scrollers": [
+      [
+        280,
+        520,
+        "auto"
+      ],
+      [
+        280,
+        520,
+        "auto"
+      ],
+      [
+        276,
+        1306,
+        "auto"
+      ],
+      [
+        276,
+        655,
+        "auto"
+      ]
+    ]
+  }
+]

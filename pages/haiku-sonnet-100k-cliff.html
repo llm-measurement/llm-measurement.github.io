@@ -1,0 +1,93 @@
+<article class="study">
+<p>On paper, Haiku 5.5 costs a twentieth of Sonnet 5.5 per input and output token. In the fine print, that rate holds only up to 100,000 prompt tokens. One token past that line and the entire request reprices at 5×: input, cache hits and output alike. Anthropic <a href="https://platform.claude.com/docs/en/about-claude/pricing#long-context-pricing">counts cache reads and writes toward the 100,000</a>.</p>
+<p>Coding agents live in long contexts, so we checked how often they cross that line. SemiAnalysis published a trace of 233 Claude Code sessions (<a href="https://huggingface.co/datasets/semianalysisai/cc-traces-weka-061526">cc-traces-weka-061526</a>): 60,996 model calls, each with its prompt size, output size and 64-token prefix hashes. We replayed five-minute prompt caching from those hashes, the same way as in our <a href="prompt-cache-bills.html">cache study</a>, and priced the exact same work at both models' published rates. Sixty-three percent of the calls cleared 100,000 tokens. Instead of a 20× price cut, the whole trace came out 3.4× cheaper on Haiku (29.8% of Sonnet's bill), and that assumes Haiku finishes every task without taking a single extra step.</p>
+<h2 id="where-the-20-goes">Where the 20× goes</h2>
+<p>Split the cached bill by what it pays for, and half of Sonnet's spend turns out to be cache writes:</p>
+<div class="study-table"><table><thead><tr><th scope="col">Component</th><th scope="col">Sonnet 5.5</th><th scope="col">Haiku 5.5</th><th scope="col">Fable 5.2</th></tr></thead><tbody>
+<tr><td>Cache writes</td><td>$1,769 (50%)</td><td>$388 (37%)</td><td>$7,075 (60%)</td></tr>
+<tr><td>Cache reads</td><td>$1,192 (34%)</td><td>$552 (52%)</td><td>$2,385 (20%)</td></tr>
+<tr><td>Output</td><td>$598 (17%)</td><td>$121 (11%)</td><td>$2,390 (20%)</td></tr>
+<tr><td>Total</td><td>$3,559</td><td>$1,061</td><td>$11,850</td></tr>
+</tbody></table></div>
+<p>Most of that $1,769 pays for old context. In the replay (which, like the cache study, offers every prompt to the cache, so uncached tokens are written at 1.25× the input price rather than billed as plain input), 69% of the written tokens had already been cached once and expired during a pause of more than five minutes. Roughly a third of Sonnet's whole bill goes to paying again for context the cache dropped. Our <a href="prompt-cache-bills.html">cache study</a> makes the case for the one-hour cache on traffic like this. On this trace it cuts the Sonnet bill by 16% and Haiku's by 14%, which moves more of the spend from writes to reads and narrows Haiku's edge from 3.4× to 3.3×.</p>
+<p>Output is the smallest line: 17% of the Sonnet bill and 11% of Haiku's. A chattier model moves an agent's bill far less than one that takes more turns.</p>
+<p>The less obvious factor is that Anthropic gives larger models steeper cache-read discounts. A cache read costs 0.025× the input price on Fable 5.2, 0.05× on Opus 5.5 and Sonnet 5.5, and 0.10× on Haiku 5.5. Calls over 100,000 tokens carry 85% of Sonnet's spend on this trace, and on those calls Haiku's writes and output are four times cheaper than Sonnet's while its reads are only twice as cheap ($0.05 against $0.10 per million). The same rule explains the Fable row: Fable lists at four times Sonnet's price, its cache reads cost twice as much, and Sonnet comes out 3.3× cheaper rather than 4×. Opus 5.5 to Sonnet 5.5 is exactly half on every line of the price sheet, and it comes out exactly 2×.</p>
+<figure class="study-chart" tabindex="0" role="region" aria-label="How much cheaper the smaller model is, on the price sheet and on the re-priced trace"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 348" role="img" aria-labelledby="t d" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<title id="t">How much cheaper the smaller model is, on the price sheet and on a re-priced Claude Code trace</title>
+<desc id="d">Opus 5.5 → Sonnet 5.5: 2.0 on the price sheet, 2.0 on the trace; Fable 5.2 → Sonnet 5.5: 4.0 on the price sheet, 3.3 on the trace; Sonnet 5.5 → Haiku 5.5: 20.0 on the price sheet, 3.4 on the trace; Same, if prompts stayed under 100k: 20.0 on the price sheet, 15.0 on the trace.</desc>
+<style>.s{fill:#fcfcfb}.p{fill:#2a78d6}.r{fill:#eb6834}.t1{fill:#1f1f1e}.t2{fill:#5b5a55}.g{stroke:#e4e3de;stroke-width:1}.a{stroke:#bdbcb5;stroke-width:1}@media (prefers-color-scheme: dark){.s{fill:#1a1a19}.p{fill:#3987e5}.r{fill:#d95926}.t1{fill:#f0efec}.t2{fill:#c3c2b7}.g{stroke:#2f2f2d}.a{stroke:#55544f}}</style>
+<rect class="s" width="680" height="348"/>
+<text class="t1" x="16" y="26" font-size="15" font-weight="600">How much cheaper is the smaller model?</text>
+<rect class="p" x="16" y="42" width="12" height="12" rx="3"/><text class="t2" x="34" y="52" font-size="12">Price sheet (base input price)</text>
+<rect class="r" x="230" y="42" width="12" height="12" rx="3"/><text class="t2" x="248" y="52" font-size="12">233 Claude Code sessions, re-priced with caching</text>
+<line class="g" x1="236.0" y1="72" x2="236.0" y2="296"/>
+<text class="t2" x="236.0" y="314" font-size="11" text-anchor="middle">0×</text>
+<line class="g" x1="333.0" y1="72" x2="333.0" y2="296"/>
+<text class="t2" x="333.0" y="314" font-size="11" text-anchor="middle">5×</text>
+<line class="g" x1="430.0" y1="72" x2="430.0" y2="296"/>
+<text class="t2" x="430.0" y="314" font-size="11" text-anchor="middle">10×</text>
+<line class="g" x1="527.0" y1="72" x2="527.0" y2="296"/>
+<text class="t2" x="527.0" y="314" font-size="11" text-anchor="middle">15×</text>
+<line class="g" x1="624.0" y1="72" x2="624.0" y2="296"/>
+<text class="t2" x="624.0" y="314" font-size="11" text-anchor="middle">20×</text>
+<text class="t2" x="430.0" y="332" font-size="11" text-anchor="middle">times cheaper than the bigger model</text>
+<text class="t1" x="224" y="97.0" font-size="12.5" text-anchor="end">Opus 5.5 → Sonnet 5.5</text>
+<path class="p" d="M236,78 h34.8 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-34.8 z"><title>Opus 5.5 → Sonnet 5.5, price sheet: 2.0× cheaper</title></path>
+<text class="t1" x="280.8" y="89" font-size="11.5">2.0×</text>
+<path class="r" d="M236,94 h34.8 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-34.8 z"><title>Opus 5.5 → Sonnet 5.5, on the trace: 2.0× cheaper</title></path>
+<text class="t1" x="280.8" y="105" font-size="11.5">2.0×</text>
+<text class="t1" x="224" y="153.0" font-size="12.5" text-anchor="end">Fable 5.2 → Sonnet 5.5</text>
+<path class="p" d="M236,134 h73.6 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-73.6 z"><title>Fable 5.2 → Sonnet 5.5, price sheet: 4.0× cheaper</title></path>
+<text class="t1" x="319.6" y="145" font-size="11.5">4.0×</text>
+<path class="r" d="M236,150 h60.6 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-60.6 z"><title>Fable 5.2 → Sonnet 5.5, on the trace: 3.3× cheaper</title></path>
+<text class="t1" x="306.6" y="161" font-size="11.5">3.3×</text>
+<text class="t1" x="224" y="209.0" font-size="12.5" text-anchor="end">Sonnet 5.5 → Haiku 5.5</text>
+<path class="p" d="M236,190 h384.0 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-384.0 z"><title>Sonnet 5.5 → Haiku 5.5, price sheet: 20.0× cheaper</title></path>
+<text class="t1" x="630.0" y="201" font-size="11.5">20.0×</text>
+<path class="r" d="M236,206 h61.1 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-61.1 z"><title>Sonnet 5.5 → Haiku 5.5, on the trace: 3.4× cheaper</title></path>
+<text class="t1" x="307.1" y="217" font-size="11.5">3.4×</text>
+<text class="t1" x="224" y="265.0" font-size="12.5" text-anchor="end">Same, if prompts stayed under 100k</text>
+<path class="p" d="M236,246 h384.0 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-384.0 z"><title>Same, if prompts stayed under 100k, price sheet: 20.0× cheaper</title></path>
+<text class="t1" x="630.0" y="257" font-size="11.5">20.0×</text>
+<path class="r" d="M236,262 h286.6 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-286.6 z"><title>Same, if prompts stayed under 100k, on the trace: 15.0× cheaper</title></path>
+<text class="t1" x="532.6" y="273" font-size="11.5">15.0×</text>
+<line class="a" x1="236" y1="72" x2="236" y2="296"/></svg></figure>
+<p>Anthropic's own <a href="https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence">cost guide</a> recommends compacting Haiku before 100,000 tokens; in their test, a 90,000-token trigger cost 70% less per request than the default of 150,000. On this trace, even magically keeping every call under 100,000 tokens gets you to 15×, because Haiku's cache reads are 10× cheaper than Sonnet's ($0.01 against $0.10 per million) while everything else is 20× cheaper. And 15× is a ceiling before you pay the compaction tax: extra summarization calls, cold cache rewrites after every reset, and whatever quality drops when you throw context away early. The median call here carries about 141,000 tokens, and a quarter of the calls clear 275,000. Staying under Haiku's cliff means running a much more amnesiac agent.</p>
+<p>In the wild, a team flips a routing rule in their gateway on a Tuesday afternoon and leaves the agent harness alone. Haiku accepts a million-token prompt without complaint, nothing errors, no alerts fire, and the 100,000 cliff first shows up when someone opens the invoice.</p>
+<h2 id="long-sessions-and-subagents">Long sessions and subagents</h2>
+<p>The 3.4× is the ratio of total spend, and it hides a wide spread from session to session. Rank the sessions by what they cost on Sonnet and cut them into quarters:</p>
+<div class="study-table"><table><thead><tr><th scope="col">Sessions, by Sonnet cost</th><th scope="col">Cost range</th><th scope="col">Median share of calls over 100k</th><th scope="col">Haiku is cheaper by</th></tr></thead><tbody>
+<tr><td>Smallest quarter</td><td>$0.29 to $1.54</td><td>11%</td><td>6.8×</td></tr>
+<tr><td>Second</td><td>$1.63 to $4.16</td><td>56%</td><td>4.6×</td></tr>
+<tr><td>Third</td><td>$4.20 to $12.70</td><td>75%</td><td>3.7×</td></tr>
+<tr><td>Largest quarter</td><td>$13.28 to $364.75</td><td>78%</td><td>3.2×</td></tr>
+</tbody></table></div>
+<p>Short sessions mostly stay under the line and come out nearly 7× cheaper. Long sessions live above it, and long sessions are where the money is: the ten most expensive hold 41% of the trace's spend, and the biggest single session costs $364.75 on Sonnet, as much as 87 median sessions. The sessions you most want to make cheaper shrink by the smallest factor.</p>
+<p>Fair enough: Anthropic's <a href="https://www.anthropic.com/claude-haiku-5-5">Haiku 5.5 announcement</a> recommends Sonnet 5.5 or Opus 5.5 for complex agentic coding (Terminal-Bench 4.0: 39.2% for Haiku 5.5, 70.6% for Sonnet 5.5) and names compaction, summarization and subagent work as Haiku's job. So we priced the setup Anthropic recommends: keep the main thread on Sonnet and hand the subagents to Haiku. Subagents turn out to be only 18% of the Sonnet bill, and 43% of their calls are still over 100,000 tokens, so even the helper tasks run long. Moving them cuts the subagent slice by 4.0× and trims the whole bill by 13%. Worth doing, sure, but nowhere near the order-of-magnitude cut people picture when they see a 20× price gap.</p>
+<h2 id="why-3-4-is-the-best-case">Why 3.4× is the best case</h2>
+<p>All of those numbers assume Haiku takes exactly the path recorded in the trace, step for step. A real switch changes the path.</p>
+<p>Every step of an agent loop re-sends the conversation so far. If Haiku needs extra steps and each one costs as much as the session's average step, it stays ahead until it needs 3.4 times as many. The real threshold is lower, because extra steps land late in the session, where the context is longest. They can also push a session that started under 100,000 tokens over the line halfway through, and from that call on everything costs five times as much.</p>
+<p>Worse than a slow loop is a failed one. If Haiku works through a refactor for twenty turns, gets stuck near the end, and the developer restarts the task on Sonnet, you didn't save 70%. You paid about 30% of a Sonnet run for the attempt, then the full Sonnet run on top: roughly 1.3 times what Sonnet alone would have cost.</p>
+<h2 id="measure-sessions-not-rate-cards">Measure sessions, not rate cards</h2>
+<p>Your own traffic has its own session lengths, compaction settings and cache hit rate. To price a switch on your logs instead of a rate card, we built fleetdiff, a single local binary that reads LiteLLM spend logs from a CSV export or a read-only snapshot of LiteLLM's Postgres. Its <code>what-if</code> command re-prices recorded traffic at another model's rates, request by request, price tiers and cache rates included. On the trace, exported as LiteLLM rows priced at Sonnet 5.5:</p>
+<pre class="output"><code class="language-text">$ fleetdiff what-if --litellm-spend trace-sonnet.csv --period 2026-10-07 \
+    --from claude-sonnet-5-5 --to claude-haiku-5-5 --fraction 1
+Moving 100% of claude-sonnet-5-5 traffic to claude-haiku-5-5 (covered usage): $3,558.76 -&gt; $1,060.99 at the same work and output length, on 2026-11-19 prices.
+Target price tiers: 22,592 requests at or under 100,000 prompt tokens; 38,404 over.</code></pre>
+<p>That's the first half of this post in two lines: the real discount, and how much of your traffic sits on each side of the cliff.</p>
+<p>To see how many extra steps the cheaper model takes, run a canary: route a randomly picked set of sessions to Haiku, export them and the rest of the same week separately, and run fleetdiff's session review on each. On the trace's Haiku-priced export:</p>
+<pre class="output"><code class="language-text">$ fleetdiff investigate --litellm-spend trace-haiku.csv --period 2026-10-07
+Recorded USD: p50 $1.08; p95 $19.35; max $116.90 (n=233, exact nearest-rank).
+Logged model calls: p50 81; p95 979; max 4095 (n=233, exact nearest-rank).</code></pre>
+<p>The Sonnet-priced export prints p50 $4.20, p95 $65.89 and max $364.75, with the same call counts. On a real canary, the calls line is the one to watch. fleetdiff stitches rows into sessions by session ID and counts missing spend separately. Its full output also lists the costliest sessions, under aliases in place of raw IDs.</p>
+<p>We first tried predicting switches like this from benchmark output ratios; the <a href="https://github.com/llm-measurement/fleetdiff/blob/main/docs/WHAT_IF_CALIBRATION.md">calibration write-up</a> has that test, and it's why we now measure steps on real sessions instead.</p>
+<p>fleetdiff is open source (Apache-2.0) at <a href="https://github.com/llm-measurement/fleetdiff">github.com/llm-measurement/fleetdiff</a>, and every script behind the numbers in this post is in <a href="assets/cheaper-model-evidence/">the evidence folder</a>.</p>
+<hr>
+<h3 id="what-the-numbers-mean">What the numbers mean</h3>
+<ul>
+<li>Prices are Anthropic's published standard rates, read on November 19, 2026. The trace is SemiAnalysis's cc-traces-weka-061526, under Apache-2.0.</li>
+<li>85% of the calls ran on Claude 4.7-and-later models, which share Haiku 5.5's tokenizer. Scaling the other 15% by the 1.3× that the older tokenizer implies moves the result from 3.35× to 3.34×.</li>
+<li>The trace's <code>in</code> field is the number of 64-token prefix blocks times 64, a block-based count rather than an exact tokenizer count. SemiAnalysis found it matches billed prompt tokens on average and overcounts by up to about 260,000 tokens in the heaviest cache-write tail. Shrinking every call over 500,000 tokens by the full 260,000 gives 3.42×, and dropping those calls entirely gives 3.56×.</li>
+<li>The dataset keeps sessions with at least 20 Anthropic requests, so quick few-turn tasks are outside it. The trace's cheapest quarter of sessions came out 6.8× cheaper.</li>
+</ul>
+</article>
