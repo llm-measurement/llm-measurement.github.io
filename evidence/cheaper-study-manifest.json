@@ -1,26 +1,27 @@
 {
   "conversion": {
-    "article_body_sha256": "35819638e5028e12cd99c906e4e15f8b7e72b9e517834c1e2ee9d4d7102f95aa",
-    "converter_sha256": "090145c49d8546f014849f1fceaf2c8f0d902b4efbf95ecf4353e2b4c26dc97e",
+    "article_body_sha256": "6e1f6a2cafa02c469ac806bf6d27948c5d513162cef275caf11f526a00e60fd8",
+    "converter_sha256": "482eecf51aea54b48f88ba9e321343be24200a5fba8d197ce91db03496c9377a",
     "source_sha256": "c7c711760e1ae394f85f6af49e2bff4aa10a3bac3443cea6c974814a0dfbdcbb"
   },
-  "converter_report_sha256": "36f7d723c3a6c36a85e5d63eca7c4e23c56950dd2e9b7b18294df7920d8da173",
+  "converter_report_sha256": "dc6088cb8d9507ae75f33ef0f035c9badc50ef2e1d9b46388ac5a88ea326c064",
   "dependencies": {
     "assets/cache-evidence/trace_replay-results.json": "69cd657a0831bf8ac863b89622b696933c3a56c0d97e5e5cf70fa22a94f9a9cf",
     "assets/cache-evidence/trace_replay.py": "a2562fb6534f1255e45bd6e46b1a80a618383ea49d288e29d35662d1e0b2f395"
   },
   "evidence": {
-    "ATTRIBUTION.md": "f4dfaa060be7d7a944348c1aef97cf3bb299dce57babc1b2965906776832fa63",
-    "FLEETDIFF_V0150_RERUN_2026-11-20.md": "db7d2a867cb2142c46b6a59e5debe39116c340d02e6f94bed901efa7f745f425",
-    "RUN.md": "0ae817c5daf150035d98be03615855cea24060ab4947ad3937ddafb6f237d4b0",
+    "ATTRIBUTION.md": "b032766c112eb460707ea67dcfd7e55104959adffcc99ab45d7a741337a9a0fd",
+    "FLEETDIFF_V0150_RERUN_2026-11-20.md": "d832b2937a263fb653c1860e95e95c078d64bbf8dbf3bc19d69616b6f756a64c",
+    "RUN.md": "a2ae7fe63ea5c1cc4abdfcdb2a0f5d3d7bc581137305cdb954a30f5b609e34c6",
     "cached-session-cost-output.json": "ef390d733029e8bf0bf7d986dbd6519f6297933b7519d144cb0dc5885da6e049",
     "cached_session_cost.py": "ece4078b62228d83c7893bbc9880e8e8ccfe1e6b436073995d4b06c5c011eff6",
-    "cheaper-ratio-chart.svg": "6dcd46035380ccc76701f951af8aa35ce47335c5c9d12c281fe3f1e5739517ab",
+    "cheaper-ratio-chart-narrow.svg": "bc0070c31c1cb108e71dc06bfa3334c1404fa350be72fd1a8b731fb560ffad99",
+    "cheaper-ratio-chart.svg": "1d2efce75cd9c1e745098bba08097162cd1f44efac7c5e9d5ee0278f946282b8",
     "fleetdiff-v0150-session-haiku.txt": "f2ea37a0af0a4164e8240d511b4c3c27d23f2d15582b8b3e23b9c40209139462",
     "fleetdiff-v0150-session-sonnet.txt": "9b0b61fbdbc1799b2a63d2b7d9a7e6296148cfa64795ebb8d336f6a951e3ee47",
     "fleetdiff-v0150-what-if.txt": "3792f63caab39bce9a2356f7613978ee7b5560204866c5e9461723ee02c46650",
-    "index.html": "e98bdb2947d3e4c5c12348268e50c12c4ca4baeb167cc1e5b1fc79e2407d2ed1",
-    "make_chart.py": "0c7f276b21eeb9ba6ef5a5a1e3f9b5e4fb611c0344646c0f6465a0addb8a1b3e",
+    "index.html": "f8bee6fa836170e84de603c79987e41de0dcda93a54a29fb2dc42d18d7cbd864",
+    "make_chart.py": "181ba2a913ed9189b24923c4836eb96708897270d9063c679d77976aa6ef059f",
     "one-hour-cache-output.json": "812da87722547b1b6989de28600e589ffa8204b6d736b6b37f1bf534a8398cbc",
     "one_hour_cache.py": "11b066405f3306f1c47e7da98b2ac14461f15ef73b448c827a1042850711ce14",
     "subagent-split-output.json": "28d866919899c17c2d0b08ac5868dade190b9526dea73f271096875f159a7c1c",

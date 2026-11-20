@@ -9,6 +9,9 @@ import { execFileSync } from 'node:child_process';
 
 const [root, baseline, out] = process.argv.slice(2);
 assert(root && baseline && out, 'supply candidate, verified baseline and evidence-output directories');
+const baselineCommit = process.env.SITE_BASELINE_COMMIT || execFileSync('git',
+  ['-C', root, 'merge-base', 'HEAD', 'origin/main'], { encoding: 'utf8' }).trim();
+assert.match(baselineCommit, /^[0-9a-f]{40}$/, 'baseline commit must be a full 40-character Git identifier');
 const { chromium } = await import(process.env.SITE_PLAYWRIGHT_MODULE || 'playwright');
 const browser = await chromium.launch({ headless: true,
   ...(process.env.SITE_CHROMIUM ? { executablePath: process.env.SITE_CHROMIUM } : {}) });
@@ -100,9 +103,9 @@ try {
           assert.equal(await page.locator('main pre.output').count(), 2);
           assert.equal(await page.locator('main .study-table').count(), 2);
           assert.equal(await page.locator('main hr + h3#what-the-numbers-mean').textContent(), 'What the numbers mean');
-          assert.equal(await page.locator('.study-chart svg[role="img"]').count(), 1);
-          assert.equal(await page.locator('.study-chart .s').evaluate(e => getComputedStyle(e).fill), 'rgb(252, 252, 251)');
-          for (const scroller of await page.locator('.study-chart, .study-table, main pre').all()) {
+          assert.equal(await page.locator('.study-chart svg[role="img"]').count(), 2);
+          assert.equal(await page.locator('.study-chart .cr-s').first().evaluate(e => getComputedStyle(e).fill), 'rgb(252, 252, 251)');
+          for (const scroller of await page.locator('.study-table, main pre').all()) {
             assert(await scroller.evaluate(e => getComputedStyle(e).overflowX === 'auto' && e.clientWidth <= innerWidth));
           }
           const chart = page.locator('.study-chart');
@@ -125,6 +128,36 @@ try {
         assert.equal(after.intro[2][0], 'NAV');
       } else {
         assert.deepEqual(after.intro, before.intro, 'input-first introduction changed');
+      }
+      if (kind === 'study') {
+        await page.locator('.study-table').evaluateAll(nodes => {
+          for (const node of nodes) {
+            if (innerWidth <= 600 && node.scrollWidth > node.clientWidth + 1) throw new Error('study table hides a column');
+            for (const cell of node.querySelectorAll('th,td')) {
+              const bounds = cell.getBoundingClientRect(), range = document.createRange();
+              range.selectNodeContents(cell);
+              for (const line of range.getClientRects()) {
+                if (line.left < bounds.left - 1 || line.right > bounds.right + 1) throw new Error('study cell text is clipped');
+              }
+            }
+          }
+        });
+      }
+      if (slug === 'haiku-sonnet-100k-cliff') {
+        await page.locator('.study-chart').evaluate(node => {
+          if (node.scrollWidth > node.clientWidth + 1) throw new Error('chart requires horizontal scrolling');
+          const visible = [...node.querySelectorAll('svg')].filter(svg => svg.getClientRects().length);
+          if (visible.length !== 1) throw new Error('expected one responsive chart');
+          const svg = visible[0], bounds = svg.getBoundingClientRect();
+          if (!svg.parentElement.classList.contains(innerWidth <= 600 ? 'chart-narrow' : 'chart-wide')) throw new Error('wrong chart layout');
+          if (svg.querySelectorAll('path').length !== 8) throw new Error('missing comparison bar');
+          for (const text of svg.querySelectorAll('text')) {
+            const box = text.getBoundingClientRect();
+            if (box.left < bounds.left - 1 || box.right > bounds.right + 1 || box.top < bounds.top - 1 || box.bottom > bounds.bottom + 1) {
+              throw new Error('chart text clipped: ' + text.textContent);
+            }
+          }
+        });
       }
       await original.close();
 
@@ -222,10 +255,20 @@ try {
         const s = getComputedStyle(document.documentElement); return [s.colorScheme, s.backgroundColor, s.color];
       }), ['light', 'rgb(251, 252, 250)', 'rgb(23, 33, 43)']);
       if (slug === 'haiku-sonnet-100k-cliff') {
-        assert.equal(await page.locator('.study-chart .s').evaluate(e => getComputedStyle(e).fill), 'rgb(252, 252, 251)');
+        assert.equal(await page.locator('.study-chart .cr-s').first().evaluate(e => getComputedStyle(e).fill), 'rgb(252, 252, 251)');
         await page.locator('.study-chart').evaluate(e => { e.scrollLeft = 0; });
         await page.screenshot({ path: path.join(out, `${slug}-${width}-dark-system.png`), fullPage: true });
         await page.locator('.study-chart').screenshot({ path: path.join(out, `${slug}-${width}-chart-dark-system.png`) });
+      }
+      if (kind === 'study') {
+        for (const scheme of ['light', 'dark']) {
+          await page.emulateMedia({ colorScheme: scheme });
+          await page.screenshot({ path: path.join(out, `${slug}-${width}-${scheme}-preference.png`), fullPage: true });
+          for (const [i, table] of (await page.locator('.study-table').all()).entries()) {
+            await table.screenshot({ path: path.join(out, `${slug}-${width}-table-${i}-${scheme}.png`) });
+          }
+        }
+        await page.emulateMedia({ colorScheme: 'light' });
       }
       await page.emulateMedia({ colorScheme: 'light' });
       await page.evaluate(() => window.scrollTo(0, 0));
@@ -267,7 +310,7 @@ for (const name of ['assets/site.css', 'assets/site.js', 'docs/assets/site.css',
   files[name] = createHash('sha256').update(await fs.readFile(path.join(root, name))).digest('hex');
 }
 const report = { method: 'Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.',
-  baselineCommit: process.env.SITE_BASELINE_COMMIT || execFileSync('git', ['-C', root, 'merge-base', 'HEAD', 'origin/main'], { encoding: 'utf8' }).trim(),
+  baselineCommit,
   newPageMethod: 'New guides verify input-first ordering against the existing LiteLLM guide. Studies verify their own title, article/math/fold/code or index-link structure, with shared palette and typography checked against the home page. No historical article-intro comparison is claimed for a new page.', files, results };
 await fs.writeFile(path.join(root, 'evidence/contact-copy-visual-verified.json'), JSON.stringify(report, null, 2) + '\n');
 await fs.writeFile(path.join(out, 'results.json'), JSON.stringify(report, null, 2) + '\n');

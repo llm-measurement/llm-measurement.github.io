@@ -1,11 +1,11 @@
 {
   "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.",
-  "baselineCommit": "2b51843",
+  "baselineCommit": "2b51843a5862acde3e9b45152ecda98cc426a2dc",
   "newPageMethod": "New guides verify input-first ordering against the existing LiteLLM guide. Studies verify their own title, article/math/fold/code or index-link structure, with shared palette and typography checked against the home page. No historical article-intro comparison is claimed for a new page.",
   "files": {
-    "assets/site.css": "e80684e6a6b967cf64b9dd4ed81cadedc8d5c9774295cce721c7438afcb8c32b",
+    "assets/site.css": "86c0f6e7d44b9d7f529eaa4e2de55f6a8a26d4c47b8d85ffb1a1eceecea3433c",
     "assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
-    "docs/assets/site.css": "e80684e6a6b967cf64b9dd4ed81cadedc8d5c9774295cce721c7438afcb8c32b",
+    "docs/assets/site.css": "86c0f6e7d44b9d7f529eaa4e2de55f6a8a26d4c47b8d85ffb1a1eceecea3433c",
     "docs/assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
     "pages.json": "c6592872d5e571534b407c29755ff0687b36b5cbef154fd8f561095fc9c2f816",
     "pages/index.html": "5e916b54005132199b7c4d666d1455c4d70749f6fee53844f19b49a376a77322",
@@ -46,8 +46,8 @@
     "docs/studies.html": "7b40eef6036ead599478ff40ba33f0d7e3a41ae3607877eb2d1ea7c88198297f",
     "pages/prompt-cache-bills.html": "b7fae161dcdfe08fb12281675dfffd8bff22b9f084598b357fe42ab7704ec499",
     "docs/prompt-cache-bills.html": "d90836749a2853bfd5c6e7a34e5a31343e55f370ce7a098bdc78350630db3b6c",
-    "pages/haiku-sonnet-100k-cliff.html": "35819638e5028e12cd99c906e4e15f8b7e72b9e517834c1e2ee9d4d7102f95aa",
-    "docs/haiku-sonnet-100k-cliff.html": "dd5b31e7775140d6cf5fb46ac7886d34fef88c763eb533d5ac56d1f2735ad14f"
+    "pages/haiku-sonnet-100k-cliff.html": "6e1f6a2cafa02c469ac806bf6d27948c5d513162cef275caf11f526a00e60fd8",
+    "docs/haiku-sonnet-100k-cliff.html": "78ca368c8b86767aeae4938089a8a1c9f2de5027a0ea1472037ef3ce85b15403"
   },
   "results": [
     {

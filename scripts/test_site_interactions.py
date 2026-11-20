@@ -4,6 +4,7 @@
 from html.parser import HTMLParser
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -55,6 +56,15 @@ class PublishedBlocks(HTMLParser):
 
 
 class InteractionPagesTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('node'), 'Node.js is needed for the harness guard')
+    def test_visual_baseline_rejects_a_short_commit_before_browser_startup(self):
+        environment = {**os.environ, 'SITE_BASELINE_COMMIT': '2b51843'}
+        result = subprocess.run(['node', 'scripts/check_interactions.mjs', str(build.ROOT),
+                                 str(build.ROOT), 'unused-qa-output'], cwd=build.ROOT,
+                                env=environment, capture_output=True, text=True, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('baseline commit must be a full 40-character Git identifier', result.stderr)
+
     def test_all_pages_and_guide_endings_have_the_approved_contact_destinations(self):
         expected = {
             'mailto:evijay+fleetdiff@gmail.com',

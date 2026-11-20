@@ -69,6 +69,7 @@ def check_live(root=ROOT, fetcher=None):
             "fresh_cache": True, "article_sha256": sha256(actual),
             "checked_links_and_resources": len(visited) + len(doi_checks),
             "doi_registry_checks": doi_checks, "evidence_files": local["evidence_files"],
+            "inline_charts": local["inline_charts"],
             "plausible_and_article_head_match": True, "staged_publication_bytes_match": True}
 
 

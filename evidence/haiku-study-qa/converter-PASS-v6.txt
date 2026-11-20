@@ -1,9 +1,11 @@
 PASS: normalized text, all words/currency/code/alt/headings exactly match source
-PASS: 5 heading ids; 1 divider(s); 4 list items; 2 locally scrolling tables; 2 byte-identical code blocks; 0 external chart(s); 1 byte-identical inline chart(s)
+PASS: 5 heading ids; 1 divider(s); 4 list items; 2 locally scrolling tables; 2 byte-identical code blocks; 0 external chart(s); 2 byte-identical inline chart(s)
 PASS: one study article fragment; H1 reserved for site-builder header
 TITLE: Haiku 5.5 is 20× cheaper than Sonnet on paper, 3.4× on a Claude Code trace
 PASS: exact figure aria-label; SVG internals excluded from article text; no SVG resources/scripts
-INLINE_CHART_SHA256: 6dcd46035380ccc76701f951af8aa35ce47335c5c9d12c281fe3f1e5739517ab
+INLINE_CHART_SHA256: 1d2efce75cd9c1e745098bba08097162cd1f44efac7c5e9d5ee0278f946282b8
+PASS: one Markdown image/alt; chart-wide/chart-narrow SVG pair; unique IDs; cr-prefixed chart classes
+INLINE_CHART_NARROW_SHA256: bc0070c31c1cb108e71dc06bfa3334c1404fa350be72fd1a8b731fb560ffad99
 SOURCE_SHA256: c7c711760e1ae394f85f6af49e2bff4aa10a3bac3443cea6c974814a0dfbdcbb
-FRAGMENT_SHA256: 35819638e5028e12cd99c906e4e15f8b7e72b9e517834c1e2ee9d4d7102f95aa
-CONVERTER_SHA256: 090145c49d8546f014849f1fceaf2c8f0d902b4efbf95ecf4353e2b4c26dc97e
+FRAGMENT_SHA256: 6e1f6a2cafa02c469ac806bf6d27948c5d513162cef275caf11f526a00e60fd8
+CONVERTER_SHA256: 482eecf51aea54b48f88ba9e321343be24200a5fba8d197ce91db03496c9377a

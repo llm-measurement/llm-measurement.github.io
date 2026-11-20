@@ -98,9 +98,11 @@ class CheaperFixture(unittest.TestCase):
 
 
 class CheaperStudyChecks(CheaperFixture):
-    def test_pinned_article_and_all_twenty_evidence_files_pass_offline(self):
+    def test_pinned_article_and_all_twenty_one_evidence_files_pass_offline(self):
         summary = study.check(self.root)
-        self.assertEqual(summary["evidence_files"], 20)
+        self.assertEqual(summary["evidence_files"], 21)
+        self.assertEqual((summary["markdown_images"], summary["inline_charts"]), (1, 2))
+        self.assertEqual(summary["chart_narrow"], study.CHART_NARROW)
         self.assertEqual((summary["code_blocks"], summary["tables"], summary["headings"]), (2, 2, 5))
         self.assertTrue(summary["offline"])
 
@@ -134,6 +136,7 @@ class CheaperStudyChecks(CheaperFixture):
 
     def test_evidence_and_chart_hashes_check_both_source_and_built_even_when_equal(self):
         for name in ("cached-session-cost-output.json", "cheaper-ratio-chart.svg",
+                     "cheaper-ratio-chart-narrow.svg",
                      "fleetdiff-v0150-what-if.txt", "RUN.md"):
             paths = [prefix / study.EVIDENCE_DIR / name for prefix in (self.root, self.root / "docs")]
             original = paths[0].read_bytes()
@@ -269,21 +272,42 @@ class CheaperStudyChecks(CheaperFixture):
                 study.check(self.root)
             self.page[key] = old
 
-    def test_structure_retains_h3_divider_two_tables_two_blocks_and_exact_inline_svg(self):
+    def test_structure_retains_h3_divider_two_tables_two_blocks_and_exact_inline_svgs(self):
         source = self.body_path.read_text(encoding="utf-8")
         chart = (self.root / study.CHART).read_bytes()
+        narrow = (self.root / study.CHART_NARROW).read_bytes()
         for old, new in (("<hr>", ""), ('<h3 id="what-the-numbers-mean">',
                                           '<h2 id="what-the-numbers-mean">'),
                          ('class="study-table"', 'class="other"'),
                          ('class="output"', 'class="other"'),
-                         (study.CHART_ALT, "Wrong alt"), ("h34.8", "h34.9")):
+                         (study.CHART_ALT, "Wrong alt"), ("h34.8", "h34.9"),
+                         ('class="chart-wide"', 'class="chart-narrow"'),
+                         ('class="chart-narrow"', 'class="other"'),
+                         (narrow.decode(), narrow.decode().replace('height="508"', 'height="509"'))):
+            self.assertIn(old, source)
             changed = source.replace(old, new, 1)
             if new.startswith("<h2"):
                 changed = changed.replace("</h3>", "</h2>", 1)
             document = Document(changed)
             article, = document.root.walk("article")
             with self.subTest(old=old), self.assertRaises(AssertionError):
-                study.check_article_structure(article, changed, chart)
+                study.check_article_structure(article, changed, chart, narrow)
+
+    def test_chart_byte_equality_does_not_accept_duplicate_ids_or_unprefixed_classes(self):
+        source = self.body_path.read_text(encoding="utf-8")
+        wide = (self.root / study.CHART).read_bytes()
+        narrow = (self.root / study.CHART_NARROW).read_bytes()
+        for index, original in enumerate((wide, narrow)):
+            for old, new in ((b'class="cr-s"', b'class="s"'), (b'.cr-s{', b'.s{'),
+                             (b'</svg>', b'<rect id="cr-wide-title"/></svg>')):
+                self.assertIn(old, original)
+                assets = [wide, narrow]
+                assets[index] = original.replace(old, new, 1)
+                changed = source.replace(original.decode(), assets[index].decode(), 1)
+                document = Document(changed)
+                article, = document.root.walk("article")
+                with self.subTest(index=index, old=old), self.assertRaises(AssertionError):
+                    study.check_article_structure(article, changed, *assets)
 
     def test_private_paths_draft_markers_and_comments_fail(self):
         for injection in ("<p>file://private-example</p>", "<p>POST_DRAFT_v6</p>", "<!-- internal draft -->"):

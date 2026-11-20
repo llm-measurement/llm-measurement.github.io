@@ -1,97 +1,74 @@
-# Haiku And Sonnet Study: Draft QA
+# Haiku And Sonnet Study QA
 
-PASS for the v6 preview build. This is not the final-text or merge approval.
-The source words, currency, headings, links, alt text and both code blocks
-match the source through the converter's independent text comparison.
-See [converter-PASS-v6.txt](converter-PASS-v6.txt) for the source,
-converter, fragment and chart hashes.
+November 20 review delta: responsive chart and table checks pass in Chrome.
+The source remains the unchanged v6 text. Refreshed Safari QA is pending;
+the earlier Safari captures do not qualify this revision.
 
-## Evidence And Prices
+## Charts And Tables
 
-All 11 sequential nice-10 reproduction runs passed with empty stderr:
-five JSON outputs, the SVG, two generated exports and three published
-fleetdiff v0.15.0 outputs match their retained records byte for byte.
-The original trace, replay helper, scripts and outputs were re-hashed
-unchanged. The only script adjustment is the replay-helper directory in
-`cached_session_cost.py`. The 20-file package and both shared dependencies
-are pinned in [the manifest](../cheaper-study-manifest.json).
+The two inline layouts use the same two JSON inputs and identical numeric
+rows. The narrow layout places each pair label above its bars, labels every
+bar end, and splits the legend across two lines. At 320 and 390 px every
+bar, value and chart label is visible without horizontal scrolling. Both
+downloadable SVGs remain available and all chart classes use the cr- prefix.
+Each layout has its own accessible title and description IDs.
 
-The [public reproduction guide](../../assets/cheaper-model-evidence/RUN.md)
-has the exact commands and figure-to-field map, including the cache-write
-split and one-hour-cache result. Full v0.15.0 stdout is preserved there.
-The quoted repricing is $3,558.76 to $1,060.99, with 22,592 short-tier and
-38,404 long-tier requests.
+Study tables use fixed tracks, wrapped headers and tighter padding on narrow
+screens. All original headings and cell text are retained. Both tables in
+this article and the cache study's existing HTML table fit at 320 and 390 px.
+The reviewed tree contains one HTML table in the cache study, not two; its
+code and SQL output remain locally scrollable.
 
-The November 20 re-read of Anthropic's official pricing page matches the
-November 19 rates for Sonnet 5.5, Haiku 5.5 (both tiers), Opus 5.5 and
-Fable 5.2. Prompt length includes cache reads and writes, each request is
-priced independently, and the whole over-threshold request uses its higher
-tier, including output. [Citation checks](citations.json) record seven
-anonymous HTTP-200 fetches with the existing 2-MiB local / 8-MiB external
-bounds. No trace download or provider call was made by those checks.
+## Reproduction And Checks
 
-## Browser QA
+The [converter self-check](converter-PASS-v6.txt) binds the unchanged source,
+both exact SVGs and the fragment. The [21-file manifest](../cheaper-study-manifest.json)
+pins all evidence and both shared replay dependencies.
+[RUN.md](../../assets/cheaper-model-evidence/RUN.md) gives the commands and
+hashes for both chart layouts, all five JSON results, both generated exports
+and all three published v0.15.0 outputs. The evidence prose records dates,
+release identities, commands and hashes, without review or publication tasks.
+The [fresh reproduction record](review-delta/reproduction.json) confirms all
+11 sequential runs and 19 literal manifest entries, including both SVGs.
 
-Machine: Apple M4 Max, macOS 27.0.1. The existing site remains light-only,
-as requested. Light and dark user preferences are both tested; no theme
-toggle was added.
+Local checks: 279 site tests (seven environment-dependent skips), 24 private
+converter tests, 14 dependency-free interaction tests and five summary
+evidence tests pass. Site, summaries and the second-study checkers pass.
+The built article head and all scientific JSON/text results are unchanged.
+The November 20 pricing and bounded citation records remain in
+[citations.json](citations.json). No provider calls or local Docker run.
 
-Chrome uses the installed Google Chrome binary, version 155.0.8059.80,
-through the site's Playwright harness. All 20 pages at 1366, 390 and
-320 pixels pass: 60 page/viewports, 225 exact keyboard copies and
-531 path-only events, with every external request intercepted and zero
-external requests completed. Existing pages retain their input-first
-structure, palette, typography and published command blocks. The second
-study's chart, tables and code scroll locally; its chart remains light
-under both preferences. Full-page captures:
+## Chrome Matrix
 
-| Width | Chrome Light | Chrome Dark Preference | Safari Light | Safari Dark Preference |
+Machine: Apple M4 Max, macOS 27.0.1, installed Google Chrome 155.0.8059.80.
+The site stays light-only under either user preference. All 60 page/viewports,
+225 keyboard copies and 531 path-only events pass with no completed external
+request. Browser checks now reject chart text outside the SVG, hidden table
+columns and overflowing cell text. The baseline is the full commit
+2b51843a5862acde3e9b45152ecda98cc426a2dc.
+
+| Width | New Study Light | New Study Dark Preference | Cache Study Light | Cache Study Dark Preference |
 | --- | --- | --- | --- | --- |
-| 1366 | [View](chrome/haiku-sonnet-100k-cliff-1366-light.png) | [View](chrome/haiku-sonnet-100k-cliff-1366-dark-system.png) | [View](safari/1366-light-preference.png) | [View](safari/1366-dark-preference.png) |
-| 390 | [View](chrome/haiku-sonnet-100k-cliff-390-light.png) | [View](chrome/haiku-sonnet-100k-cliff-390-dark-system.png) | [View](safari/390-light-preference.png) | [View](safari/390-dark-preference.png) |
-| 320 | [View](chrome/haiku-sonnet-100k-cliff-320-light.png) | [View](chrome/haiku-sonnet-100k-cliff-320-dark-system.png) | [View](safari/320-light-preference.png) | [View](safari/320-dark-preference.png) |
+| 1366 | [View](review-delta/chrome/haiku-sonnet-100k-cliff-1366-light-preference.png) | [View](review-delta/chrome/haiku-sonnet-100k-cliff-1366-dark-preference.png) | [View](review-delta/chrome/prompt-cache-bills-1366-light-preference.png) | [View](review-delta/chrome/prompt-cache-bills-1366-dark-preference.png) |
+| 390 | [View](review-delta/chrome/haiku-sonnet-100k-cliff-390-light-preference.png) | [View](review-delta/chrome/haiku-sonnet-100k-cliff-390-dark-preference.png) | [View](review-delta/chrome/prompt-cache-bills-390-light-preference.png) | [View](review-delta/chrome/prompt-cache-bills-390-dark-preference.png) |
+| 320 | [View](review-delta/chrome/haiku-sonnet-100k-cliff-320-light-preference.png) | [View](review-delta/chrome/haiku-sonnet-100k-cliff-320-dark-preference.png) | [View](review-delta/chrome/prompt-cache-bills-320-light-preference.png) | [View](review-delta/chrome/prompt-cache-bills-320-dark-preference.png) |
 
-Safari is the installed Safari 27.0.1, not Playwright WebKit. Native
-Responsive Design Mode sets each exact width at height 768. Its detached
-Web Inspector emulates light and dark user preferences; `matchMedia`
-readbacks confirm each preference. [Measurements](safari/measurements.json)
-confirm page scroll width equals viewport width at all six combinations,
-local overflow boundaries, and the light chart fill. A separate
-[scroll readback](safari/local-scroll-readback.json) moves all five local
-scrollers to the right while page scrollX stays zero. Safari screenshots
-capture the native responsive preview; Chrome captures the full article.
+[320 px chart](review-delta/chrome/haiku-sonnet-100k-cliff-320-chart-light.png) ·
+[320 px session table](review-delta/chrome/haiku-sonnet-100k-cliff-320-table-1-light.png) ·
+[320 px cache table](review-delta/chrome/prompt-cache-bills-320-table-0-light.png)
 
-Safari originally rendered an external SVG dark on the light page. The
-inline fallback is byte-identical to the downloadable SVG; scoped palette
-rules keep it light in both browsers. Its source alt is retained as the
-focusable figure's accessible label. The standalone evidence SVG still
-has both of its original palettes. Safari preference emulation was reset
-to System (Dark), the Inspector and owned preview window were closed,
-and remote automation was left at its unchanged original enabled state.
-No macOS appearance preference was changed.
+## Safari And Publication Status
 
-## Checks And Publication Gate
+The earlier screenshots and measurements in safari/ are historical evidence
+for head 2791dc3, not proof of this responsive revision. The requested fresh
+1366/390/320 light/dark Safari matrix has not run. It must be completed
+before merge.
 
-- 277 site Python tests pass, with seven environment-dependent skips;
-  the dependency-free interaction tests pass 14/14.
-- The private converter tests pass 20/20.
-- Site, summaries and new study checkers pass; summary-evidence tests
-  pass 5/5. Existing article, sitemap, IndexNow and bounded/DOI citation
-  regression tests remain enabled.
-- Public-text scan of new page, evidence, QA records and source changes:
-  no internal product name, surname, employer or machine paths.
-- [Built head](HEAD.html): one H1, canonical/OG/article/Twitter fields,
-  one BlogPosting with author Vijay, exactly one supplied Plausible
-  snippet plus the normal privacy footer, and no other third-party
-  resource. Dates here are preview placeholders; existing publication
-  staging derives the actual mainline introduction and modification
-  timestamps for head, JSON-LD and sitemap.
+[HEAD.html](HEAD.html) is unchanged: canonical, OG/article/Twitter metadata,
+one BlogPosting with author Vijay, one supplied Plausible snippet and the
+normal privacy footer. Dates are preview placeholders; publication staging
+derives the actual mainline introduction/modification timestamps.
 
-The brief mentions a text-view table below the chart, but v6 contains no
-such table. The source is preserved; its chart has accessible title and
-description, and the two supplied tables are unchanged.
-
-Next: exact-head PR review, Vijay's final rewrite and preview approval.
-Only after his merge go and deployment may the fresh-cache live checker
-pass and IndexNow run. No merge, live deployment, release or IndexNow
-submission is part of this draft build.
+Claude re-reviews the exact updated head. Final wording and Vijay's preview
+and merge approval remain separate. No merge, deployment or IndexNow
+submission occurred. Both live study gates still precede indexing.

@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-20",
+  "pass": true,
+  "sequential_nice_10_reproduction_runs": 11,
+  "recorded_commands": 43,
+  "all_recorded_commands_exit_zero": true,
+  "all_recorded_stderr_empty": true,
+  "literal_run_manifest_entries_verified": 19,
+  "five_json_outputs_byte_identical": true,
+  "both_svg_layouts_byte_identical": true,
+  "both_regenerated_csvs_byte_identical": true,
+  "three_published_binary_outputs_byte_identical": true,
+  "original_sources_and_scientific_outputs_unchanged": true,
+  "private_command_manifest_sha256": "f6193d93688cae7e0a76c7e398a0233df380332d3cb7453fa102f39ca8d0ce8b",
+  "run_md_sha256": "a2ae7fe63ea5c1cc4abdfcdb2a0f5d3d7bc581137305cdb954a30f5b609e34c6",
+  "wide_svg_sha256": "1d2efce75cd9c1e745098bba08097162cd1f44efac7c5e9d5ee0278f946282b8",
+  "narrow_svg_sha256": "bc0070c31c1cb108e71dc06bfa3334c1404fa350be72fd1a8b731fb560ffad99",
+  "sonnet_csv_sha256": "b573b795b54384f350d36f9422c3367a51bdf109f73bd3a12e0a00fced03eeae",
+  "haiku_csv_sha256": "2b897bd33667e5f9be8bb5e24a79d9fc5757c6897c1df1b2ba54bc3783a2ca9e"
+}

@@ -80,10 +80,13 @@ class CheaperStudyOutsider(CheaperFixture):
             result = outsider.check_live(self.root, fetch)
         self.assertTrue(result["pass"])
         self.assertTrue(result["staged_publication_bytes_match"])
-        self.assertEqual(result["evidence_files"], 20)
+        self.assertEqual(result["evidence_files"], 21)
+        self.assertEqual(result["inline_charts"], 2)
         self.assertEqual(set(calls), set(replies))
         self.assertEqual(len(calls), len(set(calls)))
         self.assertIn(study.BASE + "assets/pixel.png", calls)
+        self.assertIn(study.BASE + study.CHART, calls)
+        self.assertIn(study.BASE + study.CHART_NARROW, calls)
 
     def test_unstaged_preview_or_wrong_live_article_stops_before_link_fetches(self):
         publication, replies, calls, fetch = self.live_fixture()
@@ -97,7 +100,7 @@ class CheaperStudyOutsider(CheaperFixture):
 
     def test_changed_live_chart_output_evidence_or_css_dependency_is_rejected(self):
         publication, replies, _, fetch = self.live_fixture()
-        for name in (study.CHART, study.EVIDENCE_DIR + "/fleetdiff-v0150-what-if.txt",
+        for name in (study.CHART, study.CHART_NARROW, study.EVIDENCE_DIR + "/fleetdiff-v0150-what-if.txt",
                      study.EVIDENCE_DIR + "/RUN.md", "assets/pixel.png", "prompt-cache-bills.html"):
             url = study.BASE + name
             original = replies[url]

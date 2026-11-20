@@ -29,20 +29,22 @@ EVIDENCE_NAMES = frozenset({
     "subagent_split.py", "subagent-split-output.json",
     "tail_sensitivity.py", "tail-sensitivity-output.json",
     "one_hour_cache.py", "one-hour-cache-output.json", "trace_to_litellm.py",
-    "make_chart.py", "cheaper-ratio-chart.svg", "fleetdiff-v0150-what-if.txt",
+    "make_chart.py", "cheaper-ratio-chart.svg", "cheaper-ratio-chart-narrow.svg",
+    "fleetdiff-v0150-what-if.txt",
     "fleetdiff-v0150-session-sonnet.txt", "fleetdiff-v0150-session-haiku.txt",
 })
 DEPENDENCIES = frozenset({"assets/cache-evidence/trace_replay.py",
                           "assets/cache-evidence/trace_replay-results.json"})
-# These pins come from the v6 converter self-check, not an independent PR review
+# These dual-SVG pins come from the v6 converter self-check, not an independent PR review
 # or a fresh approval inferred from whatever bytes happen to be in the worktree.
 APPROVED_CONVERSION = {
     "source_sha256": "c7c711760e1ae394f85f6af49e2bff4aa10a3bac3443cea6c974814a0dfbdcbb",
-    "article_body_sha256": "35819638e5028e12cd99c906e4e15f8b7e72b9e517834c1e2ee9d4d7102f95aa",
-    "converter_sha256": "090145c49d8546f014849f1fceaf2c8f0d902b4efbf95ecf4353e2b4c26dc97e",
+    "article_body_sha256": "6e1f6a2cafa02c469ac806bf6d27948c5d513162cef275caf11f526a00e60fd8",
+    "converter_sha256": "482eecf51aea54b48f88ba9e321343be24200a5fba8d197ce91db03496c9377a",
 }
-CONVERTER_REPORT_SHA256 = "36f7d723c3a6c36a85e5d63eca7c4e23c56950dd2e9b7b18294df7920d8da173"
+CONVERTER_REPORT_SHA256 = "dc6088cb8d9507ae75f33ef0f035c9badc50ef2e1d9b46388ac5a88ea326c064"
 CHART = EVIDENCE_DIR + "/cheaper-ratio-chart.svg"
+CHART_NARROW = EVIDENCE_DIR + "/cheaper-ratio-chart-narrow.svg"
 CHART_ALT = "How much cheaper the smaller model is, on the price sheet and on the re-priced trace"
 HEADINGS = [
     ("h2", "where-the-20-goes", "Where the 20\u00d7 goes"),
@@ -87,7 +89,10 @@ def article_document(root=ROOT):
     return body, document, articles[0]
 
 
-def check_article_structure(article, source, chart_bytes):
+def check_article_structure(article, source, chart_bytes, chart_narrow_bytes):
+    identifiers = [node.attrs["id"] for node in article.walk() if "id" in node.attrs]
+    require(all(identifiers) and len(identifiers) == len(set(identifiers)),
+            "empty or duplicate article/SVG IDs")
     headings = [(node.tag, node.attrs.get("id"), node.text())
                 for node in article.walk() if re.fullmatch(r"h[1-6]", node.tag)]
     require(headings == HEADINGS, "article headings differ")
@@ -107,16 +112,35 @@ def check_article_structure(article, source, chart_bytes):
             and node.parent.attrs == {"class": "study-table"} for node in tables),
             "expected two locally scrolling tables")
     charts = list(article.walk("svg"))
-    require(not list(article.walk("img")) and len(charts) == 1
-            and charts[0].parent.tag == "figure"
-            and charts[0].parent.attrs == {"class": "study-chart", "aria-label": CHART_ALT,
-                                          "tabindex": "0", "role": "region"},
+    figures = list(article.walk("figure"))
+    require(not list(article.walk("img")) and len(charts) == 2 and len(figures) == 1
+            and figures[0].parent is article
+            and figures[0].attrs == {"class": "study-chart", "aria-label": CHART_ALT,
+                                     "tabindex": "0", "role": "region"},
             "inline chart/accessible source alt differs")
-    figure = charts[0].parent
-    start = source.index(">", figure.start) + 1
-    end = source.rfind("</figure", start, figure.end)
-    require(source[start:end].encode("utf-8") == chart_bytes,
-            "inline chart differs from frozen SVG asset bytes")
+    wrappers = [node for node in figures[0].children if isinstance(node, Element)]
+    require(len(wrappers) == 2, "expected one responsive SVG wrapper per chart")
+    classes = {"cr-" + name for name in ("s", "p", "r", "t1", "t2", "g", "a")}
+    for size, wrapper, chart, asset in zip(("wide", "narrow"), wrappers, charts,
+                                          (chart_bytes, chart_narrow_bytes)):
+        require(wrapper.tag == "div" and wrapper.attrs == {"class": "chart-" + size}
+                and [node for node in wrapper.children if isinstance(node, Element)] == [chart]
+                and chart.parent is wrapper, "responsive chart wrapper/order differs")
+        start = source.index(">", wrapper.start) + 1
+        end = source.rfind("</div", start, wrapper.end)
+        require(source[start:end].encode("utf-8") == asset,
+                f"inline {size} chart differs from frozen SVG asset bytes")
+        title_ids = [f"cr-{size}-title", f"cr-{size}-desc"]
+        require(chart.attrs.get("aria-labelledby", "").split() == title_ids
+                and [(node.tag, node.attrs.get("id")) for node in chart.children
+                     if isinstance(node, Element) and node.tag in {"title", "desc"}]
+                == list(zip(("title", "desc"), title_ids)), "chart title/description IDs differ")
+        for node in [chart, *chart.walk()]:
+            require(set(node.attrs.get("class", "").split()) <= classes,
+                    "paired SVG classes must be cr-prefixed chart classes")
+            if node.tag == "style":
+                require(set(re.findall(r"\.([a-zA-Z][\w-]*)\s*\{", node.text())) <= classes,
+                        "paired SVG style selectors must be cr-prefixed chart classes")
 
 
 def check_head(root, document):
@@ -200,7 +224,8 @@ def check(root=ROOT):
     record = check_manifest(root)
     body, source_document, source_article = article_document(root)
     check_evidence(root, record)
-    check_article_structure(source_article, source_document.source, (root / CHART).read_bytes())
+    check_article_structure(source_article, source_document.source, (root / CHART).read_bytes(),
+                            (root / CHART_NARROW).read_bytes())
     built = (root / f"docs/{SLUG}.html").read_bytes()
     document = Document(built.decode("utf-8"))
     articles = list(document.root.walk("article"))
@@ -216,6 +241,7 @@ def check(root=ROOT):
     resources = check_local_resources(root, *resource_surfaces(document))
     return {"slug": SLUG, "article_body_sha256": sha256(body), "evidence_files": len(EVIDENCE_NAMES),
             "code_blocks": 2, "tables": 2, "headings": len(HEADINGS), "chart": CHART,
+            "chart_narrow": CHART_NARROW, "inline_charts": 2, "markdown_images": 1,
             "resources": sorted(resources), "offline": True}
 
 

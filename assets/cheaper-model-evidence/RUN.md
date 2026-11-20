@@ -1,10 +1,13 @@
 # Reproducing The Haiku And Sonnet Study
 
-November 20 site-layout result: PASS. All 11 sequential runs exited 0 with
-empty stderr. The five JSON records, SVG, both regenerated CSVs and all
+November 20, 2026 reproduction result: PASS. All 11 sequential runs exited 0 with
+empty stderr. The five JSON records, both SVG layouts, both regenerated CSVs and all
 three published-binary text outputs matched their retained originals byte
 for byte. All original inputs and outputs were re-hashed unchanged at the
-end. No reproduction mismatch or evidence-packaging blocker was found.
+end. No reproduction mismatch was found.
+
+The outputs re-price the same recorded work; they do not measure model quality
+or the behavior of a real model switch.
 
 ## Environment And Source
 
@@ -23,18 +26,17 @@ end. No reproduction mismatch or evidence-packaging blocker was found.
   Size: 1,077,676,163 bytes. SHA-256:
   `a9f3345b964f7d9f8b1445f83995fc4b5994f183131b0a108cd21b15cc78f627`.
   The trace is not included here.
-- Prices were read November 19, 2026. The parent site task reports an
-  unchanged November 20 recheck of Sonnet 5.5, both Haiku 5.5 tiers,
+- Prices were read November 19, 2026, and rechecked unchanged on
+  November 20, 2026, for Sonnet 5.5, both Haiku 5.5 tiers,
   Opus 5.5, Fable 5.2 and the long-context rule. See
   [ATTRIBUTION.md](ATTRIBUTION.md) for the pricing source and credit.
-- This packaging rerun uses existing local inputs and the already-installed
-  published binary. It performs no network access, provider calls, Docker
-  execution, browser work, installation, commit or push.
+- The rerun used existing local inputs and the already-installed published
+  binary, with no network access or provider calls.
 
 The replay helper is the existing sibling
 [`../cache-evidence/trace_replay.py`](../cache-evidence/trace_replay.py),
 SHA-256 `a2562fb6534f1255e45bd6e46b1a80a618383ea49d288e29d35662d1e0b2f395`.
-It is hash-identical to the original private helper; no copy is added here.
+It is hash-identical to the original helper.
 The sibling cache-study result has SHA-256
 `69cd657a0831bf8ac863b89622b696933c3a56c0d97e5e5cf70fa22a94f9a9cf`.
 
@@ -86,9 +88,9 @@ test ! -s "$OUT/one-hour-cache.stderr"
 cmp "$EVIDENCE/one-hour-cache-output.json" "$OUT/one-hour-cache-output.json"
 ```
 
-The chart generator uses relative input and output filenames. Run the
-unchanged script against the two freshly reproduced JSON files in `OUT`,
-not against the published directory as a writable working directory.
+The chart generator writes desktop and narrow SVG layouts using relative
+input and output filenames. Run it against the two freshly reproduced JSON
+files in `OUT`, not against the published directory as a writable working directory.
 
 ```sh
 (
@@ -97,6 +99,7 @@ not against the published directory as a writable working directory.
 )
 test ! -s "$OUT/chart.stderr"
 cmp "$EVIDENCE/cheaper-ratio-chart.svg" "$OUT/cheaper-ratio-chart.svg"
+cmp "$EVIDENCE/cheaper-ratio-chart-narrow.svg" "$OUT/cheaper-ratio-chart-narrow.svg"
 ```
 
 ## Regenerate Both Exports
@@ -123,7 +126,7 @@ those too before continuing.
 
 The tagged README's pinned installer line is below for readers who need to
 install the release. This is a separate, networked setup step, not something
-executed by the offline evidence-packaging rerun. Run it from a chosen private
+executed by the offline reproduction rerun. Run it from a chosen private
 directory; it creates `./fleetdiff-install/` there.
 
 ```sh
@@ -139,7 +142,7 @@ Its darwin/arm64 SHA-256 is
 `842d81feefe9f675609466ef9853f6c3537b3bc63a6d8196b38ba55a29ee408e`;
 other release platforms have different binary hashes. Historical release
 verification is in the
-[public-sanitized provenance record](FLEETDIFF_V0150_RERUN_2026-11-20.md).
+[provenance record](FLEETDIFF_V0150_RERUN_2026-11-20.md).
 
 ```sh
 : "${FLEETDIFF:?Set FLEETDIFF to the installed v0.15.0 binary}"
@@ -214,20 +217,20 @@ Both lookup commands were executed sequentially at nice 10 with empty
 stderr. The tokenizer tally printed `52120 60996 0.8544822611318775`
 (85.4%, rounded to 85% in the essay).
 
-## Exact Allowed Script Changes
+## Reproduction Script Changes
 
-Only `cached_session_cost.py` differs from its private original: two literal
+`cached_session_cost.py` differs from its original by two literal
 replacements of the old helper-directory name with `cache-evidence`, one in
 the docstring and one in `sys.path.insert`. No calculations, rates, iteration
-order, serialization, CLI behavior or chart code change.
+order, serialization or CLI behavior changed.
 
 Original script SHA-256:
 `22a056641459de1d221757b4c0a1079f1093e6da859ea274aec08d2516e32ca0`.
 Site-layout script SHA-256:
 `ece4078b62228d83c7893bbc9880e8e8ccfe1e6b436073995d4b06c5c011eff6`.
-The other six scripts are byte-identical to their originals. Provenance
-metadata is the only sanitized retained record; numeric output files are
-not edited.
+The remaining analysis and export scripts are byte-identical to their originals.
+`make_chart.py` renders desktop and narrow SVG layouts from the same two JSON
+inputs, with `cr-`-prefixed SVG class names. Numeric output files are not edited.
 
 ## SHA-256 Reference Manifest
 
@@ -243,21 +246,12 @@ ea24bdced9a6a332dc807aaa245cf4c33db2f31042a36c07fe6c8d9f26a4a320  tail_sensitivi
 11b066405f3306f1c47e7da98b2ac14461f15ef73b448c827a1042850711ce14  one_hour_cache.py
 812da87722547b1b6989de28600e589ffa8204b6d736b6b37f1bf534a8398cbc  one-hour-cache-output.json
 c41aded60df0f871bd99da5b703ff426021e7e923897cb6947ec533aa21bfa06  trace_to_litellm.py
-0c7f276b21eeb9ba6ef5a5a1e3f9b5e4fb611c0344646c0f6465a0addb8a1b3e  make_chart.py
-6dcd46035380ccc76701f951af8aa35ce47335c5c9d12c281fe3f1e5739517ab  cheaper-ratio-chart.svg
+181ba2a913ed9189b24923c4836eb96708897270d9063c679d77976aa6ef059f  make_chart.py
+1d2efce75cd9c1e745098bba08097162cd1f44efac7c5e9d5ee0278f946282b8  cheaper-ratio-chart.svg
+bc0070c31c1cb108e71dc06bfa3334c1404fa350be72fd1a8b731fb560ffad99  cheaper-ratio-chart-narrow.svg
 3792f63caab39bce9a2356f7613978ee7b5560204866c5e9461723ee02c46650  fleetdiff-v0150-what-if.txt
 9b0b61fbdbc1799b2a63d2b7d9a7e6296148cfa64795ebb8d336f6a951e3ee47  fleetdiff-v0150-session-sonnet.txt
 f2ea37a0af0a4164e8240d511b4c3c27d23f2d15582b8b3e23b9c40209139462  fleetdiff-v0150-session-haiku.txt
 b573b795b54384f350d36f9422c3367a51bdf109f73bd3a12e0a00fced03eeae  trace-sonnet.csv (generated privately, not included)
 2b897bd33667e5f9be8bb5e24a79d9fc5757c6897c1df1b2ba54bc3783a2ca9e  trace-haiku.csv (generated privately, not included)
 ```
-
-## Judgment And Next Steps
-
-Judgment: positive for evidence packaging and reproducibility. The numerical
-results re-price the same recorded work; they do not establish model-quality
-equivalence or measure the behavior of a real model switch.
-
-Next: the parent task rebuilds the site, completes site-wide QA, obtains
-Claude's review of the exact head and Vijay's final-text and preview approval.
-This evidence package does not authorize publication or merge.

@@ -5,9 +5,9 @@ installed fleetdiff v0.15.0 reproduced all three retained pre-release output
 files byte for byte. The post's text and input exports were not changed. No
 new provider or model call was made.
 
-This public-sanitized record omits private installation/cache paths and
-unpublished draft bookkeeping. The original record is preserved privately,
-SHA-256 `8f5caedd6416efad9446f7103684512d72cc9ea4846b0729b93e9ad1f8e4cf9f`.
+This provenance record omits local installation and cache paths.
+Source record SHA-256:
+`8f5caedd6416efad9446f7103684512d72cc9ea4846b0729b93e9ad1f8e4cf9f`.
 The three accompanying text outputs are unmodified copies, not sanitized or
 reformatted output. [RUN.md](RUN.md) records the site-layout reproduction.
 
@@ -28,7 +28,7 @@ binary equaled the independently verified asset. All six release checksums
 and all seven asset attestations verified under the exact repository, tag,
 workflow identity and hosted-runner restriction. Native binary govulncheck
 was clean; all packaged-binary tests passed. These are historical release
-verification results, not checks repeated by the offline evidence packager.
+verification results, not checks repeated by the offline reproduction rerun.
 
 ## Inputs
 
@@ -52,10 +52,8 @@ nice -n 10 "$FLEETDIFF" investigate --litellm-spend "$OUT/trace-sonnet.csv" --pe
 nice -n 10 "$FLEETDIFF" investigate --litellm-spend "$OUT/trace-haiku.csv" --period 2026-10-07
 ```
 
-Each original command exited 0 with empty stderr. Live output was written
-in the private release cache first, compared against the retained
-pre-release record, then copied beside the original note and independently
-compared again.
+Each original command exited 0 with empty stderr. Its output matched the
+retained pre-release record byte for byte in two independent comparisons.
 
 | Published output | SHA-256; identical to retained pre-release output |
 | --- | --- |
@@ -72,7 +70,3 @@ work re-priced, not measurements of a real model switch.
 The independent offline site-layout rerun also reproduced both generated
 exports and all three text outputs byte for byte, using the same installed
 release binary. It did not repeat release-network or attestation checks.
-
-Judgment: positive for released-command reproducibility. Next: review the
-evidence and study text before publication; neither rerun published the post
-or site. These checks establish reproducibility, not model-quality equivalence.
