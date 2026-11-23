@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 508" role="img" aria-labelledby="cr-narrow-title cr-narrow-desc" font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<title id="cr-narrow-title">How much cheaper the smaller model is, on the price sheet and on a re-priced Claude Code trace</title>
+<desc id="cr-narrow-desc">Opus 5.5 → Sonnet 5.5: 2.0 on the price sheet, 2.0 on the trace; Fable 5.2 → Sonnet 5.5: 4.0 on the price sheet, 3.3 on the trace; Sonnet 5.5 → Haiku 5.5: 20.0 on the price sheet, 3.4 on the trace; Same, if prompts stayed under 100k: 20.0 on the price sheet, 15.0 on the trace.</desc>
+<style>.cr-s{fill:#fcfcfb}.cr-p{fill:#2a78d6}.cr-r{fill:#eb6834}.cr-t1{fill:#1f1f1e}.cr-t2{fill:#5b5a55}.cr-g{stroke:#e4e3de;stroke-width:1}.cr-a{stroke:#bdbcb5;stroke-width:1}@media (prefers-color-scheme: dark){.cr-s{fill:#1a1a19}.cr-p{fill:#3987e5}.cr-r{fill:#d95926}.cr-t1{fill:#f0efec}.cr-t2{fill:#c3c2b7}.cr-g{stroke:#2f2f2d}.cr-a{stroke:#55544f}}</style>
+<rect class="cr-s" width="340" height="508"/>
+<text class="cr-t1" x="16" y="24" font-size="18" text-anchor="start" font-weight="600">How much cheaper is</text>
+<text class="cr-t1" x="16" y="46" font-size="18" text-anchor="start" font-weight="600">the smaller model?</text>
+<rect class="cr-p" x="16" y="64" width="12" height="12" rx="3"/>
+<text class="cr-t2" x="36" y="75" font-size="15" text-anchor="start">Price sheet (base input price)</text>
+<rect class="cr-r" x="16" y="88" width="12" height="12" rx="3"/>
+<text class="cr-t2" x="36" y="99" font-size="15" text-anchor="start">Trace, with caching (233 sessions)</text>
+<text class="cr-t1" x="16" y="124" font-size="16" text-anchor="start" font-weight="600">Opus 5.5 → Sonnet 5.5</text>
+<line class="cr-g" x1="16.0" y1="132" x2="16.0" y2="180"/>
+<line class="cr-g" x1="81.5" y1="132" x2="81.5" y2="180"/>
+<line class="cr-g" x1="147.0" y1="132" x2="147.0" y2="180"/>
+<line class="cr-g" x1="212.5" y1="132" x2="212.5" y2="180"/>
+<line class="cr-g" x1="278.0" y1="132" x2="278.0" y2="180"/>
+<path class="cr-p" d="M16,136 h22.2 a4,4 0 0 1 4,4 v10 a4,4 0 0 1 -4,4 h-22.2 z"><title>Opus 5.5 → Sonnet 5.5, price sheet: 2.0× cheaper</title></path>
+<text class="cr-t1" x="48.2" y="151" font-size="15" text-anchor="start">2.0×</text>
+<path class="cr-r" d="M16,160 h22.2 a4,4 0 0 1 4,4 v10 a4,4 0 0 1 -4,4 h-22.2 z"><title>Opus 5.5 → Sonnet 5.5, on the trace: 2.0× cheaper</title></path>
+<text class="cr-t1" x="48.2" y="175" font-size="15" text-anchor="start">2.0×</text>
+<text class="cr-t1" x="16" y="212" font-size="16" text-anchor="start" font-weight="600">Fable 5.2 → Sonnet 5.5</text>
+<line class="cr-g" x1="16.0" y1="220" x2="16.0" y2="268"/>
+<line class="cr-g" x1="81.5" y1="220" x2="81.5" y2="268"/>
+<line class="cr-g" x1="147.0" y1="220" x2="147.0" y2="268"/>
+<line class="cr-g" x1="212.5" y1="220" x2="212.5" y2="268"/>
+<line class="cr-g" x1="278.0" y1="220" x2="278.0" y2="268"/>
+<path class="cr-p" d="M16,224 h48.4 a4,4 0 0 1 4,4 v10 a4,4 0 0 1 -4,4 h-48.4 z"><title>Fable 5.2 → Sonnet 5.5, price sheet: 4.0× cheaper</title></path>
+<text class="cr-t1" x="74.4" y="239" font-size="15" text-anchor="start">4.0×</text>
+<path class="cr-r" d="M16,248 h39.6 a4,4 0 0 1 4,4 v10 a4,4 0 0 1 -4,4 h-39.6 z"><title>Fable 5.2 → Sonnet 5.5, on the trace: 3.3× cheaper</title></path>
+<text class="cr-t1" x="65.6" y="263" font-size="15" text-anchor="start">3.3×</text>
+<text class="cr-t1" x="16" y="300" font-size="16" text-anchor="start" font-weight="600">Sonnet 5.5 → Haiku 5.5</text>
+<line class="cr-g" x1="16.0" y1="308" x2="16.0" y2="356"/>
+<line class="cr-g" x1="81.5" y1="308" x2="81.5" y2="356"/>
+<line class="cr-g" x1="147.0" y1="308" x2="147.0" y2="356"/>
+<line class="cr-g" x1="212.5" y1="308" x2="212.5" y2="356"/>
+<line class="cr-g" x1="278.0" y1="308" x2="278.0" y2="356"/>
+<path class="cr-p" d="M16,312 h258.0 a4,4 0 0 1 4,4 v10 a4,4 0 0 1 -4,4 h-258.0 z"><title>Sonnet 5.5 → Haiku 5.5, price sheet: 20.0× cheaper</title></path>
+<text class="cr-t1" x="284.0" y="327" font-size="15" text-anchor="start">20.0×</text>
+<path class="cr-r" d="M16,336 h39.9 a4,4 0 0 1 4,4 v10 a4,4 0 0 1 -4,4 h-39.9 z"><title>Sonnet 5.5 → Haiku 5.5, on the trace: 3.4× cheaper</title></path>
+<text class="cr-t1" x="65.9" y="351" font-size="15" text-anchor="start">3.4×</text>
+<text class="cr-t1" x="16" y="388" font-size="16" text-anchor="start" font-weight="600">Same, if prompts stayed under 100k</text>
+<line class="cr-g" x1="16.0" y1="396" x2="16.0" y2="444"/>
+<line class="cr-g" x1="81.5" y1="396" x2="81.5" y2="444"/>
+<line class="cr-g" x1="147.0" y1="396" x2="147.0" y2="444"/>
+<line class="cr-g" x1="212.5" y1="396" x2="212.5" y2="444"/>
+<line class="cr-g" x1="278.0" y1="396" x2="278.0" y2="444"/>
+<path class="cr-p" d="M16,400 h258.0 a4,4 0 0 1 4,4 v10 a4,4 0 0 1 -4,4 h-258.0 z"><title>Same, if prompts stayed under 100k, price sheet: 20.0× cheaper</title></path>
+<text class="cr-t1" x="284.0" y="415" font-size="15" text-anchor="start">20.0×</text>
+<path class="cr-r" d="M16,424 h192.2 a4,4 0 0 1 4,4 v10 a4,4 0 0 1 -4,4 h-192.2 z"><title>Same, if prompts stayed under 100k, on the trace: 15.0× cheaper</title></path>
+<text class="cr-t1" x="218.2" y="439" font-size="15" text-anchor="start">15.0×</text>
+<text class="cr-t2" x="16.0" y="480" font-size="14" text-anchor="middle">0×</text>
+<text class="cr-t2" x="81.5" y="480" font-size="14" text-anchor="middle">5×</text>
+<text class="cr-t2" x="147.0" y="480" font-size="14" text-anchor="middle">10×</text>
+<text class="cr-t2" x="212.5" y="480" font-size="14" text-anchor="middle">15×</text>
+<text class="cr-t2" x="278.0" y="480" font-size="14" text-anchor="middle">20×</text>
+<text class="cr-t2" x="170" y="501" font-size="14" text-anchor="middle">times cheaper than the bigger model</text>
+</svg>

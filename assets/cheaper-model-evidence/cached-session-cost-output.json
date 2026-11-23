@@ -1,0 +1,180 @@
+{
+ "calls": 60996,
+ "calls_over_100k": 38404,
+ "output_share": {
+  "haiku-5.5-cached": 0.11369634056312665,
+  "haiku-5.5-uncached": 0.020272307942584406,
+  "sonnet-5.5-cached": 0.16792076029825337,
+  "sonnet-5.5-uncached": 0.02310876547365271
+ },
+ "pairs": {
+  "fable-5.2->sonnet-5.5": {
+   "cached": {
+    "aggregate_breakeven_steps": 3.3299004702203616,
+    "aggregate_cost_ratio": 0.30030927619101583,
+    "session_breakeven_steps": {
+     "median": 3.4671380649141486,
+     "q1": 3.3260744239865416,
+     "q3": 3.613104781122746
+    },
+    "session_cost_ratio": {
+     "median": 0.2884223187185831,
+     "q1": 0.2767703561693622,
+     "q3": 0.3006547276732489
+    }
+   },
+   "cached_output_2.51x": {
+    "aggregate_breakeven_steps": 2.6563543393816595,
+    "aggregate_cost_ratio": 0.376455800784762,
+    "session_breakeven_steps": {
+     "median": 2.5698147321295126,
+     "q1": 2.3532197678545743,
+     "q3": 2.8424687741248107
+    },
+    "session_cost_ratio": {
+     "median": 0.3891331104524162,
+     "q1": 0.35180691953353876,
+     "q3": 0.4249497126276175
+    }
+   },
+   "sticker_input_ratio": 0.25,
+   "uncached": {
+    "aggregate_breakeven_steps": 4.0,
+    "aggregate_cost_ratio": 0.25,
+    "session_breakeven_steps": {
+     "median": 4.0,
+     "q1": 4.0,
+     "q3": 4.0
+    },
+    "session_cost_ratio": {
+     "median": 0.25,
+     "q1": 0.25,
+     "q3": 0.25
+    }
+   }
+  },
+  "opus-5.5->sonnet-5.5": {
+   "cached": {
+    "aggregate_breakeven_steps": 2.0,
+    "aggregate_cost_ratio": 0.5,
+    "session_breakeven_steps": {
+     "median": 2.0,
+     "q1": 2.0,
+     "q3": 2.0
+    },
+    "session_cost_ratio": {
+     "median": 0.5,
+     "q1": 0.5,
+     "q3": 0.5
+    }
+   },
+   "cached_output_2.51x": {
+    "aggregate_breakeven_steps": 1.5954556979331402,
+    "aggregate_cost_ratio": 0.6267801740251808,
+    "session_breakeven_steps": {
+     "median": 1.5152677100118401,
+     "q1": 1.3878114585385513,
+     "q3": 1.6405732852073784
+    },
+    "session_cost_ratio": {
+     "median": 0.6599493894000988,
+     "q1": 0.609543030099006,
+     "q3": 0.7205592931694008
+    }
+   },
+   "sticker_input_ratio": 0.5,
+   "uncached": {
+    "aggregate_breakeven_steps": 2.0,
+    "aggregate_cost_ratio": 0.5,
+    "session_breakeven_steps": {
+     "median": 2.0,
+     "q1": 2.0,
+     "q3": 2.0
+    },
+    "session_cost_ratio": {
+     "median": 0.5,
+     "q1": 0.5,
+     "q3": 0.5
+    }
+   }
+  },
+  "sonnet-5.5->haiku-5.5": {
+   "cached": {
+    "aggregate_breakeven_steps": 3.3541926383307765,
+    "aggregate_cost_ratio": 0.29813433747730506,
+    "session_breakeven_steps": {
+     "median": 3.8857684753226622,
+     "q1": 3.351371189917638,
+     "q3": 5.956934702116424
+    },
+    "session_cost_ratio": {
+     "median": 0.25734935221969524,
+     "q1": 0.16787174425338702,
+     "q3": 0.2983856210993159
+    }
+   },
+   "cached_output_2.51x": {
+    "aggregate_breakeven_steps": 2.8627171394656536,
+    "aggregate_cost_ratio": 0.3493184800600513,
+    "session_breakeven_steps": {
+     "median": 3.1358153713666552,
+     "q1": 2.7210796022420567,
+     "q3": 4.669722606458992
+    },
+    "session_cost_ratio": {
+     "median": 0.3188963256992323,
+     "q1": 0.2141516556484266,
+     "q3": 0.3675013544725899
+    }
+   },
+   "sticker_input_ratio": 0.05,
+   "uncached": {
+    "aggregate_breakeven_steps": 4.345826224570868,
+    "aggregate_cost_ratio": 0.23010584140389684,
+    "session_breakeven_steps": {
+     "median": 4.727052711299532,
+     "q1": 4.180899080546462,
+     "q3": 6.756588697148642
+    },
+    "session_cost_ratio": {
+     "median": 0.21154830738603847,
+     "q1": 0.14800401903774985,
+     "q3": 0.23918300999160935
+    }
+   }
+  }
+ },
+ "prices_usd_per_million": {
+  "fable-5.2": [
+   8.0,
+   10.0,
+   0.2,
+   40.0
+  ],
+  "haiku-5.5": [
+   0.1,
+   0.125,
+   0.01,
+   0.5
+  ],
+  "haiku-5.5-long": [
+   0.5,
+   0.625,
+   0.05,
+   2.5
+  ],
+  "opus-5.5": [
+   4.0,
+   5.0,
+   0.2,
+   20.0
+  ],
+  "sonnet-5.5": [
+   2.0,
+   2.5,
+   0.1,
+   10.0
+  ]
+ },
+ "sessions": 233
+}

@@ -59,6 +59,19 @@ details > summary { cursor: pointer; font-weight: 600; padding: 12px 0; }
 body:has(.study, .studies-index) header > a:last-child { flex-shrink: 0; white-space: nowrap; }
 .study > p:first-child { font-size: 18px; }
 .study h2 { margin-top: 40px; }
+.study h3 { font-size: 17px; line-height: 1.4; margin: 24px 0 12px; }
+.study hr { border: 0; border-top: 1px solid var(--line); margin: 40px 0 24px; }
+.study .study-chart { max-width: 100%; }
+.study .study-chart svg { display: block; width: 100%; height: auto; }
+.study .chart-narrow { display: none; }
+.study .study-chart:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.study-chart .cr-s { fill: #fcfcfb; }
+.study-chart .cr-p { fill: #2a78d6; }
+.study-chart .cr-r { fill: #eb6834; }
+.study-chart .cr-t1 { fill: #1f1f1e; }
+.study-chart .cr-t2 { fill: #5b5a55; }
+.study-chart .cr-g { stroke: #e4e3de; }
+.study-chart .cr-a { stroke: #bdbcb5; }
 .study .equation { overflow-x: auto; max-width: 100%; padding: 12px 0; }
 .study .equation math { min-width: max-content; margin: 0 auto; }
 .study math { font-size: 1.05em; }
@@ -70,4 +83,10 @@ body:has(.study, .studies-index) header > a:last-child { flex-shrink: 0; white-s
 .study details { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 24px 0; }
 .study details > summary { padding: 16px 0; }
 .evidence-downloads { margin: 40px auto 64px; padding: 0 20px; }
+@media (max-width: 600px) {
+  .study .chart-wide { display: none; }
+  .study .chart-narrow { display: block; }
+  .study table { min-width: 0; table-layout: fixed; font-size: 13px; line-height: 1.45; }
+  .study th, .study td { padding: 8px 4px; overflow-wrap: anywhere; }
+}
 @media (max-width: 767px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 20px 20px 40px; } .desktop-guides { display: none; } .mobile-guides { display: block; } nav { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 12px; } nav a { border-left: none; border-bottom: 2px solid transparent; padding: 6px 10px; } h1 { font-size: 26px; } header { padding: 18px 20px; } }

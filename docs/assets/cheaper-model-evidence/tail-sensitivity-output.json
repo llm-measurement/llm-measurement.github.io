@@ -1,0 +1,12 @@
+{
+  "all": 3.354192638332814,
+  "drop_over_500000": {
+    "times_cheaper": 3.5586280792518337,
+    "calls_dropped_share": 0.09989179618335631
+  },
+  "drop_over_300000": {
+    "times_cheaper": 3.936403789574339,
+    "calls_dropped_share": 0.22349006492228995
+  },
+  "shrink_over_500k_by_260k": 3.424004457671571
+}

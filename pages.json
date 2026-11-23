@@ -110,5 +110,16 @@
     "published": "2026-11-17T00:00:00Z",
     "modified": "2026-11-17T00:00:00Z",
     "navigation": false
+  },
+  {
+    "slug": "haiku-sonnet-100k-cliff",
+    "title": "Haiku 5.5 is 20× cheaper than Sonnet on paper, 3.4× on a Claude Code trace",
+    "document_title": "Haiku 5.5 vs Sonnet 5.5: 20× Cheaper, 3.4× on an Agent",
+    "description": "A 233-session Claude Code trace priced at Haiku 5.5 and Sonnet 5.5 rates: the 100,000-token tier and cache-read discounts turn 20× into 3.4×.",
+    "kind": "study",
+    "article": true,
+    "published": "2026-11-20T00:00:00Z",
+    "modified": "2026-11-20T00:00:00Z",
+    "navigation": false
   }
 ]

@@ -1,15 +1,15 @@
 {
   "method": "Installed Chromium; all pages/assets served through local interception; candidate and baseline Plausible stubbed before page scripts; every external request aborted, including the real tracker, with zero external requests completed. All pages at 1366/390/320px with synthetic private query/hash markers. Native button Enter/Space and contact Enter activation, exact mocked clipboard text for every command, explicit query/hash-free Plausible url option and path-only props, unchanged published blocks and input-first introduction/palette/typography, contrast >=4.5 including opened folds, hover, dark-system light palette, closed security notes, no horizontal overflow. Clipboard OS integration and live analytics delivery are not exercised.",
-  "baselineCommit": "b7143ebc1efeb93452bc516b1b064160d8bdacd5",
+  "baselineCommit": "2b51843a5862acde3e9b45152ecda98cc426a2dc",
   "newPageMethod": "New guides verify input-first ordering against the existing LiteLLM guide. Studies verify their own title, article/math/fold/code or index-link structure, with shared palette and typography checked against the home page. No historical article-intro comparison is claimed for a new page.",
   "files": {
-    "assets/site.css": "1bbc410ef6d36fd4f5b26cf6f67ea5eb7db8568cb77416f9a5b13ea0b214c9ab",
+    "assets/site.css": "86c0f6e7d44b9d7f529eaa4e2de55f6a8a26d4c47b8d85ffb1a1eceecea3433c",
     "assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
-    "docs/assets/site.css": "1bbc410ef6d36fd4f5b26cf6f67ea5eb7db8568cb77416f9a5b13ea0b214c9ab",
+    "docs/assets/site.css": "86c0f6e7d44b9d7f529eaa4e2de55f6a8a26d4c47b8d85ffb1a1eceecea3433c",
     "docs/assets/site.js": "25b270bb08ebce9b6ffb5a717efa1fcd261e442595e28e1900ca75256dde066a",
-    "pages.json": "326767882b476c5ae911fd474bb39603a724c7dac0cb0d46a022ca1b1e955a93",
-    "pages/index.html": "a6078dd6573d0cc298eed0419347d94c958314245e047a6a4301778f36c926d1",
-    "docs/index.html": "90e41310750b9273ab7f7af3fb7859e04d45d1368a1da6d2e67db6d221d8e69b",
+    "pages.json": "c6592872d5e571534b407c29755ff0687b36b5cbef154fd8f561095fc9c2f816",
+    "pages/index.html": "5e916b54005132199b7c4d666d1455c4d70749f6fee53844f19b49a376a77322",
+    "docs/index.html": "a3771fd9524003e30361afe5b6dd1871a5c390c71faf6c6327792f85b3c79f66",
     "pages/token-spike.html": "aeb1b582bacf4db58bb3fd133b370aaddf600ef209d6c4c5ceaca24c1d8799bc",
     "docs/token-spike.html": "971263acae07058ebd53043b49b0515c8133f767ae5e9390bcca11cba49fc28e",
     "pages/tokenmaxxing.html": "2357ddd5efecb96edc410d08485eecac25e92dc4e6b7632cf7e63667e92d57b9",
@@ -42,10 +42,12 @@
     "docs/summaries.html": "a3e8ef8c787fbdf4628fd78cec8c34a218a25ccb63615a18003f22ef592dacfb",
     "pages/security.html": "0589da5d3e7363d18a6824afa415ef7a8952be732fde4467087864a34b9d8b12",
     "docs/security.html": "14ead1e60e2669c7bbdd199cb7e0033bcdb977562d4e73236ec2a04477bbde94",
-    "pages/studies.html": "cbe2574dcb146767e27f835044f30969a010679190aa80fcfc8e4d7ac7582564",
-    "docs/studies.html": "639942d23f5ddf46fbad585258d533d1913d426a3307421fdff53ef1d9176225",
+    "pages/studies.html": "30a13e1e9d5374d5dd13817cb522b70dcb01a2ad52a82c8327d60dc860f23d65",
+    "docs/studies.html": "7b40eef6036ead599478ff40ba33f0d7e3a41ae3607877eb2d1ea7c88198297f",
     "pages/prompt-cache-bills.html": "b7fae161dcdfe08fb12281675dfffd8bff22b9f084598b357fe42ab7704ec499",
-    "docs/prompt-cache-bills.html": "d90836749a2853bfd5c6e7a34e5a31343e55f370ce7a098bdc78350630db3b6c"
+    "docs/prompt-cache-bills.html": "d90836749a2853bfd5c6e7a34e5a31343e55f370ce7a098bdc78350630db3b6c",
+    "pages/haiku-sonnet-100k-cliff.html": "6e1f6a2cafa02c469ac806bf6d27948c5d513162cef275caf11f526a00e60fd8",
+    "docs/haiku-sonnet-100k-cliff.html": "78ca368c8b86767aeae4938089a8a1c9f2de5027a0ea1472037ef3ce85b15403"
   },
   "results": [
     {
@@ -1048,9 +1050,9 @@
           "ratio": 8.263713628418893
         }
       ],
-      "inputFirstUnchanged": null,
+      "inputFirstUnchanged": true,
       "inputFirstVerified": true,
-      "newPage": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -1100,6 +1102,58 @@
           "ratio": 14.612903715712159
         }
       ],
+      "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
+      "paletteUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "keyboardPass": true,
+      "clipboardPass": true,
+      "contactPass": true,
+      "commandBlocks": 2,
+      "eventsChecked": 5,
+      "qaTrackerStubbed": true,
+      "externalRequestsSent": 0,
+      "pass": true
+    },
+    {
+      "slug": "haiku-sonnet-100k-cliff",
+      "width": 1366,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 1366,
+        "scroll": 1366,
+        "title": "Haiku 5.5 is 20× cheaper than Sonnet on paper, 3.4× on a Claude Code trace",
+        "folded": true
+      },
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
       "inputFirstUnchanged": null,
       "inputFirstVerified": true,
       "newPage": true,
@@ -1109,8 +1163,8 @@
       "keyboardPass": true,
       "clipboardPass": true,
       "contactPass": true,
-      "commandBlocks": 2,
-      "eventsChecked": 5,
+      "commandBlocks": 0,
+      "eventsChecked": 3,
       "qaTrackerStubbed": true,
       "externalRequestsSent": 0,
       "pass": true
@@ -2115,9 +2169,9 @@
           "ratio": 8.263713628418893
         }
       ],
-      "inputFirstUnchanged": null,
+      "inputFirstUnchanged": true,
       "inputFirstVerified": true,
-      "newPage": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -2167,6 +2221,58 @@
           "ratio": 14.612903715712159
         }
       ],
+      "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
+      "paletteUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "keyboardPass": true,
+      "clipboardPass": true,
+      "contactPass": true,
+      "commandBlocks": 2,
+      "eventsChecked": 5,
+      "qaTrackerStubbed": true,
+      "externalRequestsSent": 0,
+      "pass": true
+    },
+    {
+      "slug": "haiku-sonnet-100k-cliff",
+      "width": 390,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 390,
+        "scroll": 390,
+        "title": "Haiku 5.5 is 20× cheaper than Sonnet on paper, 3.4× on a Claude Code trace",
+        "folded": true
+      },
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
       "inputFirstUnchanged": null,
       "inputFirstVerified": true,
       "newPage": true,
@@ -2176,8 +2282,8 @@
       "keyboardPass": true,
       "clipboardPass": true,
       "contactPass": true,
-      "commandBlocks": 2,
-      "eventsChecked": 5,
+      "commandBlocks": 0,
+      "eventsChecked": 3,
       "qaTrackerStubbed": true,
       "externalRequestsSent": 0,
       "pass": true
@@ -3182,9 +3288,9 @@
           "ratio": 8.263713628418893
         }
       ],
-      "inputFirstUnchanged": null,
+      "inputFirstUnchanged": true,
       "inputFirstVerified": true,
-      "newPage": true,
+      "newPage": false,
       "paletteUnchanged": true,
       "systemDarkRemainsLight": true,
       "hoverPass": true,
@@ -3234,6 +3340,58 @@
           "ratio": 14.612903715712159
         }
       ],
+      "inputFirstUnchanged": true,
+      "inputFirstVerified": true,
+      "newPage": false,
+      "paletteUnchanged": true,
+      "systemDarkRemainsLight": true,
+      "hoverPass": true,
+      "keyboardPass": true,
+      "clipboardPass": true,
+      "contactPass": true,
+      "commandBlocks": 2,
+      "eventsChecked": 5,
+      "qaTrackerStubbed": true,
+      "externalRequestsSent": 0,
+      "pass": true
+    },
+    {
+      "slug": "haiku-sonnet-100k-cliff",
+      "width": 320,
+      "colorScheme": "light",
+      "geometry": {
+        "width": 320,
+        "scroll": 320,
+        "title": "Haiku 5.5 is 20× cheaper than Sonnet on paper, 3.4× on a Claude Code trace",
+        "folded": true
+      },
+      "contrastPairs": [
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 8.953664135410857
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 15.832958134418996
+        },
+        {
+          "foreground": "rgb(91, 104, 117)",
+          "background": "rgb(251, 252, 250)",
+          "ratio": 5.5424761974435
+        },
+        {
+          "foreground": "rgb(14, 81, 68)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 8.263713628418893
+        },
+        {
+          "foreground": "rgb(23, 33, 43)",
+          "background": "rgb(238, 244, 240)",
+          "ratio": 14.612903715712159
+        }
+      ],
       "inputFirstUnchanged": null,
       "inputFirstVerified": true,
       "newPage": true,
@@ -3243,8 +3401,8 @@
       "keyboardPass": true,
       "clipboardPass": true,
       "contactPass": true,
-      "commandBlocks": 2,
-      "eventsChecked": 5,
+      "commandBlocks": 0,
+      "eventsChecked": 3,
       "qaTrackerStubbed": true,
       "externalRequestsSent": 0,
       "pass": true

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Haiku and Sonnet study evidence | LLM Measurement</title>
+<meta name="description" content="Reproduction scripts, aggregate results and published fleetdiff outputs for the Haiku and Sonnet trace study.">
+<link rel="canonical" href="https://llm-measurement.github.io/assets/cheaper-model-evidence/">
+<link rel="stylesheet" href="../site.css">
+<script async src="https://plausible.io/js/pa-XxJJVAxJMHffrJ0MqBrpF.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head><body>
+<header><a class="brand" href="../../index.html">LLM Measurement</a><a href="../../studies.html">Studies</a></header>
+<main class="evidence-downloads">
+<h1>Haiku and Sonnet study evidence</h1>
+<p>Evidence for <a href="../../haiku-sonnet-100k-cliff.html">Haiku 5.5 is 20&times; cheaper than Sonnet on paper, 3.4&times; on a Claude Code trace</a>.</p>
+<p><a href="RUN.md">Methods, commands, figure fields and SHA-256 hashes</a>.</p>
+<ul>
+<li><a href="cached_session_cost.py">Per-model and model-pair re-pricing</a> &middot; <a href="cached-session-cost-output.json">JSON results</a></li>
+<li><a href="tier_analysis.py">Cost components, session quartiles, concentration and tokenizer sensitivity</a> &middot; <a href="tier-analysis-output.json">JSON results</a></li>
+<li><a href="subagent_split.py">Subagent-only switch</a> &middot; <a href="subagent-split-output.json">JSON results</a></li>
+<li><a href="tail_sensitivity.py">Large-prompt sensitivity</a> &middot; <a href="tail-sensitivity-output.json">JSON results</a></li>
+<li><a href="one_hour_cache.py">One-hour prompt cache</a> &middot; <a href="one-hour-cache-output.json">JSON results</a></li>
+<li><a href="trace_to_litellm.py">LiteLLM-shaped export generator</a></li>
+<li><a href="make_chart.py">Chart generator</a> &middot; <a href="cheaper-ratio-chart.svg">Wide SVG chart</a> &middot; <a href="cheaper-ratio-chart-narrow.svg">Narrow SVG chart</a></li>
+<li><a href="FLEETDIFF_V0150_RERUN_2026-11-20.md">Published fleetdiff v0.15.0 provenance</a> &middot; <a href="fleetdiff-v0150-what-if.txt">what-if output</a> &middot; <a href="fleetdiff-v0150-session-sonnet.txt">Sonnet session output</a> &middot; <a href="fleetdiff-v0150-session-haiku.txt">Haiku session output</a></li>
+<li><a href="../cache-evidence/trace_replay.py">Shared cache replay helper</a> &middot; <a href="../cache-evidence/trace_replay-results.json">cache-study results</a></li>
+<li><a href="ATTRIBUTION.md">Attribution and license</a></li>
+</ul>
+</main>
+<footer>Privacy-friendly analytics by <a href="https://plausible.io/data-policy">Plausible</a>: no cookies, no personal data</footer>
+</body></html>
