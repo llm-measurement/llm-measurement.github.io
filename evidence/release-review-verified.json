@@ -16,10 +16,10 @@
       "pass": true,
       "exit": 0,
       "authentication": "credentialed GitHub API",
-      "command_sha256": "e86557fe532e6599f4dc9cb5ace2d1db893171ab97ad050c86e199675674c50c",
-      "stdout_sha256": "f62ddbb2018483750ef250c04696ab7cab623791d309d660b5cafb40488d019b",
-      "verified_at_utc": "2026-11-12T17:17:36.794633+00:00",
-      "verification_time_basis": "Completion manifest file timestamp after the collector command passed."
+      "command_sha256": "750b8ebe860bfe95698514865273d4029faa550102362d56fa07203292d506f6",
+      "stdout_sha256": "502b4d8584a59bace096c76fe02153f019ebf2b2f25cea3fa07bda669ed0b30a",
+      "verified_at_utc": "2026-11-24T15:39:33.631Z",
+      "verification_time_basis": "Recorded completion of the exact collector verification command."
     }
   ]
 }

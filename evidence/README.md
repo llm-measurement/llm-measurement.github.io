@@ -39,6 +39,18 @@ default fixtures require that column to remain unreadable.
 The dated sections below describe earlier checks, not the current release.
 Their version strings and measurement records are retained as history.
 
+## Current Collector Guidance
+
+Current guidance selects collector v0.7.4 and stable chart 0.7.5 with separate
+runtime and chart release workflow identities. Deployment and Summary Export
+links pin documentation-only revision `c52bd8d263da51645d7cbe61cf4052b719c2effe`.
+Runtime and chart versions advance independently.
+
+The [previous collector verification records](https://github.com/llm-measurement/llm-measurement.github.io/tree/4609039be7bdc1e41a243dedce3af5dab3e30f42/evidence)
+retain their actual versions and results. The dated sections below are history,
+not verification of the current commands.
+
+<!-- historical-verification:start -->
 ## Collector v0.7.3 And Chart 0.7.4, November 12, 2026
 
 Current guidance selects collector v0.7.3 and stable chart 0.7.4 with separate
@@ -54,7 +66,6 @@ Deployment and Summary Export links pin the documentation-only revision
 Other guide command and measurement records are retained at the versions
 actually used.
 
-<!-- historical-verification:start -->
 ## Collector v0.7.1 And Chart 0.7.2, November 7, 2026
 
 Current collector guidance selects runtime v0.7.1 and stable chart 0.7.2,

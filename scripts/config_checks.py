@@ -13,7 +13,7 @@ import tempfile
 import uuid
 
 CONFIG_IMAGES = {
-    "cardinality": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:64a8002d2bd524772d00a60c8482bf76152731bf2792c948d0a25994a6e5487d",
+    "cardinality": "ghcr.io/llm-measurement/otelcol-genai-sketches@sha256:c295dfdd4174c2d0c86954f979295a80f4f96fc24a993ed333c848ccaa5c6cf6",
     "traces-usage": "otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
 }
 RECEIVER = """receivers:
@@ -63,7 +63,7 @@ def platform_image(name, architecture):
     image = CONFIG_IMAGES[name]
     if name != "cardinality":
         return image
-    raw = Path(__file__).with_name("collector-v073-index.json").read_bytes().removesuffix(b"\n")
+    raw = Path(__file__).with_name("collector-v074-index.json").read_bytes().removesuffix(b"\n")
     assert digest(raw) == image.split("@sha256:", 1)[1], "release index bytes changed"
     index = json.loads(raw)
     entries = [item for item in index["manifests"]
