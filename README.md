@@ -6,7 +6,7 @@ A Studies section presents longer investigations with their reproducible evidenc
 
 All fleetdiff guides pin v0.14.1 for reproducibility. The home-page library installs
 pin llm-sketchkit v0.4.0; the existing Python guides retain v0.3.0. Collector
-configuration pins v0.7.4 and Helm chart 0.7.5. Historical evidence
+configuration pins v0.8.0 and Helm chart 0.8.0. Historical evidence
 retains the versions and source revisions used for those measurements.
 
 | Question | Page |

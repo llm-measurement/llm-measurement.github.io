@@ -35,9 +35,9 @@ class ConfigChecksTests(unittest.TestCase):
 
     def test_child_images_are_bound_to_exact_published_index(self):
         self.assertTrue(config_checks.platform_image("cardinality", "arm64").endswith(
-            "@sha256:1d35ae491139bf67da8ca815082fe329121b38390a1bbe6237250258fe8861e8"))
+            "@sha256:a1ab3d885d125f6987f66d3e68e96c505a639067f6fe3acf803538591df83e06"))
         self.assertTrue(config_checks.platform_image("cardinality", "amd64").endswith(
-            "@sha256:f2ca8f3e2e24dbd4a3a41f46be861a69207cdce393612fb9c77455200bfc9851"))
+            "@sha256:4679ef8427c40ee027434eefa087786e05e0d7f097dc475155a967e1df62e317"))
         with self.assertRaises(AssertionError):
             config_checks.platform_image("cardinality", "unsupported")
         with patch.object(Path, "read_bytes", return_value=b"{}"), self.assertRaisesRegex(AssertionError, "index bytes"):

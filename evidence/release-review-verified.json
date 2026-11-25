@@ -16,9 +16,9 @@
       "pass": true,
       "exit": 0,
       "authentication": "credentialed GitHub API",
-      "command_sha256": "750b8ebe860bfe95698514865273d4029faa550102362d56fa07203292d506f6",
-      "stdout_sha256": "502b4d8584a59bace096c76fe02153f019ebf2b2f25cea3fa07bda669ed0b30a",
-      "verified_at_utc": "2026-11-24T15:39:33.631Z",
+      "command_sha256": "a796ff881fecb6b287f05a72e4d12d0ed72422793cc2aaee2110543710bb688e",
+      "stdout_sha256": "6a83d7dd56fd2d822d43528a5969b25983360a1235484ad2dab64e5538316ddf",
+      "verified_at_utc": "2026-11-25T07:15:31.583Z",
       "verification_time_basis": "Recorded completion of the exact collector verification command."
     }
   ]
