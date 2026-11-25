@@ -41,12 +41,12 @@ Their version strings and measurement records are retained as history.
 
 ## Current Collector Guidance
 
-Current guidance selects collector v0.7.4 and stable chart 0.7.5 with separate
+Current guidance selects collector v0.8.0 and stable chart 0.8.0 with separate
 runtime and chart release workflow identities. Deployment and Summary Export
-links pin documentation-only revision `c52bd8d263da51645d7cbe61cf4052b719c2effe`.
+links pin documentation-only revision `984f7424439e2648d17f62e2cc6d4435071e9ed1`.
 Runtime and chart versions advance independently.
 
-The [previous collector verification records](https://github.com/llm-measurement/llm-measurement.github.io/tree/4609039be7bdc1e41a243dedce3af5dab3e30f42/evidence)
+The [previous collector verification records](https://github.com/llm-measurement/llm-measurement.github.io/tree/94862c3ce4b2fae06b45d0ee8871faa0073b2a6e/evidence)
 retain their actual versions and results. The dated sections below are history,
 not verification of the current commands.
 
